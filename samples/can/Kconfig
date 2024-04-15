@@ -1,0 +1,22 @@
+# Copyright (c) 2024 Frickly Systems GmbH
+# SPDX-License-Identifier: Apache-2.0
+
+mainmenu "CAN sample application"
+
+config CAN_EXAMPLE_FRAME_ID
+	int "frame id to be used in the example"
+	default 101
+
+config CAN_EXAMPLE_USE_CAN_FD
+	bool "build the example with FD support"
+	select CAN_FD_MODE
+	default n
+
+
+menu "Zephyr"
+source "Kconfig.zephyr"
+endmenu
+
+module = APP
+module-str = APP
+source "subsys/logging/Kconfig.template.log_config"

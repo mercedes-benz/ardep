@@ -1,0 +1,5 @@
+/ {
+  chosen {
+    zephyr,canbus = &lin2can0;
+  };
+};

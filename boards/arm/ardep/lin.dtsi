@@ -1,0 +1,36 @@
+/*
+ * Copyright (c) 2024 Frickly Systems GmbH
+ *
+ * SPDX-License-Identifier: Apache-2.0
+*/
+
+lin_uart: &usart1 {
+    pinctrl-0 = <&usart1_tx_pe0 &usart1_rx_pe1>;
+    pinctrl-names = "default";
+    current-speed = <19200>;
+    status = "okay";
+
+	lin0 {
+		compatible = "virtual,lin-uart";
+		status = "okay";
+		bitrate = <19200>;
+		max-wait-percent = <150>;
+
+		abstract_lin0: abstract_lin {
+			compatible = "virtual,abstract-lin";
+			type = "LIN_MODE_RESPONDER";
+
+			lin2can0: lin2can {
+				compatible = "virtual,lin2can";
+			};
+		};
+	};
+};
+
+/ {
+	lin-enable-gpio {
+        compatible = "can-termination-gpio";
+        enable-gpios = <&gpiod 7 GPIO_ACTIVE_HIGH>;
+        enable-on-boot;
+    };
+};

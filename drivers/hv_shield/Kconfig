@@ -1,0 +1,26 @@
+menuconfig HV_SHIELD
+  bool
+  prompt "HV Shield Driver"
+  depends on GPIO && SPI
+
+if HV_SHIELD
+  rsource "hv_shield/Kconfig"
+
+  menuconfig HV_SHIELD_GPIO
+    bool
+    prompt "HV Shield GPIO Driver"
+    depends on HV_SHIELD
+
+  if HV_SHIELD_GPIO
+    rsource "gpio/Kconfig"
+  endif
+
+  menuconfig HV_SHIELD_DAC
+    bool
+    prompt "HV Shield DAC Driver"
+    depends on HV_SHIELD && DAC
+  
+  if HV_SHIELD_DAC
+    rsource "dac/Kconfig"
+  endif
+endif

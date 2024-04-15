@@ -1,0 +1,14 @@
+# Copyright (c) 2024 Frickly Systems GmbH
+# SPDX-License-Identifier: Apache-2.0
+
+sample:
+  name: Hardware Tester
+  description: Firmware receiving test data from the SUT
+common:
+  build_only: true
+  integration_platforms:
+    - ardep
+tests:
+  sample.hardware_tester:
+    integration_platforms:
+      - ardep

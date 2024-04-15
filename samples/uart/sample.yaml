@@ -1,0 +1,12 @@
+# Copyright (c) 2024 Frickly Systems GmbH
+# SPDX-License-Identifier: Apache-2.0
+
+sample:
+  name: uart example
+common:
+  build_only: true
+  integration_platforms:
+    - nucleo_g474re
+    - ardep
+tests:
+  example.uart.default: {}

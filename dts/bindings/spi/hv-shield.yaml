@@ -1,0 +1,14 @@
+description: HV shield main node binding. Controls gains. Subnodes are for gpios, adcs and dacs
+
+compatible: "hv-shield"
+
+include: spi-device.yaml
+
+# only hv-shield drivers should be subnodes
+bus: hv-shield
+
+properties:
+  oe-gpios:
+    description: The gpio line driving OE for shift registers
+    type: phandle-array
+    required: true

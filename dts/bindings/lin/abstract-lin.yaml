@@ -1,0 +1,23 @@
+# Copyright (c) 2024 Frickly Systems GmbH
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  Creates a virtual lin abstraction device to simplify concurrent lin usage
+
+compatible: "virtual,abstract-lin"
+
+include: base.yaml
+
+# must be on lin bus
+on-bus: lin
+
+# creates a virtual lin bus
+bus: abstract-lin
+
+properties:
+  type:
+    type: string
+    description: Type of LIN Node. Responder can only respond to received headers, commanders can initiate frames.
+    enum:
+      - "LIN_MODE_COMMANDER"
+      - "LIN_MODE_RESPONDER"

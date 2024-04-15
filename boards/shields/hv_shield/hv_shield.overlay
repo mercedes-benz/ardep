@@ -1,0 +1,91 @@
+#include <st/g4/stm32g474v(b-c-e)tx-pinctrl.dtsi>
+
+&dac1 {
+  status = "okay";
+  pinctrl-0 = <&dac1_out1_pa4>;
+  pinctrl-names = "default";
+};
+
+&dac2 {
+  status = "okay";
+  pinctrl-0 = <&dac2_out1_pa6>;
+  pinctrl-names = "default";
+};
+
+&adc2 {
+  vref-mv = <49500>; // 1:15 voltage divider, 49,5V = 3,3V*15
+};
+&adc3 {
+  vref-mv = <49500>;
+};
+&adc4 {
+  vref-mv = <49500>;
+};
+
+&arduino_spi {
+  hvshield: hv-shield@0 {
+    compatible = "hv-shield";
+    reg = <0>;
+    spi-max-frequency = <1000000>; // 1 MHz
+    oe-gpios = <&gpioc 7 GPIO_ACTIVE_LOW>;
+
+    hvgpio: hv-shield-gpio {
+      compatible = "hv-shield-gpio";
+      gpio-controller;
+      #gpio-cells = <2>;
+      low-voltage-gpios = // Block A
+                          <&gpioe 13 0>,
+                          <&gpioe 12 0>,
+                          <&gpioe 15 0>,
+                          <&gpioe 14 0>,
+                          <&gpiod 9 0>,
+                          <&gpiod 8 0>,
+                          <&gpiod 10 0>,
+                          <&gpiod 11 0>,
+                          // Block B
+                          <&gpiod 15 0>,
+                          <&gpiod 14 0>,
+                          <&gpiod 13 0>,
+                          <&gpiod 12 0>,
+                          <&gpioa 9 0>,
+                          <&gpioa 8 0>,
+                          <&gpioe 5 0>,
+                          <&gpioc 6 0>,
+                          // Block C
+                          <&gpioe 9 0>,
+                          <&gpioe 8 0>,
+                          <&gpioe 11 0>,
+                          <&gpioe 10 0>,
+                          <&gpioe 7 0>,
+                          <&gpiob 2 0>,
+                          <&gpiob 1 0>,
+                          <&gpioc 5 0>,
+                          // Block D
+                          //<&gpioc 14 0>,
+                          <&gpiof 2 0>,
+                          <&gpioc 0 0>,
+                          <&gpioc 2 0>,
+                          <&gpioa 0 0>,
+                          <&gpioc 14 0>,
+                          <&gpiof 9 0>,
+                          <&gpioc 15 0>,
+                          <&gpiof 10 0>;
+    };
+
+    hvdac: hv-shield-dac {
+      compatible = "hv-shield-dac";
+      #io-channel-cells = <0>;
+      io-channels = <&dac1>, <&dac2>;
+      io-channels-channel = <1 1>;
+      gains = <1 1>;
+    };
+  };
+};
+
+&arduino_serial {
+  status = "disabled";
+};
+
+&arduino_i2c {
+  status = "disabled";
+};

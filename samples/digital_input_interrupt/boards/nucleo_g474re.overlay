@@ -1,0 +1,20 @@
+/ {
+
+    aliases {
+        input = &input;
+        output = &output;
+    };
+
+    keys: keys {
+        compatible = "gpio-keys";
+
+        input: input {
+            gpios = <&arduino_header 8 (GPIO_ACTIVE_LOW|GPIO_PULL_UP)>; // D2
+        };
+
+        output: output {
+            gpios = <&arduino_header 9 GPIO_ACTIVE_LOW>; // D3;
+        };
+    };
+
+};

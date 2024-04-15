@@ -1,0 +1,4 @@
+config HV_SHIELD_DAC_INIT_PRIORITY
+  int
+  prompt "HV Shield DAC Init Priority"
+  default HV_SHIELD_INIT_PRIORITY

@@ -1,0 +1,26 @@
+# Copyright (c) 2024 Frickly Systems GmbH
+# SPDX-License-Identifier: Apache-2.0
+
+
+description: |
+  This binding is used to configure the CAN termination GPIOs.
+
+compatible: "can-termination-gpio"
+
+include: base.yaml
+
+properties:
+  enable-gpios:
+    type: phandle-array
+    required: true
+    description: |
+      GPIO to use to enable/disable the CAN termination. This GPIO is driven
+      active when the CAN termination is enabled and inactive when the CAN
+      termination is disabled.
+  enable-on-boot:
+    type: boolean
+    description: |
+      If true, the CAN termination is enabled at boot time. If false, the CAN
+      termination is disabled at boot time.
+      If this property is not present, the CAN termination is disabled at boot
+      time.

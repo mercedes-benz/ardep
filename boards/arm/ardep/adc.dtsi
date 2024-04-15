@@ -1,0 +1,98 @@
+/*
+ * Copyright (c) 2024 Frickly Systems GmbH
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+&adc2 {
+    pinctrl-0 = <&adc2_in2_A0 &adc2_in4_A1>;
+    pinctrl-names = "default";
+    st,adc-clock-source = <SYNC>;
+    st,adc-prescaler = <4>;
+    status = "okay";
+
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    adc_channel_A0: channel@2 {
+        reg = <2>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,vref-mv = <3300>;
+        zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+        zephyr,resolution = <12>;
+        zephyr,oversampling = <4>;
+    };
+
+    adc_channel_A1: channel@4 {
+        reg = <4>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,vref-mv = <3300>;
+        zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+        zephyr,resolution = <12>;
+        zephyr,oversampling = <4>;
+    };
+};
+
+&adc3 {
+    pinctrl-0 = <&adc3_in12_A2 &adc3_in5_A3>;
+    pinctrl-names = "default";
+    st,adc-clock-source = <SYNC>;
+    st,adc-prescaler = <4>;
+    status = "okay";
+
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    adc_channel_A2: channel@C {
+        reg = <12>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,vref-mv = <3300>;
+        zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+        zephyr,resolution = <12>;
+        zephyr,oversampling = <4>;
+    };
+
+    adc_channel_A3: channel@5 {
+        reg = <5>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,vref-mv = <3300>;
+        zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+        zephyr,resolution = <12>;
+        zephyr,oversampling = <4>;
+    };
+};
+
+&adc4 {
+    pinctrl-0 = <&adc4_in4_A4 &adc4_in3_A5>;
+    pinctrl-names = "default";
+    st,adc-clock-source = <SYNC>;
+    st,adc-prescaler = <4>;
+    status = "okay";
+
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    adc_channel_A4: channel@4 {
+        reg = <4>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,vref-mv = <3300>;
+        zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+        zephyr,resolution = <12>;
+        zephyr,oversampling = <4>;
+    };
+
+    adc_channel_A5: channel@3 {
+        reg = <3>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,vref-mv = <3300>;
+        zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+        zephyr,resolution = <12>;
+        zephyr,oversampling = <4>;
+    };
+};

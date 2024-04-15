@@ -1,0 +1,46 @@
+&usart2 {
+	pinctrl-0 = <&usart2_tx_pb3 &usart2_rx_pb4>;
+	pinctrl-names = "default";
+	current-speed = <115200>;
+	status = "okay";
+};
+
+/ {
+	lin-commander-gpio {
+		compatible = "can-termination-gpio";
+		enable-gpios = <&gpiob 9 GPIO_ACTIVE_LOW>;
+		enable-on-boot;
+	};
+};
+
+lin_uart: &usart2 {
+    pinctrl-0 = <&usart2_tx_pb3 &usart2_rx_pb4>;
+    pinctrl-names = "default";
+    current-speed = <19200>;
+    status = "okay";
+
+	lin0 {
+		compatible = "virtual,lin-uart";
+		status = "okay";
+		bitrate = <19200>;
+		max-wait-percent = <150>;
+
+		abstract_lin0: abstract_lin {
+			compatible = "virtual,abstract-lin";
+			type = "LIN_MODE_RESPONDER";
+
+			lin2can0: lin2can {
+				compatible = "virtual,lin2can";
+			};
+		};
+	};
+};
+
+
+/ {
+	lin-commander-gpio {
+		compatible = "can-termination-gpio";
+		enable-gpios = <&gpioa 10 GPIO_ACTIVE_HIGH>;
+		enable-on-boot;
+	};
+};

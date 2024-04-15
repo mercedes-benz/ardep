@@ -1,0 +1,15 @@
+
+// set the bus speed to 500kbit/s and the data speed to 2Mbit/s
+can_a: &fdcan1 {
+    bus-speed = <500000>;
+    bus-speed-data = <2000000>;
+    status = "okay";
+};
+
+can_b: &fdcan2 {
+    pinctrl-0 = <&fdcan2_rx_pb5 &fdcan2_tx_pb6>;
+    pinctrl-names = "default";
+    bus-speed = <500000>;
+    bus-speed-data = <2000000>;
+    status = "okay";
+};

@@ -1,0 +1,36 @@
+name: Build
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    container: ghcr.io/zephyrproject-rtos/ci:v0.26.2
+    env:
+      CMAKE_PREFIX_PATH: /opt/toolchains
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          path: zephyr-workspace/ardep
+
+      - name: Initialize
+        working-directory: zephyr-workspace/ardep
+        run: |
+          west init -l --mf ./west.yml .
+          west update -o=--depth=1 -n
+
+      - name: Build firmware examples
+        working-directory: zephyr-workspace/ardep
+        run: |
+          west twister -T samples -v --inline-logs --integration
+
+      - name: build bootloader
+        working-directory: zephyr-workspace/ardep
+        run: |
+          pip install -r scripts/requirements.txt
+          west ardep build-bootloader

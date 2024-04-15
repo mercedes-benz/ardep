@@ -1,0 +1,20 @@
+# editors
+.vscode
+*.swp
+*~
+
+# python
+.venv
+
+# build
+/build*
+/twister-out*
+
+__pycache__/
+
+# documentation build output
+doc/_build/
+doc/_board/
+
+# clangd cache
+.cache
