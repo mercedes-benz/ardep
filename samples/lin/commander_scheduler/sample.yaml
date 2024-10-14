@@ -1,0 +1,12 @@
+# Copyright (C) Frickly Systems GmbH
+# Copyright (C) MBition GmbH
+
+sample:
+  description: Simulates a lin commander with scheduler that controls a remote lin led
+  name: lin-commander-scheduler-sample
+common:
+  build_only: true
+  integration_platforms:
+    - ardep
+tests:
+  example.lin_commander_scheduler.default: {}

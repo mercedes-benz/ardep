@@ -1,0 +1,24 @@
+manifest:
+  self:
+    path: ardep
+    west-commands: scripts/west-commands.yml
+
+  remotes:
+    - name: zephyrproject-rtos
+      url-base: https://github.com/zephyrproject-rtos
+
+  projects:
+    - name: zephyr
+      remote: zephyrproject-rtos
+      revision: v3.5.0
+      import:
+        name-allowlist:
+          - cmsis
+          - hal_stm32
+          - segger
+          - hal_st
+          - mcuboot
+          - mbedtls
+    - name: zephboards
+      url: https://github.com/dragonlock2/zephyrboards.git
+      revision: 9443ad0ebe547a140ec54790687ae8b4d4e0cd34

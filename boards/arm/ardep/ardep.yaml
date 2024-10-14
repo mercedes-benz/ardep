@@ -1,0 +1,32 @@
+# Copyright (C) Frickly Systems GmbH
+# Copyright (C) MBition GmbH
+#
+# SPDX-License-Identifier: Apache-2.0
+
+identifier: ardep
+name: Automotive Rapid Development Platform
+type: mcu
+arch: arm
+toolchain:
+  - zephyr
+  - gnuarmemb
+  - xtools
+ram: 128
+flash: 512
+supported:
+  - arduino_gpio
+  - arduino_i2c
+  - arduino_spi
+  - nvs
+  - pwm
+  - i2c
+  - gpio
+  - usb device
+  - counter
+  - spi
+  - watchdog
+  - adc
+  - dac
+  - dma
+  - can
+vendor: st

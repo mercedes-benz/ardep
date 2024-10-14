@@ -1,0 +1,9 @@
+# Copyright (C) Frickly Systems GmbH
+# Copyright (C) MBition GmbH
+
+west-commands:
+  - file: scripts/ardep.py
+    commands:
+      - name: ardep
+        class: ArdepWestCommand
+        help: ardep board specific commands

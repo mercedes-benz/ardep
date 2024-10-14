@@ -1,0 +1,59 @@
+/*
+ * Copyright (C) Frickly Systems GmbH
+ * Copyright (C) MBition GmbH
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+
+can_b: &fdcan1 {
+    clocks = <&rcc STM32_CLOCK_BUS_APB1 0x02000000>,
+             <&rcc STM32_SRC_HSE FDCAN_SEL(0)>;
+    pinctrl-0 = <&fdcan1_rx_pd0 &fdcan1_tx_pd1>;
+    pinctrl-names = "default";
+    bus-speed = <500000>;
+    bus-speed-data = <2000000>;
+    phys = <&transceiver1>;
+    status = "okay";
+};
+
+can_a: &fdcan2 {
+    clocks = <&rcc STM32_CLOCK_BUS_APB1 0x02000000>,
+             <&rcc STM32_SRC_HSE FDCAN_SEL(0)>;
+    pinctrl-0 = <&fdcan2_rx_pb5 &fdcan2_tx_pb6>;
+    pinctrl-names = "default";
+    bus-speed = <500000>;
+    bus-speed-data = <2000000>;
+    phys = <&transceiver2>;
+    status = "okay";
+};
+
+/ {
+    transceiver1: can-phy1 {
+        compatible = "microchip,ata6561", "can-transceiver-gpio";
+        standby-gpios = <&gpiod 2 GPIO_ACTIVE_HIGH>;
+        max-bitrate = <5000000>;
+        #phy-cells = <0>;
+    };
+
+    // TODO: remove for final release
+    can-termination1 {
+        compatible = "can-termination-gpio";
+        enable-gpios = <&gpiod 3 GPIO_ACTIVE_HIGH>;
+        enable-on-boot;
+    };
+
+    transceiver2: can-phy2 {
+        compatible = "microchip,ata6561", "can-transceiver-gpio";
+        standby-gpios = <&gpiob 7 GPIO_ACTIVE_HIGH>;
+        max-bitrate = <5000000>;
+        #phy-cells = <0>;
+    };
+
+    // TODO: remove for final release
+    can-termination2 {
+        compatible = "can-termination-gpio";
+        enable-gpios = <&gpiob 4 GPIO_ACTIVE_HIGH>;
+        enable-on-boot;
+    };
+};

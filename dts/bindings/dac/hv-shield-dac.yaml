@@ -1,0 +1,25 @@
+description: Subode of HV shield main node for DACs
+
+compatible: hv-shield-dac
+
+on-bus: hv-shield
+
+properties:
+  io-channels:
+    description: The 2 low voltage DACs on the STM32
+    type: phandles
+    required: true
+
+  io-channels-channel:
+    description: Channel numbers for the DACs
+    type: array
+    required: true
+
+  gains:
+    description: The 2 gains for each of the two DACs
+    type: array
+    required: true
+
+  "#io-channel-cells":
+    type: int
+    const: 0

@@ -1,0 +1,13 @@
+# Copyright (C) Frickly Systems GmbH
+# Copyright (C) MBition GmbH
+
+sample:
+  description: adc example
+  name: adc-example
+common:
+  build_only: true
+  integration_platforms:
+    - nucleo_g474re
+    - ardep
+tests:
+  example.adc.default: {}

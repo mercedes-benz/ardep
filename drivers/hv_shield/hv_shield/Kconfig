@@ -1,0 +1,8 @@
+module = HV_SHIELD
+module-str = HV Shield
+source "subsys/logging/Kconfig.template.log_config"
+
+config HV_SHIELD_INIT_PRIORITY
+  int
+  prompt "HV Shield init priority"
+  default SPI_INIT_PRIORITY

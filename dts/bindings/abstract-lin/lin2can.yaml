@@ -1,0 +1,12 @@
+# Copyright (C) Frickly Systems GmbH
+# Copyright (C) MBition GmbH
+
+description: |
+  Creates a virtual can interface that converts can messages to lin messages
+
+compatible: "virtual,lin2can"
+
+include: base.yaml
+
+# must be on abstract lin bus
+on-bus: abstract-lin

@@ -1,0 +1,11 @@
+/*
+ * Copyright (C) Frickly Systems GmbH
+ * Copyright (C) MBition GmbH
+ */
+
+/ {
+  chosen {
+    zephyr,console = &uart_a;
+    zephyr,shell-uart = &uart_a;
+  };
+};

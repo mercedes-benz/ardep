@@ -1,0 +1,12 @@
+# Copyright (C) Frickly Systems GmbH
+# Copyright (C) MBition GmbH
+
+sample:
+  description: Forward can frames to lin and back
+  name: lin2can_gateway_sample
+common:
+  build_only: true
+  integration_platforms:
+    - ardep
+tests:
+  example.lin2can_gateway_sample.default: {}
