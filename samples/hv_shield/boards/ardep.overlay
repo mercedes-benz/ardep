@@ -1,0 +1,14 @@
+&hvdac {
+  // set the gains of the channels
+  // channel 0 has gain of 8 and channel 1 has gain of 1
+  gains = <8 1>;
+};
+
+/ {
+  zephyr,user{
+    io-channels = <&hvdac>;
+    io-channels-channel = <0>;
+
+    gpios = <&hvgpio 0 GPIO_ACTIVE_LOW>;
+  };
+};

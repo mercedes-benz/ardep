@@ -1,0 +1,14 @@
+# Copyright (C) Frickly Systems GmbH
+# Copyright (C) MBition GmbH
+
+sample:
+  name: Hardware Test
+  description: Test the hardware of the ardep board
+common:
+  build_only: true
+  integration_platforms:
+    - ardep
+tests:
+  sample.hardware_test:
+    integration_platforms:
+      - ardep

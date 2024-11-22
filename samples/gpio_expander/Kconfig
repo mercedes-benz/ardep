@@ -1,0 +1,29 @@
+# Copyright (C) Frickly Systems GmbH
+# Copyright (C) MBition GmbH
+#
+# SPDX-License-Identifier: Apache-2.0
+
+
+
+mainmenu "GPIO Exapnder"
+
+config GPIO_EXPANDER_CONFIG_FRAME_ID
+	int "frame id for the configuration frame"
+	default 1
+
+config GPIO_EXPANDER_WRITE_FRAME_ID
+	int "frame id for the write frame"
+	default 2
+
+config GPIO_EXPANDER_STATE_FRAME_ID
+	int "frame id for the state frame"
+	default 3
+
+
+menu "Zephyr"
+source "Kconfig.zephyr"
+endmenu
+
+module = APP
+module-str = APP
+source "subsys/logging/Kconfig.template.log_config"

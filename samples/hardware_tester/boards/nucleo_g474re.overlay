@@ -1,0 +1,39 @@
+/*
+ * Copyright (C) Frickly Systems GmbH
+ * Copyright (C) MBition GmbH
+ */
+
+/ {
+    zephyr,user {
+        gpios = <&gpioc 1 GPIO_ACTIVE_HIGH>,
+                <&gpioc 5 GPIO_ACTIVE_HIGH>,
+                <&gpiob 2 GPIO_ACTIVE_HIGH>;
+
+        uarts = // <&usart1>,
+                <&usart2>;
+
+        cans = <&can_a>;
+
+        lins = <&usart2>;
+    };
+};
+
+&usart1 {
+    pinctrl-0 = <&usart1_tx_pc4 &usart1_rx_pc5>;
+    pinctrl-names = "default";
+    current-speed = <115200>;
+    status = "okay";
+};
+
+&usart2 {
+    pinctrl-0 = <&usart2_tx_pb3 &usart2_rx_pb4>;
+    pinctrl-names = "default";
+    current-speed = <115200>;
+    status = "okay";
+};
+
+can_a: &fdcan1 {
+    bus-speed = <500000>;
+    bus-speed-data = <2000000>;
+    status = "okay";
+};

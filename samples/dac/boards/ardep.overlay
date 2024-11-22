@@ -1,0 +1,13 @@
+/ {
+
+	// valid options are:
+	// - dac1, channel 1
+	// - dac1, channel 2
+	// - dac2, channel 1
+
+	zephyr,user {
+		dac = <&dac1>;
+		dac-channel-id = <1>;
+		dac-resolution = <12>;
+	};
+};

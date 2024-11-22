@@ -1,0 +1,11 @@
+&abstract_lin0 {
+  type = "LIN_MODE_COMMANDER";
+};
+
+/ {
+  lin-commander-gpio {
+    compatible = "can-termination-gpio";
+    enable-gpios = <&gpiob 9 GPIO_ACTIVE_HIGH>;
+    enable-on-boot;
+  };
+};

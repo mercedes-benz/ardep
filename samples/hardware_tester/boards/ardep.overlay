@@ -1,0 +1,103 @@
+/*
+ * Copyright (C) Frickly Systems GmbH
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/ {
+    zephyr,user {
+        gpios = <&arduino_header 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&arduino_header 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&arduino_header 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&arduino_header 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&arduino_header 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&arduino_header 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&arduino_header 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&arduino_header 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&arduino_header 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&arduino_header 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&arduino_header 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&arduino_header 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&arduino_header 12 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&arduino_header 13 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&arduino_header 14 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&arduino_header 15 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&arduino_header 16 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&arduino_header 17 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&arduino_header 18 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&arduino_header 19 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&arduino_header 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&arduino_header 21 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+
+                <&gpioe 15 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>, // HV Shield 1
+                <&gpioe 14 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&gpioe 13 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&gpioe 12 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>, // HV 4
+                <&gpioe 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>, // HV 7
+                <&gpioe 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&gpioe 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&gpioe 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&gpioe 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&gpiob 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&gpiob 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&gpioc 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>, // HV 14
+                <&gpioc 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>, // HV 17
+                <&gpioa 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>, // HV 19
+                <&gpioa 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&gpioa 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&gpioa 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&gpioa 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&gpiof 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&gpioc 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&gpioc 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>, // HV 26
+                <&gpiof 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>, // HV 29
+                <&gpiof 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&gpioc 15 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>,
+                <&gpioc 14 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)> // HV 3
+                ;
+                
+        uarts = <&uart_a>, 
+                <&uart_b>;
+        
+        cans = <&can_a>,
+               <&can_b>;
+               
+        lins = <&lin_uart>;
+    };
+};
+
+&arduino_i2c {
+    status = "disabled";
+};
+
+&arduino_spi {
+    status = "disabled";
+};
+
+&arduino_serial {
+    status = "disabled";
+};
+
+&adc1 {
+    status = "disabled";
+};
+
+&adc2 {
+    status = "disabled";
+};
+
+&adc3 {
+    status = "disabled";
+};
+
+&adc4 {
+    status = "disabled";
+};
+
+&dac1 {
+    status = "disabled";
+};
+
+&dac2 {
+    status = "disabled";
+};

@@ -1,0 +1,12 @@
+# Copyright (C) Frickly Systems GmbH
+# Copyright (C) MBition GmbH
+
+sample:
+  name: interrupt example
+common:
+  build_only: true
+  integration_platforms:
+    - nucleo_g474re
+    - ardep
+tests:
+  example.gpio_interrupt.default: {}

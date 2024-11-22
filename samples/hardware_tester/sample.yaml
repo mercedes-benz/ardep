@@ -1,0 +1,14 @@
+# Copyright (C) Frickly Systems GmbH
+# Copyright (C) MBition GmbH
+
+sample:
+  name: Hardware Tester
+  description: Firmware receiving test data from the SUT
+common:
+  build_only: true
+  integration_platforms:
+    - ardep
+tests:
+  sample.hardware_tester:
+    integration_platforms:
+      - ardep

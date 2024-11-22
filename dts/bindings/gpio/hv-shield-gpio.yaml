@@ -1,0 +1,19 @@
+description: HV shield main node binding. Controls gains. Subnodes are for gpios, adcs and dacs
+
+compatible: "hv-shield-gpio"
+
+include: [gpio-controller.yaml, base.yaml]
+
+on-bus: hv-shield
+
+properties:
+  low-voltage-gpios:
+    type: phandle-array
+    required: true
+
+  "#gpio-cells":
+    const: 2
+
+gpio-cells:
+  - pin
+  - flags

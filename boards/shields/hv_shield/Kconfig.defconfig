@@ -1,0 +1,19 @@
+if SHIELD_HV_SHIELD
+  config GPIO
+    default y
+  
+  config SPI
+    default y
+
+  config HV_SHIELD
+    default y
+  
+  config HV_SHIELD_GPIO
+    default y
+
+  config DAC
+    default y
+  
+  config HV_SHIELD_DAC
+    default y
+endif

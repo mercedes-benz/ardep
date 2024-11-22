@@ -1,0 +1,11 @@
+# Copyright (C) Frickly Systems GmbH
+# Copyright (C) MBition GmbH
+
+sample:
+  name: config_jumpers example
+common:
+  build_only: true
+  integration_platforms:
+    - ardep
+tests:
+  example.config_jumpers.default: {}

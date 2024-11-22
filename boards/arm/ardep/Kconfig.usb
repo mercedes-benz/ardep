@@ -1,0 +1,28 @@
+# Copyright (C) Frickly Systems GmbH
+# Copyright (C) MBition GmbH
+#
+# SPDX-License-Identifier: Apache-2.0
+
+# enable USB per default
+
+config USB_DEVICE_STACK
+    default y
+
+config USB_DEVICE_VID
+    default 0x25E1
+
+config USB_DEVICE_PID
+    default 0x1B1E
+
+config USB_DEVICE_INITIALIZE_AT_BOOT
+    default y if !MCUBOOT
+
+config USB_DEVICE_PRODUCT
+    default "ARDEP Board"
+
+config USB_CDC_ACM
+    default y
+
+choice USB_CDC_ACM_LOG_LEVEL_CHOICE
+    default USB_CDC_ACM_LOG_LEVEL_OFF
+endchoice
