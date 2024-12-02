@@ -7,9 +7,9 @@ It provides easy to use abstractions, features and tools to simplify the develop
 Getting Started
 ===============
 
-See our documentation (TODO: insert link to github pages) for more information on how to use ARDEP.
+See our `documentation <https://mercedes-benz.github.io/ardep/>`_  for more information on how to use ARDEP.
 
-Follow our Getting Started Guide (TODO: insert link to github pages) for a quick introduction
+Follow our `Getting Started Guide <https://mercedes-benz.github.io/ardep/getting_started/index.html>`_ for a quick introduction
 
 
 Create zephyr workspace
