@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Bootloader &#8212; ARDEP  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=47b16dc8" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Console Output" href="../console/index.html" />
+    <link rel="prev" title="Getting Started" href="../getting_started/index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="bootloader">
+<span id="id1"></span><h1>Bootloader<a class="headerlink" href="#bootloader" title="Link to this heading">¶</a></h1>
+<nav class="contents local" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#building-the-bootloader" id="id3">Building the bootloader</a></p></li>
+<li><p><a class="reference internal" href="#flashing-the-bootloader" id="id4">Flashing the bootloader</a></p></li>
+<li><p><a class="reference internal" href="#bootloader-mode" id="id5">Bootloader mode</a></p>
+<ul>
+<li><p><a class="reference internal" href="#entering-bootloader-mode" id="id6">Entering Bootloader mode</a></p></li>
+<li><p><a class="reference internal" href="#upgrading-the-firmware" id="id7">Upgrading the firmware</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<section id="building-the-bootloader">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Building the bootloader</a><a class="headerlink" href="#building-the-bootloader" title="Link to this heading">¶</a></h2>
+<p>The bootloader can be build with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>west<span class="w"> </span>ardep<span class="w"> </span>build-bootloader
+</pre></div>
+</div>
+<p>The first line of the output gives you the expanded <cite>west build</cite> command.</p>
+</section>
+<section id="flashing-the-bootloader">
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Flashing the bootloader</a><a class="headerlink" href="#flashing-the-bootloader" title="Link to this heading">¶</a></h2>
+<p>The bootloader is flashed with an external debug probe (e.g. J-Link) using the <cite>west flash</cite> command.</p>
+<p>For this connect the SWD Pins of the ARDEP board to the debug probe an run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>west<span class="w"> </span>flash<span class="w"> </span>-d<span class="w"> </span><span class="o">{</span>BUILD_DIR<span class="o">}</span>
+</pre></div>
+</div>
+<p>The Pinout of the SWD connector is printed on the boards backside.</p>
+<p>See the <cite>board.cmake</cite> file under <cite>boards/arm/ardep</cite> for more info about supported debuggers.</p>
+</section>
+<section id="bootloader-mode">
+<span id="id2"></span><h2><a class="toc-backref" href="#id5" role="doc-backlink">Bootloader mode</a><a class="headerlink" href="#bootloader-mode" title="Link to this heading">¶</a></h2>
+<p>In this mode, the ardep board does not load any firmware and waits for a firmware upgrade via the <code class="docutils literal notranslate"><span class="pre">dfu-util</span></code> tool.
+This is handy if your firmware is broken and you can’t update it from there.</p>
+<p>It is helpful to see the Bootloader console output on <code class="docutils literal notranslate"><span class="pre">UART-A</span></code> for this.</p>
+<section id="entering-bootloader-mode">
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Entering Bootloader mode</a><a class="headerlink" href="#entering-bootloader-mode" title="Link to this heading">¶</a></h3>
+<p>To enter the bootloader mode, set the <code class="docutils literal notranslate"><span class="pre">XXXXX</span></code> Jumper to a HIGH/LOW state while power-cycling or pushing the Reset button.</p>
+<p>When the red led light up permanently, the board is in bootloader mode.</p>
+<p>On <code class="docutils literal notranslate"><span class="pre">UART-A</span></code> you will see the following output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">***</span> <span class="n">Booting</span> <span class="n">Zephyr</span> <span class="n">OS</span> <span class="n">build</span> <span class="n">zephyr</span><span class="o">-</span><span class="n">vx</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">z</span> <span class="o">***</span>
+<span class="n">I</span><span class="p">:</span> <span class="n">Starting</span> <span class="n">bootloader</span>
+<span class="n">I</span><span class="p">:</span> <span class="n">Waiting</span> <span class="k">for</span> <span class="n">USB</span> <span class="n">DFU</span>
+</pre></div>
+</div>
+</section>
+<section id="upgrading-the-firmware">
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Upgrading the firmware</a><a class="headerlink" href="#upgrading-the-firmware" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Build the firmware you want to flash (assuming it is in the <em>build</em> directory)</p></li>
+<li><p>Perform the upgrade with <code class="docutils literal notranslate"><span class="pre">west</span> <span class="pre">ardep</span> <span class="pre">dfu</span> <span class="pre">--bootloader</span> <span class="pre">--build-dir</span> <span class="pre">build</span></code></p></li>
+<li><dl class="simple">
+<dt>Wait for the upgrade to complete:</dt><dd><ul>
+<li><p>If you can’t see the bootloader console, wait &gt;20 seconds.</p></li>
+<li><p>If you can see the output, wait for the <em>panic!</em> message.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Perform a manual power cycle. Your new firmware should be running now</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">ARDEP</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Bootloader</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#building-the-bootloader">Building the bootloader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#flashing-the-bootloader">Flashing the bootloader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bootloader-mode">Bootloader mode</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../console/index.html">Console Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../error_handling/index.html">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_board/scripts/ardep.html">ARDEP Command</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_board/boards/arm/ardep/doc/index.html">ARDEP Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_board/boards/shields/hv_shield/doc/index.html">ARDEP HV Shield</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_board/samples/index.html">Samples and Demos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../debugging/index.html">Debugging</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../getting_started/index.html" title="previous chapter">Getting Started</a></li>
+      <li>Next: <a href="../console/index.html" title="next chapter">Console Output</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Frickly Systems GmbH.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../_sources/bootloader/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
