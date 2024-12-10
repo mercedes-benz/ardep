@@ -23,7 +23,7 @@ Create workspace from west.yml in this directory, e.g.
     # create a workspace
     mkdir ardep-workspace
     # clone this repo into workspace
-    cd ardep-workspace && git clone git@github.com:frickly-systems/ardep.git  ardep
+    cd ardep-workspace && git clone git@github.com:mercedes-benz/ardep.git  ardep
     # init west workspace from west.yml
     cd ardep && west init -l --mf ./west.yml .
     # update workspace, fetches dependencies
@@ -39,7 +39,7 @@ Those images are not signed (without signature validation).
 Build the bootloader
 --------------------
 
-It is recommendet to use the `ardep` subcommand of `west` to build the bootloader.
+It is recommended to use the `ardep` subcommand of `west` to build the bootloader.
 
 .. code-block:: console
    
