@@ -48,7 +48,7 @@ static int _hv_shield_update(const struct device* dev) {
   uint8_t rotated_buffer[sizeof(data->registers)];
 
   // copy inverted bytes (bits are inverted through SPI output order(MSB))
-  for(int i = 0; i < sizeof(rotated_buffer); i++) {
+  for (int i = 0; i < sizeof(rotated_buffer); i++) {
     rotated_buffer[i] = raw_buffer[sizeof(rotated_buffer) - i - 1];
   }
 

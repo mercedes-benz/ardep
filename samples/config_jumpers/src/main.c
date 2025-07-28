@@ -14,7 +14,7 @@
 #define GPIO_SPEC(node_id) GPIO_DT_SPEC_GET(node_id, gpios),
 
 static const struct gpio_dt_spec jumpers[] = {
-    DT_FOREACH_CHILD_STATUS_OKAY(JUMPERS_NODE, GPIO_SPEC)};
+  DT_FOREACH_CHILD_STATUS_OKAY(JUMPERS_NODE, GPIO_SPEC)};
 
 static int configure_input() {
   for (int i = 0; i < ARRAY_SIZE(jumpers); i++) {
