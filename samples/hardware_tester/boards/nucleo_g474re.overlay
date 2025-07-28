@@ -33,7 +33,7 @@
 };
 
 can_a: &fdcan1 {
-    bus-speed = <500000>;
-    bus-speed-data = <2000000>;
+    bitrate = <500000>;
+    bitrate-data = <2000000>;
     status = "okay";
 };

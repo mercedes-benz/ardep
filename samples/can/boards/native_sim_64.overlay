@@ -2,7 +2,7 @@
 
 fdcan1: &can0 {
     status = "okay";
-    bus-speed = <500000>;
+    bitrate = <500000>;
 };
 
 / {
@@ -11,6 +11,6 @@ fdcan1: &can0 {
         compatible = "zephyr,native-posix-linux-can";
         host-interface = "zcan0";
         sample-point = <875>;
-        bus-speed = <500000>;
+        bitrate = <500000>;
     };
 };

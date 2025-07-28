@@ -11,8 +11,8 @@ can_b: &fdcan1 {
              <&rcc STM32_SRC_HSE FDCAN_SEL(0)>;
     pinctrl-0 = <&fdcan1_rx_pd0 &fdcan1_tx_pd1>;
     pinctrl-names = "default";
-    bus-speed = <500000>;
-    bus-speed-data = <2000000>;
+    bitrate = <500000>;
+    bitrate-data = <2000000>;
     phys = <&transceiver1>;
     status = "okay";
 };
@@ -22,8 +22,8 @@ can_a: &fdcan2 {
              <&rcc STM32_SRC_HSE FDCAN_SEL(0)>;
     pinctrl-0 = <&fdcan2_rx_pb5 &fdcan2_tx_pb6>;
     pinctrl-names = "default";
-    bus-speed = <500000>;
-    bus-speed-data = <2000000>;
+    bitrate = <500000>;
+    bitrate-data = <2000000>;
     phys = <&transceiver2>;
     status = "okay";
 };
