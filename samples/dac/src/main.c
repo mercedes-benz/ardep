@@ -12,8 +12,8 @@
 
 #define ZEPHYR_USER_NODE DT_PATH(zephyr_user)
 
-#if (DT_NODE_HAS_PROP(ZEPHYR_USER_NODE, dac) &&                                \
-     DT_NODE_HAS_PROP(ZEPHYR_USER_NODE, dac_channel_id) &&                     \
+#if (DT_NODE_HAS_PROP(ZEPHYR_USER_NODE, dac) &&            \
+     DT_NODE_HAS_PROP(ZEPHYR_USER_NODE, dac_channel_id) && \
      DT_NODE_HAS_PROP(ZEPHYR_USER_NODE, dac_resolution))
 #define DAC_NODE DT_PHANDLE(ZEPHYR_USER_NODE, dac)
 #define DAC_CHANNEL_ID DT_PROP(ZEPHYR_USER_NODE, dac_channel_id)
@@ -27,9 +27,11 @@
 
 static const struct device *const dac_dev = DEVICE_DT_GET(DAC_NODE);
 
-static const struct dac_channel_cfg dac_ch_cfg = {.channel_id = DAC_CHANNEL_ID,
-                                                  .resolution = DAC_RESOLUTION,
-                                                  .buffered = true};
+static const struct dac_channel_cfg dac_ch_cfg = {
+  .channel_id = DAC_CHANNEL_ID,
+  .resolution = DAC_RESOLUTION,
+  .buffered = true,
+};
 
 int main(void) {
   if (!device_is_ready(dac_dev)) {

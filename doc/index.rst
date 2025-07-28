@@ -16,10 +16,10 @@ Welcome to the ARDEP documentation!
    console/index.rst
    error_handling/index.rst
    README.rst
-   _board/scripts/ardep.rst
-   _board/boards/arm/ardep/doc/index.rst
-   _board/boards/shields/hv_shield/doc/index.rst
-   _board/samples/index.rst
+   scripts/ardep.rst
+   boards/mercedes/ardep/doc/index.rst
+   boards/shields/hv_shield/doc/index.rst
+   samples/index.rst
    debugging/index.rst
  
 
@@ -37,4 +37,4 @@ References
 
 .. _Github: https://github.com/frickly-systems/ardep
 .. _Zephyr RTOS: https://www.zephyrproject.org
-.. _API reference: api_reference/index.html
+.. _API reference: doxygen/index.html

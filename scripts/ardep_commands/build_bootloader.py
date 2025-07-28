@@ -30,7 +30,7 @@ class BuildBootloader:
     def run(self, args: Namespace):
         build_dir: str = args.build_dir
         mcuboot_dir = f"{path.dirname(path.dirname(path.dirname(path.dirname(path.realpath(__file__)))))}/bootloader/mcuboot/boot/zephyr"
-        board_dir = f"{path.dirname(path.dirname(path.dirname(path.realpath(__file__))))}/boards/arm/ardep"
+        board_dir = f"{path.dirname(path.dirname(path.dirname(path.realpath(__file__))))}/boards/mercedes/ardep"
         extra_conf_file = f"{board_dir}/mcuboot.conf"
         extra_overlay_file = f"{board_dir}/mcuboot.overlay"
 

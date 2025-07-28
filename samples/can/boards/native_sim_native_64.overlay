@@ -1,0 +1,14 @@
+can_a: &can0 {
+    status = "okay";
+    bitrate = <500000>;
+};
+
+/ {
+    can_b: can2 {
+        status = "okay";
+        compatible = "zephyr,native-linux-can";
+        host-interface = "zcan0";
+        sample-point = <875>;
+        bitrate = <500000>;
+    };
+};

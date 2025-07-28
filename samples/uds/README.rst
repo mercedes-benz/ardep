@@ -25,7 +25,7 @@ Test with virtual CAN on posix
 
         west build\
             --pristine always\
-            --board native_sim_64\
+            --board native_sim/native/64\
             samples/uds
 
         ./build/zephyr/zephyr.exe

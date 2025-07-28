@@ -17,7 +17,7 @@ jobs:
       - uses: actions/setup-python@v3
       - name: Install sphinx dependencies dependencies
         run: |
-          pip install sphinx sphinx_rtd_theme myst_parser sphinx_copybutton
+          pip install -r doc/requirements.txt
       - name: Install doxygen
         run: |
           sudo apt-get update

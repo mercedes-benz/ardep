@@ -42,9 +42,8 @@ To archive something like a hot-reload / live-preview, you can use a command lik
 .. code-block:: bash
 
     sphinx-autobuild \
-        --pre-build 'rsync -avm --exclude="/doc" --include="*/" --include="*.rst" --include="*.png" --exclude="*" .. _board'\
         --pre-build "mkdir -p _build/html"\
-        --pre-build "doxygen ardep.doxyfile"\
+        --pre-build "doxygen"\
         . _build/html
 
 The pre-build commands are taken from the Makefile.

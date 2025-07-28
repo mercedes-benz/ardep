@@ -73,18 +73,18 @@ ATTRS{{idVendor}}=="{self._vid}", ATTRS{{idProduct}}=="{self._pid_dfu}", MODE="6
     """
             )
 
-            cmd = ["mv", tmpfile, rule_path]
-            if not os.access(destination_directory, os.W_OK):
-                cmd = ["sudo"] + cmd
+        cmd = ["mv", tmpfile, rule_path]
+        if not os.access(destination_directory, os.W_OK):
+            cmd = ["sudo"] + cmd
 
-            rc = subprocess.call(cmd)
+        rc = subprocess.call(cmd)
 
-            if rc != 0:
-                log.die(f"Failed to create udev rule at {rule_path}", exit_code=3)
+        if rc != 0:
+            log.die(f"Failed to create udev rule at {rule_path}", exit_code=3)
 
-            log.inf("New rule was successfully created")
+        log.inf("New rule was successfully created")
 
-            if destination_directory.startswith("/etc/udev/rules.d"):
-                log.inf(
-                    f"To activate the new rule, unplug the {self._board_name} and run:\n    sudo udevadm control --reload-rules && sudo udevadm trigger"
-                )
+        if destination_directory.startswith("/etc/udev/rules.d"):
+            log.inf(
+                f"To activate the new rule, unplug the {self._board_name} and run:\n    sudo udevadm control --reload-rules && sudo udevadm trigger"
+            )
