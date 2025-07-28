@@ -14,7 +14,9 @@ __pycache__/
 
 # documentation build output
 doc/_build/
-doc/_board/
+doc/boards/
+doc/samples/
+doc/scripts/
 
 # clangd cache
 .cache
