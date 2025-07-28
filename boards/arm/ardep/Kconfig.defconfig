@@ -17,12 +17,6 @@ config SPI_STM32_INTERRUPT
 config CAN_TERMINATION_GPIO
 	default y if CAN
 
-# adc 1 and 2 use the same, but the other use diffent interrupts
-# shared interrupts currently seem to be broken for a mixed of shared
-# and non-shared interrupts
-config ADC_STM32_SHARED_IRQS
-	default n
-
 config CAN_MAX_FILTER
 	default 8
 

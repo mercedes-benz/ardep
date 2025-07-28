@@ -30,7 +30,7 @@ static void rx_callback(const struct device *dev, struct can_frame *frame,
 }
 
 const struct can_filter receive_frame_filter = {
-    .flags = CAN_FILTER_DATA, .id = 0x65, .mask = CAN_STD_ID_MASK};
+    .flags = 0, .id = 0x65, .mask = CAN_STD_ID_MASK};
 
 #define CAN_CREATE_FUNCTIONS_BY_IDX(node_id, prop, idx)                        \
   int rx_filter_##idx;                                                         \

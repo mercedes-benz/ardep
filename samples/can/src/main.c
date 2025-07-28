@@ -70,11 +70,7 @@ int send_frame(const struct device *can_dev) {
   return can_send(can_dev, &frame, K_NO_WAIT, can_tx_callback, &tx_queue_sem);
 }
 
-const struct can_filter receive_frame_filter = {.flags = CAN_FILTER_DATA
-#if CONFIG_CAN_EXAMPLE_USE_CAN_FD
-                                                         | CAN_FILTER_FDF
-#endif
-                                                ,
+const struct can_filter receive_frame_filter = {.flags = 0,
                                                 .id = CAN_FRAME_ID,
                                                 .mask = CAN_STD_ID_MASK};
 

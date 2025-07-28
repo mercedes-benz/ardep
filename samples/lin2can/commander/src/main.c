@@ -48,7 +48,7 @@ int main(void) {
   }
 
   struct can_filter filter = {
-    .flags = CAN_FILTER_DATA,
+    .flags = 0,
     .id = 0x80,
     .mask = CAN_STD_ID_MASK,
   };
