@@ -1,5 +1,5 @@
 board:
   name: ardep
-  vendor: st
+  vendor: mercedes
   socs:
     - name: stm32g474xx
