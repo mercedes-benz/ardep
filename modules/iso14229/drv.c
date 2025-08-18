@@ -11,7 +11,7 @@ void isotp_user_debug(const char* fmt, ...) {
 #if CONFIG_ISO14229_LIB_LOG_LEVEL >= LOG_LEVEL_DEBUG
   va_list args;
   va_start(args, fmt);
-  printf("ISOTP DEBUG: ");  // todo: improve?
+  printf("ISOTP DEBUG: ");  // todo: improve, but how
   vprintf(fmt, args);
   va_end(args);
 #endif
@@ -27,7 +27,7 @@ int isotp_user_send_can(const uint32_t arbitration_id,
   memcpy(frame.data, data, size);
   frame.flags = 0;
   const struct device* can_dev = arg;
-  LOG_DBG("CAN TX: %03x [%d] %02x ...\n", frame.id, frame.dlc, frame.data[0]);
+  LOG_DBG("CAN TX: %03x [%d] %02x ...", frame.id, frame.dlc, frame.data[0]);
   int ret = can_send(can_dev, &frame, K_FOREVER, NULL, NULL);
 
   if (ret != 0) {

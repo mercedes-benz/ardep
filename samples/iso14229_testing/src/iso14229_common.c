@@ -1,11 +1,14 @@
 // This would be dedicated into a separate library
 #include "iso14229_common.h"
 
+#include <zephyr/logging/log.h>
+
+LOG_MODULE_REGISTER(iso14229_common, LOG_LEVEL_DBG);
+
 static void can_rx_cb(const struct device* dev,
                       struct can_frame* frame,
                       void* user_data) {
-  // todo: logging
-  printk("CAN RX: %x %x %x\n", frame->id, frame->dlc, frame->data[0]);
+  LOG_DBG("CAN RX: %x %x %x", frame->id, frame->dlc, frame->data[0]);
   k_msgq_put((struct k_msgq*)user_data, frame, K_NO_WAIT);
 }
 
