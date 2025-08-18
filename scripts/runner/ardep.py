@@ -1,6 +1,7 @@
-from runners.core import RunnerCaps, ZephyrBinaryRunner
+from runners.core import RunnerCaps, ZephyrBinaryRunner  # pylint: disable=import-error
 import subprocess
 import time
+
 
 class ArdepRunner(ZephyrBinaryRunner):
     """Runner for ardep board using dfu-util for flashing"""
@@ -22,8 +23,8 @@ class ArdepRunner(ZephyrBinaryRunner):
     def do_add_parser(cls, parser):
         parser.add_argument(
             "--device",
-            help=f"Ardep usb device (see `lsusb`)",
-            default=f"25e1:1b1e",
+            help="Ardep usb device (see `lsusb`)",
+            default="25e1:1b1e",
             metavar="DEVICE",
         )
 
@@ -44,7 +45,7 @@ class ArdepRunner(ZephyrBinaryRunner):
                 return True
         return False
 
-    def do_run(self, command, **kwargs):
+    def do_run(self, command, **kwargs):  # pylint: disable=unused-argument
         if command != "flash":
             self.logger.critical(f"Unsupported command: {command}")
             exit(1)
@@ -72,7 +73,7 @@ class ArdepRunner(ZephyrBinaryRunner):
         )
 
         while result.poll() is None:
-            print(f"flashing ...", end="\r")
+            print("flashing ...", end="\r")
             time.sleep(1)
 
         print("")
@@ -80,10 +81,10 @@ class ArdepRunner(ZephyrBinaryRunner):
             subprocess_output = result.stdout.read()
 
             self.logger.error(f"dfu-util subprocess output:\n{subprocess_output}\n")
-            self.logger.error(f"Failed to flash firmware to ardep")
+            self.logger.error("Failed to flash firmware to ardep")
 
             exit(result.returncode)
-        
+
         result = subprocess.Popen(
             [
                 "dfu-util",
@@ -100,15 +101,19 @@ class ArdepRunner(ZephyrBinaryRunner):
         )
 
         while result.poll() is None:
-            print(f"detaching ...", end="\r")
+            print("detaching ...", end="\r")
             time.sleep(1)
-        
+
         print("")
         if result.returncode != 0:
             self.logger.error(f"dfu-util subprocess output:\n{result.stdout.read()}\n")
-            self.logger.error(f"Failed to detach dfu-util from ardep")
+            self.logger.error("Failed to detach dfu-util from ardep")
 
             exit(result.returncode)
 
-        self.logger.info(f"Successfully upgraded ardep firmware on usb device {self.device}")
-        self.logger.info(f"The device applies the new firmware and boots in the next few seconds.")
+        self.logger.info(
+            f"Successfully upgraded ardep firmware on usb device {self.device}"
+        )
+        self.logger.info(
+            "The device applies the new firmware and boots in the next few seconds."
+        )
