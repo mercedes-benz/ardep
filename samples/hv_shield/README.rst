@@ -20,7 +20,7 @@ Flash it using dfu-util:
 
 .. code-block:: bash
 
-  west ardep dfu
+  west flash
 
 
 Expected behavior

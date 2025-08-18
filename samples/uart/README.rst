@@ -21,5 +21,5 @@ Flash the app using dfu-util:
 
     .. code-block:: bash
 
-        west ardep dfu
+        west flash
     
