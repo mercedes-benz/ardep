@@ -5,6 +5,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+#include "iso14229_common.h"
+
 #include <errno.h>
 
 #include <zephyr/drivers/can.h>
@@ -20,19 +22,7 @@ static const struct device *can_dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_canbus));
 
 uint8_t dummy_memory[512] = {0x01, 0x02, 0x03, 0x04, 0x05};
 
-char can_phys_fifo_buffer[sizeof(struct can_frame) * 25];
-char can_func_fifo_buffer[sizeof(struct can_frame) * 25];
-
-struct k_msgq can_phys_fifo;
-struct k_msgq can_func_fifo;
-
-void can_cb(const struct device *dev,
-            struct can_frame *frame,
-            void *user_data) {
-  printk("CAN RX: %x %x %x\n", frame->id, frame->dlc, frame->data[0]);
-
-  k_msgq_put((struct k_msgq *)user_data, frame, K_NO_WAIT);
-}
+struct iso14229_zephyr_instance inst;
 
 UDSErr_t uds_cb(struct UDSServer *srv, UDSEvent_t event, void *arg) {
   printk("UDS Event: %d\n", event);
@@ -70,6 +60,19 @@ UDSErr_t uds_cb(struct UDSServer *srv, UDSEvent_t event, void *arg) {
              req->size, req->dataFormatIdentifier);
       break;
     }
+    case UDS_EVT_TransferData: {  //! note: very import: the first block number
+                                  //! must be 1 with this library
+      UDSTransferDataArgs_t *transfer_args = (UDSTransferDataArgs_t *)arg;
+      LOG_HEXDUMP_INF(transfer_args->data, transfer_args->len, "Received data");
+      break;
+    }
+    case UDS_EVT_RequestTransferExit: {
+      UDSRequestTransferExitArgs_t *exit_args =
+          (UDSRequestTransferExitArgs_t *)arg;
+      printk("Request Transfer Exit: data=%p len=%d\n", exit_args->data,
+             exit_args->len);
+      break;
+    }
     case UDS_EVT_ReadMemByAddr: {
       UDSReadMemByAddrArgs_t *read_args = (UDSReadMemByAddrArgs_t *)arg;
       printk("Read Memory By Address: addr=%p size=%zu\n", read_args->memAddr,
@@ -87,50 +90,19 @@ UDSErr_t uds_cb(struct UDSServer *srv, UDSEvent_t event, void *arg) {
 }
 
 int main(void) {
-  k_msgq_init(&can_phys_fifo, can_phys_fifo_buffer, sizeof(struct can_frame),
-              ARRAY_SIZE(can_phys_fifo_buffer));
-
-  k_msgq_init(&can_func_fifo, can_func_fifo_buffer, sizeof(struct can_frame),
-              ARRAY_SIZE(can_func_fifo_buffer));
-
-  UDSServer_t server;
-  UDSServerInit(&server);
-  UDSISOTpC_t tp;
   UDSISOTpCConfig_t cfg = {
     .source_addr = 0x7E8,
     .target_addr = 0x7E0,
     .source_addr_func = 0x7DF,
     .target_addr_func = UDS_TP_NOOP_ADDR,
   };
-  UDSISOTpCInit(&tp, &cfg);
-  server.tp = &tp.hdl;
-  server.fn = uds_cb;
-  tp.phys_link.user_send_can_arg = (void *)can_dev;
-  tp.func_link.user_send_can_arg = (void *)can_dev;
+
+  iso14229_zephyr_init(&inst, &cfg, can_dev, uds_cb);
 
   int err;
   if (!device_is_ready(can_dev)) {
     printk("CAN device not ready\n");
     return -ENODEV;
-  }
-
-  const struct can_filter phys_filter = {
-    .id = tp.phys_sa,
-    .mask = CAN_STD_ID_MASK,
-  };
-  const struct can_filter func_filter = {
-    .id = tp.func_sa,
-    .mask = CAN_STD_ID_MASK,
-  };
-  err = can_add_rx_filter(can_dev, can_cb, &can_phys_fifo, &phys_filter);
-  if (err < 0) {
-    printk("Failed to add RX filter for physical address: %d\n", err);
-    return err;
-  }
-  err = can_add_rx_filter(can_dev, can_cb, &can_func_fifo, &func_filter);
-  if (err < 0) {
-    printk("Failed to add RX filter for functional address: %d\n", err);
-    return err;
   }
 
   err = can_set_mode(can_dev, CAN_MODE_NORMAL);
@@ -146,23 +118,7 @@ int main(void) {
   }
   printk("CAN device started\n");
 
-  printk("Hello UDS! %x %x\n", tp.phys_sa, tp.func_sa);
-
   while (1) {
-    struct can_frame frame_phys;
-    struct can_frame frame_func;
-    int ret_phys = k_msgq_get(&can_phys_fifo, &frame_phys, K_NO_WAIT);
-    int ret_func = k_msgq_get(&can_func_fifo, &frame_func, K_NO_WAIT);
-
-    if (ret_phys == 0) {
-      isotp_on_can_message(&tp.phys_link, frame_phys.data, frame_phys.dlc);
-    }
-
-    if (ret_func == 0) {
-      isotp_on_can_message(&tp.func_link, frame_func.data, frame_func.dlc);
-    }
-
-    UDSServerPoll(&server);
-    k_sleep(K_MSEC(1));
+    iso14229_zephyr_thread(&inst);
   }
 }
