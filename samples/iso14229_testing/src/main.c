@@ -20,11 +20,18 @@ static const struct device *can_dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_canbus));
 
 uint8_t dummy_memory[512] = {0x01, 0x02, 0x03, 0x04, 0x05};
 
+char can_phys_fifo_buffer[sizeof(struct can_frame) * 25];
+char can_func_fifo_buffer[sizeof(struct can_frame) * 25];
+
+struct k_msgq can_phys_fifo;
+struct k_msgq can_func_fifo;
+
 void can_cb(const struct device *dev,
             struct can_frame *frame,
             void *user_data) {
   printk("CAN RX: %x %x %x\n", frame->id, frame->dlc, frame->data[0]);
-  isotp_on_can_message((IsoTpLink *)user_data, frame->data, frame->dlc);
+
+  k_msgq_put((struct k_msgq *)user_data, frame, K_NO_WAIT);
 }
 
 UDSErr_t uds_cb(struct UDSServer *srv, UDSEvent_t event, void *arg) {
@@ -80,6 +87,12 @@ UDSErr_t uds_cb(struct UDSServer *srv, UDSEvent_t event, void *arg) {
 }
 
 int main(void) {
+  k_msgq_init(&can_phys_fifo, can_phys_fifo_buffer, sizeof(struct can_frame),
+              ARRAY_SIZE(can_phys_fifo_buffer));
+
+  k_msgq_init(&can_func_fifo, can_func_fifo_buffer, sizeof(struct can_frame),
+              ARRAY_SIZE(can_func_fifo_buffer));
+
   UDSServer_t server;
   UDSServerInit(&server);
   UDSISOTpC_t tp;
@@ -109,12 +122,12 @@ int main(void) {
     .id = tp.func_sa,
     .mask = CAN_STD_ID_MASK,
   };
-  err = can_add_rx_filter(can_dev, can_cb, &tp.phys_link, &phys_filter);
+  err = can_add_rx_filter(can_dev, can_cb, &can_phys_fifo, &phys_filter);
   if (err < 0) {
     printk("Failed to add RX filter for physical address: %d\n", err);
     return err;
   }
-  err = can_add_rx_filter(can_dev, can_cb, &tp.func_link, &func_filter);
+  err = can_add_rx_filter(can_dev, can_cb, &can_func_fifo, &func_filter);
   if (err < 0) {
     printk("Failed to add RX filter for functional address: %d\n", err);
     return err;
@@ -136,6 +149,19 @@ int main(void) {
   printk("Hello UDS! %x %x\n", tp.phys_sa, tp.func_sa);
 
   while (1) {
+    struct can_frame frame_phys;
+    struct can_frame frame_func;
+    int ret_phys = k_msgq_get(&can_phys_fifo, &frame_phys, K_NO_WAIT);
+    int ret_func = k_msgq_get(&can_func_fifo, &frame_func, K_NO_WAIT);
+
+    if (ret_phys == 0) {
+      isotp_on_can_message(&tp.phys_link, frame_phys.data, frame_phys.dlc);
+    }
+
+    if (ret_func == 0) {
+      isotp_on_can_message(&tp.func_link, frame_func.data, frame_func.dlc);
+    }
+
     UDSServerPoll(&server);
     k_sleep(K_MSEC(1));
   }
