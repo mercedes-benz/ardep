@@ -1,0 +1,27 @@
+From cfe044492a0ffdab0f1224b01f145e1d69df93ff Mon Sep 17 00:00:00 2001
+From: Tim <tim.schrader@frickly.systems>
+Date: Thu, 28 Aug 2025 10:46:00 +0200
+Subject: [PATCH 2/2] chore: add sys_custom.h include
+
+---
+ iso14229.h | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/iso14229.h b/iso14229.h
+index 2b0de39..1b365a6 100755
+--- a/iso14229.h
++++ b/iso14229.h
+@@ -114,6 +114,10 @@ typedef SSIZE_T ssize_t;
+ 
+ 
+ 
++#if UDS_SYS == UDS_SYS_CUSTOM
++#include "sys_custom.h"
++#endif
++
+ 
+ /** ISO-TP Maximum Transmissiable Unit (ISO-15764-2-2004 section 5.3.3) */
+ #define UDS_ISOTP_MTU (4095)
+-- 
+2.43.0
+

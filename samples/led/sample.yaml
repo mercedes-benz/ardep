@@ -6,7 +6,6 @@ sample:
 tests:
   sample.rgb_led:
     filter: dt_alias_exists("red-led") and dt_alias_exists("green-led")
-      and dt_alias_exists("blue-led")
     tags:
       - drivers
       - gpio

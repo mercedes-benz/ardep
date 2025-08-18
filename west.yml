@@ -6,6 +6,8 @@ manifest:
   remotes:
     - name: zephyrproject-rtos
       url-base: https://github.com/zephyrproject-rtos
+    - name: frickly-systems
+      url-base: https://github.com/frickly-systems
 
   projects:
     - name: zephyr
@@ -22,3 +24,6 @@ manifest:
     - name: zephboards
       url: https://github.com/dragonlock2/zephyrboards.git
       revision: 9443ad0ebe547a140ec54790687ae8b4d4e0cd34
+    - name: iso14229
+      remote: frickly-systems
+      revision: zephyr
