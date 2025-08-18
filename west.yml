@@ -24,4 +24,4 @@ manifest:
       revision: 9443ad0ebe547a140ec54790687ae8b4d4e0cd34
     - name: iso14229
       url: https://github.com/driftregion/iso14229.git
-      revision: main
+      revision: 4a9394163d817b6ec55c3ad5c8e937bd51efeadf

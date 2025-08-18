@@ -18,6 +18,7 @@
 
 #include <server.h>
 #include <tp/isotp_c.h>
+#include <util.h>
 
 LOG_MODULE_REGISTER(iso14229_testing, LOG_LEVEL_DBG);
 
@@ -28,7 +29,7 @@ uint8_t dummy_memory[512] = {0x01, 0x02, 0x03, 0x04, 0x05};
 struct iso14229_zephyr_instance inst;
 
 UDSErr_t uds_cb(struct UDSServer *srv, UDSEvent_t event, void *arg) {
-  LOG_DBG("UDS Event: %d", event);
+  LOG_DBG("UDS Event: %s", UDSEventToStr(event));
   switch (event) {
     case UDS_EVT_Err: {
       UDSErr_t *err = (UDSErr_t *)arg;
@@ -74,8 +75,7 @@ UDSErr_t uds_cb(struct UDSServer *srv, UDSEvent_t event, void *arg) {
     case UDS_EVT_RequestTransferExit: {
       UDSRequestTransferExitArgs_t *exit_args =
           (UDSRequestTransferExitArgs_t *)arg;
-      LOG_INF("Request Transfer Exit: data=%p len=%d", exit_args->data,
-              exit_args->len);
+      LOG_INF("Request Transfer Exit: len=%d", exit_args->len);
       break;
     }
     case UDS_EVT_ReadMemByAddr: {
