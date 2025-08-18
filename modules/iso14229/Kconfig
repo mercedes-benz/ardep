@@ -1,0 +1,12 @@
+# config ZEPHYR_TRUSTED_FIRMWARE_A_MODULE
+
+menuconfig ISO14229_LIB
+  bool "ISO14229 Library"
+  depends on ZEPHYR_ISO14229_MODULE
+  depends on CAN
+
+if ISO14229_LIB
+  module = ISO14229_LIB
+  module-str = ISO14229 Library
+  source "subsys/logging/Kconfig.template.log_config"
+endif

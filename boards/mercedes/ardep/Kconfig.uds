@@ -6,11 +6,13 @@
 # enable UDS module per default
 
 config UDS
- 	default y
+ 	default n
+
 config CAN
 	default y
+
 config ISOTP
-	default y
+	default n
 
 config FLASH
     default y
