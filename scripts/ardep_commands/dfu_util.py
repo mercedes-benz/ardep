@@ -1,7 +1,6 @@
 from argparse import ArgumentParser, Namespace
 import subprocess
 import time
-import warnings
 from .util import Util
 
 from west import log
