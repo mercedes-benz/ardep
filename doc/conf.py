@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "ARDEP"
-copyright = "2024, Frickly Systems GmbH"
+copyright = "2024, Frickly Systems GmbH"  # pylint: disable=redefined-builtin
 author = "Frickly Systems GmbH"
 
 # -- General configuration ---------------------------------------------------
