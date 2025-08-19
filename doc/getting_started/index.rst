@@ -35,7 +35,7 @@ Install the additional dependencies for the ardep board:
 
    .. tab:: Windows
    
-        Install the latest `dfu-util <https://dfu-util.sourceforge.net/>` from the `release-page <https://dfu-util.sourceforge.net/releases/>` and ensure the executables are in your PATH.
+        Install the latest `dfu-util <https://dfu-util.sourceforge.net/>`_ from the `release page <https://dfu-util.sourceforge.net/releases/>`_ and ensure the executables are in your *$PATH*.
 
         run ``dfu-util --version`` to check that the command is available.
         
@@ -49,7 +49,7 @@ Follow `Zephyr's guide (section "Install Zephyr SDK") <https://docs.zephyrprojec
 Set up your workspace
 ****************************
 
-Since you will install some python packages, we recommend using a virtual environment. We will use `uv <https://docs.astral.sh/uv/>` for this purpose.
+Since you will install some python packages, we recommend using a virtual environment. We will use `uv <https://docs.astral.sh/uv/>`_ for this purpose.
 
 
 #. Navigate to the directory where you want to create your workspace and activate a new virtual environment
@@ -64,7 +64,7 @@ Since you will install some python packages, we recommend using a virtual enviro
                 uv venv
                 source .venv/bin/activate
                 
-        .. tab:: Windows
+        .. tab:: bash
 
             .. code-block:: powershell
 
@@ -130,17 +130,18 @@ Since you will install some python packages, we recommend using a virtual enviro
 
             You can use the `Zadig <https://zadig.akeo.ie/>`_ tool to install the drivers.
 
-            After installing and starting *Zadig*, ensure the *List all devices* option is turned on in the Options menu.
+            After starting *Zadig*, ensure the *List all devices* option is turned on in the Options menu.
             Then, in the dropdown menu, select *Ardep (Interface 0)*, *Ardep board* or similar and install the *WinUSB* driver.
             This allows us to set the device into DFU mode.
+            
+            .. image:: windows_install_usb_driver.png
+               :alt: Installing WinUSB driver using Zadig
             
             We also need to install a driver for the DFU mode. For this, we need build a sample application and unsuccessfully try to flash the firmware (see `Build your first app`_).
             
             After the initial flash command failed, select the *Ardep board* in the dropdown menu and install the *WinUSB* driver again.
             
             Now, flashing the app should succeed.
-
-
 
 Build your first app 
 ********************
