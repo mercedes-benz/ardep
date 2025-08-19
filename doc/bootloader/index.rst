@@ -28,7 +28,7 @@ For this connect the SWD Pins of the ARDEP board to the debug probe an run:
 
 .. code-block:: bash
    
-    west flash -d {BUILD_DIR}
+    west flash
 
 The Pinout of the SWD connector is printed on the boards backside.
 
