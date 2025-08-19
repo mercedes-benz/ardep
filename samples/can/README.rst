@@ -25,9 +25,9 @@ The normal sample does not not use CAN-FD. To use CAN-FD, use the following comm
 
 Flash the app using dfu-util:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        west ardep dfu
+    west flash
 
 Sample Output
 =============

@@ -37,14 +37,14 @@ Build and flash the UDS application to the ARDEP 2 board in the diagram:
 .. code-block:: bash
 
   west build --board ardep samples/lin2can/uds
-  west ardep dfu
+  west flash
 
 Build and flash the Gateway application to the ARDEP 1 board in the diagram:
 
 .. code-block:: bash
 
   west build --board ardep samples/lin2can/gateway
-  west ardep dfu
+  west flash
 
 
 Usage

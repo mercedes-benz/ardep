@@ -101,6 +101,6 @@ Flash the app using dfu-util:
 
     .. code-block:: bash
 
-        west ardep dfu
+        west flash
 
 .. [1] Tested on Ubuntu 24.04, Zephyr SDK 0.17.2 and Zephyr RTOS 4.2.0

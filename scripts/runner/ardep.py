@@ -6,7 +6,9 @@ import time
 class ArdepRunner(ZephyrBinaryRunner):
     """Runner for ardep board using dfu-util for flashing"""
 
-    def __init__(self, cfg, device=None):
+    device: str
+
+    def __init__(self, cfg, device=None, bootloader_mode=False):
         super().__init__(cfg)
         self._bin_file = cfg.bin_file
         self.device = device
@@ -30,7 +32,10 @@ class ArdepRunner(ZephyrBinaryRunner):
 
     @classmethod
     def do_create(cls, cfg, args):
-        return cls(cfg, device=args.device)
+        return cls(
+            cfg,
+            device=args.device,
+        )
 
     def has_usb_device(self, device: str) -> bool:
         output = subprocess.run(
