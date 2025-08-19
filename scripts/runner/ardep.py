@@ -8,7 +8,7 @@ class ArdepRunner(ZephyrBinaryRunner):
 
     device: str
 
-    def __init__(self, cfg, device=None, bootloader_mode=False):
+    def __init__(self, cfg, device=None):
         super().__init__(cfg)
         self._bin_file = cfg.bin_file
         self.device = device
