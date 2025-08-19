@@ -27,6 +27,6 @@ To build the bootloader, you can use the following command:
 Then erase the flash memory of the ardep board.
 
 Next, flash the bootloader. You can use a debugger of your choice or use the ``west flash`` command.
-For an overview of the ``west flash`` command see `Zephyr's documentation on the west command <https://docs.zephyrproject.org/3.5.0/develop/west/build-flash-debug.html#flashing-west-flash>`_ and the *board.cmake* file under *boards/arm/ardep* for an overview of supported runners.
+For an overview of the ``west flash`` command see `Zephyr's documentation on the west command <https://docs.zephyrproject.org/4.2.0/develop/west/build-flash-debug.html#flashing-west-flash>`_, ``west flash -h`` and the *board.cmake* file under *boards/arm/ardep* for an overview of supported runners.
 
 After flashing the bootloader, flash the application of your choice. See the :ref:`getting_started` guide and the :ref:`bootloader_mode` documentation for this.
