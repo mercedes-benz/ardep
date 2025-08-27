@@ -11,6 +11,7 @@
 /twister-out*
 
 __pycache__/
+.mypy_cache/
 
 # documentation build output
 doc/_build/

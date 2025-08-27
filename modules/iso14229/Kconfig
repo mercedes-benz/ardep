@@ -6,7 +6,9 @@ menuconfig ISO14229_LIB
   depends on CAN
 
 if ISO14229_LIB
+
   module = ISO14229_LIB
   module-str = ISO14229 Library
   source "subsys/logging/Kconfig.template.log_config"
+
 endif

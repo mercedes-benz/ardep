@@ -1,0 +1,10 @@
+# Copyright (C) Frickly Systems GmbH
+#
+# SPDX-License-Identifier: Apache-2.0
+
+zephyr_library()
+zephyr_library_sources(
+    iso14229_common.c
+)
+
+zephyr_include_directories(.)

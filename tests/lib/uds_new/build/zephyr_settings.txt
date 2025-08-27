@@ -1,0 +1,15 @@
+# WARNING. THIS FILE IS AUTO-GENERATED. DO NOT MODIFY!
+#
+# This file contains build system settings derived from your modules.
+#
+# Modules may be set via ZEPHYR_MODULES, ZEPHYR_EXTRA_MODULES,
+# and/or the west manifest file.
+#
+# See the Modules guide for more information.
+"BOARD_ROOT":"/home/tim/Frickly/projects/mercedes/ardep-workspace/ardep"
+"DTS_ROOT":"/home/tim/Frickly/projects/mercedes/ardep-workspace/ardep"
+"MODULE_EXT_ROOT":"/home/tim/Frickly/projects/mercedes/ardep-workspace/ardep"
+"BOARD_ROOT":"/home/tim/Frickly/projects/mercedes/ardep-workspace/zephboards"
+"DTS_ROOT":"/home/tim/Frickly/projects/mercedes/ardep-workspace/zephboards"
+"SOC_ROOT":"/home/tim/Frickly/projects/mercedes/ardep-workspace/zephboards"
+"DTS_ROOT":"/home/tim/Frickly/projects/mercedes/ardep-workspace/modules/hal/stm32"

@@ -1,0 +1,51 @@
+menu "ardep (/home/tim/Frickly/projects/mercedes/ardep-workspace/ardep)"
+osource "/home/tim/Frickly/projects/mercedes/ardep-workspace/ardep/Kconfig"
+config ZEPHYR_ARDEP_MODULE
+	bool
+	default y
+endmenu
+menu "zephboards (/home/tim/Frickly/projects/mercedes/ardep-workspace/zephboards)"
+osource "/home/tim/Frickly/projects/mercedes/ardep-workspace/zephboards/Kconfig"
+config ZEPHYR_ZEPHBOARDS_MODULE
+	bool
+	default y
+endmenu
+menu "iso14229 (/home/tim/Frickly/projects/mercedes/ardep-workspace/iso14229)"
+osource "$(ZEPHYR_ISO14229_KCONFIG)"
+config ZEPHYR_ISO14229_MODULE
+	bool
+	default y
+endmenu
+menu "cmsis_6 (/home/tim/Frickly/projects/mercedes/ardep-workspace/modules/hal/cmsis_6)"
+osource "$(ZEPHYR_CMSIS_6_KCONFIG)"
+config ZEPHYR_CMSIS_6_MODULE
+	bool
+	default y
+endmenu
+menu "hal_st (/home/tim/Frickly/projects/mercedes/ardep-workspace/modules/hal/st)"
+osource "$(ZEPHYR_HAL_ST_KCONFIG)"
+config ZEPHYR_HAL_ST_MODULE
+	bool
+	default y
+endmenu
+config ZEPHYR_HAL_STM32_MODULE
+	bool
+	default y
+
+config ZEPHYR_HAL_STM32_MODULE_BLOBS
+	bool
+menu "mbedtls (/home/tim/Frickly/projects/mercedes/ardep-workspace/modules/crypto/mbedtls)"
+osource "$(ZEPHYR_MBEDTLS_KCONFIG)"
+config ZEPHYR_MBEDTLS_MODULE
+	bool
+	default y
+endmenu
+config ZEPHYR_MCUBOOT_MODULE
+	bool
+	default y
+menu "segger (/home/tim/Frickly/projects/mercedes/ardep-workspace/modules/debug/segger)"
+osource "$(ZEPHYR_SEGGER_KCONFIG)"
+config ZEPHYR_SEGGER_MODULE
+	bool
+	default y
+endmenu

@@ -28,7 +28,7 @@ int isotp_user_send_can(const uint32_t arbitration_id,
   frame.flags = 0;
   const struct device* can_dev = arg;
   LOG_DBG("CAN TX: %03x [%d] %02x ...", frame.id, frame.dlc, frame.data[0]);
-  int ret = can_send(can_dev, &frame, K_FOREVER, NULL, NULL);
+  int ret = can_send(can_dev, &frame, K_FOREVER, NULL, &frame);
 
   if (ret != 0) {
     return ISOTP_RET_ERROR;
@@ -39,4 +39,5 @@ int isotp_user_send_can(const uint32_t arbitration_id,
 
 uint32_t isotp_user_get_us(void) { return k_uptime_get_32() * 1000; }
 
+// todo: comment schreiben
 uint32_t UDSMillis() { return k_uptime_get_32(); }

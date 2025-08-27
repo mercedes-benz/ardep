@@ -8,4 +8,4 @@ cmake_minimum_required(VERSION 3.13.1)
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 project(uds_routine)
 
-target_sources(app PRIVATE src/main.c src/iso14229_common.c src/write_memory_by_addr_impl.c)
+target_sources(app PRIVATE src/main.c)

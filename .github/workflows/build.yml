@@ -8,29 +8,48 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
-    container: ghcr.io/zephyrproject-rtos/ci:v0.26.2
-    env:
-      CMAKE_PREFIX_PATH: /opt/toolchains
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, macos-13, macos-14, windows-2022]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
-          path: zephyr-workspace/ardep
+          path: ardep
 
-      - name: Initialize
-        working-directory: zephyr-workspace/ardep
-        run: |
-          west init -l --mf ./west.yml .
-          west update -o=--depth=1 -n
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
 
-      - name: Build firmware examples
-        working-directory: zephyr-workspace/ardep
+      - name: Setup Zephyr project
+        uses: zephyrproject-rtos/action-zephyr-setup@v1
+        with:
+          app-path: ardep
+          toolchains: arm-zephyr-eabi
+
+      - name: Build firmware
+        working-directory: ardep
+        shell: bash
         run: |
-          west twister -T samples -v --inline-logs --integration
+          if [ "${{ runner.os }}" = "Windows" ]; then
+            EXTRA_TWISTER_FLAGS="--short-build-path -O/tmp/twister-out"
+          fi
+          west twister -T samples -v --inline-logs --integration $EXTRA_TWISTER_FLAGS
 
       - name: build bootloader
-        working-directory: zephyr-workspace/ardep
+        working-directory: ardep
         run: |
           pip install -r scripts/requirements.txt
           west ardep build-bootloader
+
+      - name: Twister Tests
+        working-directory: ardep
+        shell: bash
+        run: |
+          if [ "${{ runner.os }}" = "Windows" ]; then
+            EXTRA_TWISTER_FLAGS="--short-build-path -O/tmp/twister-out"
+          fi
+          west twister -T tests -p native_sim -v --inline-logs --integration $EXTRA_TWISTER_FLAGS

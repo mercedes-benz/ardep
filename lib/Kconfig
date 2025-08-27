@@ -18,7 +18,10 @@ menu "ARDEP"
     if UDS
         rsource "uds/Kconfig"
     endif
+    
 
+    rsource "uds_minimal/Kconfig"
+    rsource "uds_new/Kconfig"
 
     menuconfig CAN_ROUTER
         bool "Can frame router"

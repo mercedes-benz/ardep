@@ -1,0 +1,9 @@
+common:
+  tags: can, uds
+  platform_allow:
+    - native_sim/native/64
+    - native_sim
+
+tests:
+  lib.uds_new:
+    harness: ztest

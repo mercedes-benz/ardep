@@ -1,0 +1,27 @@
+config ZEPHYR_ARDEP_MODULE
+   bool
+   default y
+config ZEPHYR_ZEPHBOARDS_MODULE
+   bool
+   default y
+config ZEPHYR_ISO14229_MODULE
+   bool
+   default y
+config ZEPHYR_CMSIS_6_MODULE
+   bool
+   default y
+config ZEPHYR_HAL_ST_MODULE
+   bool
+   default y
+config ZEPHYR_HAL_STM32_MODULE
+   bool
+   default y
+config ZEPHYR_MBEDTLS_MODULE
+   bool
+   default y
+config ZEPHYR_MCUBOOT_MODULE
+   bool
+   default y
+config ZEPHYR_SEGGER_MODULE
+   bool
+   default y
