@@ -8,7 +8,9 @@ zephyr_library_sources(
     ecu_reset.c
     uds.c
     read_data_by_identifier.c
+    
     write_memory_by_addr_impl.c
+    
 )
 
 zephyr_linker_sources(SECTIONS iterables.ld)

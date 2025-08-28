@@ -79,3 +79,16 @@ ZTEST_F(lib_uds_new, test_0x22_read_by_id_dynamic_array) {
 
   assert_copy_data(expected, sizeof(expected));
 }
+
+ZTEST_F(lib_uds_new, test_0x23_read_memory_by_address) {
+  struct uds_new_instance_t *instance = &fixture->instance;
+
+  UDSReadMemByAddrArgs_t args = {
+    .memAddr = (void*)0x20000000,
+    .memSize = 16,
+    .copy = copy,
+  };
+
+  int ret = receive_event(instance, UDS_EVT_ReadMemByAddr, &args);
+  zassert_equal(ret, UDS_NRC_SubFunctionNotSupported);
+}

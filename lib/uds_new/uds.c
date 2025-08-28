@@ -54,7 +54,7 @@ UDSErr_t uds_event_callback(struct iso14229_zephyr_instance* inst,
       break;
   }
 
-  return UDS_OK;
+  return UDS_NRC_ServiceNotSupported;
 }
 
 int uds_new_init(struct uds_new_instance_t* inst,
