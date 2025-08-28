@@ -129,3 +129,17 @@ ZTEST_F(lib_uds_new, test_0x23_read_memory_by_address_valid_memory) {
   assert_copy_data(local_buffer, sizeof(local_buffer));
 }
 #endif
+
+
+// We use a nucleo board with known memory layout
+#if CONFIG_BOARD_NUCLEO_G474RE
+
+const uintptr_t known_ram_start = 0x08000000;
+const uintptr_t known_ram_end = 0x080FFFFF;
+
+const uintptr_t known_flash_start = 0x08000000;
+const uintptr_t known_flash_end = 0x080FFFFF;
+
+// add test for real hardware here
+
+#endif
