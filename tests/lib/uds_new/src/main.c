@@ -82,44 +82,48 @@ ZTEST_F(lib_uds_new, test_0x22_read_by_id_dynamic_array) {
 
 ZTEST_F(lib_uds_new, test_0x23_read_memory_by_address) {
   struct uds_new_instance_t *instance = &fixture->instance;
+  int ret;
 
-  // Test 1: Invalid address should be rejected
+  // Test NULL address should be rejected
   UDSReadMemByAddrArgs_t args1 = {
-    .memAddr = (void*)0x20000000,
-    .memSize = 16,
-    .copy = copy,
-  };
-
-  int ret1 = receive_event(instance, UDS_EVT_ReadMemByAddr, &args1);
-  zassert_equal(ret1, UDS_PositiveResponse);
-
-  // Test 2: NULL address should be rejected
-  UDSReadMemByAddrArgs_t args2 = {
     .memAddr = NULL,
     .memSize = 16,
     .copy = copy,
   };
 
-  int ret2 = receive_event(instance, UDS_EVT_ReadMemByAddr, &args2);
-  zassert_equal(ret2, UDS_NRC_RequestOutOfRange);
+  ret = receive_event(instance, UDS_EVT_ReadMemByAddr, &args1);
+  zassert_equal(ret, UDS_NRC_RequestOutOfRange);
 
-  // Test 3: Zero size should be rejected
-  UDSReadMemByAddrArgs_t args3 = {
+  // Test Zero size should be rejected
+  UDSReadMemByAddrArgs_t args2 = {
     .memAddr = (void*)0x10000,
     .memSize = 0,
     .copy = copy,
   };
 
-  int ret3 = receive_event(instance, UDS_EVT_ReadMemByAddr, &args3);
-  zassert_equal(ret3, UDS_NRC_RequestOutOfRange);
+  ret = receive_event(instance, UDS_EVT_ReadMemByAddr, &args2);
+  zassert_equal(ret, UDS_NRC_RequestOutOfRange);
 
-  // Test 4: Too large size should be rejected
-  UDSReadMemByAddrArgs_t args4 = {
-    .memAddr = (void*)0x10000,
-    .memSize = 0x20000, // 128KB - too large
-    .copy = copy,
-  };
+  #if CONFIG_BOARD_NATIVE_SIM
+    // Test Valid request to accessible memory (use stack address)
+    uint8_t local_buffer[16] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
+                                0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10};
+    
+    UDSReadMemByAddrArgs_t args5 = {
+      .memAddr = local_buffer,
+      .memSize = 16,
+      .copy = copy,
+    };
 
-  int ret4 = receive_event(instance, UDS_EVT_ReadMemByAddr, &args4);
-  zassert_equal(ret4, UDS_NRC_RequestOutOfRange);
+    ret = receive_event(instance, UDS_EVT_ReadMemByAddr, &args5);
+    zassert_equal(ret, UDS_PositiveResponse);
+
+    zassert_equal(copy_fake.call_count, 1);
+
+    zassert_equal(copy_fake.arg0_val, &instance->iso14229.server);
+    zassert_equal(copy_fake.arg2_val, sizeof(local_buffer));
+
+
+    assert_copy_data(local_buffer, sizeof(local_buffer));
+  #endif
 }

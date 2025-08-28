@@ -15,32 +15,38 @@ LOG_MODULE_DECLARE(uds_new, CONFIG_UDS_NEW_LOG_LEVEL);
 static bool is_memory_address_valid(uintptr_t addr, size_t size) {
     // Prevent overflow
     if (addr > UINTPTR_MAX - size) {
+        LOG_ERR("Memory address overflow detected");
         return false;
     }
     
     // Don't allow NULL pointer access
     if (addr == 0) {
+        LOG_ERR("Memory address is NULL");
         return false;
     }
     
-    // Don't allow access to very low addresses (likely invalid)
-    if (addr < 0x1000) {
-        return false;
-    }
-    
-    // Don't allow extremely large sizes (prevent DoS attacks)
-    if (size > 0x10000) { // 64KB limit for safety
-        return false;
-    }
-    
-    // For native_sim (simulator), we have less restrictive validation
-    // In a real embedded system, you would check against actual memory map
     #ifdef CONFIG_BOARD_NATIVE_SIM
         return true; // Allow most reasonable addresses on simulator
     #else
-        // On real hardware, you would implement proper memory map validation
-        // This is a conservative approach for embedded systems
-        return true; 
+        // Check if address is within RAM range
+        uintptr_t ram_start = (uintptr_t)_image_ram_start;
+        uintptr_t ram_end = (uintptr_t)_image_ram_end;
+
+        if (addr >= ram_start && (addr + size) <= ram_end) {
+            return true;
+        }
+
+        // Check if address is within Flash range  
+        uintptr_t flash_start = (uintptr_t)__rom_region_start;
+        uintptr_t flash_end = (uintptr_t)__rom_region_end;
+
+        if (addr >= flash_start && (addr + size) <= flash_end) {
+            return true;
+        }
+
+        LOG_ERR("Memory address 0x%08lX not in valid RAM or Flash range", 
+                (unsigned long)addr);
+        return false;
     #endif
 }
 
