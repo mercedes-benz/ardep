@@ -1,3 +1,13 @@
+/*
+ * Copyright (C) Frickly Systems GmbH
+ * Copyright (C) MBition GmbH
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <zephyr/logging/log.h>
+LOG_MODULE_DECLARE(uds_new, CONFIG_UDS_NEW_LOG_LEVEL);
+
 #include "write_memory_by_addr_impl.h"
 
 UDSErr_t customuds_decode_write_memory_by_addr(

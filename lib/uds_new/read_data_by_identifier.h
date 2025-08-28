@@ -1,3 +1,10 @@
+/*
+ * Copyright (C) Frickly Systems GmbH
+ * Copyright (C) MBition GmbH
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 #include <ardep/iso14229.h>
 #include <ardep/uds_new.h>
 

@@ -62,7 +62,6 @@ struct uds_new_instance_t {
   struct iso14229_zephyr_instance iso14229;
   struct uds_new_registration_t* static_registrations;
   void* user_context;
-  set_ecu_reset_callback_fn set_ecu_reset_callback;
 
 #ifdef CONFIG_UDS_NEW_USE_DYNAMIC_DATA_BY_ID
   struct uds_new_registration_t* dynamic_registrations;
