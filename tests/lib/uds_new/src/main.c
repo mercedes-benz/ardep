@@ -80,50 +80,52 @@ ZTEST_F(lib_uds_new, test_0x22_read_by_id_dynamic_array) {
   assert_copy_data(expected, sizeof(expected));
 }
 
-ZTEST_F(lib_uds_new, test_0x23_read_memory_by_address) {
+ZTEST_F(lib_uds_new, test_0x23_read_memory_by_address_null_address) {
   struct uds_new_instance_t *instance = &fixture->instance;
-  int ret;
 
-  // Test NULL address should be rejected
-  UDSReadMemByAddrArgs_t args1 = {
+  UDSReadMemByAddrArgs_t args = {
     .memAddr = NULL,
     .memSize = 16,
     .copy = copy,
   };
 
-  ret = receive_event(instance, UDS_EVT_ReadMemByAddr, &args1);
+  int ret = receive_event(instance, UDS_EVT_ReadMemByAddr, &args);
   zassert_equal(ret, UDS_NRC_RequestOutOfRange);
+}
 
-  // Test Zero size should be rejected
-  UDSReadMemByAddrArgs_t args2 = {
+ZTEST_F(lib_uds_new, test_0x23_read_memory_by_address_zero_size) {
+  struct uds_new_instance_t *instance = &fixture->instance;
+
+  UDSReadMemByAddrArgs_t args = {
     .memAddr = (void*)0x10000,
     .memSize = 0,
     .copy = copy,
   };
 
-  ret = receive_event(instance, UDS_EVT_ReadMemByAddr, &args2);
+  int ret = receive_event(instance, UDS_EVT_ReadMemByAddr, &args);
   zassert_equal(ret, UDS_NRC_RequestOutOfRange);
-
-  #if CONFIG_BOARD_NATIVE_SIM
-    // Test Valid request to accessible memory (use stack address)
-    uint8_t local_buffer[16] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
-                                0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10};
-    
-    UDSReadMemByAddrArgs_t args5 = {
-      .memAddr = local_buffer,
-      .memSize = 16,
-      .copy = copy,
-    };
-
-    ret = receive_event(instance, UDS_EVT_ReadMemByAddr, &args5);
-    zassert_equal(ret, UDS_PositiveResponse);
-
-    zassert_equal(copy_fake.call_count, 1);
-
-    zassert_equal(copy_fake.arg0_val, &instance->iso14229.server);
-    zassert_equal(copy_fake.arg2_val, sizeof(local_buffer));
-
-
-    assert_copy_data(local_buffer, sizeof(local_buffer));
-  #endif
 }
+
+#if CONFIG_BOARD_NATIVE_SIM
+ZTEST_F(lib_uds_new, test_0x23_read_memory_by_address_valid_memory) {
+  struct uds_new_instance_t *instance = &fixture->instance;
+
+  uint8_t local_buffer[16] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
+                              0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10};
+  
+  UDSReadMemByAddrArgs_t args = {
+    .memAddr = local_buffer,
+    .memSize = 16,
+    .copy = copy,
+  };
+
+  int ret = receive_event(instance, UDS_EVT_ReadMemByAddr, &args);
+  zassert_equal(ret, UDS_PositiveResponse);
+
+  zassert_equal(copy_fake.call_count, 1);
+  zassert_equal(copy_fake.arg0_val, &instance->iso14229.server);
+  zassert_equal(copy_fake.arg2_val, sizeof(local_buffer));
+
+  assert_copy_data(local_buffer, sizeof(local_buffer));
+}
+#endif
