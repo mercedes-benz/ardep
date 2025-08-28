@@ -5,10 +5,6 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
-#include <string.h>
+#include <stdio.h>
 
 #include <sys/types.h>
-
-#ifndef static_assert
-#define static_assert _Static_assert
-#endif

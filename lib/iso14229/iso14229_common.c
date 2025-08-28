@@ -1,12 +1,11 @@
 // This would be dedicated into a separate library
-#include "ardep/uds_minimal.h"
+#include "ardep/iso14229.h"
 
 #include <zephyr/logging/log.h>
 
-#include <server.h>
-#include <util.h>
+#include <iso14229.h>
 
-LOG_MODULE_REGISTER(uds_minimal, CONFIG_UDS_MINIMAL_LOG_LEVEL);
+LOG_MODULE_REGISTER(iso14229, CONFIG_ISO14229_LOG_LEVEL);
 
 UDSErr_t uds_cb(struct UDSServer *srv, UDSEvent_t event, void *arg) {
   LOG_DBG("UDS Event: %s", UDSEventToStr(event));

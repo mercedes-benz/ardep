@@ -1,13 +1,12 @@
-#ifndef ARDEP_UDS_MINIMAL_H
-#define ARDEP_UDS_MINIMAL_H
+#ifndef ARDEP_ISO14229_H
+#define ARDEP_ISO14229_H
 
 #pragma once
 
 #include <zephyr/drivers/can.h>
 #include <zephyr/kernel.h>
 
-#include <server.h>
-#include <tp/isotp_c.h>
+#include <iso14229.h>
 
 struct iso14229_zephyr_instance;
 
@@ -43,6 +42,4 @@ int iso14229_zephyr_init(struct iso14229_zephyr_instance* inst,
                          const struct device* can_dev,
                          void* user_context);
 
-void iso14229_zephyr_thread(struct iso14229_zephyr_instance *inst);
-
-#endif  // ARDEP_UDS_MINIMAL_H
+#endif  // ARDEP_ISO14229_H

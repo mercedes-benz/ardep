@@ -5,7 +5,7 @@
 
 menuconfig UDS_NEW
     bool "UDS New"
-    select UDS_MINIMAL
+    select ISO14229
     
 if UDS_NEW
 

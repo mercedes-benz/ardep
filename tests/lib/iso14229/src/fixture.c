@@ -12,9 +12,7 @@
 #include <zephyr/drivers/can/can_fake.h>
 #include <zephyr/ztest.h>
 
-#include <server.h>
-#include <tp.h>
-#include <tp/isotp_c.h>
+#include <iso14229.h>
 
 DEFINE_FFF_GLOBALS;
 
@@ -54,7 +52,7 @@ void advance_time_and_tick_thread(struct iso14229_zephyr_instance *instance) {
   tick_thread(instance);
 }
 
-void receive_phys_can_frame(const struct lib_uds_minimal_fixture *fixture,
+void receive_phys_can_frame(const struct lib_iso14229_fixture *fixture,
                             uint8_t *data,
                             uint8_t data_len) {
   const struct device *dev = fixture->can_dev;
@@ -69,7 +67,7 @@ void receive_phys_can_frame(const struct lib_uds_minimal_fixture *fixture,
   captured_rx_callback_phys(dev, &frame, captured_user_data_phy);
 }
 
-void assert_send_phy_can_frame(const struct lib_uds_minimal_fixture *fixture,
+void assert_send_phy_can_frame(const struct lib_iso14229_fixture *fixture,
                                uint32_t frame_index,
                                uint8_t *data,
                                uint8_t data_len) {
@@ -137,7 +135,7 @@ static int capture_rx_filter_fake(const struct device *dev,
 }
 
 static void *uds_new_setup(void) {
-  static struct lib_uds_minimal_fixture fixture = {
+  static struct lib_iso14229_fixture fixture = {
     .cfg = cfg,
     .can_dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_canbus)),
   };
@@ -146,7 +144,7 @@ static void *uds_new_setup(void) {
 }
 
 static void uds_new_before(void *f) {
-  struct lib_uds_minimal_fixture *fixture = f;
+  struct lib_iso14229_fixture *fixture = f;
   const struct device *dev = fixture->can_dev;
   struct iso14229_zephyr_instance *uds_instance = &fixture->instance;
 
@@ -184,4 +182,4 @@ static void uds_new_before(void *f) {
   uds_instance->set_callback(uds_instance, test_uds_callback);
 }
 
-ZTEST_SUITE(lib_uds_minimal, NULL, uds_new_setup, uds_new_before, NULL, NULL);
+ZTEST_SUITE(lib_iso14229, NULL, uds_new_setup, uds_new_before, NULL, NULL);

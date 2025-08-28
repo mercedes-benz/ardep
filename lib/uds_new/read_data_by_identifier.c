@@ -1,4 +1,4 @@
-#include "ardep/uds_minimal.h"
+#include "ardep/iso14229.h"
 #include "read_data_by_identifier.h"
 #include "zephyr/sys/byteorder.h"
 

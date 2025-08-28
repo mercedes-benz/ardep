@@ -1,15 +1,13 @@
 
 
 // #ifdef UDS_NEW_ENABLE_RESET
-#include "uds.h"
-
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
 #include <zephyr/sys/reboot.h>
 #include <zephyr/sys/util.h>
 
 #include <ardep/uds_new.h>
-#include <server.h>
+#include <iso14229.h>
 
 LOG_MODULE_REGISTER(uds_new, LOG_LEVEL_INF);
 
