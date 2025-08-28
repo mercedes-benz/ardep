@@ -5,6 +5,6 @@
 #include <ardep/uds_new.h>
 
 UDSErr_t handle_read_memory_by_address(struct uds_new_instance_t* instance,
-                                        UDSRDBIArgs_t* args);
+                                        UDSReadMemByAddrArgs_t* args);
 
 #endif // ARDEP_LIB_UDS_NEW_READ_MEMORY_BY_ADDRESS_H

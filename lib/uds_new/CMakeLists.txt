@@ -8,7 +8,7 @@ zephyr_library_sources(
     ecu_reset.c
     uds.c
     read_data_by_identifier.c
-    
+    read_memory_by_address.c
     write_memory_by_addr_impl.c
     
 )
