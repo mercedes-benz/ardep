@@ -23,11 +23,13 @@ DEFINE_FFF_GLOBALS;
 
 DEFINE_FAKE_VALUE_FUNC(uint8_t, copy, UDSServer_t *, const void *, uint16_t);
 
+struct uds_new_instance_t fixture_uds_instance;
+
 UDS_NEW_REGISTER_DATA_IDENTIFIER_STATIC(
-    NULL, by_id_data1_id, by_id_data1, true, true);
+    &fixture_uds_instance, by_id_data1_id, by_id_data1, true, true);
 
 UDS_NEW_REGISTER_DATA_IDENTIFIER_STATIC_ARRAY(
-    NULL, by_id_data2_id, by_id_data2, true, true);
+    &fixture_uds_instance, by_id_data2_id, by_id_data2, true, true);
 
 static const UDSISOTpCConfig_t cfg = {
   // Hardware Addresses
@@ -39,11 +41,11 @@ static const UDSISOTpCConfig_t cfg = {
   .target_addr_func = UDS_TP_NOOP_ADDR,  // ID Client (them)
 };
 
-static uint8_t copied_data[32];
+static uint8_t copied_data[4096];
 static uint32_t copied_len;
 
 void assert_copy_data(uint8_t *data, uint32_t len) {
-  zassert_equal(copied_len, len);
+  zassert_equal(copied_len, len, "Expected length %u, but got %u", len, copied_len);
   zassert_mem_equal(copied_data, data, len);
 }
 
@@ -57,10 +59,15 @@ static uint8_t custom_copy(UDSServer_t *server,
 }
 
 static void *uds_new_setup(void) {
+  memset(&fixture_uds_instance, 0, sizeof(fixture_uds_instance));
+
   static struct lib_uds_new_fixture fixture = {
     .cfg = cfg,
     .can_dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_canbus)),
+    .instance = &fixture_uds_instance,
   };
+
+  printk("Using CAN device %s\n", fixture.can_dev->name);
 
   return &fixture;
 }
@@ -68,7 +75,7 @@ static void *uds_new_setup(void) {
 static void uds_new_before(void *f) {
   struct lib_uds_new_fixture *fixture = f;
   const struct device *dev = fixture->can_dev;
-  struct uds_new_instance_t *uds_instance = &fixture->instance;
+  struct uds_new_instance_t *uds_instance = fixture->instance;
 
   RESET_FAKE(copy);
   FFF_RESET_HISTORY();
@@ -79,8 +86,6 @@ static void uds_new_before(void *f) {
   assert(ret == 0);
 
   STRUCT_SECTION_FOREACH (uds_new_registration_t, reg) {
-    reg->instance = uds_instance;
-
     if (reg->data_identifier.data_id == by_id_data1_id) {
       memcpy(reg->user_data, &by_id_data1_default, sizeof(by_id_data1_default));
     }

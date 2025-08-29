@@ -17,7 +17,7 @@ DECLARE_FAKE_VALUE_FUNC(uint8_t, copy, UDSServer_t *, const void *, uint16_t);
 struct lib_uds_new_fixture {
   UDSISOTpCConfig_t cfg;
 
-  struct uds_new_instance_t instance;
+  struct uds_new_instance_t* instance;
 
   const struct device *can_dev;
 };

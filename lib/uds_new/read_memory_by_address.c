@@ -4,6 +4,8 @@
 #include <zephyr/logging/log.h>
 #include <zephyr/sys/util.h>
 
+#include <zephyr/linker/linker-defs.h>
+
 LOG_MODULE_DECLARE(uds_new, CONFIG_UDS_NEW_LOG_LEVEL);
 
 /**
