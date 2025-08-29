@@ -42,6 +42,6 @@ UDSErr_t receive_event(struct uds_new_instance_t *inst,
  *
  * Beware that the data is in big endian!
  */
-void assert_copy_data(uint8_t *data, uint32_t len);
+void assert_copy_data(const uint8_t *data, uint32_t len);
 
 #endif  // APP_TESTS_LIB_UDS_MINIMAL_SRC_FIXTURE_H_

@@ -44,7 +44,7 @@ static const UDSISOTpCConfig_t cfg = {
 static uint8_t copied_data[4096];
 static uint32_t copied_len;
 
-void assert_copy_data(uint8_t *data, uint32_t len) {
+void assert_copy_data(const uint8_t *data, uint32_t len) {
   zassert_equal(copied_len, len, "Expected length %u, but got %u", len, copied_len);
   zassert_mem_equal(copied_data, data, len);
 }
