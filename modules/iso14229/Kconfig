@@ -1,14 +1,14 @@
 # config ZEPHYR_TRUSTED_FIRMWARE_A_MODULE
 
-menuconfig ISO14229_LIB
+config MODULE_ISO14229_EXTERNAL
   bool "ISO14229 Library"
-  depends on ZEPHYR_ISO14229_MODULE
   depends on CAN
+	depends on STD_C11 || STD_C17 || STD_C23
 
-if ISO14229_LIB
+if MODULE_ISO14229_EXTERNAL
 
-  module = ISO14229_LIB
-  module-str = ISO14229 Library
+  module = MODULE_ISO14229_EXTERNAL
+  module-str = External ISO14229 Library
   source "subsys/logging/Kconfig.template.log_config"
 
 endif

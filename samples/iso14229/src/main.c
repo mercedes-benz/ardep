@@ -16,10 +16,8 @@
 #include <zephyr/logging/log.h>
 #include <zephyr/sys/byteorder.h>
 
-#include <ardep/uds_minimal.h>
-#include <server.h>
-#include <tp/isotp_c.h>
-#include <util.h>
+#include <ardep/iso14229.h>
+#include <iso14229.h>
 
 LOG_MODULE_REGISTER(iso14229_testing, LOG_LEVEL_DBG);
 
@@ -77,5 +75,5 @@ int main(void) {
   }
   printk("CAN device started\n");
 
-  iso14229_zephyr_thread(&inst);
+  inst.thread_run(&inst);
 }

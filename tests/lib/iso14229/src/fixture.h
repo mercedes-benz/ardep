@@ -1,14 +1,12 @@
-#ifndef APP_TESTS_LIB_UDS_MINIMAL_SRC_FIXTURE_H_
-#define APP_TESTS_LIB_UDS_MINIMAL_SRC_FIXTURE_H_
+#ifndef APP_TESTS_LIB_ISO14229_SRC_FIXTURE_H_
+#define APP_TESTS_LIB_ISO14229_SRC_FIXTURE_H_
 
 #include <zephyr/drivers/can.h>
 #include <zephyr/drivers/can/can_fake.h>
 #include <zephyr/fff.h>
 
-#include <ardep/uds_minimal.h>
-#include <server.h>
-#include <tp.h>
-#include <tp/isotp_c.h>
+#include <ardep/iso14229.h>
+#include <iso14229.h>
 
 // Test callback function for UDS events
 DECLARE_FAKE_VALUE_FUNC(UDSErr_t,
@@ -18,7 +16,7 @@ DECLARE_FAKE_VALUE_FUNC(UDSErr_t,
                         void *,
                         void *);
 
-struct lib_uds_minimal_fixture {
+struct lib_iso14229_fixture {
   UDSISOTpCConfig_t cfg;
 
   struct iso14229_zephyr_instance instance;
@@ -49,7 +47,7 @@ void advance_time_and_tick_thread(struct iso14229_zephyr_instance *instance);
  * @param data The whole CAN frame data
  * @param data_len  The length of the CAN frame data (== dlc)
  */
-void receive_phys_can_frame(const struct lib_uds_minimal_fixture *fixture,
+void receive_phys_can_frame(const struct lib_iso14229_fixture *fixture,
                             uint8_t *data,
                             uint8_t data_len);
 
@@ -68,7 +66,7 @@ void receive_phys_can_frame(const struct lib_uds_minimal_fixture *fixture,
  * @param data The CAN frame data
  * @param data_len The length of the CAN frame data (== dlc)
  */
-void assert_send_phy_can_frame(const struct lib_uds_minimal_fixture *fixture,
+void assert_send_phy_can_frame(const struct lib_iso14229_fixture *fixture,
                                uint32_t frame_index,
                                uint8_t *data,
                                uint8_t data_len);
@@ -83,4 +81,4 @@ void assert_send_phy_can_frame(const struct lib_uds_minimal_fixture *fixture,
   assert_send_phy_can_frame(fixture, frame_index, data_array,             \
                             ARRAY_SIZE(data_array))
 
-#endif  // APP_TESTS_LIB_UDS_MINIMAL_SRC_FIXTURE_H_
+#endif  // APP_TESTS_LIB_ISO14229_SRC_FIXTURE_H_

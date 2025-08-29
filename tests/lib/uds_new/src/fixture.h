@@ -1,5 +1,5 @@
-#ifndef APP_TESTS_LIB_UDS_MINIMAL_SRC_FIXTURE_H_
-#define APP_TESTS_LIB_UDS_MINIMAL_SRC_FIXTURE_H_
+#ifndef APP_TESTS_LIB_ISO14229_SRC_FIXTURE_H_
+#define APP_TESTS_LIB_ISO14229_SRC_FIXTURE_H_
 
 #include "ardep/uds_new.h"
 
@@ -7,10 +7,8 @@
 #include <zephyr/drivers/can/can_fake.h>
 #include <zephyr/fff.h>
 
-#include <ardep/uds_minimal.h>
-#include <server.h>
-#include <tp.h>
-#include <tp/isotp_c.h>
+#include <ardep/iso14229.h>
+#include <iso14229.h>
 
 DECLARE_FAKE_VALUE_FUNC(uint8_t, copy, UDSServer_t *, const void *, uint16_t);
 
@@ -44,4 +42,4 @@ UDSErr_t receive_event(struct uds_new_instance_t *inst,
  */
 void assert_copy_data(const uint8_t *data, uint32_t len);
 
-#endif  // APP_TESTS_LIB_UDS_MINIMAL_SRC_FIXTURE_H_
+#endif  // APP_TESTS_LIB_ISO14229_SRC_FIXTURE_H_

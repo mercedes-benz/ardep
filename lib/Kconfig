@@ -20,7 +20,7 @@ menu "ARDEP"
     endif
     
 
-    rsource "uds_minimal/Kconfig"
+    rsource "iso14229/Kconfig"
     rsource "uds_new/Kconfig"
 
     menuconfig CAN_ROUTER

@@ -5,5 +5,5 @@ common:
     - native_sim
 
 tests:
-  lib.uds_minimal:
+  lib.iso14229:
     harness: ztest

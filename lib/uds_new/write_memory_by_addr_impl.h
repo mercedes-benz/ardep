@@ -1,4 +1,11 @@
-#include <server.h>
+/*
+ * Copyright (C) Frickly Systems GmbH
+ * Copyright (C) MBition GmbH
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <iso14229.h>
 
 #define CUSTOMUDS_WriteMemoryByAddr_SID 0x3D
 

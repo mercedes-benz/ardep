@@ -11,10 +11,8 @@
 #include <zephyr/ztest.h>
 
 // Include UDS minimal library headers
-#include <ardep/uds_minimal.h>
-#include <server.h>
-#include <tp/isotp_c.h>
-#include <uds.h>
+#include <ardep/iso14229.h>
+#include <iso14229.h>
 
 static const uint8_t uds_mem_data[255] = {
   0x01, 0x02, 0x03, 0x04, 0x05, 0x66, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D,
@@ -39,7 +37,7 @@ static const uint8_t uds_mem_data[255] = {
   0xF8, 0xF9, 0xFA, 0xFB, 0xFC, 0xFD, 0xFE, 0xFF,
 };
 
-ZTEST_F(lib_uds_minimal, test_0x10_diag_session_ctrl) {
+ZTEST_F(lib_iso14229, test_0x10_diag_session_ctrl) {
   struct iso14229_zephyr_instance *instance = &fixture->instance;
 
   uint8_t request_data[] = {
@@ -81,7 +79,7 @@ UDSErr_t test_0x10_diag_session_ctrl_not_supported_uds_callback(
   return UDS_OK;
 }
 
-ZTEST_F(lib_uds_minimal, test_0x10_diag_session_ctrl_not_supported) {
+ZTEST_F(lib_iso14229, test_0x10_diag_session_ctrl_not_supported) {
   struct iso14229_zephyr_instance *instance = &fixture->instance;
 
   test_uds_callback_fake.custom_fake =
@@ -107,7 +105,7 @@ ZTEST_F(lib_uds_minimal, test_0x10_diag_session_ctrl_not_supported) {
   zassert_equal(fake_can_send_fake.call_count, 1);
 }
 
-ZTEST_F(lib_uds_minimal, test_0x11_ecu_reset) {
+ZTEST_F(lib_iso14229, test_0x11_ecu_reset) {
   struct iso14229_zephyr_instance *instance = &fixture->instance;
 
   uint8_t request_data[] = {
@@ -133,7 +131,7 @@ ZTEST_F(lib_uds_minimal, test_0x11_ecu_reset) {
   zassert_equal(fake_can_send_fake.call_count, 1);
 }
 
-ZTEST_F(lib_uds_minimal, test_0x11_ecu_reset_response_pending) {
+ZTEST_F(lib_iso14229, test_0x11_ecu_reset_response_pending) {
   struct iso14229_zephyr_instance *instance = &fixture->instance;
 
   uint8_t request_data[] = {
@@ -176,7 +174,7 @@ UDSErr_t test_0x11_ecu_reset_rapid_power_shutdown_uds_callback(
   return UDS_OK;
 }
 
-ZTEST_F(lib_uds_minimal, test_0x11_ecu_reset_rapid_power_shutdown) {
+ZTEST_F(lib_iso14229, test_0x11_ecu_reset_rapid_power_shutdown) {
   struct iso14229_zephyr_instance *instance = &fixture->instance;
 
   test_uds_callback_fake.custom_fake =
@@ -230,7 +228,7 @@ UDSErr_t test_0x22_read_data_by_identifier_uds_callback(
   return UDS_OK;
 }
 
-ZTEST_F(lib_uds_minimal, test_0x22_read_data_by_identifier) {
+ZTEST_F(lib_iso14229, test_0x22_read_data_by_identifier) {
   struct iso14229_zephyr_instance *instance = &fixture->instance;
 
   test_uds_callback_fake.custom_fake =
@@ -312,7 +310,7 @@ UDSErr_t test_0x23_read_memory_uds_callback(
                     args->memSize);
 }
 
-ZTEST_F(lib_uds_minimal, test_0x23_read_memory) {
+ZTEST_F(lib_iso14229, test_0x23_read_memory) {
   struct iso14229_zephyr_instance *instance = &fixture->instance;
 
   test_uds_callback_fake.custom_fake = test_0x23_read_memory_uds_callback;

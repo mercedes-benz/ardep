@@ -10,13 +10,14 @@
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(uds, CONFIG_UDS_LOG_LEVEL);
 
-#include "uds.h"
 #include "uds_session.h"
 
 #include <zephyr/dfu/flash_img.h>
 #include <zephyr/dfu/mcuboot.h>
 #include <zephyr/storage/flash_map.h>
 #include <zephyr/sys/reboot.h>
+
+#include <iso14229.h>
 
 #define STACKSIZE 10240
 #define PRIORITY 7

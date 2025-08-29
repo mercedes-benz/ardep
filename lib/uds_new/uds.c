@@ -1,14 +1,21 @@
+/*
+ * Copyright (C) Frickly Systems GmbH
+ * Copyright (C) MBition GmbH
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 #include <zephyr/logging/log.h>
-LOG_MODULE_DECLARE(uds_new, CONFIG_UDS_NEW_LOG_LEVEL);
+LOG_MODULE_REGISTER(uds_new, CONFIG_UDS_NEW_LOG_LEVEL);
 
 #include "ecu_reset.h"
 #include "read_data_by_identifier.h"
 #include "read_memory_by_address.h"
 #include "uds.h"
 
-#include <ardep/uds_minimal.h>
+#include <ardep/iso14229.h>
 #include <ardep/uds_new.h>
-#include <server.h>
+#include <iso14229.h>
 
 UDSErr_t uds_event_callback(struct iso14229_zephyr_instance* inst,
                             UDSEvent_t event,
@@ -66,7 +73,6 @@ int uds_new_init(struct uds_new_instance_t* inst,
                  const struct device* can_dev,
                  void* user_context) {
   inst->user_context = user_context;
-  inst->set_ecu_reset_callback = uds_new_set_ecu_reset_callback;
 
 #ifdef CONFIG_UDS_NEW_USE_DYNAMIC_DATA_BY_ID
   inst->register_data_by_identifier = uds_new_register_runtime_data_identifier;

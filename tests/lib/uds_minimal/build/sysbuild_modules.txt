@@ -1,1 +1,0 @@
-"mcuboot":"/home/tim/Frickly/projects/mercedes/ardep-workspace/bootloader/mcuboot":"/home/tim/Frickly/projects/mercedes/ardep-workspace/bootloader/mcuboot/boot/zephyr/sysbuild"
