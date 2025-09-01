@@ -54,8 +54,9 @@ typedef int (*set_ecu_reset_callback_fn)(struct uds_new_instance_t* inst,
 typedef int (*register_data_by_identifier_fn)(struct uds_new_instance_t* inst,
                                               uint16_t data_id,
                                               void* addr,
-                                              size_t len,
-                                              size_t len_elem);
+                                              size_t num_of_elem,
+                                              size_t len_elem,
+                                              bool can_write);
 #endif  // CONFIG_UDS_NEW_USE_DYNAMIC_DATA_BY_ID
 
 struct uds_new_instance_t {
@@ -93,13 +94,12 @@ struct uds_new_registration_t {
   enum uds_new_registration_type_t type;
 
   void* user_data;
-  bool can_read;
   bool can_write;
 
   union {
     struct {
       uint16_t data_id;
-      size_t len;
+      size_t num_of_elem;
       size_t len_elem;
       UDSErr_t (*read)(void* data,
                        size_t* len,
@@ -138,33 +138,31 @@ UDSErr_t _uds_new_data_identifier_static_write(
  * To not convert the data to big endian before sending, pass 1 as len_elem and
  * the size of the data in bytes to len.
  *
- * @param name      User identifier.
- * @param _instance uds_new instance that owns the reference.
- * @param _data_id  Identifier for the data at @p addr.
- * @param addr      Memory address where the data is found.
- * @param len       Length of the data at @p addr in elements.
- * @param len_elem  Length of each element in bytes ad @p addr. These amount of
+ * @param name         User identifier.
+ * @param _instance    uds_new instance that owns the reference.
+ * @param _data_id     Identifier for the data at @p addr.
+ * @param addr         Memory address where the data is found.
+ * @param _num_of_elem number of elements at @p addr.
+ * @param len_elem     Length of each element in bytes ad @p addr. These amount of
  * byte are converted to be each
  */
 #define UDS_NEW_REGISTER_DATA_IDENTIFIER_STATIC_MEM(    \
   _instance,                                           \
   _data_id,                                                  \
   addr,                                                      \
-  _len,                                                      \
+  _num_of_elem,                                                      \
   _len_elem,                                                 \
-  readable,                                                  \
   writable                                                   \
   )                                                          \
   STRUCT_SECTION_ITERABLE(uds_new_registration_t, id##_data_id) = {  \
     .instance = _instance,                                   \
     .type = UDS_NEW_REGISTRATION_TYPE__DATA_IDENTIFIER,      \
     .user_data = addr,                                       \
-    .can_read = readable,                                    \
     .can_write = writable,                                   \
     .data_identifier =                                       \
         {                                                    \
           .data_id = _data_id,                               \
-          .len = _len,                                       \
+          .num_of_elem = _num_of_elem,                      \
           .len_elem = _len_elem,                             \
           .read = _uds_new_data_identifier_static_read,      \
           .write = _uds_new_data_identifier_static_write,    \
@@ -184,7 +182,6 @@ UDSErr_t _uds_new_data_identifier_static_write(
  */
 #define UDS_NEW_REGISTER_DATA_IDENTIFIER_STATIC(_instance, _data_id, \
                                                 variable,\
-  readable,                                                  \
   writable                                                   \
                                               )                  \
 UDS_NEW_REGISTER_DATA_IDENTIFIER_STATIC_MEM(                               \
@@ -193,7 +190,6 @@ UDS_NEW_REGISTER_DATA_IDENTIFIER_STATIC_MEM(                               \
   &variable,                                                               \
   1,                                                                       \
   sizeof(variable),                                                         \
-  readable,                                                  \
   writable                                                   \
 )
 
@@ -214,7 +210,6 @@ UDS_NEW_REGISTER_DATA_IDENTIFIER_STATIC_MEM(                               \
  */
 #define UDS_NEW_REGISTER_DATA_IDENTIFIER_STATIC_ARRAY(      \
      _instance, _data_id, array,\
-  readable,                                                  \
   writable                                                   \
   )                       \
 UDS_NEW_REGISTER_DATA_IDENTIFIER_STATIC_MEM(                \
@@ -223,7 +218,6 @@ UDS_NEW_REGISTER_DATA_IDENTIFIER_STATIC_MEM(                \
   &array[0],                                                \
   ARRAY_SIZE(array),                                        \
   sizeof(array[0]),                                          \
-  readable,                                                  \
   writable                                                   \
 )
 // clang-format on

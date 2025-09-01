@@ -8,8 +8,8 @@
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(uds_new, CONFIG_UDS_NEW_LOG_LEVEL);
 
+#include "data_by_identifier.h"
 #include "ecu_reset.h"
-#include "read_data_by_identifier.h"
 #include "read_memory_by_address.h"
 
 #include <ardep/iso14229.h>
@@ -37,7 +37,7 @@ UDSErr_t uds_event_callback(struct iso14229_zephyr_instance* inst,
     }
     case UDS_EVT_ReadDataByIdent: {
       UDSRDBIArgs_t* args = arg;
-      return handle_data_read_by_identifier(instance, args);
+      return uds_new_handle_read_data_by_identifier(instance, args);
     }
     case UDS_EVT_ReadMemByAddr: {
       UDSReadMemByAddrArgs_t* args = arg;
@@ -46,7 +46,10 @@ UDSErr_t uds_event_callback(struct iso14229_zephyr_instance* inst,
     case UDS_EVT_CommCtrl:
     case UDS_EVT_SecAccessRequestSeed:
     case UDS_EVT_SecAccessValidateKey:
-    case UDS_EVT_WriteDataByIdent:
+    case UDS_EVT_WriteDataByIdent: {
+      UDSWDBIArgs_t* args = arg;
+      return uds_new_handle_write_data_by_identifier(instance, args);
+    }
     case UDS_EVT_RoutineCtrl:
     case UDS_EVT_RequestDownload:
     case UDS_EVT_RequestUpload:

@@ -31,10 +31,11 @@ struct uds_new_instance_t instance;
 
 uint16_t variable = 5;
 char variable2[] = "Hello world";
-UDS_NEW_REGISTER_DATA_IDENTIFIER_STATIC(
-    &instance, 0x1234, variable, true, true);
-UDS_NEW_REGISTER_DATA_IDENTIFIER_STATIC_ARRAY(
-    &instance, 0x1235, variable2, true, true);
+UDS_NEW_REGISTER_DATA_IDENTIFIER_STATIC(&instance, 0x1234, variable, true);
+UDS_NEW_REGISTER_DATA_IDENTIFIER_STATIC_ARRAY(&instance,
+                                              0x1235,
+                                              variable2,
+                                              true);
 
 // todo: tickets für nötige msgs
 
