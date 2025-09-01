@@ -1,5 +1,5 @@
-/*
- * Copyright (c) 2023 Intel Corporation
+/**
+ * Copyright (c) Frickly Systems GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -16,7 +16,7 @@
 FAKE_VOID_FUNC(ecu_reset_work_handler, struct k_work *);
 
 ZTEST_F(lib_uds_new, test_0x11_ecu_reset) {
-  struct uds_new_instance_t *instance = &fixture->instance;
+  struct uds_new_instance_t *instance = fixture->instance;
 
   UDSECUResetArgs_t args = {.type = ECU_RESET_HARD};
 
@@ -29,7 +29,7 @@ ZTEST_F(lib_uds_new, test_0x11_ecu_reset) {
 }
 
 ZTEST_F(lib_uds_new, test_0x11_ecu_reset_fails_when_subtype_not_implemented) {
-  struct uds_new_instance_t *instance = &fixture->instance;
+  struct uds_new_instance_t *instance = fixture->instance;
 
   UDSECUResetArgs_t args = {.type = ECU_RESET_KEY_OFF_ON};
 
@@ -38,7 +38,7 @@ ZTEST_F(lib_uds_new, test_0x11_ecu_reset_fails_when_subtype_not_implemented) {
 }
 
 ZTEST_F(lib_uds_new, test_0x22_read_by_id_static_single_element) {
-  struct uds_new_instance_t *instance = &fixture->instance;
+  struct uds_new_instance_t *instance = fixture->instance;
 
   UDSRDBIArgs_t args = {
     .dataId = by_id_data1_id,
@@ -60,7 +60,7 @@ ZTEST_F(lib_uds_new, test_0x22_read_by_id_static_single_element) {
 }
 
 ZTEST_F(lib_uds_new, test_0x22_read_by_id_fails_when_id_unknown) {
-  struct uds_new_instance_t *instance = &fixture->instance;
+  struct uds_new_instance_t *instance = fixture->instance;
 
   UDSRDBIArgs_t args = {
     .dataId = 0xFFFF,  // unknown ID
@@ -72,7 +72,7 @@ ZTEST_F(lib_uds_new, test_0x22_read_by_id_fails_when_id_unknown) {
 }
 
 ZTEST_F(lib_uds_new, test_0x22_read_by_id_static_array) {
-  struct uds_new_instance_t *instance = &fixture->instance;
+  struct uds_new_instance_t *instance = fixture->instance;
 
   UDSRDBIArgs_t args = {
     .dataId = by_id_data2_id,
@@ -91,7 +91,7 @@ ZTEST_F(lib_uds_new, test_0x22_read_by_id_static_array) {
 }
 
 ZTEST_F(lib_uds_new, test_0x22_read_by_id_dynamic_array) {
-  struct uds_new_instance_t *instance = &fixture->instance;
+  struct uds_new_instance_t *instance = fixture->instance;
 
   uint16_t id = 0x9988;
   uint32_t data[4] = {0x11223344, 0x55667788, 0x99AABBCC, 0xDDEEFF00};

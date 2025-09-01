@@ -3,6 +3,7 @@ common:
   platform_allow:
     - native_sim/native/64
     - native_sim
+    - nucleo_g474re
 
 tests:
   lib.uds_new:

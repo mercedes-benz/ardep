@@ -10,6 +10,7 @@ LOG_MODULE_REGISTER(uds_new, CONFIG_UDS_NEW_LOG_LEVEL);
 
 #include "ecu_reset.h"
 #include "read_data_by_identifier.h"
+#include "read_memory_by_address.h"
 
 #include <ardep/iso14229.h>
 #include <ardep/uds_new.h>
@@ -38,7 +39,10 @@ UDSErr_t uds_event_callback(struct iso14229_zephyr_instance* inst,
       UDSRDBIArgs_t* args = arg;
       return handle_data_read_by_identifier(instance, args);
     }
-    case UDS_EVT_ReadMemByAddr:
+    case UDS_EVT_ReadMemByAddr: {
+      UDSReadMemByAddrArgs_t* args = arg;
+      return handle_read_memory_by_address(instance, args);
+    }
     case UDS_EVT_CommCtrl:
     case UDS_EVT_SecAccessRequestSeed:
     case UDS_EVT_SecAccessValidateKey:
@@ -60,7 +64,7 @@ UDSErr_t uds_event_callback(struct iso14229_zephyr_instance* inst,
       break;
   }
 
-  return UDS_OK;
+  return UDS_NRC_ServiceNotSupported;
 }
 
 int uds_new_init(struct uds_new_instance_t* inst,
