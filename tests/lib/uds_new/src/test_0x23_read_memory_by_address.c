@@ -68,10 +68,10 @@ ZTEST_F(lib_uds_new, test_0x23_read_memory_by_address_valid_memory) {
 #if CONFIG_BOARD_NUCLEO_G474RE
 
 // STM32G474RE memory layout (correct addresses for this MCU)
-const uintptr_t known_ram_start = 0x20000000;    // SRAM start
-const uintptr_t known_ram_end = 0x20020000;      // 128KB SRAM
-const uintptr_t known_flash_start = 0x08000000;  // Flash start
-const uintptr_t known_flash_end = 0x08080000;    // 512KB Flash
+const static uintptr_t known_ram_start = 0x20000000;    // SRAM start
+const static uintptr_t known_ram_end = 0x20020000;      // 128KB SRAM
+const static uintptr_t known_flash_start = 0x08000000;  // Flash start
+const static uintptr_t known_flash_end = 0x08080000;    // 512KB Flash
 
 // Test cases for real hardware with known memory layout
 ZTEST_F(lib_uds_new, test_0x23_read_memory_by_address_nucleo_ram_valid) {

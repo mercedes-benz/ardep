@@ -8,7 +8,6 @@
 // Use scripts/uds_iso14229_demo_script.py to test
 
 #include "ardep/uds_new.h"
-#include "write_memory_by_addr_impl.h"
 
 #include <errno.h>
 
@@ -39,18 +38,6 @@ UDS_NEW_REGISTER_DATA_IDENTIFIER_STATIC_ARRAY(&instance,
 
 // todo: tickets für nötige msgs
 
-UDSErr_t read_mem_by_addr_impl(struct UDSServer *srv,
-                               const UDSReadMemByAddrArgs_t *read_args,
-                               void *user_context) {
-  uint32_t addr = (uintptr_t)read_args->memAddr;
-
-  LOG_INF("Read Memory By Address: addr=0x%08X size=%u", addr,
-          read_args->memSize);
-
-  return read_args->copy(srv,
-                         &dummy_memory[(uint32_t)(uintptr_t)read_args->memAddr],
-                         read_args->memSize);
-}
 
 int main(void) {
   UDSISOTpCConfig_t cfg = {
