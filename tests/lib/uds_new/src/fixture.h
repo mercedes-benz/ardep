@@ -12,26 +12,36 @@
 
 DECLARE_FAKE_VALUE_FUNC(uint8_t, copy, UDSServer_t *, const void *, uint16_t);
 
+DECLARE_FAKE_VALUE_FUNC(UDSErr_t,
+                        data_id_check_fn,
+                        const struct uds_new_context *const,
+                        bool *);
+
+DECLARE_FAKE_VALUE_FUNC(UDSErr_t,
+                        data_id_action_fn,
+                        struct uds_new_context *const,
+                        bool *);
+
+extern const uint16_t data_id_r;
+extern uint8_t data_id_r_data[4];
+
+extern const uint16_t data_id_rw;
+extern uint8_t data_id_rw_data[4];
+
+extern const uint16_t data_id_rw_duplicated1;
+extern const uint16_t data_id_rw_duplicated2;
+extern uint8_t data_id_rw_duplicated_data[4];
+
+#ifdef CONFIG_UDS_NEW_USE_DYNAMIC_REGISTRATION
+extern bool test_dynamic_registration_check_invoked;
+extern bool test_dynamic_registration_action_invoked;
+#endif  // # CONFIG_UDS_NEW_USE_DYNAMIC_REGISTRATION
+
 struct lib_uds_new_fixture {
   UDSISOTpCConfig_t cfg;
-
   struct uds_new_instance_t *instance;
-
   const struct device *can_dev;
 };
-
-extern const uint16_t by_id_data1_default;
-extern uint16_t by_id_data1;
-extern const uint16_t by_id_data1_id;
-
-extern const uint16_t by_id_data2_default[3];
-extern uint16_t by_id_data2[3];
-extern const uint16_t by_id_data2_id;
-
-__attribute__((unused)) extern uint16_t by_id_data_no_rw[4];
-extern const uint16_t by_id_data_no_rw_id;
-
-extern const uint16_t by_id_data_unknown_id;
 
 /**
  * @brief Receive an event from iso14229

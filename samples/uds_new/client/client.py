@@ -1,4 +1,5 @@
 import struct
+from typing import Any
 from udsoncan.client import Client
 from udsoncan.connections import IsoTPSocketConnection
 from udsoncan.exceptions import (
@@ -47,9 +48,19 @@ def write_read_memory(client: Client):
     client.change_session(DiagnosticSessionControl.Session.defaultSession)
 
 
-def read_data_by_identifier(client: Client):
-    data = client.read_data_by_identifier([0x1234])
-    print(f"Reading data from identifier 0x1234: {data.service_data.values[0x1234]}")
+def read_write_data_by_identifier(client: Client):
+
+    data = client.read_data_by_identifier([0x0100])
+    print(f"Reading data from identifier 0x0100: {data.service_data.values[0x0100]}")
+
+    data = client.read_data_by_identifier_first([0x0050])
+    print(f"Reading data from identifier 0x0050: {data}")
+
+    data = client.write_data_by_identifier(0x0050, 0x1234)
+    print("Written data to identifier 0x0050: 0x1234")
+
+    data = client.read_data_by_identifier_first([0x0050])
+    print(f"Reading data from identifier 0x0050: {data}")
 
 
 def ecu_reset(client: Client):
@@ -60,14 +71,31 @@ def ecu_reset(client: Client):
 
 
 class MyCustomCodec(udsoncan.DidCodec):
-    def encode(self, val):
-        return struct.pack(">H", val)  # Big endian, 16 bit value
+    def encode(self, *did_value: Any):
+        return struct.pack(">H", *did_value)  # Big endian, 16 bit value
 
-    def decode(self, payload):
-        return struct.unpack(">H", payload)[0]  # decode the 16 bits value
+    def decode(self, did_payload: bytes):
+        return struct.unpack(">H", did_payload)[0]  # decode the 16 bits value
 
     def __len__(self):
         return 2  # encoded payload is 2 byte long.
+
+
+class StringCodec(udsoncan.DidCodec):
+    def encode(self, *did_value: Any):
+        value = did_value[0] if did_value else ""
+        encoded = value.encode("ascii") if isinstance(value, str) else value
+        # Ensure the data is exactly 15 bytes long, terminated with null byte
+        if len(encoded) >= 15:
+            return encoded[:14] + b"\x00"
+        else:
+            return encoded + b"\x00" * (15 - len(encoded))
+
+    def decode(self, did_payload: bytes):
+        return did_payload.decode("ascii", errors="ignore").rstrip("\x00")
+
+    def __len__(self):
+        return 15  # "Hello from UDS" + null terminator = 15 bytes
 
 
 def main(args: Namespace):
@@ -79,7 +107,8 @@ def main(args: Namespace):
     config = dict(udsoncan.configs.default_client_config)
     config["data_identifiers"] = {
         "default": ">H",  # Default codec is a struct.pack/unpack string. 16bits little endian
-        0x1234: MyCustomCodec,
+        0x0050: MyCustomCodec,
+        0x0100: StringCodec,
     }
 
     with Client(conn, config=config, request_timeout=2) as client:
@@ -104,13 +133,15 @@ def main(args: Namespace):
         #     )
 
         try:
-            read_data_by_identifier(client)
+            read_write_data_by_identifier(client)
 
         except NegativeResponseException as e:
             print(
                 f"Server refused our request for service {e.response.service.get_name()} "
                 f'with code "{e.response.code_name}" (0x{e.response.code:02x})'
             )
+        except (InvalidResponseException, UnexpectedResponseException) as e:
+            print(f"Server sent an invalid payload : {e.response.original_payload}")
 
 
 if __name__ == "__main__":
@@ -118,6 +149,6 @@ if __name__ == "__main__":
     parser.add_argument(
         "-c", "--can", default="vcan0", help="CAN interface (default: vcan0)"
     )
-    args = parser.parse_args()
+    parsed_args = parser.parse_args()
 
-    main(args)
+    main(parsed_args)

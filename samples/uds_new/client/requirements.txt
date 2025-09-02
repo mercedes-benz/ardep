@@ -1,0 +1,2 @@
+can-isotp==2.0.3
+udsoncan==1.21.2
