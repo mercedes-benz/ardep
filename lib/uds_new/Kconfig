@@ -6,22 +6,13 @@
 menuconfig UDS_NEW
     bool "UDS New"
     select ISO14229
+    select REBOOT
     
 if UDS_NEW
 
 module = UDS_NEW
 module-str = UDS new
 source "subsys/logging/Kconfig.template.log_config"
-
-config UDS_NEW_ENABLE_RESET
-    bool "Enable reboot/reset from ECU reset command"
-    default y
-    select REBOOT
-
-config UDS_NEW_RESET_DELAY_MS
-    int "Delay for the default ecu reset handling by this time (minimum of p2 is forced to ensure a response is send)"
-    default 0
-    depends on UDS_NEW_ENABLE_RESET
 
 config UDS_NEW_USE_DYNAMIC_REGISTRATION
     bool "Allow registering new event handlers at runtime"

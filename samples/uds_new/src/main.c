@@ -126,6 +126,8 @@ UDS_NEW_REGISTER_DATA_IDENTIFIER_STATIC(&instance,
                                         NULL,
                                         &string_size);
 
+UDS_NEW_REGISTER_ECU_HARD_RESET_HANDLER(&instance);
+
 UDSErr_t read_mem_by_addr_impl(struct UDSServer *srv,
                                const UDSReadMemByAddrArgs_t *read_args,
                                void *user_context) {

@@ -33,6 +33,11 @@ UDSErr_t _uds_new_check_and_act_on_event(struct uds_new_instance_t* instance,
   };
   UDSErr_t ret = UDS_OK;
 
+  if (!reg->applies_to_event(event)) {
+    *consume_event = false;
+    return UDS_OK;
+  }
+
   bool apply_action = false;
   if (!check) {
     *consume_event = false;
@@ -58,6 +63,41 @@ UDSErr_t _uds_new_check_and_act_on_event(struct uds_new_instance_t* instance,
 
   *found_at_least_one_match = true;
   return UDS_OK;
+}
+
+static UDSErr_t default_nrc_when_no_handler_found(UDSEvent_t event) {
+  switch (event) {
+    case UDS_EVT_WriteDataByIdent:
+    case UDS_EVT_ReadDataByIdent:
+      return UDS_NRC_RequestOutOfRange;
+    case UDS_EVT_EcuReset:
+    case UDS_EVT_DoScheduledReset:
+      return UDS_NRC_SubFunctionNotSupported;
+    case UDS_EVT_Err:
+    case UDS_EVT_DiagSessCtrl:
+    case UDS_EVT_ReadMemByAddr:
+    case UDS_EVT_CommCtrl:
+    case UDS_EVT_SecAccessRequestSeed:
+    case UDS_EVT_SecAccessValidateKey:
+    case UDS_EVT_WriteMemByAddr:
+    case UDS_EVT_RoutineCtrl:
+    case UDS_EVT_RequestDownload:
+    case UDS_EVT_RequestUpload:
+    case UDS_EVT_TransferData:
+    case UDS_EVT_RequestTransferExit:
+    case UDS_EVT_SessionTimeout:
+    case UDS_EVT_RequestFileTransfer:
+    case UDS_EVT_Custom:
+    case UDS_EVT_Poll:
+    case UDS_EVT_SendComplete:
+    case UDS_EVT_ResponseReceived:
+    case UDS_EVT_Idle:
+    case UDS_EVT_MAX:
+    default:
+      // TODO: Every event should be handled. This should be unreachable.
+      return UDS_NRC_ConditionsNotCorrect;
+      break;
+  }
 }
 
 // Iterates over event handlers to apply the actions for the event
@@ -96,7 +136,7 @@ UDSErr_t uds_new_handle_event(struct uds_new_instance_t* instance,
 #endif  // CONFIG_UDS_NEW_USE_DYNAMIC_REGISTRATION
 
   if (!found_at_least_one_match) {
-    return UDS_NRC_RequestOutOfRange;
+    return default_nrc_when_no_handler_found(event);
   }
 
   return UDS_PositiveResponse;
@@ -112,15 +152,16 @@ UDSErr_t uds_event_callback(struct iso14229_zephyr_instance* inst,
   switch (event) {
     case UDS_EVT_DiagSessCtrl:
       break;
-    case UDS_EVT_EcuReset: {
-#ifdef CONFIG_UDS_NEW_ENABLE_RESET
-      UDSECUResetArgs_t* args = arg;
+    case UDS_EVT_EcuReset:
+      return uds_new_handle_event(instance, event, arg,
+                                  uds_new_get_check_for_ecu_reset,
+                                  uds_new_get_action_for_ecu_reset);
 
-      return handle_ecu_reset_event(instance, (enum ecu_reset_type)args->type);
-#else
-      return UDS_NRC_ServiceNotSupported;
-#endif
-    }
+    case UDS_EVT_DoScheduledReset:
+      return uds_new_handle_event(
+          instance, event, arg, uds_new_get_check_for_execute_scheduled_reset,
+          uds_new_get_action_for_execute_scheduled_reset);
+
     case UDS_EVT_ReadDataByIdent:
       return uds_new_handle_event(
           instance, event, arg, uds_new_get_check_for_read_data_by_identifier,
@@ -148,7 +189,6 @@ UDSErr_t uds_event_callback(struct iso14229_zephyr_instance* inst,
     case UDS_EVT_TransferData:
     case UDS_EVT_RequestTransferExit:
     case UDS_EVT_SessionTimeout:
-    case UDS_EVT_DoScheduledReset:
     case UDS_EVT_RequestFileTransfer:
     case UDS_EVT_Custom:
     case UDS_EVT_Poll:

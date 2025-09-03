@@ -12,6 +12,10 @@ LOG_MODULE_DECLARE(uds_new, CONFIG_UDS_NEW_LOG_LEVEL);
 
 #include "data_by_identifier.h"
 
+bool uds_new_filter_for_data_by_id_event(UDSEvent_t event) {
+  return event == UDS_EVT_ReadDataByIdent || event == UDS_EVT_WriteDataByIdent;
+}
+
 uds_new_check_fn uds_new_get_check_for_read_data_by_identifier(
     const struct uds_new_registration_t* const reg) {
   return reg->data_identifier.read.check;

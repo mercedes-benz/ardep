@@ -96,6 +96,16 @@ UDS_NEW_REGISTER_DATA_IDENTIFIER_STATIC(&fixture_uds_instance,
                                         data_id_action_fn,
                                         NULL)
 
+UDS_NEW_REGISTER_ECU_RESET_HANDLER(&fixture_uds_instance,
+                                   NULL,
+                                   ECU_RESET_KEY_OFF_ON,
+                                   // ecu_reset
+                                   data_id_check_fn,
+                                   data_id_action_fn,
+                                   // do_scheduled_reset
+                                   data_id_check_fn,
+                                   data_id_action_fn)
+
 static const UDSISOTpCConfig_t cfg = {
   // Hardware Addresses
   .source_addr = 0x7E8,  // Can ID Server (us)

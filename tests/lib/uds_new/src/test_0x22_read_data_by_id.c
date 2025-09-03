@@ -210,6 +210,7 @@ ZTEST_F(lib_uds_new, test_0x22_read_by_id_dynamic_registration) {
 
   struct uds_new_registration_t reg;
   reg.type = UDS_NEW_REGISTRATION_TYPE__DATA_IDENTIFIER;
+  reg.applies_to_event = uds_new_filter_for_data_by_id_event;
   reg.data_identifier.data_id = UDS_UNIQUE_DATA_ID;
   reg.data_identifier.read.check = custom_check_for_0x22_dynamic_registration;
   reg.data_identifier.read.action = custom_action_for_0x22_dynamic_registration;
@@ -239,6 +240,7 @@ ZTEST_F(lib_uds_new,
 
   struct uds_new_registration_t reg;
   reg.type = UDS_NEW_REGISTRATION_TYPE__DATA_IDENTIFIER;
+  reg.applies_to_event = uds_new_filter_for_data_by_id_event;
   reg.data_identifier.data_id = UDS_UNIQUE_DATA_ID;
   reg.data_identifier.read.check = NULL;
   reg.data_identifier.read.action = NULL;

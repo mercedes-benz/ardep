@@ -15,38 +15,66 @@ LOG_MODULE_DECLARE(uds_new, CONFIG_UDS_NEW_LOG_LEVEL);
 #include <ardep/uds_new.h>
 #include <iso14229.h>
 
-/**
- * @brief Work handler that performs the actual ECU reset
- */
-void __weak ecu_reset_work_handler(struct k_work *work) {
-  LOG_INF("Performing ECU reset");
-  // Allow logging to be processed
+bool uds_new_filter_for_ecu_reset_event(UDSEvent_t event) {
+  return event == UDS_EVT_DoScheduledReset || event == UDS_EVT_EcuReset;
+}
+
+uds_new_check_fn uds_new_get_check_for_ecu_reset(
+    const struct uds_new_registration_t* const reg) {
+  return reg->ecu_reset.ecu_reset.check;
+}
+uds_new_action_fn uds_new_get_action_for_ecu_reset(
+    const struct uds_new_registration_t* const reg) {
+  return reg->ecu_reset.ecu_reset.action;
+}
+
+uds_new_check_fn uds_new_get_check_for_execute_scheduled_reset(
+    const struct uds_new_registration_t* const reg) {
+  return reg->ecu_reset.execute_scheduled_reset.check;
+}
+uds_new_action_fn uds_new_get_action_for_execute_scheduled_reset(
+    const struct uds_new_registration_t* const reg) {
+  return reg->ecu_reset.execute_scheduled_reset.action;
+}
+
+UDSErr_t uds_new_check_ecu_hard_reset(
+    const struct uds_new_context* const context, bool* apply_action) {
+  UDSECUResetArgs_t* args = context->arg;
+
+  if (args->type == ECU_RESET_HARD) {
+    *apply_action = true;
+  }
+
+  return UDS_OK;
+}
+
+UDSErr_t uds_new_action_ecu_hard_reset(struct uds_new_context* const context,
+                                       bool* consume_event) {
+  UDSECUResetArgs_t* args = context->arg;
+
+  // Issue reset just after Confirmation to ECU Reset request
+  args->powerDownTimeMillis = context->instance->iso14229.server.p2_ms;
+  *consume_event = true;
+  return UDS_OK;
+}
+
+UDSErr_t uds_new_check_execute_scheduled_reset(
+    const struct uds_new_context* const context, bool* apply_action) {
+  uint8_t reset_type = *(uint8_t*)context->arg;
+
+  if (reset_type == ECU_RESET_HARD) {
+    *apply_action = true;
+  }
+
+  return UDS_OK;
+}
+
+UDSErr_t uds_new_action_execute_scheduled_reset(
+    struct uds_new_context* const context, bool* consume_event) {
+  LOG_INF("Executing scheduled hard reset now");
+  // Wait for logging to be processed
   k_msleep(1);
   sys_reboot(SYS_REBOOT_COLD);
-}
-K_WORK_DELAYABLE_DEFINE(reset_work, ecu_reset_work_handler);
-
-UDSErr_t handle_ecu_reset_event(struct uds_new_instance_t *inst,
-                                enum ecu_reset_type reset_type) {
-  // By default only support hard reset
-  if (reset_type != ECU_RESET_HARD) {
-    return UDS_NRC_SubFunctionNotSupported;
-  }
-
-  uint32_t delay_ms =
-      MAX(CONFIG_UDS_NEW_RESET_DELAY_MS, inst->iso14229.server.p2_ms);
-  LOG_INF("Scheduling ECU reset in %u ms, type: %d", delay_ms, reset_type);
-
-  int ret = 0;
-  if (!k_work_delayable_is_pending(&reset_work)) {
-    ret = k_work_schedule(&reset_work, K_MSEC(delay_ms));
-  } else {
-    LOG_WRN("ECU reset work item is already scheduled");
-    ret = -1;
-  }
-  if (ret < 0) {
-    LOG_ERR("Failed to schedule ECU reset work");
-    return UDS_NRC_ConditionsNotCorrect;
-  }
-  return UDS_OK;
+  LOG_ERR("Error rebooting from ECU hard reset!");
+  return UDS_NRC_ConditionsNotCorrect;
 }

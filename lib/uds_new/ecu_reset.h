@@ -10,7 +10,14 @@
 
 #include <ardep/uds_new.h>
 
-UDSErr_t handle_ecu_reset_event(struct uds_new_instance_t* inst,
-                                enum ecu_reset_type reset_type);
+uds_new_check_fn uds_new_get_check_for_ecu_reset(
+    const struct uds_new_registration_t* const reg);
+uds_new_action_fn uds_new_get_action_for_ecu_reset(
+    const struct uds_new_registration_t* const reg);
+
+uds_new_check_fn uds_new_get_check_for_execute_scheduled_reset(
+    const struct uds_new_registration_t* const reg);
+uds_new_action_fn uds_new_get_action_for_execute_scheduled_reset(
+    const struct uds_new_registration_t* const reg);
 
 #endif  // ARDEP_LIB_UDS_NEW_ECU_RESET_H
