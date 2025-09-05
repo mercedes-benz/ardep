@@ -1,5 +1,6 @@
-/**
- * Copyright (c) Frickly Systems GmbH
+/*
+ * Copyright (C) Frickly Systems GmbH
+ * Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -105,6 +106,8 @@ UDS_NEW_REGISTER_ECU_RESET_HANDLER(&fixture_uds_instance,
                                    // do_scheduled_reset
                                    data_id_check_fn,
                                    data_id_action_fn)
+
+UDS_NEW_REGISTER_MEMORY_DEFAULT_HANDLER(&fixture_uds_instance)
 
 static const UDSISOTpCConfig_t cfg = {
   // Hardware Addresses

@@ -5,12 +5,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+#include "memory_by_address.h"
+
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(uds_new, CONFIG_UDS_NEW_LOG_LEVEL);
 
 #include "data_by_identifier.h"
 #include "ecu_reset.h"
-#include "memory_by_address.h"
 
 #include <ardep/iso14229.h>
 #include <ardep/uds_new.h>
@@ -167,18 +168,19 @@ UDSErr_t uds_event_callback(struct iso14229_zephyr_instance* inst,
           instance, event, arg, uds_new_get_check_for_read_data_by_identifier,
           uds_new_get_action_for_read_data_by_identifier);
 
-    case UDS_EVT_ReadMemByAddr: {
-      UDSReadMemByAddrArgs_t* args = arg;
-      return handle_read_memory_by_address(instance, args);
-    }
+    case UDS_EVT_ReadMemByAddr:
+      return uds_new_handle_event(instance, event, arg,
+                                  uds_new_get_check_for_read_memory_by_addr,
+                                  uds_new_get_action_for_read_memory_by_addr);
     case UDS_EVT_WriteDataByIdent:
       return uds_new_handle_event(
           instance, event, arg, uds_new_get_check_for_write_data_by_identifier,
           uds_new_get_action_for_write_data_by_identifier);
-    case UDS_EVT_WriteMemByAddr: {
-      UDSWriteMemByAddrArgs_t* args = arg;
-      return handle_write_memory_by_address(instance, args);
-    }
+    case UDS_EVT_WriteMemByAddr:
+      return uds_new_handle_event(instance, event, arg,
+                                  uds_new_get_check_for_write_memory_by_addr,
+                                  uds_new_get_action_for_write_memory_by_addr);
+
     case UDS_EVT_Err:
     case UDS_EVT_CommCtrl:
     case UDS_EVT_SecAccessRequestSeed:

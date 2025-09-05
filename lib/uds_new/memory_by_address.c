@@ -1,3 +1,11 @@
+/*
+ * Copyright (C) Frickly Systems GmbH
+ * Copyright (C) MBition GmbH
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include "iso14229.h"
 #include "memory_by_address.h"
 
 #include <zephyr/kernel.h>
@@ -11,6 +19,8 @@ LOG_MODULE_DECLARE(uds_new, CONFIG_UDS_NEW_LOG_LEVEL);
  * Check if the requested memory address range is within valid memory bounds
  * @param addr Starting address to check
  * @param size Size of memory region to check
+ * @param readonly Set to `true` if the specified region should be read
+ *                 (not written)
  * @return true if address range is valid, false otherwise
  */
 static bool is_memory_address_valid(uintptr_t addr,
@@ -38,7 +48,7 @@ static bool is_memory_address_valid(uintptr_t addr,
 
 // Flash memory range check
 #if DT_HAS_CHOSEN(zephyr_flash) && \
-DT_NODE_HAS_PROP(DT_CHOSEN(zephyr_flash), reg)
+    DT_NODE_HAS_PROP(DT_CHOSEN(zephyr_flash), reg)
 #define FLASH_NODE DT_CHOSEN(zephyr_flash)
   if (readonly) {
     const static uintptr_t flash_base = DT_REG_ADDR(FLASH_NODE);
@@ -55,8 +65,31 @@ DT_NODE_HAS_PROP(DT_CHOSEN(zephyr_flash), reg)
 #endif
 }
 
-UDSErr_t handle_read_memory_by_address(struct uds_new_instance_t* instance,
-                                       UDSReadMemByAddrArgs_t* args) {
+bool uds_new_filter_for_memory_by_addr(UDSEvent_t event) {
+  return event == UDS_EVT_ReadMemByAddr || event == UDS_EVT_WriteMemByAddr;
+}
+
+uds_new_check_fn uds_new_get_check_for_read_memory_by_addr(
+    const struct uds_new_registration_t* const reg) {
+  return reg->memory.read.check;
+}
+uds_new_action_fn uds_new_get_action_for_read_memory_by_addr(
+    const struct uds_new_registration_t* const reg) {
+  return reg->memory.read.action;
+}
+
+uds_new_check_fn uds_new_get_check_for_write_memory_by_addr(
+    const struct uds_new_registration_t* const reg) {
+  return reg->memory.write.check;
+}
+uds_new_action_fn uds_new_get_action_for_write_memory_by_addr(
+    const struct uds_new_registration_t* const reg) {
+  return reg->memory.write.action;
+}
+
+UDSErr_t uds_new_check_default_memory_by_addr_read(
+    const struct uds_new_context* const context, bool* apply_action) {
+  UDSReadMemByAddrArgs_t* args = context->arg;
   if (args->memAddr == NULL) {
     LOG_ERR("Read Memory By Address: NULL memory address");
     return UDS_NRC_RequestOutOfRange;
@@ -79,8 +112,17 @@ UDSErr_t handle_read_memory_by_address(struct uds_new_instance_t* instance,
     return UDS_NRC_RequestOutOfRange;
   }
 
-  uint8_t copy_result =
-      args->copy(&instance->iso14229.server, args->memAddr, args->memSize);
+  *apply_action = true;
+  return UDS_OK;
+}
+
+UDSErr_t uds_new_action_default_memory_by_addr_read(
+    struct uds_new_context* const context, bool* consume_event) {
+  UDSReadMemByAddrArgs_t* args = context->arg;
+  uintptr_t mem_addr = (uintptr_t)args->memAddr;
+
+  uint8_t copy_result = args->copy(&context->instance->iso14229.server,
+                                   args->memAddr, args->memSize);
   if (copy_result != UDS_PositiveResponse) {
     LOG_ERR("Read Memory By Address: Copy failed with result %d", copy_result);
     return UDS_NRC_RequestOutOfRange;
@@ -92,8 +134,9 @@ UDSErr_t handle_read_memory_by_address(struct uds_new_instance_t* instance,
   return UDS_PositiveResponse;
 }
 
-UDSErr_t handle_write_memory_by_address(struct uds_new_instance_t* instance,
-                                        UDSWriteMemByAddrArgs_t* args) {
+UDSErr_t uds_new_check_default_memory_by_addr_write(
+    const struct uds_new_context* const context, bool* apply_action) {
+  UDSWriteMemByAddrArgs_t* args = context->arg;
   if (args->memAddr == NULL) {
     LOG_ERR("Write Memory By Address: NULL memory address");
     return UDS_NRC_RequestOutOfRange;
@@ -115,6 +158,16 @@ UDSErr_t handle_write_memory_by_address(struct uds_new_instance_t* instance,
             (unsigned long)(mem_addr + args->memSize - 1));
     return UDS_NRC_RequestOutOfRange;
   }
+
+  *apply_action = true;
+  return UDS_OK;
+}
+
+UDSErr_t uds_new_action_default_memory_by_addr_write(
+    struct uds_new_context* const context, bool* consume_event) {
+  UDSWriteMemByAddrArgs_t* args = context->arg;
+
+  uintptr_t mem_addr = (uintptr_t)args->memAddr;
 
   memmove((void*)mem_addr, args->data, args->memSize);
 
