@@ -41,7 +41,7 @@ UDSErr_t uds_new_check_ecu_hard_reset(
     const struct uds_new_context* const context, bool* apply_action) {
   UDSECUResetArgs_t* args = context->arg;
 
-  if (args->type == ECU_RESET_HARD) {
+  if (args->type == ECU_RESET__HARD) {
     *apply_action = true;
   }
 
@@ -62,7 +62,7 @@ UDSErr_t uds_new_check_execute_scheduled_reset(
     const struct uds_new_context* const context, bool* apply_action) {
   uint8_t reset_type = *(uint8_t*)context->arg;
 
-  if (reset_type == ECU_RESET_HARD) {
+  if (reset_type == ECU_RESET__HARD) {
     *apply_action = true;
   }
 

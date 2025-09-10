@@ -12,6 +12,7 @@ LOG_MODULE_REGISTER(uds_new, CONFIG_UDS_NEW_LOG_LEVEL);
 
 #include "data_by_identifier.h"
 #include "ecu_reset.h"
+#include "read_dtc_info.h"
 
 #include <ardep/iso14229.h>
 #include <ardep/uds_new.h>
@@ -70,6 +71,7 @@ static UDSErr_t default_nrc_when_no_handler_found(UDSEvent_t event) {
   switch (event) {
     case UDS_EVT_WriteDataByIdent:
     case UDS_EVT_ReadDataByIdent:
+    case UDS_EVT_ReadDTCInformation:
       return UDS_NRC_RequestOutOfRange;
     case UDS_EVT_EcuReset:
     case UDS_EVT_DoScheduledReset:
@@ -180,6 +182,10 @@ UDSErr_t uds_event_callback(struct iso14229_zephyr_instance* inst,
       return uds_new_handle_event(instance, event, arg,
                                   uds_new_get_check_for_write_memory_by_addr,
                                   uds_new_get_action_for_write_memory_by_addr);
+    case UDS_EVT_ReadDTCInformation:
+      return uds_new_handle_event(instance, event, arg,
+                                  uds_new_get_check_for_read_dtc_info,
+                                  uds_new_get_action_for_read_dtc_info);
 
     case UDS_EVT_Err:
     case UDS_EVT_CommCtrl:
@@ -198,7 +204,6 @@ UDSErr_t uds_event_callback(struct iso14229_zephyr_instance* inst,
     case UDS_EVT_ResponseReceived:
     case UDS_EVT_Idle:
     case UDS_EVT_MAX:
-    case UDS_EVT_ReadDTCInformation:
       break;
   }
 

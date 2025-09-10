@@ -5,12 +5,8 @@
 
 zephyr_library()
 
-zephyr_library_sources(
-    data_by_identifier.c
-    ecu_reset.c
-    memory_by_address.c
-    uds.c
-)
+file(GLOB UDS_NEW_SOURCES *.c)
+zephyr_library_sources(${UDS_NEW_SOURCES})
 
 
 zephyr_linker_sources(SECTIONS iterables.ld)

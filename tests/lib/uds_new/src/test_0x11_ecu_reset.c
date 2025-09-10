@@ -18,7 +18,7 @@ UDSErr_t custom_check_for_0x11_return_subfunc_not_sup(
   if (context->registration->type == UDS_NEW_REGISTRATION_TYPE__ECU_RESET &&
       context->event == UDS_EVT_EcuReset) {
     UDSECUResetArgs_t *args = context->arg;
-    if (args->type == ECU_RESET_KEY_OFF_ON) {
+    if (args->type == ECU_RESET__KEY_OFF_ON) {
       *apply_action = true;
     }
   }
@@ -30,7 +30,7 @@ UDSErr_t custom_action_for_0x11_return_subfunc_not_sup(
   if (context->registration->type == UDS_NEW_REGISTRATION_TYPE__ECU_RESET &&
       context->event == UDS_EVT_EcuReset) {
     UDSECUResetArgs_t *args = context->arg;
-    if (args->type == ECU_RESET_KEY_OFF_ON) {
+    if (args->type == ECU_RESET__KEY_OFF_ON) {
       *consume_event = true;
     }
   }
@@ -46,7 +46,7 @@ ZTEST_F(lib_uds_new, test_0x11_ecu_reset_return_subfunc_not_sup) {
       custom_action_for_0x11_return_subfunc_not_sup;
 
   UDSECUResetArgs_t arg = {
-    .type = ECU_RESET_HARD,
+    .type = ECU_RESET__HARD,
     .powerDownTimeMillis = 500,
   };
 
@@ -61,7 +61,7 @@ UDSErr_t custom_check_for_0x11_ecu_reset_event_works(
   if (context->registration->type == UDS_NEW_REGISTRATION_TYPE__ECU_RESET &&
       context->event == UDS_EVT_EcuReset) {
     UDSECUResetArgs_t *args = context->arg;
-    if (args->type == ECU_RESET_KEY_OFF_ON) {
+    if (args->type == ECU_RESET__KEY_OFF_ON) {
       *apply_action = true;
     }
   }
@@ -73,7 +73,7 @@ UDSErr_t custom_action_for_0x11_ecu_reset_event_works(
   if (context->registration->type == UDS_NEW_REGISTRATION_TYPE__ECU_RESET &&
       context->event == UDS_EVT_EcuReset) {
     UDSECUResetArgs_t *args = context->arg;
-    if (args->type == ECU_RESET_KEY_OFF_ON) {
+    if (args->type == ECU_RESET__KEY_OFF_ON) {
       *consume_event = true;
     }
   }
@@ -89,7 +89,7 @@ ZTEST_F(lib_uds_new, test_0x11_ecu_reset_ecu_reset_event_works) {
       custom_action_for_0x11_ecu_reset_event_works;
 
   UDSECUResetArgs_t arg = {
-    .type = ECU_RESET_KEY_OFF_ON,
+    .type = ECU_RESET__KEY_OFF_ON,
     .powerDownTimeMillis = 500,
   };
 
@@ -106,7 +106,7 @@ UDSErr_t custom_check_for_0x11_do_scheduled_reset_event_works(
     const struct uds_new_context *const context, bool *apply_action) {
   if (context->registration->type == UDS_NEW_REGISTRATION_TYPE__ECU_RESET &&
       context->event == UDS_EVT_DoScheduledReset) {
-    if (*(uint32_t *)context->arg == ECU_RESET_KEY_OFF_ON) {
+    if (*(uint32_t *)context->arg == ECU_RESET__KEY_OFF_ON) {
       *apply_action = true;
     }
   }
@@ -117,7 +117,7 @@ UDSErr_t custom_action_for_0x11_do_scheduled_reset_event_works(
     struct uds_new_context *const context, bool *consume_event) {
   if (context->registration->type == UDS_NEW_REGISTRATION_TYPE__ECU_RESET &&
       context->event == UDS_EVT_DoScheduledReset) {
-    if (*(uint32_t *)context->arg == ECU_RESET_KEY_OFF_ON) {
+    if (*(uint32_t *)context->arg == ECU_RESET__KEY_OFF_ON) {
       *consume_event = true;
     }
   }
@@ -132,7 +132,7 @@ ZTEST_F(lib_uds_new, test_0x11_ecu_reset_do_scheduled_reset_event_works) {
   data_id_action_fn_fake.custom_fake =
       custom_action_for_0x11_do_scheduled_reset_event_works;
 
-  uint32_t reset_type = ECU_RESET_KEY_OFF_ON;
+  uint32_t reset_type = ECU_RESET__KEY_OFF_ON;
   ;
 
   int ret = receive_event(instance, UDS_EVT_DoScheduledReset, &reset_type);

@@ -99,7 +99,7 @@ UDS_NEW_REGISTER_DATA_IDENTIFIER_STATIC(&fixture_uds_instance,
 
 UDS_NEW_REGISTER_ECU_RESET_HANDLER(&fixture_uds_instance,
                                    NULL,
-                                   ECU_RESET_KEY_OFF_ON,
+                                   ECU_RESET__KEY_OFF_ON,
                                    // ecu_reset
                                    data_id_check_fn,
                                    data_id_action_fn,

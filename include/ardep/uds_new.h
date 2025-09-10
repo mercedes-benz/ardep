@@ -17,14 +17,41 @@ struct uds_new_instance_t;
 struct uds_new_registration_t;
 
 enum ecu_reset_type {
-  ECU_RESET_HARD = 1,
-  ECU_RESET_KEY_OFF_ON = 2,
-  ECU_RESET_ENABLE_RAPID_POWER_SHUT_DOWN = 4,
-  ECU_RESET_DISABLE_RAPID_POWER_SHUT_DOWN = 5,
-  ECU_RESET_VEHICLE_MANUFACTURER_SPECIFIC_START = 0x40,
-  ECU_RESET_VEHICLE_MANUFACTURER_SPECIFIC_END = 0x5F,
-  ECU_RESET_SYSTEM_SUPPLIER_SPECIFIC_START = 0x60,
-  ECU_RESET_SYSTEM_SUPPLIER_SPECIFIC_END = 0x7E,
+  ECU_RESET__HARD = 1,
+  ECU_RESET__KEY_OFF_ON = 2,
+  ECU_RESET__ENABLE_RAPID_POWER_SHUT_DOWN = 4,
+  ECU_RESET__DISABLE_RAPID_POWER_SHUT_DOWN = 5,
+  ECU_RESET__VEHICLE_MANUFACTURER_SPECIFIC_START = 0x40,
+  ECU_RESET__VEHICLE_MANUFACTURER_SPECIFIC_END = 0x5F,
+  ECU_RESET__SYSTEM_SUPPLIER_SPECIFIC_START = 0x60,
+  ECU_RESET__SYSTEM_SUPPLIER_SPECIFIC_END = 0x7E,
+};
+
+enum read_dtc_info_subfunc {
+  READ_DTC_INFO_SUBFUNC__NUM_OF_DTC_BY_STATUS_MASK = 0x01,
+  READ_DTC_INFO_SUBFUNC__DTC_BY_STATUS_MASK = 0x02,
+  READ_DTC_INFO_SUBFUNC__DTC_SNAPSHOT_IDENTIFICATION = 0x03,
+  READ_DTC_INFO_SUBFUNC__DTC_SNAPSHOT_RECORD_BY_DTC_NUM = 0x04,
+  READ_DTC_INFO_SUBFUNC__DTC_STORED_DATA_BY_RECORD_NUM = 0x05,
+  READ_DTC_INFO_SUBFUNC__DTC_EXT_DATA_RECORD_BY_DTC_NUM = 0x06,
+  READ_DTC_INFO_SUBFUNC__NUM_OF_DTC_BY_SEVERITY_MASK_RECORD = 0x07,
+  READ_DTC_INFO_SUBFUNC__DTC_BY_SEVERITY_MASK_RECORD = 0x08,
+  READ_DTC_INFO_SUBFUNC__SEVERITY_INFO_OF_DTC = 0x09,
+  READ_DTC_INFO_SUBFUNC__SUPPORTED_DTC = 0x0A,
+  READ_DTC_INFO_SUBFUNC__FIRST_TEST_FAILED_DTC = 0x0B,
+  READ_DTC_INFO_SUBFUNC__FIRST_CONFIRMED_DTC = 0x0C,
+  READ_DTC_INFO_SUBFUNC__MOST_RECENT_TEST_FAILED_DTC = 0x0D,
+  READ_DTC_INFO_SUBFUNC__MOST_RECENT_CONFIRMED_DTC = 0x0E,
+  READ_DTC_INFO_SUBFUNC__DTC_FAULT_DETECTION_COUNTER = 0x14,
+  READ_DTC_INFO_SUBFUNC__DTC_WITH_PERMANENT_STATUS = 0x15,
+  READ_DTC_INFO_SUBFUNC__DTC_EXT_DATA_RECORD_BY_NUM = 0x16,
+  READ_DTC_INFO_SUBFUNC__USER_DEF_MEM_DTC_BY_STATUS_MASK = 0x17,
+  READ_DTC_INFO_SUBFUNC__USER_DEF_MEM_DTC_SNAPSHOT_RECORD_BY_DTC_NUM = 0x18,
+  READ_DTC_INFO_SUBFUNC__USER_DEF_MEM_DTC_EXT_DATA_RECORD_BY_DTC_NUM = 0x19,
+  READ_DTC_INFO_SUBFUNC__DTC_EXTENDED_DATA_RECORD_IDENTIFICATION = 0x1A,
+  READ_DTC_INFO_SUBFUNC__WWHOBD_DTC_BY_MASK_RECORD = 0x42,
+  READ_DTC_INFO_SUBFUNC__WWHOBD_DTC_WITH_PERMANENT_STATUS = 0x55,
+  READ_DTC_INFO_SUBFUNC__DTC_INFO_BY_DTC_READINESS_GROUP_IDENTIFIER = 0x56
 };
 
 /**
@@ -165,6 +192,7 @@ int uds_new_init(struct uds_new_instance_t *inst,
 enum uds_new_registration_type_t {
   UDS_NEW_REGISTRATION_TYPE__ECU_RESET,
   UDS_NEW_REGISTRATION_TYPE__MEMORY,
+  UDS_NEW_REGISTRATION_TYPE__READ_DTC_INFO,
   UDS_NEW_REGISTRATION_TYPE__DATA_IDENTIFIER,
 };
 
@@ -213,6 +241,10 @@ struct uds_new_registration_t {
       struct uds_new_actor read;
       struct uds_new_actor write;
     } memory;
+    struct {
+      uint8_t sub_function;
+      struct uds_new_actor actor;
+    } read_dtc;
   };
 
   /**
@@ -302,10 +334,53 @@ bool uds_new_filter_for_data_by_id_event(UDSEvent_t event);
  */
 bool uds_new_filter_for_memory_by_addr(UDSEvent_t event);
 
+/**
+ * @brief Filter for Read DTC Information event handler registrations
+ *
+ * see @fn uds_new_filter_for_ecu_reset_event for details
+ */
+bool uds_new_filter_for_read_dtc_info_event(UDSEvent_t event);
+
 // clang-format off
 
 #define _UDS_CAT(a, b) a##b
 #define _UDS_CAT_EXPAND(a, b) _UDS_CAT(a, b)
+
+/**
+ * @brief Register a new memory by address event handler
+ * 
+ * @param _instance Pointer to associated the UDS server instance
+ * @param _context Optional context provided by the user
+ * @param _read_check Check if the `_read` action should be executed
+ * @param _read Execute a read for the event
+ * @param _write_check Check if the `_write` action should be executed
+ * @param _write Execute a write for the event
+ */
+#define UDS_NEW_REGISTER_READ_DTC_INFO_HANDLER(                                     \
+  _instance,                                                                        \
+  _context,                                                                         \
+  _subfunc_id,                                                                      \
+  _check,                                                                           \
+  _act                                                                              \
+)                                                                                   \
+  STRUCT_SECTION_ITERABLE(uds_new_registration_t,                                   \
+      /* Use a counter to generate unique names for the iterable section */         \
+        _UDS_CAT_EXPAND(__uds_new_registration_id_read_dtc_info, __COUNTER__)) = {  \
+    .instance = _instance,                                                          \
+    .type = UDS_NEW_REGISTRATION_TYPE__READ_DTC_INFO,                               \
+    .applies_to_event = uds_new_filter_for_read_dtc_info_event,                     \
+    .user_data = _context,                                                          \
+    .memory = {                                                                     \
+      .read = {                                                                     \
+        .check = _read_check,                                                       \
+        .action = _read,                                                            \
+      },                                                                            \
+      .write = {                                                                    \
+        .check = _write_check,                                                      \
+        .action = _write,                                                           \
+      },                                                                            \
+    }                                                                               \
+  };
 
 
 /**
