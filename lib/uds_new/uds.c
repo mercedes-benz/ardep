@@ -198,6 +198,7 @@ UDSErr_t uds_event_callback(struct iso14229_zephyr_instance* inst,
     case UDS_EVT_ResponseReceived:
     case UDS_EVT_Idle:
     case UDS_EVT_MAX:
+    case UDS_EVT_ReadDTCInformation:
       break;
   }
 
