@@ -19,8 +19,8 @@ bool uds_new_filter_for_read_dtc_info_event(UDSEvent_t event) {
   return event == UDS_EVT_ReadDTCInformation;
 }
 
-static UDSErr_t my_uds_new_check_fn(const struct uds_new_context* const context,
-                                    bool* apply_action) {
+static UDSErr_t uds_new_check_with_subfunc_fn(
+    const struct uds_new_context* const context, bool* apply_action) {
   const struct uds_new_registration_t* const reg = context->registration;
 
   UDSRDTCIArgs_t* args = (UDSRDTCIArgs_t*)context->arg;
@@ -35,7 +35,7 @@ static UDSErr_t my_uds_new_check_fn(const struct uds_new_context* const context,
 
 uds_new_check_fn uds_new_get_check_for_read_dtc_info(
     const struct uds_new_registration_t* const reg) {
-  return my_uds_new_check_fn;
+  return uds_new_check_with_subfunc_fn;
 }
 uds_new_action_fn uds_new_get_action_for_read_dtc_info(
     const struct uds_new_registration_t* const reg) {

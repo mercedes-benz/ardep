@@ -109,10 +109,12 @@ UDS_NEW_REGISTER_ECU_RESET_HANDLER(&fixture_uds_instance,
 
 UDS_NEW_REGISTER_MEMORY_DEFAULT_HANDLER(&fixture_uds_instance)
 
-UDS_NEW_REGISTER_READ_DTC_INFO_HANDLER(
-    &fixture_uds_instance, NULL, 1, data_id_check_fn, data_id_action_fn)
+UDS_NEW_REGISTER_READ_DTC_INFO_HANDLER_ALL(&fixture_uds_instance,
+                                           NULL,
+                                           data_id_check_fn,
+                                           data_id_action_fn)
 
-static const UDSISOTpCConfig_t cfg = {
+static const UDSISOTpCConfig_t default_cfg = {
   // Hardware Addresses
   .source_addr = 0x7E8,  // Can ID Server (us)
   .target_addr = 0x7E0,  // Can ID Client (them)
@@ -150,7 +152,7 @@ static void *uds_new_setup(void) {
   memset(&fixture_uds_instance, 0, sizeof(fixture_uds_instance));
 
   static struct lib_uds_new_fixture fixture = {
-    .cfg = cfg,
+    .cfg = default_cfg,
     .can_dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_canbus)),
     .instance = &fixture_uds_instance,
   };
@@ -170,7 +172,7 @@ static void uds_new_before(void *f) {
 
   copy_fake.custom_fake = custom_copy;
 
-  int ret = uds_new_init(uds_instance, &cfg, dev, fixture);
+  int ret = uds_new_init(uds_instance, &default_cfg, dev, fixture);
   assert(ret == 0);
 
   STRUCT_SECTION_FOREACH (uds_new_registration_t, reg) {
