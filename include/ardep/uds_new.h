@@ -370,14 +370,10 @@ bool uds_new_filter_for_read_dtc_info_event(UDSEvent_t event);
     .type = UDS_NEW_REGISTRATION_TYPE__READ_DTC_INFO,                               \
     .applies_to_event = uds_new_filter_for_read_dtc_info_event,                     \
     .user_data = _context,                                                          \
-    .memory = {                                                                     \
-      .read = {                                                                     \
-        .check = _read_check,                                                       \
-        .action = _read,                                                            \
-      },                                                                            \
-      .write = {                                                                    \
-        .check = _write_check,                                                      \
-        .action = _write,                                                           \
+    .read_dtc = {                                                                   \
+      .actor = {                                                                    \
+        .check = _check,                                                            \
+        .action = _act,                                                             \
       },                                                                            \
     }                                                                               \
   };
