@@ -2,6 +2,7 @@
 
 config MODULE_ISO14229_EXTERNAL
   bool "ISO14229 Library"
+  default n
   depends on CAN
 	depends on STD_C11 || STD_C17 || STD_C23
 

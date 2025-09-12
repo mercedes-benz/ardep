@@ -135,7 +135,7 @@ static int capture_rx_filter_fake(const struct device *dev,
   return 0;
 }
 
-static void *uds_new_setup(void) {
+static void *uds_setup(void) {
   static struct lib_iso14229_fixture fixture = {
     .cfg = cfg,
     .can_dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_canbus)),
@@ -144,7 +144,7 @@ static void *uds_new_setup(void) {
   return &fixture;
 }
 
-static void uds_new_before(void *f) {
+static void uds_before(void *f) {
   struct lib_iso14229_fixture *fixture = f;
   const struct device *dev = fixture->can_dev;
   struct iso14229_zephyr_instance *uds_instance = &fixture->instance;
@@ -183,4 +183,4 @@ static void uds_new_before(void *f) {
   uds_instance->set_callback(uds_instance, test_uds_callback);
 }
 
-ZTEST_SUITE(lib_iso14229, NULL, uds_new_setup, uds_new_before, NULL, NULL);
+ZTEST_SUITE(lib_iso14229, NULL, uds_setup, uds_before, NULL, NULL);

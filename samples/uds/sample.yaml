@@ -1,0 +1,13 @@
+# Copyright (C) Frickly Systems GmbH
+# Copyright (C) MBition GmbH
+
+sample:
+  name: uds example
+common:
+  build_only: true
+  integration_platforms:
+    - ardep
+    - native_sim/native/64
+    - native_sim
+tests:
+  example.uds.default: {}

@@ -5,7 +5,8 @@
 
 menuconfig ISO14229
     bool "UDS Minimal support"
-    select MODULE_ISO14229_EXTERNAL
+    default n
+    imply MODULE_ISO14229_EXTERNAL
     
 if ISO14229
 

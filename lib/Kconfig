@@ -4,32 +4,10 @@
 # SPDX-License-Identifier: Apache-2.0
 
 menu "ARDEP"
-    menuconfig UDS
-        bool "UDS"
-        depends on CAN
-        depends on ISOTP
 
-        depends on CAN_MAX_FILTER >= 8
-
-        depends on BOOTLOADER_MCUBOOT
-        depends on IMG_MANAGER
-        depends on REBOOT
-
-    if UDS
-        rsource "uds/Kconfig"
-    endif
-    
-
+    rsource "can_router/Kconfig"
     rsource "iso14229/Kconfig"
-    rsource "uds_new/Kconfig"
+    rsource "uds/Kconfig"
+    rsource "uds_legacy/Kconfig"
 
-    menuconfig CAN_ROUTER
-        bool "Can frame router"
-        depends on CAN
-        help
-            Route can frames from one can device to another using filters
-
-    if CAN_ROUTER
-        rsource "can_router/Kconfig"
-    endif
 endmenu

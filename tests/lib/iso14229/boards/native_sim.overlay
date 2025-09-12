@@ -8,8 +8,6 @@
 		zephyr,canbus = &can_fake;
 	};
 	
-	
-	
 };
 
 /delete-node/ &can0;

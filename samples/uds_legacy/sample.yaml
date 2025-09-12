@@ -1,0 +1,11 @@
+# Copyright (C) Frickly Systems GmbH
+# Copyright (C) MBition GmbH
+
+sample:
+  name: uds legacy example
+common:
+  build_only: true
+  integration_platforms:
+    - ardep
+tests:
+  example.uds_legacy.default: {}

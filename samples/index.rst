@@ -23,4 +23,5 @@ Samples and Demos
    lin2can/*
    uart/*
    uds/*
+   uds_legacy/*
 
