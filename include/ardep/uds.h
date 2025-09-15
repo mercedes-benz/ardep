@@ -242,6 +242,7 @@ struct uds_registration_t {
     struct {
       struct uds_actor diag_sess_ctrl;
       struct uds_actor session_timeout;
+      void *user_data;
     } diag_session_ctrl;
     struct {
       struct uds_actor ecu_reset;

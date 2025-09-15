@@ -483,7 +483,7 @@
  * @param _diag_session_ctrl Execute a read for the event
  * @param _session_timeout_check Check if the `_session_timeout` action should be executed
  * @param _session_timeout Execute a write for the event
- * @param _context Optional context provided by the user
+ * @param _user_context Optional context provided by the user
  * 
  */
 #define UDS_REGISTER_DIAG_SESSION_CTRL_HANDLER(                                \
@@ -492,15 +492,15 @@
   _diag_session_ctrl,                                                          \
   _session_timeout_check,                                                      \
   _session_timeout,                                                            \
-  _context                                                                     \
+  _user_context                                                                \
 )                                                                              \
   STRUCT_SECTION_ITERABLE(uds_registration_t,                                  \
         _UDS_CAT_EXPAND(__uds_registration_diag_session_id_, __COUNTER__)) = { \
     .instance = _instance,                                                     \
     .type = UDS_REGISTRATION_TYPE__DIAG_SESSION_CTRL,                          \
     .applies_to_event = uds_filter_for_diag_session_ctrl_event,                \
-    .user_data = _context,                                                     \
     .diag_session_ctrl = {                                                     \
+      .user_data = _user_context,                                              \
       .diag_sess_ctrl = {                                                      \
         .check = _diag_session_ctrl_check,                                     \
         .action = _diag_session_ctrl,                                          \
