@@ -166,6 +166,7 @@ enum uds_registration_type_t {
   UDS_REGISTRATION_TYPE__MEMORY,
   UDS_REGISTRATION_TYPE__READ_DTC_INFO,
   UDS_REGISTRATION_TYPE__DATA_IDENTIFIER,
+  UDS_REGISTRATION_TYPE__DIAG_SESSION_CTRL,
 };
 
 /**
@@ -198,6 +199,10 @@ struct uds_registration_t {
   void *user_data;
 
   union {
+    struct {
+      struct uds_actor diag_sess_ctrl;
+      struct uds_actor session_timeout;
+    } diag_session_ctrl;
     struct {
       struct uds_actor ecu_reset;
       struct uds_actor execute_scheduled_reset;
@@ -301,6 +306,13 @@ bool uds_filter_for_data_by_id_event(UDSEvent_t event);
  * see @fn uds_filter_for_ecu_reset_event for details
  */
 bool uds_filter_for_memory_by_addr(UDSEvent_t event);
+
+/**
+ * @brief Filter for Diagnostic Session Control event handler registrations
+ *
+ * see @fn uds_filter_for_ecu_reset_event for details
+ */
+bool uds_filter_for_diag_session_ctrl_event(UDSEvent_t event);
 
 #include "ardep/uds_macro.h"
 

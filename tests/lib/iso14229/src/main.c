@@ -106,6 +106,59 @@ ZTEST_F(lib_iso14229, test_0x10_diag_session_ctrl_not_supported) {
   zassert_equal(fake_can_send_fake.call_count, 1);
 }
 
+bool _session_timeout_event_fired = false;
+UDSErr_t test_0x10_diag_session_ctrl_with_session_timeout_callback(
+    struct iso14229_zephyr_instance *inst,
+    UDSEvent_t event,
+    void *arg,
+    void *user_context) {
+  if (event == UDS_EVT_DiagSessCtrl) {
+    return UDS_PositiveResponse;
+  } else if (event == UDS_EVT_SessionTimeout) {
+    _session_timeout_event_fired = true;
+    return UDS_PositiveResponse;
+  }
+
+  return UDS_NRC_GeneralProgrammingFailure;
+}
+
+ZTEST_F(lib_iso14229, test_0x10_diag_session_ctrl_with_session_timeout) {
+  struct iso14229_zephyr_instance *instance = &fixture->instance;
+  _session_timeout_event_fired = false;
+
+  test_uds_callback_fake.custom_fake =
+      test_0x10_diag_session_ctrl_with_session_timeout_callback;
+
+  uint8_t request_data[] = {
+    0x02,  // PCI (single frame, 2 bytes of data)
+    0x10,  // SID (DiagnosticSessionControl)
+    0x02,  // DS  (Programming Session)
+  };
+
+  receive_phys_can_frame_array(fixture, request_data);
+  advance_time_and_tick_thread(instance);
+  tick_thread(instance);
+
+  uint8_t response_data[] = {
+    0x06,  // PCI   (single frame, 3 bytes)
+    0x50,  // SID   (DiagnosticSessionControl)
+    0x02,  // DS (Session Type)
+    0x00,  // SPREC (p2 upper byte)
+    0x96,  // SPREC (p2 lower byte)
+    0x00,  // SPREC (p2* upper byte)
+    0x96,  // SPREC (p2* lower byte)
+
+  };
+  assert_send_phy_can_frame_array(fixture, 0, response_data);
+  zassert_equal(fake_can_send_fake.call_count, 1);
+
+  // Advance time to provoke session timeout event
+  k_msleep(8000);
+  advance_time_and_tick_thread(instance);
+
+  zassert_true(_session_timeout_event_fired);
+}
+
 ZTEST_F(lib_iso14229, test_0x11_ecu_reset) {
   struct iso14229_zephyr_instance *instance = &fixture->instance;
 

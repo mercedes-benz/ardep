@@ -5,6 +5,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+#include "diag_session_ctrl.h"
 #include "memory_by_address.h"
 
 #include <zephyr/logging/log.h>
@@ -69,7 +70,8 @@ UDSErr_t _uds_check_and_act_on_event(struct uds_instance_t* instance,
 static UDSErr_t default_nrc_when_no_handler_found(UDSEvent_t event) {
   switch (event) {
     case UDS_EVT_DiagSessCtrl:
-      // We don't require a handler for this event
+    case UDS_EVT_SessionTimeout:
+      // We don't require a handler for these event
       return UDS_PositiveResponse;
     case UDS_EVT_WriteDataByIdent:
     case UDS_EVT_ReadDataByIdent:
@@ -89,7 +91,6 @@ static UDSErr_t default_nrc_when_no_handler_found(UDSEvent_t event) {
     case UDS_EVT_RequestUpload:
     case UDS_EVT_TransferData:
     case UDS_EVT_RequestTransferExit:
-    case UDS_EVT_SessionTimeout:
     case UDS_EVT_RequestFileTransfer:
     case UDS_EVT_Custom:
     case UDS_EVT_Poll:
@@ -155,7 +156,13 @@ UDSErr_t uds_event_callback(struct iso14229_zephyr_instance* inst,
 
   switch (event) {
     case UDS_EVT_DiagSessCtrl:
-      break;
+      return uds_handle_event(instance, event, arg,
+                              uds_get_check_for_diag_session_ctrl,
+                              uds_get_action_for_diag_session_ctrl);
+    case UDS_EVT_SessionTimeout:
+      return uds_handle_event(instance, event, arg,
+                              uds_get_check_for_session_timeout,
+                              uds_get_action_for_session_timeout);
     case UDS_EVT_EcuReset:
       return uds_handle_event(instance, event, arg, uds_get_check_for_ecu_reset,
                               uds_get_action_for_ecu_reset);
@@ -192,7 +199,6 @@ UDSErr_t uds_event_callback(struct iso14229_zephyr_instance* inst,
     case UDS_EVT_RequestUpload:
     case UDS_EVT_TransferData:
     case UDS_EVT_RequestTransferExit:
-    case UDS_EVT_SessionTimeout:
     case UDS_EVT_RequestFileTransfer:
     case UDS_EVT_Custom:
     case UDS_EVT_Poll:

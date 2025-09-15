@@ -106,6 +106,15 @@ UDS_REGISTER_ECU_RESET_HANDLER(&fixture_uds_instance,
 
 UDS_REGISTER_MEMORY_DEFAULT_HANDLER(&fixture_uds_instance)
 
+UDS_REGISTER_DIAG_SESSION_CTRL_HANDLER(&fixture_uds_instance,
+                                       // diag_session_ctrl
+                                       data_id_check_fn,
+                                       data_id_action_fn,
+                                       // session_timeout
+                                       data_id_check_fn,
+                                       data_id_action_fn,
+                                       NULL)
+
 static const UDSISOTpCConfig_t default_cfg = {
   // Hardware Addresses
   .source_addr = 0x7E8,  // Can ID Server (us)

@@ -8,6 +8,7 @@
 // Use scripts/uds_iso14229_demo_script.py to test
 
 #include "ardep/uds.h"
+#include "ardep/uds_macro.h"
 
 #include <zephyr/drivers/can.h>
 #include <zephyr/kernel.h>
@@ -40,7 +41,7 @@ UDSErr_t read_data_by_id_check(const struct uds_context *const context,
   if (args->dataId != context->registration->data_identifier.data_id) {
     return UDS_OK;
   }
-  LOG_INF("Checking to read data id: 0x%02X successful",
+  LOG_INF("Check to read data id: 0x%02X successful",
           context->registration->data_identifier.data_id);
   // Set to true, when we want to handle this event
   *apply_action = true;
@@ -81,7 +82,7 @@ UDSErr_t write_data_by_id_check(const struct uds_context *const context,
   if (args->dataId != context->registration->data_identifier.data_id) {
     return UDS_OK;
   }
-  LOG_INF("Checking to write data id: 0x%02X successful",
+  LOG_INF("Check to write data id: 0x%02X successful",
           context->registration->data_identifier.data_id);
   // Set to true, when we want to handle this event
   *apply_action = true;
@@ -99,6 +100,41 @@ UDSErr_t write_data_by_id_action(struct uds_context *const context,
           context->registration->data_identifier.data_id, *data);
 
   // Signal this action consumes the event
+  *consume_event = true;
+
+  return UDS_PositiveResponse;
+}
+
+UDSErr_t diag_session_ctrl_check(const struct uds_context *const context,
+                                 bool *apply_action) {
+  UDSDiagSessCtrlArgs_t *args = context->arg;
+  *apply_action = true;
+  LOG_INF("Check to change diagnostic session to 0x%02X successful",
+          args->type);
+  return UDS_OK;
+}
+
+UDSErr_t diag_session_ctrl_action(struct uds_context *const context,
+                                  bool *consume_event) {
+  UDSDiagSessCtrlArgs_t *args = context->arg;
+  LOG_INF("Changing diagnostic session to 0x%02X", args->type);
+
+  *consume_event = true;
+
+  return UDS_PositiveResponse;
+}
+
+UDSErr_t diag_session_timeout_check(const struct uds_context *const context,
+                                    bool *apply_action) {
+  *apply_action = true;
+  LOG_INF("Check to act on Diagnostic Session Timeout successful");
+  return UDS_OK;
+}
+
+UDSErr_t diag_session_timeout_action(struct uds_context *const context,
+                                     bool *consume_event) {
+  LOG_INF("Diagnostic Session Timeout handled");
+
   *consume_event = true;
 
   return UDS_PositiveResponse;
@@ -127,6 +163,13 @@ UDS_REGISTER_DATA_IDENTIFIER_STATIC(&instance,
                                     &string_size);
 
 UDS_REGISTER_MEMORY_DEFAULT_HANDLER(&instance);
+
+UDS_REGISTER_DIAG_SESSION_CTRL_HANDLER(&instance,
+                                       diag_session_ctrl_check,
+                                       diag_session_ctrl_action,
+                                       diag_session_timeout_check,
+                                       diag_session_timeout_action,
+                                       NULL)
 
 UDSErr_t read_mem_by_addr_impl(struct UDSServer *srv,
                                const UDSReadMemByAddrArgs_t *read_args,
