@@ -90,8 +90,8 @@ UDSErr_t write_mem_by_address_action(struct uds_context *const context,
 }
 
 UDS_REGISTER_MEMORY_HANDLER(&instance,
-                            NULL,
                             read_mem_by_address_check,
                             read_mem_by_address_action,
                             write_mem_by_address_check,
-                            write_mem_by_address_action)
+                            write_mem_by_address_action,
+                            NULL)

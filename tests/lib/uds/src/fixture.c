@@ -95,14 +95,14 @@ UDS_REGISTER_DATA_IDENTIFIER_STATIC(&fixture_uds_instance,
                                     NULL)
 
 UDS_REGISTER_ECU_RESET_HANDLER(&fixture_uds_instance,
-                               NULL,
                                ECU_RESET__KEY_OFF_ON,
                                // ecu_reset
                                data_id_check_fn,
                                data_id_action_fn,
                                // do_scheduled_reset
                                data_id_check_fn,
-                               data_id_action_fn)
+                               data_id_action_fn,
+                               NULL)
 
 UDS_REGISTER_MEMORY_DEFAULT_HANDLER(&fixture_uds_instance)
 
@@ -116,9 +116,9 @@ UDS_REGISTER_DIAG_SESSION_CTRL_HANDLER(&fixture_uds_instance,
                                        NULL)
 
 UDS_REGISTER_READ_DTC_INFO_HANDLER_ALL(&fixture_uds_instance,
-                                       NULL,
                                        data_id_check_fn,
-                                       data_id_action_fn)
+                                       data_id_action_fn,
+                                       NULL)
 
 static const UDSISOTpCConfig_t default_cfg = {
   // Hardware Addresses

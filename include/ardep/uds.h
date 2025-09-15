@@ -233,33 +233,32 @@ struct uds_registration_t {
    */
   bool (*applies_to_event)(UDSEvent_t event);
 
-  /**
-   * @brief Event Handler specific context or user data
-   */
-  void *user_data;
-
   union {
     struct {
+      void *user_context;
       struct uds_actor diag_sess_ctrl;
       struct uds_actor session_timeout;
-      void *user_data;
     } diag_session_ctrl;
     struct {
+      void *user_context;
       struct uds_actor ecu_reset;
       struct uds_actor execute_scheduled_reset;
       uint8_t type;
     } ecu_reset;
     struct {
+      void *user_context;
+      void *data;
       uint16_t data_id;
       struct uds_actor read;
       struct uds_actor write;
-      void *user_context;
     } data_identifier;
     struct {
+      void *user_context;
       struct uds_actor read;
       struct uds_actor write;
     } memory;
     struct {
+      void *user_context;
       uint8_t sub_function;
       struct uds_actor actor;
     } read_dtc;

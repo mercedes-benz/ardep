@@ -80,7 +80,7 @@ UDSErr_t read_dtc_info_action(struct uds_context *const context,
 
 UDS_REGISTER_READ_DTC_INFO_HANDLER(
     &instance,
-    NULL,
     read_dtc_info_check,
     read_dtc_info_action,
-    UDS_READ_DTC_INFO_SUBFUNC__DTC_BY_STATUS_MASK)
+    UDS_READ_DTC_INFO_SUBFUNC__DTC_BY_STATUS_MASK,
+    NULL)
