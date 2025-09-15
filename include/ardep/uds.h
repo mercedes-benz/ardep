@@ -26,6 +26,33 @@ enum ecu_reset_type {
   ECU_RESET__SYSTEM_SUPPLIER_SPECIFIC_END = 0x7E,
 };
 
+enum UDS_READ_DTC_INFO_SUBFUNC {
+  UDS_READ_DTC_INFO_SUBFUNC__NUM_OF_DTC_BY_STATUS_MASK = 0x01,
+  UDS_READ_DTC_INFO_SUBFUNC__DTC_BY_STATUS_MASK = 0x02,
+  UDS_READ_DTC_INFO_SUBFUNC__DTC_SNAPSHOT_IDENTIFICATION = 0x03,
+  UDS_READ_DTC_INFO_SUBFUNC__DTC_SNAPSHOT_RECORD_BY_DTC_NUM = 0x04,
+  UDS_READ_DTC_INFO_SUBFUNC__DTC_STORED_DATA_BY_RECORD_NUM = 0x05,
+  UDS_READ_DTC_INFO_SUBFUNC__DTC_EXT_DATA_RECORD_BY_DTC_NUM = 0x06,
+  UDS_READ_DTC_INFO_SUBFUNC__NUM_OF_DTC_BY_SEVERITY_MASK_RECORD = 0x07,
+  UDS_READ_DTC_INFO_SUBFUNC__DTC_BY_SEVERITY_MASK_RECORD = 0x08,
+  UDS_READ_DTC_INFO_SUBFUNC__SEVERITY_INFO_OF_DTC = 0x09,
+  UDS_READ_DTC_INFO_SUBFUNC__SUPPORTED_DTC = 0x0A,
+  UDS_READ_DTC_INFO_SUBFUNC__FIRST_TEST_FAILED_DTC = 0x0B,
+  UDS_READ_DTC_INFO_SUBFUNC__FIRST_CONFIRMED_DTC = 0x0C,
+  UDS_READ_DTC_INFO_SUBFUNC__MOST_RECENT_TEST_FAILED_DTC = 0x0D,
+  UDS_READ_DTC_INFO_SUBFUNC__MOST_RECENT_CONFIRMED_DTC = 0x0E,
+  UDS_READ_DTC_INFO_SUBFUNC__DTC_FAULT_DETECTION_COUNTER = 0x14,
+  UDS_READ_DTC_INFO_SUBFUNC__DTC_WITH_PERMANENT_STATUS = 0x15,
+  UDS_READ_DTC_INFO_SUBFUNC__DTC_EXT_DATA_RECORD_BY_NUM = 0x16,
+  UDS_READ_DTC_INFO_SUBFUNC__USER_DEF_MEM_DTC_BY_STATUS_MASK = 0x17,
+  UDS_READ_DTC_INFO_SUBFUNC__USER_DEF_MEM_DTC_SNAPSHOT_RECORD_BY_DTC_NUM = 0x18,
+  UDS_READ_DTC_INFO_SUBFUNC__USER_DEF_MEM_DTC_EXT_DATA_RECORD_BY_DTC_NUM = 0x19,
+  UDS_READ_DTC_INFO_SUBFUNC__DTC_EXTENDED_DATA_RECORD_IDENTIFICATION = 0x1A,
+  UDS_READ_DTC_INFO_SUBFUNC__WWHOBD_DTC_BY_MASK_RECORD = 0x42,
+  UDS_READ_DTC_INFO_SUBFUNC__WWHOBD_DTC_WITH_PERMANENT_STATUS = 0x55,
+  UDS_READ_DTC_INFO_SUBFUNC__DTC_INFO_BY_DTC_READINESS_GROUP_IDENTIFIER = 0x56
+};
+
 /**
  * @brief Callback type for ECU reset events
  *
@@ -231,6 +258,10 @@ struct uds_registration_t {
       struct uds_actor read;
       struct uds_actor write;
     } memory;
+    struct {
+      uint8_t sub_function;
+      struct uds_actor actor;
+    } read_dtc;
   };
 
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
@@ -329,6 +360,13 @@ bool uds_filter_for_memory_by_addr(UDSEvent_t event);
  * see @ref uds_filter_for_ecu_reset_event for details
  */
 bool uds_filter_for_diag_session_ctrl_event(UDSEvent_t event);
+
+/**
+ * @brief Filter for Read DTC Information event handler registrations
+ *
+ * see @ref uds_filter_for_ecu_reset_event for details
+ */
+bool uds_filter_for_read_dtc_info_event(UDSEvent_t event);
 
 // Include macro declarations after all types are defined
 #include "ardep/uds_macro.h"  // IWYU pragma: keep
