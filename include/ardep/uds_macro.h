@@ -437,7 +437,7 @@
  * @note: @p _write_check and @p _write are optional. Set to NULL for read-only
  *        data identifier
  */
-#define UDS_REGISTER_DATA_IDENTIFIER_STATIC(                          \
+#define UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(                      \
   _instance,                                                          \
   _data_id,                                                           \
   _data_ptr,                                                          \

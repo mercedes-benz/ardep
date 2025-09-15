@@ -93,20 +93,20 @@ UDSErr_t write_data_by_id_action(struct uds_context *const context,
   return UDS_PositiveResponse;
 }
 
-UDS_REGISTER_DATA_IDENTIFIER_STATIC(&instance,
-                                    primitive_type_id,
-                                    &primitive_type,
-                                    read_data_by_id_check,
-                                    read_data_by_id_action,
-                                    write_data_by_id_check,
-                                    write_data_by_id_action,
-                                    &primitive_type_size);
+UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(&instance,
+                                        primitive_type_id,
+                                        &primitive_type,
+                                        read_data_by_id_check,
+                                        read_data_by_id_action,
+                                        write_data_by_id_check,
+                                        write_data_by_id_action,
+                                        &primitive_type_size);
 
-UDS_REGISTER_DATA_IDENTIFIER_STATIC(&instance,
-                                    string_id,
-                                    &string,
-                                    read_data_by_id_check,
-                                    read_data_by_id_action,
-                                    NULL,
-                                    NULL,
-                                    &string_size);
+UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(&instance,
+                                        string_id,
+                                        &string,
+                                        read_data_by_id_check,
+                                        read_data_by_id_action,
+                                        NULL,
+                                        NULL,
+                                        &string_size);

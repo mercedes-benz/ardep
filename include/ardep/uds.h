@@ -26,7 +26,7 @@ enum ecu_reset_type {
   ECU_RESET__SYSTEM_SUPPLIER_SPECIFIC_END = 0x7E,
 };
 
-enum UDS_READ_DTC_INFO_SUBFUNC {
+enum uds_read_dtc_info_subfunc {
   UDS_READ_DTC_INFO_SUBFUNC__NUM_OF_DTC_BY_STATUS_MASK = 0x01,
   UDS_READ_DTC_INFO_SUBFUNC__DTC_BY_STATUS_MASK = 0x02,
   UDS_READ_DTC_INFO_SUBFUNC__DTC_SNAPSHOT_IDENTIFICATION = 0x03,
@@ -151,7 +151,13 @@ typedef uds_action_fn (*uds_get_action_fn)(
  * @brief Associates a check with an action
  */
 struct uds_actor {
+  /**
+   * @brief Check function to evaluate whether the action should be executed
+   */
   uds_check_fn check;
+  /**
+   * @brief Action function to execute when the check passes.
+   */
   uds_action_fn action;
 };
 
@@ -234,32 +240,111 @@ struct uds_registration_t {
   bool (*applies_to_event)(UDSEvent_t event);
 
   union {
+    /**
+     * @brief Data for the diagnostic session control event handler
+     *
+     * Handles *UDS_EVT_DiagSessCtrl* events
+     */
     struct {
+      /**
+       * @brief User-defined context pointer
+       */
       void *user_context;
+      /**
+       * @brief Actor for *UDS_EVT_DiagSessCtrl* events
+       */
       struct uds_actor diag_sess_ctrl;
+      /**
+       * @brief Actor for *UDS_EVT_SessionTimeout* events
+       */
       struct uds_actor session_timeout;
     } diag_session_ctrl;
+    /**
+     * @brief Data for the ECU Reset event handler
+     *
+     * Handles *UDS_EVT_EcuReset* and *UDS_EVT_DoScheduledReset* events
+     */
     struct {
+      /**
+       * @brief User-defined context pointer
+       */
       void *user_context;
+      /**
+       * @brief Actor for *UDS_EVT_EcuReset* events
+       */
       struct uds_actor ecu_reset;
+      /**
+       * @brief Actor for *UDS_EVT_DoScheduledReset* events
+       */
       struct uds_actor execute_scheduled_reset;
-      uint8_t type;
+      /**
+       * @brief Type of reset to perform
+       */
+      enum ecu_reset_type type;
     } ecu_reset;
+    /**
+     * @brief Data for the Read/Write Data by ID event handler
+     *
+     * Handles *UDS_EVT_ReadDataByIdent* and *UDS_EVT_WriteDataByIdent* events
+     */
     struct {
+      /**
+       * @brief User-defined context pointer
+       */
       void *user_context;
+      /**
+       * @brief Pointer to the data to read/write
+       */
       void *data;
+      /**
+       * @brief Data identifier as defined in ISO 14229-1
+       */
       uint16_t data_id;
+      /**
+       * @brief Actor for *UDS_EVT_ReadDataByIdent* events
+       */
       struct uds_actor read;
+      /**
+       * @brief Actor for *UDS_EVT_WriteDataByIdent* events
+       */
       struct uds_actor write;
     } data_identifier;
+    /**
+     * @brief Data for the Read/Write Memory by Address event handler
+     *
+     * Handles *UDS_EVT_ReadMemByAddr* and *UDS_EVT_WriteMemByAddr* events
+     */
     struct {
+      /**
+       * @brief User-defined context pointer
+       */
       void *user_context;
+      /**
+       * @brief Actor for *UDS_EVT_ReadMemByAddr* events
+       */
       struct uds_actor read;
+      /**
+       * @brief Actor for *UDS_EVT_WriteMemByAddr* events
+       */
       struct uds_actor write;
     } memory;
+    /**
+     * @brief Data for the Read DTC Information event handler
+     *
+     * Handles *UDS_EVT_ReadDTCInformation* events with all its sub-Functions
+     */
     struct {
+      /**
+       * @brief User-defined context pointer
+       */
       void *user_context;
-      uint8_t sub_function;
+      /**
+       * @brief Sub-Function as defined in ISO 14229-1
+       */
+      enum uds_read_dtc_info_subfunc sub_function;
+      /**
+       * @brief Actor for *UDS_EVT_ReadDTCInformation* events
+       */
       struct uds_actor actor;
     } read_dtc;
   };
