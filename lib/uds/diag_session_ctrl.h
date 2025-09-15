@@ -4,15 +4,12 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
+
 #ifndef ARDEP_LIB_UDS_DIAG_SESSION_CTRL_H
 #define ARDEP_LIB_UDS_DIAG_SESSION_CTRL_H
 
-#include "iso14229.h"
-
 #include <ardep/iso14229.h>
 #include <ardep/uds.h>
-
-#pragma once
 
 uds_check_fn uds_get_check_for_diag_session_ctrl(
     const struct uds_registration_t* const reg);

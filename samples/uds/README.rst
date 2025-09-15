@@ -43,3 +43,9 @@ Test with board
 
         sudo ip link set can0 type can bitrate 500000
         sudo ip link set up can0
+
+#. Run test client with *can0* interface
+
+    .. code-block:: bash
+
+        python samples/uds/client.py --can can0

@@ -1,7 +1,11 @@
-.. _uds-sample:
+.. _uds-sample-legacy:
    
-UDS Sample
-##########
+UDS Sample (Legacy)
+###################
+
+.. note::
+
+    The underlying UDS implementation is **deprecated**, please use the new implementation and the :ref:`uds sample <uds-sample>` instead.
 
 This sample can be used to test the uds implementation draft.
 The UDS implementation does not support all the services yet, but it is a good starting point.

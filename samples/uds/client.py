@@ -14,16 +14,16 @@
 
 import struct
 from typing import Any
-from udsoncan.client import Client
+from argparse import ArgumentParser, Namespace
+
+import isotp
+import udsoncan
+from udsoncan.client import Client, MemoryLocation
 from udsoncan.connections import IsoTPSocketConnection
 from udsoncan.exceptions import (
     NegativeResponseException,
 )
 from udsoncan.services import DiagnosticSessionControl, ECUReset
-from argparse import ArgumentParser, Namespace
-
-import isotp
-import udsoncan
 
 
 def change_session(client: Client):
@@ -60,6 +60,55 @@ def read_write_data_by_identifier(client: Client):
     print(f"\tReading data from identifier 0x{data_id:04X}: 0x{data:04X}")
 
 
+def read_write_memory_by_address(client: Client):
+    print("Memory By Address:")
+
+    address: int = 0x00001000
+    memory_location = MemoryLocation(address=address, memorysize=16)
+
+    data = client.read_memory_by_address(memory_location)
+    print(f"\tRead 16 bytes:\t\t\t{' '.join(f'{b:02X}' for b in data.data)}")
+    read_data = data.data
+
+    write_data = bytes(
+        [
+            0x11,
+            0x12,
+            0x13,
+            0x14,
+            0x15,
+            0x16,
+            0x17,
+            0x18,
+            0x19,
+            0x1A,
+            0x1B,
+            0x1C,
+            0x1D,
+            0x1E,
+            0x1F,
+            0x20,
+        ]
+    )
+    data = client.write_memory_by_address(
+        memory_location,
+        write_data,
+    )
+    print(f"\tWritten 16 bytes:\t\t{' '.join(f'{b:02X}' for b in write_data)}")
+
+    data = client.read_memory_by_address(memory_location)
+    print(f"\tRead updated 16 bytes:\t\t{' '.join(f'{b:02X}' for b in data.data)}")
+
+    data = client.write_memory_by_address(
+        memory_location,
+        read_data,
+    )
+    print(f"\tRestored original 16 bytes:\t{' '.join(f'{b:02X}' for b in read_data)}")
+
+    data = client.read_memory_by_address(memory_location)
+    print(f"\tRead restored 16 bytes:\t\t{' '.join(f'{b:02X}' for b in data.data)}")
+
+
 def ecu_reset(client: Client):
     # Send ECU reset request (hard reset)
     print("Sending ECU hard reset request...")
@@ -67,7 +116,7 @@ def ecu_reset(client: Client):
     print("ECU reset request sent successfully")
 
 
-class MyCustomCodec(udsoncan.DidCodec):
+class CustomUint16Codec(udsoncan.DidCodec):
     def encode(self, *did_value: Any):
         return struct.pack(">H", *did_value)  # Big endian, 16 bit value
 
@@ -116,13 +165,14 @@ def main(args: Namespace):
     config = dict(udsoncan.configs.default_client_config)
     config["data_identifiers"] = {
         "default": ">H",  # Default codec is a struct.pack/unpack string. 16bits little endian
-        0x0050: MyCustomCodec,
+        0x0050: CustomUint16Codec,
         0x0100: StringCodec,
     }
 
     with Client(conn, config=config, request_timeout=2) as client:
         try_run(lambda: change_session(client))
         try_run(lambda: read_write_data_by_identifier(client))
+        try_run(lambda: read_write_memory_by_address(client))
 
         if reset:
             try_run(lambda: ecu_reset(client))

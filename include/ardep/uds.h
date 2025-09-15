@@ -8,7 +8,6 @@
 #ifndef ARDEP_UDS_H
 #define ARDEP_UDS_H
 
-// Forward declaration to avoid include dependency issues
 #include "ardep/iso14229.h"
 
 #include <iso14229.h>
@@ -75,8 +74,8 @@ struct uds_context {
  * @brief Callback to check whether the associated `uds_action_fn`
  * should be executed on this event.
  *
- * @param[in] context The context of this UDS Event
- * @param[out] apply_action set to `true` when an associated action should be
+ * @param context The context of this UDS Event
+ * @param apply_action set to `true` when an associated action should be
  *                          applied to this event.
  * @returns UDS_PositiveResponse on success
  * @returns UDS_NRC_* on failure. This NRC is returned to the UDS client
@@ -90,12 +89,13 @@ typedef UDSErr_t (*uds_check_fn)(const struct uds_context *const context,
  * When this callback is called, assume that the relevant conditions are met and
  * checked with an associated `uds_check_fn` beforehand.
  *
- * @param[in,out] context The context of this UDS Event
- * @param[out] consume_event Set to `false` if the event should not be consumed
+ * @param context The context of this UDS Event
+ * @param consume_event Set to `false` if the event should not be consumed
  *                           by this action or to `true` to consume it.
- *                           This should always be set.
  * @returns UDS_PositiveResponse on success
  * @returns UDS_NRC_* on failure. This NRC is returned to the UDS client
+ *
+ * @note You should always set `consume_event` and not rely on the default value
  */
 typedef UDSErr_t (*uds_action_fn)(struct uds_context *const context,
                                   bool *consume_event);
@@ -103,7 +103,7 @@ typedef UDSErr_t (*uds_action_fn)(struct uds_context *const context,
 /**
  * @brief Function to get the associated check function for a registration
  *
- * @param[in] reg Pointer to the registration instance
+ * @param reg Pointer to the registration instance
  * @returns The associated check function
  * @returns NULL if no function is associated
  */
@@ -113,7 +113,7 @@ typedef uds_check_fn (*uds_get_check_fn)(
 /**
  * @brief Function to get the associated action function for a registration
  *
- * @param[in] reg Pointer to the registration instance
+ * @param reg Pointer to the registration instance
  * @returns The associated check function
  * @returns NULL if no function is associated
  */
@@ -145,12 +145,22 @@ typedef int (*register_event_handler_fn)(
 
 #endif  // CONFIG_UDS_USE_DYNAMIC_REGISTRATION
 
+/**
+ * @brief UDS server instance
+ */
 struct uds_instance_t {
+  /**
+   * @brief isotp instance
+   */
   struct iso14229_zephyr_instance iso14229;
-  struct uds_registration_t *static_registrations;
+
   void *user_context;
 
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
+  /**
+   * @brief Pointer to the head of the singly linked list of dynamic
+   * registrations
+   */
   struct uds_registration_t *dynamic_registrations;
   register_event_handler_fn register_event_handler;
 #endif  // CONFIG_UDS_USE_DYNAMIC_REGISTRATION
@@ -161,6 +171,9 @@ int uds_init(struct uds_instance_t *inst,
              const struct device *can_dev,
              void *user_context);
 
+/**
+ * @brief type identifier for `struct uds_registration_t`
+ */
 enum uds_registration_type_t {
   UDS_REGISTRATION_TYPE__ECU_RESET,
   UDS_REGISTRATION_TYPE__MEMORY,
@@ -220,12 +233,15 @@ struct uds_registration_t {
     } memory;
   };
 
+#ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
+
   /**
    * @brief Pointer to the next dynamic registration
    *
    * @note: Only used for dynamic registration
    */
   struct uds_registration_t *next;
+#endif  // CONFIG_UDS_USE_DYNAMIC_REGISTRATION
 };
 
 /**
@@ -287,7 +303,7 @@ UDSErr_t uds_action_default_memory_by_addr_write(
 /**
  * @brief Filter for ECU Reset event handler registrations
  *
- * @param[in] event the event to check against
+ * @param event the event to check against
  * @returns true if the `event` can be handled
  * @returns false otherwise
  */
@@ -296,24 +312,25 @@ bool uds_filter_for_ecu_reset_event(UDSEvent_t event);
 /**
  * @brief Filter for Read/Write data by ID event handler registrations
  *
- * see @fn uds_filter_for_ecu_reset_event for details
+ * see @ref uds_filter_for_ecu_reset_event for details
  */
 bool uds_filter_for_data_by_id_event(UDSEvent_t event);
 
 /**
  * @brief Filter for Read/Write memory by address event handler registrations
  *
- * see @fn uds_filter_for_ecu_reset_event for details
+ * see @ref uds_filter_for_ecu_reset_event for details
  */
 bool uds_filter_for_memory_by_addr(UDSEvent_t event);
 
 /**
  * @brief Filter for Diagnostic Session Control event handler registrations
  *
- * see @fn uds_filter_for_ecu_reset_event for details
+ * see @ref uds_filter_for_ecu_reset_event for details
  */
 bool uds_filter_for_diag_session_ctrl_event(UDSEvent_t event);
 
-#include "ardep/uds_macro.h"
+// Include macro declarations after all types are defined
+#include "ardep/uds_macro.h"  // IWYU pragma: keep
 
 #endif  // ARDEP_UDS_H

@@ -1,4 +1,10 @@
-// This would be dedicated into a separate library
+/*
+ * Copyright (C) Frickly Systems GmbH
+ * Copyright (C) MBition GmbH
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 #include "ardep/iso14229.h"
 
 #include <zephyr/logging/log.h>
@@ -54,11 +60,66 @@ void iso14229_zephyr_thread_tick(struct iso14229_zephyr_instance *inst) {
   UDSServerPoll(&inst->server);
 }
 
-void iso14229_zephyr_thread(struct iso14229_zephyr_instance *inst) {
-  while (1) {
+static void iso14229_thread_entry(void *p1, void *p2, void *p3) {
+  struct iso14229_zephyr_instance *inst = (struct iso14229_zephyr_instance *)p1;
+
+  while (atomic_get(&inst->thread_stop_requested) == 0) {
     iso14229_zephyr_thread_tick(inst);
     k_sleep(K_MSEC(1));
   }
+
+  k_mutex_lock(&inst->thread_mutex, K_FOREVER);
+  inst->thread_running = false;
+  k_mutex_unlock(&inst->thread_mutex);
+}
+
+int iso14229_zephyr_thread_start(struct iso14229_zephyr_instance *inst) {
+  LOG_DBG("Starting UDS thread");
+
+  k_mutex_lock(&inst->thread_mutex, K_FOREVER);
+
+  if (inst->thread_running) {
+    LOG_WRN("Thread is already running");
+    k_mutex_unlock(&inst->thread_mutex);
+    return -EALREADY;
+  }
+
+  atomic_set(&inst->thread_stop_requested, 0);
+  inst->thread_id = k_thread_create(&inst->thread_data, inst->thread_stack,
+                                    K_KERNEL_STACK_SIZEOF(inst->thread_stack),
+                                    iso14229_thread_entry, inst, NULL, NULL,
+                                    K_PRIO_COOP(7), 0, K_NO_WAIT);
+
+  if (inst->thread_id == NULL) {
+    LOG_ERR("Failed to create UDS thread");
+    k_mutex_unlock(&inst->thread_mutex);
+    return -ENOMEM;
+  }
+
+  inst->thread_running = true;
+  k_mutex_unlock(&inst->thread_mutex);
+  return 0;
+}
+
+int iso14229_zephyr_thread_stop(struct iso14229_zephyr_instance *inst) {
+  LOG_DBG("Stopping UDS thread");
+
+  k_mutex_lock(&inst->thread_mutex, K_FOREVER);
+
+  if (!inst->thread_running) {
+    LOG_WRN("Thread is not running");
+    k_mutex_unlock(&inst->thread_mutex);
+    return -EALREADY;
+  }
+
+  atomic_set(&inst->thread_stop_requested, 1);
+  k_mutex_unlock(&inst->thread_mutex);
+
+  // Wait for thread to finish
+  k_thread_join(inst->thread_id, K_FOREVER);
+
+  LOG_DBG("UDS thread stopped");
+  return 0;
 }
 
 int iso14229_zephyr_init(struct iso14229_zephyr_instance *inst,
@@ -68,13 +129,23 @@ int iso14229_zephyr_init(struct iso14229_zephyr_instance *inst,
   inst->user_context = user_context;
   inst->set_callback = iso14229_zephyr_set_callback;
   inst->thread_tick = iso14229_zephyr_thread_tick;
-  inst->thread_run = iso14229_zephyr_thread;
+  inst->thread_start = iso14229_zephyr_thread_start;
+  inst->thread_stop = iso14229_zephyr_thread_stop;
 
   int ret = k_mutex_init(&inst->event_callback_mutex);
   if (ret != 0) {
     LOG_ERR("Failed to initialize event callback mutex");
     return ret;
   }
+
+  ret = k_mutex_init(&inst->thread_mutex);
+  if (ret != 0) {
+    LOG_ERR("Failed to initialize thread mutex");
+    return ret;
+  }
+
+  inst->thread_running = false;
+  atomic_set(&inst->thread_stop_requested, 0);
 
   k_msgq_init(&inst->can_phys_msgq, inst->can_phys_buffer,
               sizeof(struct can_frame),
@@ -93,13 +164,11 @@ int iso14229_zephyr_init(struct iso14229_zephyr_instance *inst,
   inst->tp.phys_link.user_send_can_arg = (void *)can_dev;
   inst->tp.func_link.user_send_can_arg = (void *)can_dev;
 
-  // Von CAN Nachrichten
   const struct can_filter phys_filter = {
     .id = inst->tp.phys_sa,
     .mask = CAN_STD_ID_MASK,
   };
 
-  // KP woher das kommt?!
   const struct can_filter func_filter = {
     .id = inst->tp.func_sa,
     .mask = CAN_STD_ID_MASK,

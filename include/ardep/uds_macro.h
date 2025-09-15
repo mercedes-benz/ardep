@@ -38,12 +38,12 @@
   _write_check,                                                               \
   _write                                                                      \
 )                                                                             \
-  STRUCT_SECTION_ITERABLE(uds_registration_t,                             \
+  STRUCT_SECTION_ITERABLE(uds_registration_t,                                 \
       /* Use a counter to generate unique names for the iterable section */   \
-        _UDS_CAT_EXPAND(__uds_registration_id_memory_, __COUNTER__)) = {  \
+        _UDS_CAT_EXPAND(__uds_registration_id_memory_, __COUNTER__)) = {      \
     .instance = _instance,                                                    \
-    .type = UDS_REGISTRATION_TYPE__MEMORY,                                \
-    .applies_to_event = uds_filter_for_memory_by_addr,                    \
+    .type = UDS_REGISTRATION_TYPE__MEMORY,                                    \
+    .applies_to_event = uds_filter_for_memory_by_addr,                        \
     .user_data = _context,                                                    \
     .memory = {                                                               \
       .read = {                                                               \
@@ -65,10 +65,10 @@
   UDS_REGISTER_MEMORY_HANDLER(                                                \
     _instance,                                                                \
     NULL,                                                                     \
-    uds_check_default_memory_by_addr_read,                                \
-    uds_action_default_memory_by_addr_read,                               \
-    uds_check_default_memory_by_addr_write,                               \
-    uds_action_default_memory_by_addr_write                               \
+    uds_check_default_memory_by_addr_read,                                    \
+    uds_action_default_memory_by_addr_read,                                   \
+    uds_check_default_memory_by_addr_write,                                   \
+    uds_action_default_memory_by_addr_write                                   \
   )
 
 // clang-format on
@@ -79,8 +79,14 @@
 
 // clang-format off
 
+
+
 /**
  * @brief Register a new ecu reset event handler
+ * 
+ * @details The `UDS_EVT_DoScheduledReset` event is triggered after the 
+ *          response to the `UDS_EVT_EcuReset` event is send and the wait
+ *          duration has elapsed
  * 
  * @param _instance Pointer to associated the UDS server instance
  * @param _context Optional context provided by the user
@@ -101,11 +107,11 @@
   _do_scheduled_reset_check,                                                  \
   _do_scheduled_reset                                                         \
 )                                                                             \
-  STRUCT_SECTION_ITERABLE(uds_registration_t,                             \
-        _UDS_CAT_EXPAND(__uds_registration_id, _reset_type)) = {          \
+  STRUCT_SECTION_ITERABLE(uds_registration_t,                                 \
+        _UDS_CAT_EXPAND(__uds_registration_id, _reset_type)) = {              \
     .instance = _instance,                                                    \
-    .type = UDS_REGISTRATION_TYPE__ECU_RESET,                             \
-    .applies_to_event = uds_filter_for_ecu_reset_event,                   \
+    .type = UDS_REGISTRATION_TYPE__ECU_RESET,                                 \
+    .applies_to_event = uds_filter_for_ecu_reset_event,                       \
     .user_data = _context,                                                    \
     .ecu_reset = {                                                            \
       .type = _reset_type,                                                    \
@@ -125,17 +131,17 @@
  * 
  * @param _instance Pointer to associated the UDS server instance
  */
-#define UDS_REGISTER_ECU_HARD_RESET_HANDLER(                                 \
+#define UDS_REGISTER_ECU_DEFAULT_HARD_RESET_HANDLER(                                 \
   _instance                                                                  \
 )                                                                            \
   UDS_REGISTER_ECU_RESET_HANDLER(                                            \
     _instance,                                                               \
     NULL,                                                                    \
     ECU_RESET__HARD,                                                         \
-    uds_check_ecu_hard_reset,                                            \
-    uds_action_ecu_hard_reset,                                           \
-    uds_check_execute_scheduled_reset,                                   \
-    uds_action_execute_scheduled_reset                                   \
+    uds_check_ecu_hard_reset,                                                \
+    uds_action_ecu_hard_reset,                                               \
+    uds_check_execute_scheduled_reset,                                       \
+    uds_action_execute_scheduled_reset                                       \
   )
 
 // clang-format on
@@ -171,11 +177,11 @@
   _write,                                                             \
   _context                                                            \
 )                                                                     \
-  STRUCT_SECTION_ITERABLE(uds_registration_t,                     \
-        _UDS_CAT_EXPAND(__uds_registration_id, _data_id)) = {     \
+  STRUCT_SECTION_ITERABLE(uds_registration_t,                         \
+        _UDS_CAT_EXPAND(__uds_registration_id, _data_id)) = {         \
     .instance = _instance,                                            \
-    .type = UDS_REGISTRATION_TYPE__DATA_IDENTIFIER,               \
-    .applies_to_event = uds_filter_for_data_by_id_event,          \
+    .type = UDS_REGISTRATION_TYPE__DATA_IDENTIFIER,                   \
+    .applies_to_event = uds_filter_for_data_by_id_event,              \
     .user_data = data_ptr,                                            \
     .data_identifier = {                                              \
       .user_context = _context,                                       \

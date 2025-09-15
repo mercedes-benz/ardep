@@ -1,4 +1,0 @@
-west:
-  command: /home/tim/.local/bin/west build -t run
-  topdir: /home/tim/Frickly/projects/mercedes/ardep-workspace
-  version: 1.4.0

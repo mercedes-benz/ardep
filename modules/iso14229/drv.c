@@ -1,8 +1,15 @@
+/*
+ * Copyright (C) Frickly Systems GmbH
+ * Copyright (C) MBition GmbH
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <zephyr/logging/log.h>
+LOG_MODULE_REGISTER(isotp, CONFIG_MODULE_ISO14229_EXTERNAL_LOG_LEVEL);
+
 #include <zephyr/drivers/can.h>
 #include <zephyr/kernel.h>
-#include <zephyr/logging/log.h>
-
-LOG_MODULE_REGISTER(isotp, CONFIG_MODULE_ISO14229_EXTERNAL_LOG_LEVEL);
 
 #include <iso14229.h>
 
