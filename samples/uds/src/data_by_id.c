@@ -51,8 +51,9 @@ UDSErr_t read_data_by_id_action(struct uds_context *const context,
         *(uint16_t *)context->registration->data_identifier.user_context);
   } else if (context->registration->data_identifier.data_id == string_id) {
     // Transport string as raw data without conversion
-    memcpy(temp, context->registration->data_identifier.user_context,
-           *(uint16_t *)context->registration->data_identifier.user_context);
+    uint16_t size =
+        *(uint16_t *)context->registration->data_identifier.user_context;
+    memcpy(temp, context->registration->data_identifier.data, size);
   }
 
   // Signal this action consumes the event
@@ -81,7 +82,7 @@ UDSErr_t write_data_by_id_action(struct uds_context *const context,
                                  bool *consume_event) {
   UDSWDBIArgs_t *args = context->arg;
 
-  uint16_t *data = context->registration->data_identifier.user_context;
+  uint16_t *data = context->registration->data_identifier.data;
   *data = sys_be16_to_cpu(*(uint16_t *)args->data);
 
   LOG_INF("Written data to id 0x%02X: 0x%04X",
