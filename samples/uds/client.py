@@ -13,6 +13,7 @@
 
 
 import struct
+import time
 from typing import Any
 from argparse import ArgumentParser, Namespace
 
@@ -109,15 +110,8 @@ def read_write_memory_by_address(client: Client):
     print(f"\tRead restored 16 bytes:\t\t{' '.join(f'{b:02X}' for b in data.data)}")
 
 
-def read_dtc_inforamation(client: Client):
+def dtc_inforamation(client: Client):
     print("Reading DTC information...")
-
-    print("\tRequesting DTCs with status mask 0x84...")
-    dtc_data = client.read_dtc_information(
-        subfunction=0x02,
-        status_mask=0x84,
-    )
-    print(f"\t\tDTC count: {dtc_data.service_data.dtc_count}")
 
     print("\tRequesting DTC Snapshot Identification (unimplemented subFunc)...")
     try:
@@ -129,6 +123,33 @@ def read_dtc_inforamation(client: Client):
             f"\t\tServer refused our request with code "
             f'"{e.response.code_name}" (0x{e.response.code:02x})'
         )
+
+    print("\tRequesting DTCs with status mask 0x84...")
+    dtc_data = client.read_dtc_information(
+        subfunction=0x02,
+        status_mask=0x84,
+    )
+    print(f"\t\tDTC count: {dtc_data.service_data.dtc_count}")
+
+    print("")
+    print("\tClearing DTC Information...")
+    client.clear_dtc(group=0xFFFFFF)
+
+    print("\tRequesting DTCs with status mask 0x84 again...")
+    dtc_data = client.read_dtc_information(
+        subfunction=0x02,
+        status_mask=0x84,
+    )
+    print(f"\t\tDTC count: {dtc_data.service_data.dtc_count}")
+
+    time.sleep(1.5)
+
+    print("\tRequesting DTCs with status mask 0x84 after delay...")
+    dtc_data = client.read_dtc_information(
+        subfunction=0x02,
+        status_mask=0x84,
+    )
+    print(f"\t\tDTC count: {dtc_data.service_data.dtc_count}")
 
 
 def ecu_reset(client: Client):
@@ -195,7 +216,7 @@ def main(args: Namespace):
         try_run(lambda: change_session(client))
         try_run(lambda: read_write_data_by_identifier(client))
         try_run(lambda: read_write_memory_by_address(client))
-        try_run(lambda: read_dtc_inforamation(client))
+        try_run(lambda: dtc_inforamation(client))
 
         if reset:
             try_run(lambda: ecu_reset(client))

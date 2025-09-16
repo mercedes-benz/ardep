@@ -5,14 +5,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "diag_session_ctrl.h"
-#include "memory_by_address.h"
-
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(uds, CONFIG_UDS_LOG_LEVEL);
 
+#include "clear_diag_info.h"
 #include "data_by_identifier.h"
+#include "diag_session_ctrl.h"
 #include "ecu_reset.h"
+#include "memory_by_address.h"
 #include "read_dtc_info.h"
 
 #include <ardep/iso14229.h>
@@ -76,6 +76,7 @@ static UDSErr_t default_nrc_when_no_handler_found(UDSEvent_t event) {
       return UDS_PositiveResponse;
     case UDS_EVT_WriteDataByIdent:
     case UDS_EVT_ReadDataByIdent:
+    case UDS_EVT_ClearDiagnosticInfo:
       return UDS_NRC_RequestOutOfRange;
     case UDS_EVT_EcuReset:
     case UDS_EVT_DoScheduledReset:
@@ -194,8 +195,11 @@ UDSErr_t uds_event_callback(struct iso14229_zephyr_instance* inst,
       return uds_handle_event(instance, event, arg,
                               uds_get_check_for_read_dtc_info,
                               uds_get_action_for_read_dtc_info);
-    case UDS_EVT_Err:
     case UDS_EVT_ClearDiagnosticInfo:
+      return uds_handle_event(instance, event, arg,
+                              uds_get_check_for_clear_diag_info,
+                              uds_get_action_for_clear_diag_info);
+    case UDS_EVT_Err:
     case UDS_EVT_CommCtrl:
     case UDS_EVT_SecAccessRequestSeed:
     case UDS_EVT_SecAccessValidateKey:

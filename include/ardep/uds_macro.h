@@ -516,4 +516,41 @@
 
 // #endregion DIAG_SESSION_CTRL
 
+// #region CLEAR_DIAGNOSTIC_INFORMATION
+
+// clang-format off
+
+/**
+ * @brief Register a new clear diagnostic event handler
+ * 
+ * @param _instance Pointer to associated the UDS server instance
+ * @param _check Check if the action should be executed
+ * @param _act Execute the handler for the event
+ * @param _user_context Optional context provided by the user
+ * 
+ */
+#define UDS_REGISTER_CLEAR_DIAG_INFO_HANDLER(                                  \
+  _instance,                                                                   \
+  _check,                                                                      \
+  _act,                                                                        \
+  _user_context                                                                \
+)                                                                              \
+  STRUCT_SECTION_ITERABLE(uds_registration_t,                                  \
+        _UDS_CAT_EXPAND(__uds_registration_clear_diag_info_, __COUNTER__)) = { \
+    .instance = _instance,                                                     \
+    .type = UDS_REGISTRATION_TYPE__CLEAR_DIAG_INFO,                            \
+    .applies_to_event = uds_filter_for_clear_diag_info_event,                  \
+    .clear_diagnostic_information = {                                          \
+      .user_context = _user_context,                                           \
+      .actor = {                                                               \
+        .check = _check,                                                       \
+        .action = _act,                                                        \
+      },                                                                       \
+    },                                                                         \
+  };
+
+// clang-format on
+
+// #endregion CLEAR_DIAGNOSTIC_INFORMATION
+
 #endif  // ARDEP_UDS_MACRO_H

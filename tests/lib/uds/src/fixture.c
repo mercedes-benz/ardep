@@ -120,6 +120,11 @@ UDS_REGISTER_READ_DTC_INFO_HANDLER_ALL(&fixture_uds_instance,
                                        data_id_action_fn,
                                        NULL)
 
+UDS_REGISTER_CLEAR_DIAG_INFO_HANDLER(&fixture_uds_instance,
+                                     data_id_check_fn,
+                                     data_id_action_fn,
+                                     NULL)
+
 static const UDSISOTpCConfig_t default_cfg = {
   // Hardware Addresses
   .source_addr = 0x7E8,  // Can ID Server (us)

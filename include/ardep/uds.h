@@ -213,6 +213,7 @@ enum uds_registration_type_t {
   UDS_REGISTRATION_TYPE__READ_DTC_INFO,
   UDS_REGISTRATION_TYPE__DATA_IDENTIFIER,
   UDS_REGISTRATION_TYPE__DIAG_SESSION_CTRL,
+  UDS_REGISTRATION_TYPE__CLEAR_DIAG_INFO,
 };
 
 /**
@@ -349,6 +350,16 @@ struct uds_registration_t {
        */
       struct uds_actor actor;
     } read_dtc;
+    struct {
+      /**
+       * @brief User-defined context pointer
+       */
+      void *user_context;
+      /**
+       * @brief Actor for *UDS_EVT_ClearDiagnosticInfo* events
+       */
+      struct uds_actor actor;
+    } clear_diagnostic_information;
   };
 
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
@@ -454,6 +465,13 @@ bool uds_filter_for_diag_session_ctrl_event(UDSEvent_t event);
  * see @ref uds_filter_for_ecu_reset_event for details
  */
 bool uds_filter_for_read_dtc_info_event(UDSEvent_t event);
+
+/**
+ * @brief Filter for Clear Diagnostic Information event handler registrations
+ *
+ * see @ref uds_filter_for_ecu_reset_event for details
+ */
+bool uds_filter_for_clear_diag_info_event(UDSEvent_t event);
 
 // Include macro declarations after all types are defined
 #include "ardep/uds_macro.h"  // IWYU pragma: keep
