@@ -28,37 +28,87 @@ from udsoncan.services import DiagnosticSessionControl, ECUReset
 
 
 def change_session(client: Client):
-    print("Changing to programming session")
+    print("Changing to programming session...")
     client.change_session(DiagnosticSessionControl.Session.programmingSession)
-    print("\tChange session successful")
+    print("\tSession change successful")
 
 
-def read_write_data_by_identifier(client: Client):
+def data_by_identifier(client: Client):
     print("Data By Identifier:")
 
     data_id: int = 0x0100
     data = client.read_data_by_identifier([data_id])
     print(
-        f'\tRead data from identifier {data_id:04X}: "{data.service_data.values[data_id]}"\n'
+        f'\tReading data from identifier\t0x{data_id:04X}:\t"{data.service_data.values[data_id]}"'
     )
 
     data_id = 0x0050
     data = client.read_data_by_identifier_first([data_id])
-    print(f"\tReading data from identifier 0x{data_id:04X}: 0x{data:04X}\n")
+    print(f"\tReading data from identifier\t0x{data_id:04X}:\t0x{data:04X}")
 
     write_data = 0x1234
     data = client.write_data_by_identifier(data_id, write_data)
-    print(f"\tWritten data to identifier 0x{data_id:04X}: 0x{write_data:04X}")
+    print(f"\tWriting data to identifier\t0x{data_id:04X}:\t0x{write_data:04X}")
 
     data = client.read_data_by_identifier_first([data_id])
-    print(f"\tReading data from identifier 0x{data_id:04X}: 0x{data:04X}\n")
+    print(f"\tReading data from identifier\t0x{data_id:04X}:\t0x{data:04X}")
 
     write_data = 0xBEEF
     data = client.write_data_by_identifier(data_id, write_data)
-    print(f"\tWritten data to identifier 0x{data_id:04X}: 0x{write_data:04X}")
+    print(f"\tWriting data to identifier\t0x{data_id:04X}:\t0x{write_data:04X}")
 
     data = client.read_data_by_identifier_first([data_id])
-    print(f"\tReading data from identifier 0x{data_id:04X}: 0x{data:04X}")
+    print(f"\tReading data from identifier\t0x{data_id:04X}:\t0x{data:04X}")
+
+    led_id = 0x0200
+    data = client.read_data_by_identifier_first([led_id])
+    print(f"\tReading LED state:\t\t\t0x{data:02X}")
+
+    write_data = 0x01
+    data = client.write_data_by_identifier(led_id, write_data)
+    print(f"\tTurning LED ON, writing:\t\t0x{write_data:02X}")
+
+    time.sleep(1)
+
+    io_control_param = 0x03  # short term adjustment
+    io_control_data = 0x00
+    client.io_control(led_id, control_param=io_control_param, values=[io_control_data])
+    print(
+        f"\tTemporarily overriding LED state via IO control. Setting LED state: 0x{io_control_data:02X}"
+    )
+
+    time.sleep(1)
+
+    io_control_data = 0x01
+    client.io_control(led_id, control_param=io_control_param, values=[io_control_data])
+    print(
+        f"\tTemporarily overriding LED state via IO control. Setting LED state: 0x{io_control_data:02X}"
+    )
+
+    time.sleep(1)
+
+    io_control_param = 0x01  # reset to Default
+    client.io_control(led_id, control_param=io_control_param)
+    print("\tResetting LED state to default (OFF)")
+
+    time.sleep(1)
+
+    io_control_param = 0x00  # return control to ECU
+    client.io_control(led_id, control_param=io_control_param)
+    print("\tReturning control of LED back to the ECU")
+
+    time.sleep(1)
+
+    write_data = 0x01
+    data = client.write_data_by_identifier(led_id, write_data)
+    print(f"\tTurning LED ON, writing:\t\t0x{write_data:02X}")
+
+    time.sleep(1)
+
+    write_data = 0x00
+    data = client.write_data_by_identifier(led_id, write_data)
+    print(f"\tTurning LED OFF, writing:\t\t0x{write_data:02X}")
+    time.sleep(1)
 
 
 def read_write_memory_by_address(client: Client):
@@ -68,7 +118,7 @@ def read_write_memory_by_address(client: Client):
     memory_location = MemoryLocation(address=address, memorysize=16)
 
     data = client.read_memory_by_address(memory_location)
-    print(f"\tRead 16 bytes:\t\t\t{' '.join(f'{b:02X}' for b in data.data)}")
+    print(f"\tReading 16 bytes:\t\t\t{' '.join(f'{b:02X}' for b in data.data)}")
     read_data = data.data
 
     write_data = bytes(
@@ -95,22 +145,24 @@ def read_write_memory_by_address(client: Client):
         memory_location,
         write_data,
     )
-    print(f"\tWritten 16 bytes:\t\t{' '.join(f'{b:02X}' for b in write_data)}")
+    print(f"\tWriting 16 bytes:\t\t\t{' '.join(f'{b:02X}' for b in write_data)}")
 
     data = client.read_memory_by_address(memory_location)
-    print(f"\tRead updated 16 bytes:\t\t{' '.join(f'{b:02X}' for b in data.data)}")
+    print(f"\tReading updated 16 bytes:\t\t{' '.join(f'{b:02X}' for b in data.data)}")
 
     data = client.write_memory_by_address(
         memory_location,
         read_data,
     )
-    print(f"\tRestored original 16 bytes:\t{' '.join(f'{b:02X}' for b in read_data)}")
+    print(
+        f"\tRestoring original 16 bytes:\t\t{' '.join(f'{b:02X}' for b in read_data)}"
+    )
 
     data = client.read_memory_by_address(memory_location)
-    print(f"\tRead restored 16 bytes:\t\t{' '.join(f'{b:02X}' for b in data.data)}")
+    print(f"\tReading restored 16 bytes:\t\t{' '.join(f'{b:02X}' for b in data.data)}")
 
 
-def dtc_inforamation(client: Client):
+def dtc_information(client: Client):
     print("Reading DTC information...")
 
     print("\tRequesting DTC Snapshot Identification (unimplemented subFunc)...")
@@ -120,8 +172,7 @@ def dtc_inforamation(client: Client):
         )
     except NegativeResponseException as e:
         print(
-            f"\t\tServer refused our request with code "
-            f'"{e.response.code_name}" (0x{e.response.code:02x})'
+            f'\t\tServer refused our request with code "{e.response.code_name}" (0x{e.response.code:02X})'
         )
 
     print("\tRequesting DTCs with status mask 0x84...")
@@ -131,8 +182,7 @@ def dtc_inforamation(client: Client):
     )
     print(f"\t\tDTC count: {dtc_data.service_data.dtc_count}")
 
-    print("")
-    print("\tClearing DTC Information...")
+    print("\tClearing DTC information...")
     client.clear_dtc(group=0xFFFFFF)
 
     print("\tRequesting DTCs with status mask 0x84 again...")
@@ -156,7 +206,7 @@ def ecu_reset(client: Client):
     # Send ECU reset request (hard reset)
     print("Sending ECU hard reset request...")
     client.ecu_reset(ECUReset.ResetType.hardReset)
-    print("ECU reset request sent successfully")
+    print("\tECU reset request sending successfully")
 
 
 class CustomUint16Codec(udsoncan.DidCodec):
@@ -168,6 +218,17 @@ class CustomUint16Codec(udsoncan.DidCodec):
 
     def __len__(self):
         return 2  # encoded payload is 2 byte long.
+
+
+class CustomUint8Codec(udsoncan.DidCodec):
+    def encode(self, *did_value: Any):
+        return struct.pack(">B", *did_value)  # Big endian, 8 bit value
+
+    def decode(self, did_payload: bytes):
+        return struct.unpack(">B", did_payload)[0]  # decode the 8 bits value
+
+    def __len__(self):
+        return 1  # encoded payload is 1 byte long.
 
 
 class StringCodec(udsoncan.DidCodec):
@@ -194,7 +255,7 @@ def try_run(runnable):
     except NegativeResponseException as e:
         print(
             f"Server refused our request for service {e.response.service.get_name()} "
-            f'with code "{e.response.code_name}" (0x{e.response.code:02x})'
+            f'with code "{e.response.code_name}" (0x{e.response.code:02X})'
         )
 
 
@@ -210,13 +271,18 @@ def main(args: Namespace):
         "default": ">H",  # Default codec is a struct.pack/unpack string. 16bits little endian
         0x0050: CustomUint16Codec,
         0x0100: StringCodec,
+        0x0200: CustomUint8Codec,
+    }
+
+    config["input_output"] = {
+        0x0200: "<B",  # Single Byte
     }
 
     with Client(conn, config=config, request_timeout=2) as client:
         try_run(lambda: change_session(client))
-        try_run(lambda: read_write_data_by_identifier(client))
+        try_run(lambda: data_by_identifier(client))
         try_run(lambda: read_write_memory_by_address(client))
-        try_run(lambda: dtc_inforamation(client))
+        try_run(lambda: dtc_information(client))
 
         if reset:
             try_run(lambda: ecu_reset(client))
