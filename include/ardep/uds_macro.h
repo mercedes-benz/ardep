@@ -432,10 +432,15 @@
  * @param _read Execute a read for the event
  * @param _write_check Check if the `_write` action should be executed
  * @param _write Execute a write for the event
+ * @param _io_control_check Check if the `_io_control` action should be executed
+ * @param _io_control Act an io control event
  * @param _user_context Optional context provided by the user
  * 
  * @note: @p _write_check and @p _write are optional. Set to NULL for read-only
  *        data identifier
+ *
+ * @note: @p _io_control_check and @p _io_control are optional.
+ *        Set to NULL for to make this data identifier not I/O controllable
  */
 #define UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(                      \
   _instance,                                                          \
@@ -445,6 +450,8 @@
   _read,                                                              \
   _write_check,                                                       \
   _write,                                                             \
+  _io_control_check,                                                  \
+  _io_control,                                                        \
   _user_context                                                       \
 )                                                                     \
   STRUCT_SECTION_ITERABLE(uds_registration_t,                         \
@@ -463,6 +470,10 @@
       .write = {                                                      \
         .check = _write_check,                                        \
         .action = _write,                                             \
+      },                                                              \
+      .io_control = {                                                 \
+        .check = _io_control_check,                                   \
+        .action = _io_control,                                        \
       },                                                              \
     },                                                                \
   };

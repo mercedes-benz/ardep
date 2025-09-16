@@ -199,6 +199,10 @@ UDSErr_t uds_event_callback(struct iso14229_zephyr_instance* inst,
       return uds_handle_event(instance, event, arg,
                               uds_get_check_for_clear_diag_info,
                               uds_get_action_for_clear_diag_info);
+    case UDS_EVT_IOControl:
+      return uds_handle_event(instance, event, arg,
+                              uds_get_check_for_io_control_by_identifier,
+                              uds_get_action_for_io_control_by_identifier);
     case UDS_EVT_Err:
     case UDS_EVT_CommCtrl:
     case UDS_EVT_SecAccessRequestSeed:

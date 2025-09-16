@@ -288,7 +288,8 @@ struct uds_registration_t {
     /**
      * @brief Data for the Read/Write Data by ID event handler
      *
-     * Handles *UDS_EVT_ReadDataByIdent* and *UDS_EVT_WriteDataByIdent* events
+     * Handles *UDS_EVT_ReadDataByIdent*, *UDS_EVT_WriteDataByIdent* and
+     * *UDS_EVT_IOControl* events
      */
     struct {
       /**
@@ -311,6 +312,10 @@ struct uds_registration_t {
        * @brief Actor for *UDS_EVT_WriteDataByIdent* events
        */
       struct uds_actor write;
+      /**
+       * @brief Actor for *UDS_EVT_IOControl* events
+       */
+      struct uds_actor io_control;
     } data_identifier;
     /**
      * @brief Data for the Read/Write Memory by Address event handler
@@ -439,7 +444,7 @@ UDSErr_t uds_action_default_memory_by_addr_write(
 bool uds_filter_for_ecu_reset_event(UDSEvent_t event);
 
 /**
- * @brief Filter for Read/Write data by ID event handler registrations
+ * @brief Filter for Read/Write/IOControl data by ID event handler registrations
  *
  * see @ref uds_filter_for_ecu_reset_event for details
  */

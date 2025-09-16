@@ -101,6 +101,8 @@ UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(&instance,
                                         read_data_by_id_action,
                                         write_data_by_id_check,
                                         write_data_by_id_action,
+                                        NULL,
+                                        NULL,
                                         &primitive_type_size);
 
 UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(&instance,
@@ -108,6 +110,8 @@ UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(&instance,
                                         &string,
                                         read_data_by_id_check,
                                         read_data_by_id_action,
+                                        NULL,
+                                        NULL,
                                         NULL,
                                         NULL,
                                         &string_size);

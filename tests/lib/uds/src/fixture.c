@@ -58,6 +58,9 @@ UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(&fixture_uds_instance,
                                         // write
                                         NULL,
                                         NULL,
+                                        // io control
+                                        NULL,
+                                        NULL,
                                         NULL)
 
 UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(&fixture_uds_instance,
@@ -67,6 +70,9 @@ UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(&fixture_uds_instance,
                                         data_id_check_fn,
                                         data_id_action_fn,
                                         // write
+                                        data_id_check_fn,
+                                        data_id_action_fn,
+                                        // io control
                                         data_id_check_fn,
                                         data_id_action_fn,
                                         NULL)
@@ -81,6 +87,9 @@ UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(&fixture_uds_instance,
                                         // write
                                         data_id_check_fn,
                                         data_id_action_fn,
+                                        // io control
+                                        data_id_check_fn,
+                                        data_id_action_fn,
                                         NULL)
 
 UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(&fixture_uds_instance,
@@ -90,6 +99,9 @@ UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(&fixture_uds_instance,
                                         data_id_check_fn,
                                         data_id_action_fn,
                                         // write
+                                        data_id_check_fn,
+                                        data_id_action_fn,
+                                        // io control
                                         data_id_check_fn,
                                         data_id_action_fn,
                                         NULL)
