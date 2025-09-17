@@ -14,6 +14,7 @@ LOG_MODULE_REGISTER(uds, CONFIG_UDS_LOG_LEVEL);
 #include "ecu_reset.h"
 #include "memory_by_address.h"
 #include "read_dtc_info.h"
+#include "routine_control.h"
 
 #include <ardep/iso14229.h>
 #include <ardep/uds.h>
@@ -81,6 +82,7 @@ static UDSErr_t default_nrc_when_no_handler_found(UDSEvent_t event) {
     case UDS_EVT_EcuReset:
     case UDS_EVT_DoScheduledReset:
     case UDS_EVT_ReadDTCInformation:
+    case UDS_EVT_RoutineCtrl:
       return UDS_NRC_SubFunctionNotSupported;
     case UDS_EVT_Err:
     case UDS_EVT_ReadMemByAddr:
@@ -88,7 +90,6 @@ static UDSErr_t default_nrc_when_no_handler_found(UDSEvent_t event) {
     case UDS_EVT_SecAccessRequestSeed:
     case UDS_EVT_SecAccessValidateKey:
     case UDS_EVT_WriteMemByAddr:
-    case UDS_EVT_RoutineCtrl:
     case UDS_EVT_RequestDownload:
     case UDS_EVT_RequestUpload:
     case UDS_EVT_TransferData:
@@ -203,11 +204,14 @@ UDSErr_t uds_event_callback(struct iso14229_zephyr_instance* inst,
       return uds_handle_event(instance, event, arg,
                               uds_get_check_for_io_control_by_identifier,
                               uds_get_action_for_io_control_by_identifier);
+    case UDS_EVT_RoutineCtrl:
+      return uds_handle_event(instance, event, arg,
+                              uds_get_check_for_routine_control,
+                              uds_get_action_for_routine_control);
     case UDS_EVT_Err:
     case UDS_EVT_CommCtrl:
     case UDS_EVT_SecAccessRequestSeed:
     case UDS_EVT_SecAccessValidateKey:
-    case UDS_EVT_RoutineCtrl:
     case UDS_EVT_RequestDownload:
     case UDS_EVT_RequestUpload:
     case UDS_EVT_TransferData:

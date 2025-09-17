@@ -38,6 +38,8 @@ extern const uint16_t data_id_rw_duplicated1;
 extern const uint16_t data_id_rw_duplicated2;
 extern uint8_t data_id_rw_duplicated_data[4];
 
+extern const uint16_t routine_id;
+
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
 extern bool test_dynamic_registration_check_invoked;
 extern bool test_dynamic_registration_action_invoked;

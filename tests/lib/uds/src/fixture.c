@@ -49,6 +49,8 @@ const uint16_t data_id_rw_duplicated1 = 3;
 const uint16_t data_id_rw_duplicated2 = 3;
 uint8_t data_id_rw_duplicated_data[4];
 
+const uint16_t routine_id = 0xDEAD;
+
 UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(&fixture_uds_instance,
                                         data_id_r,
                                         data_id_r_data,
@@ -133,6 +135,12 @@ UDS_REGISTER_READ_DTC_INFO_HANDLER_ALL(&fixture_uds_instance,
                                        NULL)
 
 UDS_REGISTER_CLEAR_DIAG_INFO_HANDLER(&fixture_uds_instance,
+                                     data_id_check_fn,
+                                     data_id_action_fn,
+                                     NULL)
+
+UDS_REGISTER_ROUTINE_CONTROL_HANDLER(&fixture_uds_instance,
+                                     routine_id,
                                      data_id_check_fn,
                                      data_id_action_fn,
                                      NULL)

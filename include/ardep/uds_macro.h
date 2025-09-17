@@ -564,4 +564,43 @@
 
 // #endregion CLEAR_DIAGNOSTIC_INFORMATION
 
+// #region ROUTINE_CONTROL
+
+// clang-format off
+
+/**
+ * @brief Register a new routine control event handler
+ * 
+ * @param _instance Pointer to associated the UDS server instance
+ * @param _check Check if the action should be executed
+ * @param _act Execute the handler for the event
+ * @param _user_context Optional context provided by the user
+ * 
+ */
+#define UDS_REGISTER_ROUTINE_CONTROL_HANDLER(                                  \
+  _instance,                                                                   \
+  _routine_id,                                                                 \
+  _check,                                                                      \
+  _act,                                                                        \
+  _user_context                                                                \
+)                                                                              \
+  STRUCT_SECTION_ITERABLE(uds_registration_t,                                  \
+        _UDS_CAT_EXPAND(__uds_registration_routine_control_, _routine_id)) = { \
+    .instance = _instance,                                                     \
+    .type = UDS_REGISTRATION_TYPE__ROUTINE_CONTROL,                            \
+    .applies_to_event = uds_filter_for_routine_control_event,                  \
+    .routine_control = {                                                       \
+      .user_context = _user_context,                                           \
+      .routine_id = _routine_id,                                               \
+      .actor = {                                                               \
+        .check = _check,                                                       \
+        .action = _act,                                                        \
+      },                                                                       \
+    },                                                                         \
+  };
+
+// clang-format on
+
+// #endregion CLEAR_DIAGNOSTIC_INFORMATION
+
 #endif  // ARDEP_UDS_MACRO_H

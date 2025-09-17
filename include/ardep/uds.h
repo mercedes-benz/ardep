@@ -74,6 +74,12 @@ enum uds_input_output_control_param {
   UDS_IO_CONTROL__CHECK_PROGRAMMING_DEPENDENCIES = 0xFF01,
 };
 
+enum uds_routine_control_subfunc {
+  UDS_ROUTINE_CONTROL__START_ROUTINE = 0x01,
+  UDS_ROUTINE_CONTROL__STOP_ROUTINE = 0x02,
+  UDS_ROUTINE_CONTROL__REQUEST_ROUTINE_RESULTS = 0x03,
+};
+
 /**
  * @brief Callback type for ECU reset events
  *
@@ -235,6 +241,7 @@ enum uds_registration_type_t {
   UDS_REGISTRATION_TYPE__DATA_IDENTIFIER,
   UDS_REGISTRATION_TYPE__DIAG_SESSION_CTRL,
   UDS_REGISTRATION_TYPE__CLEAR_DIAG_INFO,
+  UDS_REGISTRATION_TYPE__ROUTINE_CONTROL,
 };
 
 /**
@@ -376,6 +383,11 @@ struct uds_registration_t {
        */
       struct uds_actor actor;
     } read_dtc;
+    /**
+     * @brief Data for the Clear Diagnostic Information event handler
+     *
+     * Handles *UDS_EVT_ClearDiagnosticInfo* events
+     */
     struct {
       /**
        * @brief User-defined context pointer
@@ -386,6 +398,25 @@ struct uds_registration_t {
        */
       struct uds_actor actor;
     } clear_diagnostic_information;
+    /**
+     * @brief Data for the Routine Control event handler
+     *
+     * Handles *UDS_EVT_RoutineCtrl* events with all its sub-Functions
+     */
+    struct {
+      /**
+       * @brief User-defined context pointer
+       */
+      void *user_context;
+      /**
+       * @brief ID of the routine controlled by the actor
+       */
+      uint16_t routine_id;
+      /**
+       * @brief Actor for *UDS_EVT_RoutineCtrl* events
+       */
+      struct uds_actor actor;
+    } routine_control;
   };
 
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
@@ -498,6 +529,13 @@ bool uds_filter_for_read_dtc_info_event(UDSEvent_t event);
  * see @ref uds_filter_for_ecu_reset_event for details
  */
 bool uds_filter_for_clear_diag_info_event(UDSEvent_t event);
+
+/**
+ * @brief Filter for Routine Control event handler registrations
+ *
+ * see @ref uds_filter_for_ecu_reset_event for details
+ */
+bool uds_filter_for_routine_control_event(UDSEvent_t event);
 
 // Include macro declarations after all types are defined
 #include "ardep/uds_macro.h"  // IWYU pragma: keep
