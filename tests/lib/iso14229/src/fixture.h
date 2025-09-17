@@ -48,6 +48,17 @@ void tick_thread(struct iso14229_zephyr_instance *instance);
 void advance_time_and_tick_thread(struct iso14229_zephyr_instance *instance);
 
 /**
+ * Advance Time andTick the iso14229 thread once
+ *
+ * Necessary to elapse the timeout to send the next response to the client
+ *
+ * @param fixture The fixture containing the configuration and device
+ * @param num_of_ticks Number of times to tick the thread
+ */
+void advance_time_and_tick_thread_num(struct iso14229_zephyr_instance *instance,
+                                      size_t num_of_ticks);
+
+/**
  *  Fake the reception of a physical CAN Frame
  *
  * @param fixture The fixture containing the configuration and device

@@ -48,9 +48,17 @@ void tick_thread(struct iso14229_zephyr_instance *instance) {
   instance->thread_tick(instance);
 }
 
+void advance_time_and_tick_thread_num(struct iso14229_zephyr_instance *instance,
+                                      size_t num_of_ticks) {
+  k_msleep(1000);
+  for (size_t i = 0; i < num_of_ticks; i++) {
+    tick_thread(instance);
+  }
+}
+
 void advance_time_and_tick_thread(struct iso14229_zephyr_instance *instance) {
   k_msleep(1000);
-  tick_thread(instance);
+  advance_time_and_tick_thread_num(instance, 1);
 }
 
 void receive_phys_can_frame(const struct lib_iso14229_fixture *fixture,
