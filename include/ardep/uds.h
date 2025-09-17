@@ -15,7 +15,7 @@
 struct uds_instance_t;
 struct uds_registration_t;
 
-enum ecu_reset_type {
+enum uds_ecu_reset_type {
   ECU_RESET__HARD = 1,
   ECU_RESET__KEY_OFF_ON = 2,
   ECU_RESET__ENABLE_RAPID_POWER_SHUT_DOWN = 4,
@@ -83,7 +83,7 @@ enum uds_input_output_control_param {
  * uds_init()
  */
 typedef UDSErr_t (*ecu_reset_callback_t)(struct uds_instance_t *inst,
-                                         enum ecu_reset_type reset_type,
+                                         enum uds_ecu_reset_type reset_type,
                                          void *user_context);
 
 /**
@@ -304,7 +304,7 @@ struct uds_registration_t {
       /**
        * @brief Type of reset to perform
        */
-      enum ecu_reset_type type;
+      enum uds_ecu_reset_type type;
     } ecu_reset;
     /**
      * @brief Data for the Read/Write Data by ID event handler
