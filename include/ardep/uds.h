@@ -242,6 +242,7 @@ enum uds_registration_type_t {
   UDS_REGISTRATION_TYPE__DIAG_SESSION_CTRL,
   UDS_REGISTRATION_TYPE__CLEAR_DIAG_INFO,
   UDS_REGISTRATION_TYPE__ROUTINE_CONTROL,
+  UDS_REGISTRATION_TYPE__SECURITY_ACCESS,
 };
 
 /**
@@ -417,6 +418,26 @@ struct uds_registration_t {
        */
       struct uds_actor actor;
     } routine_control;
+    /**
+     * @brief Data for the Security Access event handler
+     *
+     * Handles *UDS_EVT_SecAccessRequestSeed* and *UDS_EVT_SecAccessValidateKey*
+     * events
+     */
+    struct {
+      /**
+       * @brief User-defined context pointer
+       */
+      void *user_context;
+      /**
+       * @brief Actor for *UDS_EVT_SecAccessRequestSeed* events
+       */
+      struct uds_actor request_seed;
+      /**
+       * @brief Actor for *UDS_EVT_SecAccessValidateKey* events
+       */
+      struct uds_actor validate_key;
+    } security_access;
   };
 
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
@@ -536,6 +557,13 @@ bool uds_filter_for_clear_diag_info_event(UDSEvent_t event);
  * see @ref uds_filter_for_ecu_reset_event for details
  */
 bool uds_filter_for_routine_control_event(UDSEvent_t event);
+
+/**
+ * @brief Filter for Security Access event handler registrations
+ *
+ * see @ref uds_filter_for_ecu_reset_event for details
+ */
+bool uds_filter_for_security_access_event(UDSEvent_t event);
 
 // Include macro declarations after all types are defined
 #include "ardep/uds_macro.h"  // IWYU pragma: keep

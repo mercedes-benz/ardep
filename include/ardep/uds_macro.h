@@ -601,6 +601,51 @@
 
 // clang-format on
 
-// #endregion CLEAR_DIAGNOSTIC_INFORMATION
+// #endregion ROUTINE_CONTROL
+
+// #region SECURITY_ACCESS
+
+// clang-format off
+
+/**
+ * @brief Register a new security access event handler
+ * 
+ * @param _instance Pointer to associated the UDS server instance
+ * @param _request_seed_check Check if the associated action should be executed
+ * @param _request_seed_act Execute the handler for the request seed event
+ * @param _validate_key_check Check if the associated action should be executed
+ * @param _validate_key_act Execute the handler for the validate key event
+ * @param _user_context Optional context provided by the user
+ * 
+ */
+#define UDS_REGISTER_SECURITY_ACCESS_HANDLER(                                  \
+  _instance,                                                                   \
+  _request_seed_check,                                                         \
+  _request_seed_act,                                                           \
+  _validate_key_check,                                                         \
+  _validate_key_act,                                                           \
+  _user_context                                                                \
+)                                                                              \
+  STRUCT_SECTION_ITERABLE(uds_registration_t,                                  \
+        _UDS_CAT_EXPAND(__uds_registration_security_access_, __COUNTER__)) = {      \
+    .instance = _instance,                                                     \
+    .type = UDS_REGISTRATION_TYPE__SECURITY_ACCESS,                            \
+    .applies_to_event = uds_filter_for_security_access_event,                  \
+    .security_access = {                                                       \
+      .user_context = _user_context,                                           \
+      .request_seed = {                                                        \
+        .check = _request_seed_check,                                          \
+        .action = _request_seed_act,                                           \
+      },                                                                       \
+      .validate_key = {                                                        \
+        .check = _validate_key_check,                                          \
+        .action = _validate_key_act,                                           \
+      },                                                                       \
+    },                                                                         \
+  };
+
+// clang-format on
+
+// #endregion SECURITY_ACCESS
 
 #endif  // ARDEP_UDS_MACRO_H

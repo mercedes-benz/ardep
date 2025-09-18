@@ -15,6 +15,7 @@ LOG_MODULE_REGISTER(uds, CONFIG_UDS_LOG_LEVEL);
 #include "memory_by_address.h"
 #include "read_dtc_info.h"
 #include "routine_control.h"
+#include "security_access.h"
 
 #include <ardep/iso14229.h>
 #include <ardep/uds.h>
@@ -208,10 +209,16 @@ UDSErr_t uds_event_callback(struct iso14229_zephyr_instance* inst,
       return uds_handle_event(instance, event, arg,
                               uds_get_check_for_routine_control,
                               uds_get_action_for_routine_control);
+    case UDS_EVT_SecAccessRequestSeed:
+      return uds_handle_event(instance, event, arg,
+                              uds_get_check_for_security_access_request_seed,
+                              uds_get_action_for_security_access_request_seed);
+    case UDS_EVT_SecAccessValidateKey:
+      return uds_handle_event(instance, event, arg,
+                              uds_get_check_for_security_access_validate_key,
+                              uds_get_action_for_security_access_validate_key);
     case UDS_EVT_Err:
     case UDS_EVT_CommCtrl:
-    case UDS_EVT_SecAccessRequestSeed:
-    case UDS_EVT_SecAccessValidateKey:
     case UDS_EVT_RequestDownload:
     case UDS_EVT_RequestUpload:
     case UDS_EVT_TransferData:
