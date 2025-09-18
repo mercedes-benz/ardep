@@ -285,6 +285,67 @@ def routine_control(client: Client):
         raise
 
 
+def security_access(client: Client):
+    print("Security Access:")
+
+    secure_data_id = 0x0300
+
+    # First, try to read the secure data without authentication
+    print(
+        f"\tTrying to read secure data (ID: 0x{secure_data_id:04X}) without authentication..."
+    )
+    try:
+        data = client.read_data_by_identifier([secure_data_id])
+        print(f'\t\tUnexpected success: "{data.service_data.values[secure_data_id]}"')
+    except NegativeResponseException as e:
+        if e.response.code == 0x33:  # Security Access Denied
+            print(
+                f"\t\tAccess denied as expected: {e.response.code_name} (0x{e.response.code:02X})"
+            )
+        else:
+            print(
+                f"\t\tUnexpected error: {e.response.code_name} (0x{e.response.code:02X})"
+            )
+
+    # Now perform security access authentication
+    print("\tPerforming security access authentication for level 1...")
+
+    try:
+        # Step 1: Request seed for security level 1
+        print("\t\tRequesting seed for security level 1...")
+        client.unlock_security_access(1)
+
+        print("\t\tSecurity access successful! Level 1 unlocked.")
+
+    except NegativeResponseException as e:
+        print(
+            f"\t\tSecurity access failed: {e.response.code_name} (0x{e.response.code:02X})"
+        )
+        return
+    except Exception as e:
+        print(f"\t\tUnexpected error during security access: {e}")
+        return
+
+    # Now try to read the secure data with authentication
+    print(
+        f"\tTrying to read secure data (ID: 0x{secure_data_id:04X}) with authentication..."
+    )
+    try:
+        data = client.read_data_by_identifier([secure_data_id])
+        secure_content = data.service_data.values[secure_data_id]
+        print(f'\t\tSuccess! Secure data: "{secure_content}"')
+    except NegativeResponseException as e:
+        print(f"\t\tStill denied: {e.response.code_name} (0x{e.response.code:02X})")
+    except Exception as e:
+        print(f"\t\tUnexpected error: {e}")
+
+    print("\tSecurity access demonstration completed.")
+
+
+def security_algorithm(level: int, seed: bytes, params: Any) -> bytes:
+    return bytes(~b & 0xFF for b in seed)
+
+
 class CustomUint16Codec(udsoncan.DidCodec):
     def encode(self, *did_value: Any):
         return struct.pack(">H", *did_value)  # Big endian, 16 bit value
@@ -324,6 +385,19 @@ class StringCodec(udsoncan.DidCodec):
         return 15  # "Hello from UDS" + null terminator = 15 bytes
 
 
+class SecureDataCodec(udsoncan.DidCodec):
+    def encode(self, *did_value: Any):
+        value = did_value[0] if did_value else ""
+        encoded = value.encode("ascii") if isinstance(value, str) else value
+        return encoded
+
+    def decode(self, did_payload: bytes):
+        return did_payload.decode("ascii", errors="ignore").rstrip("\x00")
+
+    def __len__(self):
+        return 40  # "Secret Data Protected by Security Access" + null terminator
+
+
 def try_run(runnable):
     try:
         runnable()
@@ -348,11 +422,14 @@ def main(args: Namespace):
         0x0050: CustomUint16Codec,
         0x0100: StringCodec,
         0x0200: CustomUint8Codec,
+        0x0300: SecureDataCodec,
     }
 
     config["input_output"] = {
         0x0200: "<B",  # Single Byte
     }
+
+    config["security_algo"] = security_algorithm
 
     with Client(conn, config=config, request_timeout=2) as client:
         try_run(lambda: change_session(client))
@@ -360,6 +437,7 @@ def main(args: Namespace):
         try_run(lambda: read_write_memory_by_address(client))
         try_run(lambda: dtc_information(client))
         try_run(lambda: routine_control(client))
+        try_run(lambda: security_access(client))
 
         if reset:
             try_run(lambda: ecu_reset(client))
