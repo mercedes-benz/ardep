@@ -15,6 +15,8 @@
 #include <ardep/iso14229.h>
 #include <iso14229.h>
 
+extern bool session_timeout_event_fired;
+
 // Test callback function for UDS events
 DECLARE_FAKE_VALUE_FUNC(UDSErr_t,
                         test_uds_callback,

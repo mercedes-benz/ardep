@@ -44,6 +44,8 @@ static void *captured_user_data_func = NULL;
 static struct can_frame send_can_frames[20];
 static uint32_t send_can_frame_count = 0;
 
+bool session_timeout_event_fired = false;
+
 void tick_thread(struct iso14229_zephyr_instance *instance) {
   instance->thread_tick(instance);
 }
@@ -189,6 +191,8 @@ static void uds_before(void *f) {
 
   // Set the unified callback
   uds_instance->set_callback(uds_instance, test_uds_callback);
+
+  session_timeout_event_fired = false;
 }
 
 ZTEST_SUITE(lib_iso14229, NULL, uds_setup, uds_before, NULL, NULL);

@@ -83,7 +83,6 @@ ZTEST_F(lib_iso14229, test_0x10_diag_session_ctrl_not_supported) {
   zassert_equal(fake_can_send_fake.call_count, 1);
 }
 
-bool _session_timeout_event_fired = false;
 UDSErr_t test_0x10_diag_session_ctrl_with_session_timeout_callback(
     struct iso14229_zephyr_instance *inst,
     UDSEvent_t event,
@@ -92,7 +91,7 @@ UDSErr_t test_0x10_diag_session_ctrl_with_session_timeout_callback(
   if (event == UDS_EVT_DiagSessCtrl) {
     return UDS_PositiveResponse;
   } else if (event == UDS_EVT_SessionTimeout) {
-    _session_timeout_event_fired = true;
+    session_timeout_event_fired = true;
     return UDS_PositiveResponse;
   }
 
@@ -101,7 +100,6 @@ UDSErr_t test_0x10_diag_session_ctrl_with_session_timeout_callback(
 
 ZTEST_F(lib_iso14229, test_0x10_diag_session_ctrl_with_session_timeout) {
   struct iso14229_zephyr_instance *instance = &fixture->instance;
-  _session_timeout_event_fired = false;
 
   test_uds_callback_fake.custom_fake =
       test_0x10_diag_session_ctrl_with_session_timeout_callback;
@@ -133,5 +131,5 @@ ZTEST_F(lib_iso14229, test_0x10_diag_session_ctrl_with_session_timeout) {
   k_msleep(8000);
   advance_time_and_tick_thread(instance);
 
-  zassert_true(_session_timeout_event_fired);
+  zassert_true(session_timeout_event_fired);
 }
