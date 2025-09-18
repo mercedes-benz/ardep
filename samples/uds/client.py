@@ -209,6 +209,82 @@ def ecu_reset(client: Client):
     print("\tECU reset request sending successfully")
 
 
+def routine_control(client: Client):
+    print("Routine Control:")
+
+    routine_id = 0x1234
+    input_value = ~0xDEADBEEF & 0xFFFFFFFF
+
+    print(f"\tExecuting synchronous routine 0x{routine_id:04X}...")
+    try:
+        response = client.routine_control(
+            routine_id=routine_id,
+            control_type=1,  # Start routine
+            data=struct.pack(">I", input_value),  # Input as big endian (4 bytes)
+        )
+
+        # The first byte is the status, the next 4 bytes are the BE uint32 result
+        result = struct.unpack(">I", response.service_data.routine_status_record)[0]
+        print(f"\t\tRoutine input : 0x{input_value:08X}")
+        print(f"\t\tRoutine result: 0x{result:08X}")
+        print("\t\tRoutine executed successfully")
+
+    except NegativeResponseException as e:
+        print(
+            f"\t\tRoutine control failed: {e.response.code_name} (0x{e.response.code:02X})"
+        )
+        raise
+    except Exception as e:
+        print(f"\t\tUnexpected error during routine control: {e}")
+        raise
+
+    print(f"\tExecuting asynchronous routine 0x{routine_id:04X}...")
+
+    routine_id = 0x5678
+    try:
+        print(f"\t\tStarting asynchronous routine 0x{routine_id:04X}...")
+        client.routine_control(
+            routine_id=routine_id,
+            control_type=1,  # Start routine
+        )
+        print(f"\t\tAsynchronous routine 0x{routine_id:04X} started successfully\n")
+
+        time.sleep(0.1)  # Wait a bit before requesting status
+
+        print(f"\t\tStopping asynchronous routine 0x{routine_id:04X}...")
+        client.routine_control(
+            routine_id=routine_id,
+            control_type=2,  # Stop routine
+        )
+        print(f"\t\tAsynchronous routine 0x{routine_id:04X} stopped successfully\n")
+
+        print(f"\t\tRequesting results from asynchronous routine 0x{routine_id:04X}...")
+        response = client.routine_control(
+            routine_id=routine_id,
+            control_type=3,  # Request routine results
+        )
+
+        if response.service_data.routine_status_record:
+            status_data = response.service_data.routine_status_record
+            if len(status_data) >= 5:
+                status = status_data[0]
+                progress = struct.unpack(">I", status_data[1:5])[0]
+                print(f"\t\tRoutine status: {status}, Progress: {progress}")
+            else:
+                print(
+                    f"\t\tRoutine status data: {' '.join(f'{b:02X}' for b in status_data)}"
+                )
+
+    except NegativeResponseException as e:
+        print(
+            f"\t\tRoutine control failed: {e.response.code_name} (0x{e.response.code:02X})"
+        )
+        raise
+    except Exception as e:
+        print(f"\t\tUnexpected error during routine control: {e}")
+        raise
+
+
 class CustomUint16Codec(udsoncan.DidCodec):
     def encode(self, *did_value: Any):
         return struct.pack(">H", *did_value)  # Big endian, 16 bit value
@@ -283,6 +359,7 @@ def main(args: Namespace):
         try_run(lambda: data_by_identifier(client))
         try_run(lambda: read_write_memory_by_address(client))
         try_run(lambda: dtc_information(client))
+        try_run(lambda: routine_control(client))
 
         if reset:
             try_run(lambda: ecu_reset(client))

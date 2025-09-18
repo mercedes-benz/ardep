@@ -5,12 +5,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "ardep/uds_macro.h"
-#include "iso14229.h"
-
 #include <zephyr/logging/log.h>
 LOG_MODULE_DECLARE(uds_sample, LOG_LEVEL_DBG);
 
+#include "ardep/uds.h"
+#include "iso14229.h"
 #include "uds.h"
 
 const uint32_t fake_memory_start_addr = 0x00001000;

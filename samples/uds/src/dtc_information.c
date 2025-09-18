@@ -5,15 +5,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "ardep/iso14229.h"
-#include "ardep/uds.h"
-#include "iso14229.h"
-#include "zephyr/kernel.h"
-
 #include <zephyr/logging/log.h>
 LOG_MODULE_DECLARE(uds_sample, LOG_LEVEL_DBG);
 
+#include "ardep/iso14229.h"
+#include "ardep/uds.h"
 #include "uds.h"
+
+#include <zephyr/kernel.h>
 
 K_MUTEX_DEFINE(dtc_record_mutex);
 
