@@ -627,7 +627,7 @@
   _user_context                                                                \
 )                                                                              \
   STRUCT_SECTION_ITERABLE(uds_registration_t,                                  \
-        _UDS_CAT_EXPAND(__uds_registration_security_access_, __COUNTER__)) = {      \
+        _UDS_CAT_EXPAND(__uds_registration_security_access_, __COUNTER__)) = { \
     .instance = _instance,                                                     \
     .type = UDS_REGISTRATION_TYPE__SECURITY_ACCESS,                            \
     .applies_to_event = uds_filter_for_security_access_event,                  \
@@ -647,5 +647,42 @@
 // clang-format on
 
 // #endregion SECURITY_ACCESS
+
+// #region COMMUNICATION_CONTROL
+
+// clang-format off
+
+/**
+ * @brief Register a new communication control event handler
+ * 
+ * @param _instance Pointer to associated the UDS server instance
+ * @param _check Check if the associated action should be executed
+ * @param _act Execute the handler for the communication control event
+ * @param _user_context Optional context provided by the user
+ * 
+ */
+#define UDS_REGISTER_COMMUNICATION_CONTROL_HANDLER(                            \
+  _instance,                                                                   \
+  _check,                                                                      \
+  _act,                                                                        \
+  _user_context                                                                \
+)                                                                              \
+  STRUCT_SECTION_ITERABLE(uds_registration_t,                                  \
+        _UDS_CAT_EXPAND(__uds_registration_comm_ctrl_, __COUNTER__)) = {       \
+    .instance = _instance,                                                     \
+    .type = UDS_REGISTRATION_TYPE__COMMUNICATION_CONTROL,                      \
+    .applies_to_event = uds_filter_for_communication_control_event,            \
+    .communication_control = {                                                 \
+      .user_context = _user_context,                                           \
+      .actor = {                                                               \
+        .check = _check,                                                       \
+        .action = _act,                                                        \
+      },                                                                       \
+    },                                                                         \
+  };
+
+// clang-format on
+
+// #endregion COMMUNICATION_CONTROL
 
 #endif  // ARDEP_UDS_MACRO_H

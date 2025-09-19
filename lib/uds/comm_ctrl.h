@@ -1,0 +1,19 @@
+/*
+ * Copyright (C) Frickly Systems GmbH
+ * Copyright (C) MBition GmbH
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#ifndef ARDEP_LIB_UDS_COMMUNICATION_CONTROL_H
+#define ARDEP_LIB_UDS_COMMUNICATION_CONTROL_H
+
+#include <ardep/uds.h>
+
+uds_check_fn uds_get_check_for_communication_control(
+    const struct uds_registration_t* const reg);
+
+uds_action_fn uds_get_action_for_communication_control(
+    const struct uds_registration_t* const reg);
+
+#endif  // ARDEP_LIB_UDS_COMMUNICATION_CONTROL_H

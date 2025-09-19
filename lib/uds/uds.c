@@ -9,6 +9,7 @@
 LOG_MODULE_REGISTER(uds, CONFIG_UDS_LOG_LEVEL);
 
 #include "clear_diag_info.h"
+#include "comm_ctrl.h"
 #include "data_by_identifier.h"
 #include "diag_session_ctrl.h"
 #include "ecu_reset.h"
@@ -79,6 +80,7 @@ static UDSErr_t default_nrc_when_no_handler_found(UDSEvent_t event) {
     case UDS_EVT_WriteDataByIdent:
     case UDS_EVT_ReadDataByIdent:
     case UDS_EVT_ClearDiagnosticInfo:
+    case UDS_EVT_CommCtrl:
       return UDS_NRC_RequestOutOfRange;
     case UDS_EVT_EcuReset:
     case UDS_EVT_DoScheduledReset:
@@ -87,7 +89,6 @@ static UDSErr_t default_nrc_when_no_handler_found(UDSEvent_t event) {
       return UDS_NRC_SubFunctionNotSupported;
     case UDS_EVT_Err:
     case UDS_EVT_ReadMemByAddr:
-    case UDS_EVT_CommCtrl:
     case UDS_EVT_SecAccessRequestSeed:
     case UDS_EVT_SecAccessValidateKey:
     case UDS_EVT_WriteMemByAddr:
@@ -217,8 +218,11 @@ UDSErr_t uds_event_callback(struct iso14229_zephyr_instance* inst,
       return uds_handle_event(instance, event, arg,
                               uds_get_check_for_security_access_validate_key,
                               uds_get_action_for_security_access_validate_key);
-    case UDS_EVT_Err:
     case UDS_EVT_CommCtrl:
+      return uds_handle_event(instance, event, arg,
+                              uds_get_check_for_communication_control,
+                              uds_get_action_for_communication_control);
+    case UDS_EVT_Err:
     case UDS_EVT_RequestDownload:
     case UDS_EVT_RequestUpload:
     case UDS_EVT_TransferData:

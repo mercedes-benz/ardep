@@ -152,6 +152,11 @@ UDS_REGISTER_SECURITY_ACCESS_HANDLER(&fixture_uds_instance,
                                      data_id_action_fn,
                                      NULL)
 
+UDS_REGISTER_COMMUNICATION_CONTROL_HANDLER(&fixture_uds_instance,
+                                           data_id_check_fn,
+                                           data_id_action_fn,
+                                           NULL)
+
 static const UDSISOTpCConfig_t default_cfg = {
   // Hardware Addresses
   .source_addr = 0x7E8,  // Can ID Server (us)
