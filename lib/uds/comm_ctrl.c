@@ -15,10 +15,6 @@ LOG_MODULE_DECLARE(uds, CONFIG_UDS_LOG_LEVEL);
 #include <ardep/uds.h>
 #include <iso14229.h>
 
-bool uds_filter_for_communication_control_event(UDSEvent_t event) {
-  return event == UDS_EVT_CommCtrl;
-}
-
 uds_check_fn uds_get_check_for_communication_control(
     const struct uds_registration_t* const reg) {
   return reg->communication_control.actor.check;

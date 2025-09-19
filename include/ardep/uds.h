@@ -9,8 +9,7 @@
 #define ARDEP_UDS_H
 
 #include "ardep/iso14229.h"
-
-#include <iso14229.h>
+#include "iso14229.h"
 
 struct uds_instance_t;
 struct uds_registration_t;
@@ -81,28 +80,6 @@ enum uds_routine_control_subfunc {
 };
 
 /**
- * @brief Callback type for ECU reset events
- *
- * @param inst Pointer to the UDS server instance
- * @param reset_type Type of reset to perform
- * @param user_context User-defined context pointer as passed to \ref
- * uds_init()
- */
-typedef UDSErr_t (*ecu_reset_callback_t)(struct uds_instance_t *inst,
-                                         enum uds_ecu_reset_type reset_type,
-                                         void *user_context);
-
-/**
- * Set the ECU reset callback function for custom callbacks
- *
- * @param inst Pointer to the UDS server instance
- * @param callback Pointer to the callback function to set
- * @return 0 on success, negative error code on failure
- */
-typedef int (*set_ecu_reset_callback_fn)(struct uds_instance_t *inst,
-                                         ecu_reset_callback_t callback);
-
-/**
  * @brief Context provided to Event handlers on an event
  */
 struct uds_context {
@@ -114,6 +91,10 @@ struct uds_context {
    * @brief The registration instance to handle the event
    */
   struct uds_registration_t *const registration;
+  /**
+   * @brief Pointer to the server parameter used in copy functions
+   */
+  UDSServer_t *server;
   /**
    * @brief The event type
    */
@@ -259,18 +240,6 @@ struct uds_registration_t {
    * @brief Type of event handler
    */
   enum uds_registration_type_t type;
-
-  /**
-   * @brief Filter function to determine if the event can be handled by this
-   * registration type
-   *
-   * We need to filter before any "check" functions because those reside
-   * inside the unnamed union member. Thus accessing the wrong view on the data
-   * can lead to incorrect data and behavior.
-   *
-   * @note See e.g. @ref uds_filter_for_diag_session_ctrl_event
-   */
-  bool (*applies_to_event)(UDSEvent_t event);
 
   union {
     /**
@@ -522,71 +491,6 @@ UDSErr_t uds_check_default_memory_by_addr_write(
  */
 UDSErr_t uds_action_default_memory_by_addr_write(
     struct uds_context *const context, bool *consume_event);
-
-/**
- * @brief Filter for ECU Reset event handler registrations
- *
- * @param event the event to check against
- * @returns true if the `event` can be handled
- * @returns false otherwise
- */
-bool uds_filter_for_ecu_reset_event(UDSEvent_t event);
-
-/**
- * @brief Filter for Read/Write/IOControl data by ID event handler registrations
- *
- * see @ref uds_filter_for_ecu_reset_event for details
- */
-bool uds_filter_for_data_by_id_event(UDSEvent_t event);
-
-/**
- * @brief Filter for Read/Write memory by address event handler registrations
- *
- * see @ref uds_filter_for_ecu_reset_event for details
- */
-bool uds_filter_for_memory_by_addr(UDSEvent_t event);
-
-/**
- * @brief Filter for Diagnostic Session Control event handler registrations
- *
- * see @ref uds_filter_for_ecu_reset_event for details
- */
-bool uds_filter_for_diag_session_ctrl_event(UDSEvent_t event);
-
-/**
- * @brief Filter for Read DTC Information event handler registrations
- *
- * see @ref uds_filter_for_ecu_reset_event for details
- */
-bool uds_filter_for_read_dtc_info_event(UDSEvent_t event);
-
-/**
- * @brief Filter for Clear Diagnostic Information event handler registrations
- *
- * see @ref uds_filter_for_ecu_reset_event for details
- */
-bool uds_filter_for_clear_diag_info_event(UDSEvent_t event);
-
-/**
- * @brief Filter for Routine Control event handler registrations
- *
- * see @ref uds_filter_for_ecu_reset_event for details
- */
-bool uds_filter_for_routine_control_event(UDSEvent_t event);
-
-/**
- * @brief Filter for Security Access event handler registrations
- *
- * see @ref uds_filter_for_ecu_reset_event for details
- */
-bool uds_filter_for_security_access_event(UDSEvent_t event);
-
-/**
- * @brief Filter for Communication Control event handler registrations
- *
- * see @ref uds_filter_for_ecu_reset_event for details
- */
-bool uds_filter_for_communication_control_event(UDSEvent_t event);
 
 // Include macro declarations after all types are defined
 #include "ardep/uds_macro.h"  // IWYU pragma: keep

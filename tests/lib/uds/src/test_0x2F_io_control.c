@@ -33,8 +33,7 @@ UDSErr_t io_control_0x2F_action_fn(struct uds_context *const context,
   UDSIOCtrlArgs_t *args = (UDSIOCtrlArgs_t *)context->arg;
 
   uint8_t response_data[] = {0x11, 0x22};
-  return args->copy(&context->instance->iso14229.server, response_data,
-                    sizeof(response_data));
+  return args->copy(context->server, response_data, sizeof(response_data));
 }
 
 ZTEST_F(lib_uds, test_0x2F_io_control) {

@@ -51,7 +51,7 @@ UDSErr_t read_mem_by_address_action(struct uds_context *const context,
 
   LOG_INF("Reading memory at address 0x%08X with size %d", addr, size);
 
-  return args->copy(&context->instance->iso14229.server,
+  return args->copy(context->server,
                     &fake_memory[addr - fake_memory_start_addr], size);
 }
 

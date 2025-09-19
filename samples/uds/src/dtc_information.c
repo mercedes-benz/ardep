@@ -46,8 +46,7 @@ UDSErr_t read_dtc_info_action(struct uds_context *const context,
                               bool *consume_event) {
   UDSRDTCIArgs_t *args = context->arg;
 
-  int ret = args->copy(&context->instance->iso14229.server,
-                       &dtc_status_availability_mask,
+  int ret = args->copy(context->server, &dtc_status_availability_mask,
                        sizeof(dtc_status_availability_mask));
   if (ret != UDS_OK) {
     LOG_ERR("Failed to copy DTC status availability mask: %d", ret);
@@ -59,7 +58,7 @@ UDSErr_t read_dtc_info_action(struct uds_context *const context,
     if (dtc_records[i].status &
             args->subFuncArgs.numOfDTCByStatusMaskArgs.mask &&
         dtc_records[i].is_active) {
-      ret = args->copy(&context->instance->iso14229.server, dtc_records[i].dtc,
+      ret = args->copy(context->server, dtc_records[i].dtc,
                        sizeof(dtc_records[i].dtc));
       if (ret != UDS_OK) {
         uint32_t dtc_value = (dtc_records[i].dtc[0] << 16) |
@@ -69,8 +68,8 @@ UDSErr_t read_dtc_info_action(struct uds_context *const context,
         k_mutex_unlock(&dtc_record_mutex);
         return ret;
       }
-      ret = args->copy(&context->instance->iso14229.server,
-                       &dtc_records[i].status, sizeof(dtc_records[i].status));
+      ret = args->copy(context->server, &dtc_records[i].status,
+                       sizeof(dtc_records[i].status));
       if (ret != UDS_OK) {
         uint32_t dtc_value = (dtc_records[i].dtc[0] << 16) |
                              (dtc_records[i].dtc[1] << 8) |

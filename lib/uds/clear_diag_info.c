@@ -13,10 +13,6 @@ LOG_MODULE_DECLARE(uds, CONFIG_UDS_LOG_LEVEL);
 
 #include "clear_diag_info.h"
 
-bool uds_filter_for_clear_diag_info_event(UDSEvent_t event) {
-  return event == UDS_EVT_ClearDiagnosticInfo;
-}
-
 uds_check_fn uds_get_check_for_clear_diag_info(
     const struct uds_registration_t* const reg) {
   return reg->clear_diagnostic_information.actor.check;

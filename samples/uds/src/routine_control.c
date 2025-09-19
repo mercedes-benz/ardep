@@ -51,8 +51,7 @@ static UDSErr_t sync_routine_control_action(struct uds_context *const context,
   // Signal this action consumes the event
   *consume_event = true;
 
-  return args->copyStatusRecord(&context->instance->iso14229.server, &output,
-                                sizeof(output));
+  return args->copyStatusRecord(context->server, &output, sizeof(output));
 }
 
 UDS_REGISTER_ROUTINE_CONTROL_HANDLER(&instance,
@@ -177,8 +176,8 @@ static UDSErr_t async_routine_control_action(struct uds_context *const context,
 
       // Return stop acknowledgment
       uint8_t stop_status = ASYNC_WORK_STATUS_STOPPED;
-      return args->copyStatusRecord(&context->instance->iso14229.server,
-                                    &stop_status, sizeof(stop_status));
+      return args->copyStatusRecord(context->server, &stop_status,
+                                    sizeof(stop_status));
     }
 
     case UDS_ROUTINE_CONTROL__REQUEST_ROUTINE_RESULTS: {
@@ -194,8 +193,7 @@ static UDSErr_t async_routine_control_action(struct uds_context *const context,
 
       k_mutex_unlock(&async_work_mutex);
 
-      return args->copyStatusRecord(&context->instance->iso14229.server, output,
-                                    sizeof(output));
+      return args->copyStatusRecord(context->server, output, sizeof(output));
     }
 
     default:

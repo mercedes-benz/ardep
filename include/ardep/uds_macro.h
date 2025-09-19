@@ -41,7 +41,6 @@
         _UDS_CAT_EXPAND(__uds_registration_id_read_dtc_info, __COUNTER__)) = {      \
     .instance = _instance,                                                          \
     .type = UDS_REGISTRATION_TYPE__READ_DTC_INFO,                                   \
-    .applies_to_event = uds_filter_for_read_dtc_info_event,                         \
     .read_dtc = {                                                                   \
       .user_context = _user_context,                                                \
       .sub_function = _subfunc_id,                                                  \
@@ -313,7 +312,6 @@
         _UDS_CAT_EXPAND(__uds_registration_id_memory_, __COUNTER__)) = {      \
     .instance = _instance,                                                    \
     .type = UDS_REGISTRATION_TYPE__MEMORY,                                    \
-    .applies_to_event = uds_filter_for_memory_by_addr,                        \
     .memory = {                                                               \
       .user_context = _user_context,                                          \
       .read = {                                                               \
@@ -381,7 +379,6 @@
         _UDS_CAT_EXPAND(__uds_registration_id, _reset_type)) = {              \
     .instance = _instance,                                                    \
     .type = UDS_REGISTRATION_TYPE__ECU_RESET,                                 \
-    .applies_to_event = uds_filter_for_ecu_reset_event,                       \
     .ecu_reset = {                                                            \
       .user_context = _user_context,                                          \
       .type = _reset_type,                                                    \
@@ -458,7 +455,6 @@
         _UDS_CAT_EXPAND(__uds_registration_id, _data_id)) = {         \
     .instance = _instance,                                            \
     .type = UDS_REGISTRATION_TYPE__DATA_IDENTIFIER,                   \
-    .applies_to_event = uds_filter_for_data_by_id_event,              \
     .data_identifier = {                                              \
       .user_context = _user_context,                                  \
       .data = _data_ptr,                                              \
@@ -509,7 +505,6 @@
         _UDS_CAT_EXPAND(__uds_registration_diag_session_id_, __COUNTER__)) = { \
     .instance = _instance,                                                     \
     .type = UDS_REGISTRATION_TYPE__DIAG_SESSION_CTRL,                          \
-    .applies_to_event = uds_filter_for_diag_session_ctrl_event,                \
     .diag_session_ctrl = {                                                     \
       .user_context = _user_context,                                           \
       .diag_sess_ctrl = {                                                      \
@@ -550,7 +545,6 @@
         _UDS_CAT_EXPAND(__uds_registration_clear_diag_info_, __COUNTER__)) = { \
     .instance = _instance,                                                     \
     .type = UDS_REGISTRATION_TYPE__CLEAR_DIAG_INFO,                            \
-    .applies_to_event = uds_filter_for_clear_diag_info_event,                  \
     .clear_diagnostic_information = {                                          \
       .user_context = _user_context,                                           \
       .actor = {                                                               \
@@ -588,7 +582,6 @@
         _UDS_CAT_EXPAND(__uds_registration_routine_control_, _routine_id)) = { \
     .instance = _instance,                                                     \
     .type = UDS_REGISTRATION_TYPE__ROUTINE_CONTROL,                            \
-    .applies_to_event = uds_filter_for_routine_control_event,                  \
     .routine_control = {                                                       \
       .user_context = _user_context,                                           \
       .routine_id = _routine_id,                                               \
@@ -630,7 +623,6 @@
         _UDS_CAT_EXPAND(__uds_registration_security_access_, __COUNTER__)) = { \
     .instance = _instance,                                                     \
     .type = UDS_REGISTRATION_TYPE__SECURITY_ACCESS,                            \
-    .applies_to_event = uds_filter_for_security_access_event,                  \
     .security_access = {                                                       \
       .user_context = _user_context,                                           \
       .request_seed = {                                                        \
@@ -671,7 +663,6 @@
         _UDS_CAT_EXPAND(__uds_registration_comm_ctrl_, __COUNTER__)) = {       \
     .instance = _instance,                                                     \
     .type = UDS_REGISTRATION_TYPE__COMMUNICATION_CONTROL,                      \
-    .applies_to_event = uds_filter_for_communication_control_event,            \
     .communication_control = {                                                 \
       .user_context = _user_context,                                           \
       .actor = {                                                               \

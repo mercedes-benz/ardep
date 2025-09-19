@@ -59,8 +59,7 @@ UDSErr_t security_access_request_seed_action(struct uds_context *const context,
   uint32_t seed_be = sys_cpu_to_be32(current_seed);
 
   *consume_event = true;
-  return args->copySeed(&context->instance->iso14229.server,
-                        (uint8_t *)&seed_be, sizeof(seed_be));
+  return args->copySeed(context->server, (uint8_t *)&seed_be, sizeof(seed_be));
 }
 
 /**
@@ -169,8 +168,7 @@ UDSErr_t read_secure_data_action(struct uds_context *const context,
 
   // Return the secure data as-is (it's a string)
   *consume_event = true;
-  return args->copy(&context->instance->iso14229.server, (uint8_t *)secure_data,
-                    secure_data_size);
+  return args->copy(context->server, (uint8_t *)secure_data, secure_data_size);
 }
 
 // Register the secure data identifier handler

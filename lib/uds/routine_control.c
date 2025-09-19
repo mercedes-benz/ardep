@@ -12,10 +12,6 @@ LOG_MODULE_DECLARE(uds, CONFIG_UDS_LOG_LEVEL);
 #include "iso14229.h"
 #include "routine_control.h"
 
-bool uds_filter_for_routine_control_event(UDSEvent_t event) {
-  return event == UDS_EVT_RoutineCtrl;
-}
-
 static UDSErr_t uds_check_with_routine_id_fn(
     const struct uds_context* const context, bool* apply_action) {
   const struct uds_registration_t* const reg = context->registration;

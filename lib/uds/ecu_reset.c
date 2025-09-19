@@ -15,10 +15,6 @@ LOG_MODULE_DECLARE(uds, CONFIG_UDS_LOG_LEVEL);
 #include <ardep/uds.h>
 #include <iso14229.h>
 
-bool uds_filter_for_ecu_reset_event(UDSEvent_t event) {
-  return event == UDS_EVT_DoScheduledReset || event == UDS_EVT_EcuReset;
-}
-
 uds_check_fn uds_get_check_for_ecu_reset(
     const struct uds_registration_t* const reg) {
   return reg->ecu_reset.ecu_reset.check;

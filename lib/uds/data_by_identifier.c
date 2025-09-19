@@ -13,11 +13,6 @@ LOG_MODULE_DECLARE(uds, CONFIG_UDS_LOG_LEVEL);
 
 #include "data_by_identifier.h"
 
-bool uds_filter_for_data_by_id_event(UDSEvent_t event) {
-  return event == UDS_EVT_ReadDataByIdent ||
-         event == UDS_EVT_WriteDataByIdent || event == UDS_EVT_IOControl;
-}
-
 uds_check_fn uds_get_check_for_read_data_by_identifier(
     const struct uds_registration_t* const reg) {
   return reg->data_identifier.read.check;

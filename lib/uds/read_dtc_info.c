@@ -15,10 +15,6 @@ LOG_MODULE_DECLARE(uds, CONFIG_UDS_LOG_LEVEL);
 #include <ardep/uds.h>
 #include <iso14229.h>
 
-bool uds_filter_for_read_dtc_info_event(UDSEvent_t event) {
-  return event == UDS_EVT_ReadDTCInformation;
-}
-
 static UDSErr_t uds_check_with_subfunc_fn(
     const struct uds_context* const context, bool* apply_action) {
   const struct uds_registration_t* const reg = context->registration;

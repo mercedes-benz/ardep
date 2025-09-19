@@ -442,6 +442,8 @@ def main(args: Namespace):
         if reset:
             try_run(lambda: ecu_reset(client))
 
+        print("\n=== Demo finished ===\n")
+
 
 if __name__ == "__main__":
     parser = ArgumentParser(description="UDS ISO 14229 Demo Script")

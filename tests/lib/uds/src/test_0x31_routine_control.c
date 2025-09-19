@@ -34,8 +34,7 @@ UDSErr_t routine_control_0x31_action_fn(struct uds_context *const context,
   UDSRoutineCtrlArgs_t *args = context->arg;
 
   uint8_t routine_status_record[] = {0x11, 0x22};
-  return args->copyStatusRecord(&context->instance->iso14229.server,
-                                routine_status_record,
+  return args->copyStatusRecord(context->server, routine_status_record,
                                 sizeof(routine_status_record));
 }
 

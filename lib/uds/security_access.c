@@ -12,11 +12,6 @@ LOG_MODULE_DECLARE(uds, CONFIG_UDS_LOG_LEVEL);
 #include "iso14229.h"
 #include "security_access.h"
 
-bool uds_filter_for_security_access_event(UDSEvent_t event) {
-  return event == UDS_EVT_SecAccessRequestSeed ||
-         event == UDS_EVT_SecAccessValidateKey;
-}
-
 uds_check_fn uds_get_check_for_security_access_request_seed(
     const struct uds_registration_t* const reg) {
   return reg->security_access.request_seed.check;

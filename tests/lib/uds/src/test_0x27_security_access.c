@@ -32,8 +32,7 @@ UDSErr_t security_access_0x27_request_seed_action_fn(
   UDSSecAccessRequestSeedArgs_t *args = context->arg;
 
   uint8_t seed[] = {0x11, 0x22};
-  return args->copySeed(&context->instance->iso14229.server, seed,
-                        sizeof(seed));
+  return args->copySeed(context->server, seed, sizeof(seed));
 }
 
 ZTEST_F(lib_uds, test_0x27_security_access_request_seed) {

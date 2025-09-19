@@ -65,7 +65,7 @@ UDSErr_t read_data_by_id_action(struct uds_context *const context,
   *consume_event = true;
 
   return args->copy(
-      &context->instance->iso14229.server, temp,
+      context->server, temp,
       *(uint16_t *)context->registration->data_identifier.user_context);
 }
 
@@ -164,7 +164,7 @@ UDSErr_t read_led_action(struct uds_context *const context,
   uint8_t state = (uint8_t)led_state;
 
   *consume_event = true;
-  return args->copy(&context->instance->iso14229.server, &state, sizeof(state));
+  return args->copy(context->server, &state, sizeof(state));
 }
 
 UDSErr_t write_led_check(const struct uds_context *const context,
@@ -236,8 +236,7 @@ UDSErr_t io_ctrl_led_action(struct uds_context *const context,
     k_mutex_unlock(&led_data_mutex);
 
     uint8_t state = (uint8_t)current_led_state;
-    return args->copy(&context->instance->iso14229.server, &state,
-                      sizeof(state));
+    return args->copy(context->server, &state, sizeof(state));
   } else if (args->ioCtrlParam == UDS_IO_CONTROL__RESET_TO_DEFAULT) {
     k_mutex_lock(&led_data_mutex, K_FOREVER);
     const uint8_t state = 0;
@@ -245,8 +244,7 @@ UDSErr_t io_ctrl_led_action(struct uds_context *const context,
     led_data.led_state = state;
     k_mutex_unlock(&led_data_mutex);
 
-    return args->copy(&context->instance->iso14229.server, &state,
-                      sizeof(state));
+    return args->copy(context->server, &state, sizeof(state));
   }
   if (args->ioCtrlParam == UDS_IO_CONTROL__RETURN_CONTROL_TO_ECU) {
     k_mutex_lock(&led_data_mutex, K_FOREVER);
@@ -254,8 +252,7 @@ UDSErr_t io_ctrl_led_action(struct uds_context *const context,
     led_data.io_control_active = false;
     k_mutex_unlock(&led_data_mutex);
 
-    return args->copy(&context->instance->iso14229.server, &state,
-                      sizeof(state));
+    return args->copy(context->server, &state, sizeof(state));
   }
 
   return UDS_NRC_RequestOutOfRange;

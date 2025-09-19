@@ -239,7 +239,6 @@ ZTEST_F(lib_uds, test_0x2E_write_by_id_dynamic_registration) {
 
   struct uds_registration_t reg;
   reg.type = UDS_REGISTRATION_TYPE__DATA_IDENTIFIER;
-  reg.applies_to_event = uds_filter_for_data_by_id_event;
   reg.data_identifier.data_id = UDS_UNIQUE_DATA_ID;
   reg.data_identifier.read.check = NULL;
   reg.data_identifier.read.action = NULL;
@@ -273,7 +272,6 @@ ZTEST_F(
 
   struct uds_registration_t reg;
   reg.type = UDS_REGISTRATION_TYPE__DATA_IDENTIFIER;
-  reg.applies_to_event = uds_filter_for_data_by_id_event;
   reg.data_identifier.data_id = UDS_UNIQUE_DATA_ID;
   reg.data_identifier.read.check = NULL;
   reg.data_identifier.read.action = NULL;
