@@ -32,7 +32,7 @@ UDSErr_t read_dtc_info_check(const struct uds_context *const context,
   // internally before calling this function.
 
   LOG_INF("Reading DT information by status mask: 0x%02X",
-          args->numOfDTCByStatusMaskArgs.mask);
+          args->subFuncArgs.numOfDTCByStatusMaskArgs.mask);
 
   *apply_action = true;
   return UDS_OK;
@@ -51,7 +51,8 @@ UDSErr_t read_dtc_info_action(struct uds_context *const context,
   }
 
   for (uint32_t i = 0; i < ARRAY_SIZE(dtc_records); i++) {
-    if (dtc_records[i].status & args->numOfDTCByStatusMaskArgs.mask) {
+    if (dtc_records[i].status &
+        args->subFuncArgs.numOfDTCByStatusMaskArgs.mask) {
       ret = args->copy(&context->instance->iso14229.server, dtc_records[i].dtc,
                        sizeof(dtc_records[i].dtc));
       if (ret != UDS_OK) {
