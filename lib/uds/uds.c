@@ -9,16 +9,6 @@
 #include <zephyr/sys/util.h>
 LOG_MODULE_REGISTER(uds, CONFIG_UDS_LOG_LEVEL);
 
-#include "clear_diag_info.h"
-#include "comm_ctrl.h"
-#include "data_by_identifier.h"
-#include "diag_session_ctrl.h"
-#include "ecu_reset.h"
-#include "memory_by_address.h"
-#include "read_dtc_info.h"
-#include "routine_control.h"
-#include "security_access.h"
-
 #include <ardep/iso14229.h>
 #include <ardep/uds.h>
 #include <iso14229.h>
@@ -26,7 +16,7 @@ LOG_MODULE_REGISTER(uds, CONFIG_UDS_LOG_LEVEL);
 /**
  * @brief Associated events with other data required to handle them
  */
-struct uds_event_to_handler_mapping {
+struct uds_event_handler_data {
   UDSEvent_t event;
   uds_get_check_fn get_check;
   uds_get_action_fn get_action;
@@ -34,125 +24,10 @@ struct uds_event_to_handler_mapping {
   enum uds_registration_type_t registration_type;
 };
 
-static const struct uds_event_to_handler_mapping event_handler_mappings[] = {
-  {
-    .event = UDS_EVT_Err,
-    .get_check = uds_get_check_for_diag_session_ctrl,
-    .get_action = uds_get_action_for_diag_session_ctrl,
-    .default_nrc = UDS_PositiveResponse,
-    .registration_type = UDS_REGISTRATION_TYPE__DIAG_SESSION_CTRL,
-  },
-  {
-    .event = UDS_EVT_DiagSessCtrl,
-    .get_check = uds_get_check_for_diag_session_ctrl,
-    .get_action = uds_get_action_for_diag_session_ctrl,
-    .default_nrc = UDS_PositiveResponse,
-    .registration_type = UDS_REGISTRATION_TYPE__DIAG_SESSION_CTRL,
-  },
-  {
-    .event = UDS_EVT_SessionTimeout,
-    .get_check = uds_get_check_for_session_timeout,
-    .get_action = uds_get_action_for_session_timeout,
-    .default_nrc = UDS_PositiveResponse,
-    .registration_type = UDS_REGISTRATION_TYPE__DIAG_SESSION_CTRL,
-  },
-  {
-    .event = UDS_EVT_EcuReset,
-    .get_check = uds_get_check_for_ecu_reset,
-    .get_action = uds_get_action_for_ecu_reset,
-    .default_nrc = UDS_NRC_SubFunctionNotSupported,
-    .registration_type = UDS_REGISTRATION_TYPE__ECU_RESET,
-  },
-  {
-    .event = UDS_EVT_DoScheduledReset,
-    .get_check = uds_get_check_for_execute_scheduled_reset,
-    .get_action = uds_get_action_for_execute_scheduled_reset,
-    .default_nrc = UDS_NRC_SubFunctionNotSupported,
-    .registration_type = UDS_REGISTRATION_TYPE__ECU_RESET,
-  },
-  {
-    .event = UDS_EVT_ReadDataByIdent,
-    .get_check = uds_get_check_for_read_data_by_identifier,
-    .get_action = uds_get_action_for_read_data_by_identifier,
-    .default_nrc = UDS_NRC_RequestOutOfRange,
-    .registration_type = UDS_REGISTRATION_TYPE__DATA_IDENTIFIER,
-  },
-  {
-    .event = UDS_EVT_ReadMemByAddr,
-    .get_check = uds_get_check_for_read_memory_by_addr,
-    .get_action = uds_get_action_for_read_memory_by_addr,
-    .default_nrc = UDS_NRC_ConditionsNotCorrect,
-    .registration_type = UDS_REGISTRATION_TYPE__MEMORY,
-  },
-  {
-    .event = UDS_EVT_WriteDataByIdent,
-    .get_check = uds_get_check_for_write_data_by_identifier,
-    .get_action = uds_get_action_for_write_data_by_identifier,
-    .default_nrc = UDS_NRC_RequestOutOfRange,
-    .registration_type = UDS_REGISTRATION_TYPE__DATA_IDENTIFIER,
-  },
-  {
-    .event = UDS_EVT_WriteMemByAddr,
-    .get_check = uds_get_check_for_write_memory_by_addr,
-    .get_action = uds_get_action_for_write_memory_by_addr,
-    .default_nrc = UDS_NRC_ConditionsNotCorrect,
-    .registration_type = UDS_REGISTRATION_TYPE__MEMORY,
-  },
-  {
-    .event = UDS_EVT_ReadDTCInformation,
-    .get_check = uds_get_check_for_read_dtc_info,
-    .get_action = uds_get_action_for_read_dtc_info,
-    .default_nrc = UDS_NRC_SubFunctionNotSupported,
-    .registration_type = UDS_REGISTRATION_TYPE__READ_DTC_INFO,
-  },
-  {
-    .event = UDS_EVT_ClearDiagnosticInfo,
-    .get_check = uds_get_check_for_clear_diag_info,
-    .get_action = uds_get_action_for_clear_diag_info,
-    .default_nrc = UDS_NRC_RequestOutOfRange,
-    .registration_type = UDS_REGISTRATION_TYPE__CLEAR_DIAG_INFO,
-  },
-  {
-    .event = UDS_EVT_IOControl,
-    .get_check = uds_get_check_for_io_control_by_identifier,
-    .get_action = uds_get_action_for_io_control_by_identifier,
-    .default_nrc = UDS_NRC_RequestOutOfRange,
-    .registration_type = UDS_REGISTRATION_TYPE__DATA_IDENTIFIER,
-  },
-  {
-    .event = UDS_EVT_RoutineCtrl,
-    .get_check = uds_get_check_for_routine_control,
-    .get_action = uds_get_action_for_routine_control,
-    .default_nrc = UDS_NRC_SubFunctionNotSupported,
-    .registration_type = UDS_REGISTRATION_TYPE__ROUTINE_CONTROL,
-  },
-  {
-    .event = UDS_EVT_SecAccessRequestSeed,
-    .get_check = uds_get_check_for_security_access_request_seed,
-    .get_action = uds_get_action_for_security_access_request_seed,
-    .default_nrc = UDS_NRC_ConditionsNotCorrect,
-    .registration_type = UDS_REGISTRATION_TYPE__SECURITY_ACCESS,
-  },
-  {
-    .event = UDS_EVT_SecAccessValidateKey,
-    .get_check = uds_get_check_for_security_access_validate_key,
-    .get_action = uds_get_action_for_security_access_validate_key,
-    .default_nrc = UDS_NRC_ConditionsNotCorrect,
-    .registration_type = UDS_REGISTRATION_TYPE__SECURITY_ACCESS,
-  },
-  {
-    .event = UDS_EVT_CommCtrl,
-    .get_check = uds_get_check_for_communication_control,
-    .get_action = uds_get_action_for_communication_control,
-    .default_nrc = UDS_NRC_RequestOutOfRange,
-    .registration_type = UDS_REGISTRATION_TYPE__COMMUNICATION_CONTROL,
-  },
-};
-
 // Wraps the logic to check and execute action on the event
 static UDSErr_t uds_check_and_act_on_event(
     struct uds_context* context,
-    const struct uds_event_to_handler_mapping* handler,
+    const struct uds_event_handler_data* handler,
     bool* found_at_least_one_match,
     bool* consume_event) {
   struct uds_registration_t* reg = context->registration;
@@ -196,7 +71,7 @@ static UDSErr_t uds_check_and_act_on_event(
 UDSErr_t uds_handle_event(struct uds_instance_t* instance,
                           UDSEvent_t event,
                           void* arg,
-                          const struct uds_event_to_handler_mapping* handler) {
+                          const struct uds_event_handler_data* handler) {
   bool found_at_least_one_match = false;
 
   // We start with static registrations
@@ -256,10 +131,10 @@ UDSErr_t uds_event_callback(struct iso14229_zephyr_instance* inst,
                             void* user_context) {
   struct uds_instance_t* instance = user_context;
 
-  // Look up the event in the handler mapping table
-  for (size_t i = 0; i < ARRAY_SIZE(event_handler_mappings); i++) {
-    if (event_handler_mappings[i].event == event) {
-      return uds_handle_event(instance, event, arg, &event_handler_mappings[i]);
+  // Look up the event in the handler mapping section
+  STRUCT_SECTION_FOREACH (uds_event_handler_data, handler) {
+    if (handler->event == event) {
+      return uds_handle_event(instance, event, arg, handler);
     }
   }
 

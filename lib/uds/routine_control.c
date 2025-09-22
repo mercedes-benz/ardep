@@ -10,7 +10,7 @@ LOG_MODULE_DECLARE(uds, CONFIG_UDS_LOG_LEVEL);
 
 #include "ardep/uds.h"
 #include "iso14229.h"
-#include "routine_control.h"
+#include "uds.h"
 
 static UDSErr_t uds_check_with_routine_id_fn(
     const struct uds_context* const context, bool* apply_action) {
@@ -34,3 +34,12 @@ uds_action_fn uds_get_action_for_routine_control(
     const struct uds_registration_t* const reg) {
   return reg->routine_control.actor.action;
 }
+
+STRUCT_SECTION_ITERABLE(uds_event_handler_data,
+                        __uds_event_handler_data_routine_ctrl_) = {
+  .event = UDS_EVT_RoutineCtrl,
+  .get_check = uds_get_check_for_routine_control,
+  .get_action = uds_get_action_for_routine_control,
+  .default_nrc = UDS_NRC_SubFunctionNotSupported,
+  .registration_type = UDS_REGISTRATION_TYPE__ROUTINE_CONTROL,
+};

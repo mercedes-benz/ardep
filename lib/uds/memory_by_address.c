@@ -6,12 +6,14 @@
  */
 
 #include "iso14229.h"
-#include "memory_by_address.h"
+#include "uds.h"
 
 #include <zephyr/kernel.h>
 #include <zephyr/linker/linker-defs.h>
 #include <zephyr/logging/log.h>
 #include <zephyr/sys/util.h>
+
+#include <ardep/uds.h>
 
 LOG_MODULE_DECLARE(uds, CONFIG_UDS_LOG_LEVEL);
 
@@ -74,6 +76,15 @@ uds_action_fn uds_get_action_for_read_memory_by_addr(
   return reg->memory.read.action;
 }
 
+STRUCT_SECTION_ITERABLE(uds_event_handler_data,
+                        __uds_event_handler_data_read_mem_by_addr_) = {
+  .event = UDS_EVT_ReadMemByAddr,
+  .get_check = uds_get_check_for_read_memory_by_addr,
+  .get_action = uds_get_action_for_read_memory_by_addr,
+  .default_nrc = UDS_NRC_ConditionsNotCorrect,
+  .registration_type = UDS_REGISTRATION_TYPE__MEMORY,
+};
+
 uds_check_fn uds_get_check_for_write_memory_by_addr(
     const struct uds_registration_t* const reg) {
   return reg->memory.write.check;
@@ -82,6 +93,15 @@ uds_action_fn uds_get_action_for_write_memory_by_addr(
     const struct uds_registration_t* const reg) {
   return reg->memory.write.action;
 }
+
+STRUCT_SECTION_ITERABLE(uds_event_handler_data,
+                        __uds_event_handler_data_write_mem_by_addr_) = {
+  .event = UDS_EVT_WriteMemByAddr,
+  .get_check = uds_get_check_for_write_memory_by_addr,
+  .get_action = uds_get_action_for_write_memory_by_addr,
+  .default_nrc = UDS_NRC_ConditionsNotCorrect,
+  .registration_type = UDS_REGISTRATION_TYPE__MEMORY,
+};
 
 UDSErr_t uds_check_default_memory_by_addr_read(
     const struct uds_context* const context, bool* apply_action) {
