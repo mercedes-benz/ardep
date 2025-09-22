@@ -11,6 +11,8 @@
 #include "ardep/iso14229.h"
 #include "iso14229.h"
 
+#include <zephyr/sys/slist.h>
+
 struct uds_instance_t;
 struct uds_registration_t;
 
@@ -199,10 +201,9 @@ struct uds_instance_t {
 
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
   /**
-   * @brief Pointer to the head of the singly linked list of dynamic
-   * registrations
+   * @brief Singly linked list of dynamic registrations
    */
-  struct uds_registration_t *dynamic_registrations;
+  sys_slist_t dynamic_registrations;
   register_event_handler_fn register_event_handler;
 #endif  // CONFIG_UDS_USE_DYNAMIC_REGISTRATION
 };
@@ -428,11 +429,12 @@ struct uds_registration_t {
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
 
   /**
-   * @brief Pointer to the next dynamic registration
+   * @brief Singly linked list of `struct uds_registration_t` using zephyr's
+   * sys_slist_t
    *
    * @note: Only used for dynamic registration
    */
-  struct uds_registration_t *next;
+  sys_snode_t node;
 #endif  // CONFIG_UDS_USE_DYNAMIC_REGISTRATION
 };
 

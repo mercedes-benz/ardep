@@ -232,16 +232,15 @@ static void uds_after(void *f) {
   struct lib_uds_fixture *fixture = f;
 
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
-  struct uds_registration_t *next = fixture->instance->dynamic_registrations;
+  struct uds_registration_t *reg;
+  struct uds_registration_t *temp;
 
-  // Free all dynamically registered event handler
-  while (next != NULL) {
-    struct uds_registration_t *current = next;
-    next = current->next;
-    k_free(current);
+  SYS_SLIST_FOR_EACH_CONTAINER_SAFE (&fixture->instance->dynamic_registrations,
+                                     reg, temp, node) {
+    k_free(reg);
   }
 
-  fixture->instance->dynamic_registrations = NULL;
+  sys_slist_init(&fixture->instance->dynamic_registrations);
 #endif
 }
 

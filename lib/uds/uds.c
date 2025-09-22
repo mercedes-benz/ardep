@@ -95,8 +95,8 @@ UDSErr_t uds_handle_event(struct uds_instance_t* instance,
 
   // Optional dynamic registrations
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
-  struct uds_registration_t* reg = instance->dynamic_registrations;
-  while (reg != NULL) {
+  struct uds_registration_t* reg;
+  SYS_SLIST_FOR_EACH_CONTAINER (&instance->dynamic_registrations, reg, node) {
     bool consume_event = false;
 
     struct uds_context context = {
@@ -112,8 +112,6 @@ UDSErr_t uds_handle_event(struct uds_instance_t* instance,
     if (consume_event || ret != UDS_OK) {
       return ret;
     }
-
-    reg = reg->next;
   }
 #endif  // CONFIG_UDS_USE_DYNAMIC_REGISTRATION
 
@@ -156,17 +154,7 @@ static int uds_register_event_handler(struct uds_instance_t* inst,
   }
   *heap_registration = registration;
 
-  if (inst->dynamic_registrations == NULL) {
-    inst->dynamic_registrations = heap_registration;
-    heap_registration->next = NULL;
-  } else {
-    struct uds_registration_t* current = inst->dynamic_registrations;
-    while (current->next != NULL) {
-      current = current->next;
-    }
-    current->next = heap_registration;
-    heap_registration->next = NULL;
-  }
+  sys_slist_append(&inst->dynamic_registrations, &heap_registration->node);
 
   return 0;
 }
@@ -179,7 +167,7 @@ int uds_init(struct uds_instance_t* inst,
   inst->user_context = user_context;
 
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
-  inst->dynamic_registrations = NULL;
+  sys_slist_init(&inst->dynamic_registrations);
   inst->register_event_handler = uds_register_event_handler;
 #endif  //  CONFIG_UDS_USE_DYNAMIC_REGISTRATION
 
