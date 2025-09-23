@@ -144,20 +144,68 @@ UDSErr_t uds_event_callback(struct iso14229_zephyr_instance* inst,
 // Registration function to dynamically register new handlers at runtime
 // (Heap allocated)
 static int uds_register_event_handler(struct uds_instance_t* inst,
-                                      struct uds_registration_t registration) {
+                                      struct uds_registration_t registration,
+                                      uint32_t dynamic_id) {
   registration.instance = inst;
+
+  // Validate that the provided ID is unique
+  struct uds_registration_t* reg;
+  SYS_SLIST_FOR_EACH_CONTAINER (&inst->dynamic_registrations, reg, node) {
+    if (reg->dynamic_id == dynamic_id) {
+      return -EEXIST;  // ID already in use
+    }
+  }
 
   struct uds_registration_t* heap_registration =
       k_malloc(sizeof(struct uds_registration_t));
   if (heap_registration == NULL) {
     return -ENOMEM;
   }
+
   *heap_registration = registration;
+
+  /* IMPORTANT: Never append a node that might contain garbage pointers */
+  heap_registration->node = (sys_snode_t){0};
+
+  /* Set the user-provided ID */
+  heap_registration->dynamic_id = dynamic_id;
 
   sys_slist_append(&inst->dynamic_registrations, &heap_registration->node);
 
   return 0;
 }
+
+int uds_unregister_event_handler(struct uds_instance_t* inst,
+                                 uint32_t dynamic_id) {
+  struct uds_registration_t* reg;
+  struct uds_registration_t* tmp;
+
+  SYS_SLIST_FOR_EACH_CONTAINER_SAFE (&inst->dynamic_registrations, reg, tmp,
+                                     node) {
+    if (reg->dynamic_id == dynamic_id) {
+      /* Call custom unregister function if provided */
+      if (reg->unregister_registration_fn) {
+        int ret = reg->unregister_registration_fn(reg);
+        if (ret < 0) {
+          LOG_ERR(
+              "Custom unregister function failed for registration ID %u: %d",
+              dynamic_id, ret);
+          return ret;
+        }
+      }
+
+      /* Remove from list and free */
+      bool removed =
+          sys_slist_find_and_remove(&inst->dynamic_registrations, &reg->node);
+      __ASSERT(removed, "node not found during remove (should not happen)");
+      k_free(reg);
+      return 0;
+    }
+  }
+
+  return -ENOENT;  // Registration not found
+}
+
 #endif  //  CONFIG_UDS_USE_DYNAMIC_REGISTRATION
 
 int uds_init(struct uds_instance_t* inst,
@@ -169,6 +217,7 @@ int uds_init(struct uds_instance_t* inst,
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
   sys_slist_init(&inst->dynamic_registrations);
   inst->register_event_handler = uds_register_event_handler;
+  inst->unregister_event_handler = uds_unregister_event_handler;
 #endif  //  CONFIG_UDS_USE_DYNAMIC_REGISTRATION
 
   int ret = iso14229_zephyr_init(&inst->iso14229, iso_tp_config, can_dev, inst);

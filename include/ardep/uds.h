@@ -11,6 +11,8 @@
 #include "ardep/iso14229.h"
 #include "iso14229.h"
 
+#include <wchar.h>
+
 #include <zephyr/sys/slist.h>
 
 struct uds_instance_t;
@@ -174,17 +176,35 @@ struct uds_actor {
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
 
 /**
- * @brief Function to register a new data identifier at runtime
+ * @brief Function to dynamically register a new event handler at runtime
  *
  * @param inst Pointer to the UDS server instance.
- * @param registration The registration information for the new data identifier.
+ * @param registration The registration information for the new event handler.
+ * @param dynamic_id A unique ID provided by the user to identify this
+ * registration.
  *
  * @returns 0 on success
- * @returns <0 on failure
+ * @returns -EEXIST if the provided ID is already in use
+ * @returns <0 on other failures
  *
  */
-typedef int (*register_event_handler_fn)(
-    struct uds_instance_t *inst, struct uds_registration_t registration);
+typedef int (*register_event_handler_fn)(struct uds_instance_t *inst,
+                                         struct uds_registration_t registration,
+                                         uint32_t dynamic_id);
+
+/**
+ * @brief Function to unregister a dynamically registered event handler at
+ * runtime
+ *
+ * @param inst Pointer to the UDS server instance.
+ * @param dynamic_id The unique ID of the registration to delete.
+ *
+ * @returns 0 on success
+ * @returns -ENOENT if no registration with the given ID was found
+ * @returns Error value of custom unregister function if provided
+ */
+typedef int (*unregister_event_handler_fn)(struct uds_instance_t *inst,
+                                           uint32_t dynamic_id);
 
 #endif  // CONFIG_UDS_USE_DYNAMIC_REGISTRATION
 
@@ -205,6 +225,7 @@ struct uds_instance_t {
    */
   sys_slist_t dynamic_registrations;
   register_event_handler_fn register_event_handler;
+  unregister_event_handler_fn unregister_event_handler;
 #endif  // CONFIG_UDS_USE_DYNAMIC_REGISTRATION
 };
 
@@ -435,6 +456,24 @@ struct uds_registration_t {
    * @note: Only used for dynamic registration
    */
   sys_snode_t node;
+
+  /**
+   * @brief Unique ID of this dynamic registration
+   */
+  uint32_t dynamic_id;
+
+  /**
+   * @brief Function to unregister this registration
+   *
+   * A custom function can be provided to e.g. free additional resources when
+   * this registration gets unregistered.
+   *
+   * @param this Pointer to this registration instance
+   *
+   * @returns 0 on success
+   * @returns <0 on failure
+   */
+  int (*unregister_registration_fn)(struct uds_registration_t *this);
 #endif  // CONFIG_UDS_USE_DYNAMIC_REGISTRATION
 };
 
