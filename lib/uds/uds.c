@@ -5,6 +5,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+#include <stdint.h>
+
 #include <zephyr/logging/log.h>
 #include <zephyr/sys/util.h>
 LOG_MODULE_REGISTER(uds, CONFIG_UDS_LOG_LEVEL);
@@ -141,19 +143,57 @@ UDSErr_t uds_event_callback(struct iso14229_zephyr_instance* inst,
 }
 
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
+
+// Find next available dynamic ID, starting from 1
+// Returns 0 if no ID is available
+// TODO: This is inefficient for large numbers of registrations
+static uint32_t find_next_dynamic_id(struct uds_instance_t* inst) {
+  // Find the next available ID starting from 1
+  uint32_t candidate_id = 1;
+  bool id_found = false;
+
+  while (candidate_id != 0) {  // Check for overflow (UINT32_MAX + 1 = 0)
+    bool id_in_use = false;
+
+    // Check if this ID is already in use
+    struct uds_registration_t* reg;
+    SYS_SLIST_FOR_EACH_CONTAINER (&inst->dynamic_registrations, reg, node) {
+      if (reg->dynamic_id == candidate_id) {
+        id_in_use = true;
+        break;
+      }
+    }
+
+    if (!id_in_use) {
+      id_found = true;
+      break;
+    }
+
+    if (candidate_id == UINT32_MAX) {
+      id_found = false;
+      candidate_id = 0;
+    } else {
+      candidate_id++;
+    }
+  }
+
+  if (!id_found) {
+    return 0;  // No free ID available
+  }
+
+  return candidate_id;
+}
+
 // Registration function to dynamically register new handlers at runtime
 // (Heap allocated)
 static int uds_register_event_handler(struct uds_instance_t* inst,
                                       struct uds_registration_t registration,
-                                      uint32_t dynamic_id) {
+                                      uint32_t* dynamic_id) {
   registration.instance = inst;
 
-  // Validate that the provided ID is unique
-  struct uds_registration_t* reg;
-  SYS_SLIST_FOR_EACH_CONTAINER (&inst->dynamic_registrations, reg, node) {
-    if (reg->dynamic_id == dynamic_id) {
-      return -EEXIST;  // ID already in use
-    }
+  uint32_t next_id = find_next_dynamic_id(inst);
+  if (next_id == 0) {
+    return -ENOSPC;  // No free ID available
   }
 
   struct uds_registration_t* heap_registration =
@@ -164,13 +204,14 @@ static int uds_register_event_handler(struct uds_instance_t* inst,
 
   *heap_registration = registration;
 
-  /* IMPORTANT: Never append a node that might contain garbage pointers */
+  // Never append a node that might contain garbage pointers
   heap_registration->node = (sys_snode_t){0};
-
-  /* Set the user-provided ID */
-  heap_registration->dynamic_id = dynamic_id;
+  heap_registration->dynamic_id = next_id;
 
   sys_slist_append(&inst->dynamic_registrations, &heap_registration->node);
+
+  // Return the assigned ID to the caller
+  *dynamic_id = next_id;
 
   return 0;
 }

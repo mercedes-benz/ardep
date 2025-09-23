@@ -14,8 +14,6 @@
 
 #define UDS_DYNAMIC_DATA_ID_1 0xABCD
 #define UDS_DYNAMIC_DATA_ID_2 0x1234
-#define UDS_DYNAMIC_REG_ID_1 0x12345678
-#define UDS_DYNAMIC_REG_ID_2 0x87654321
 
 // Global counters to track invocations
 static bool dynamic_reg1_check_invoked = false;
@@ -110,8 +108,8 @@ ZTEST_F(lib_uds, test_two_dynamic_registration) {
   reg1.data_identifier.io_control.action = NULL;
   reg1.unregister_registration_fn = custom_unregister_for_dynamic_reg1;
 
-  int ret =
-      instance->register_event_handler(instance, reg1, UDS_DYNAMIC_REG_ID_1);
+  uint32_t dynamic_id_1;
+  int ret = instance->register_event_handler(instance, reg1, &dynamic_id_1);
   zassert_ok(ret);
 
   // Create second dynamic registration
@@ -126,7 +124,8 @@ ZTEST_F(lib_uds, test_two_dynamic_registration) {
   reg2.data_identifier.io_control.action = NULL;
   reg2.unregister_registration_fn = NULL;
 
-  ret = instance->register_event_handler(instance, reg2, UDS_DYNAMIC_REG_ID_2);
+  uint32_t dynamic_id_2;
+  ret = instance->register_event_handler(instance, reg2, &dynamic_id_2);
   zassert_ok(ret);
 
   // Test first dynamic registration
@@ -171,7 +170,7 @@ ZTEST_F(lib_uds, test_two_dynamic_registration) {
 
   reset_global_counters();
 
-  ret = instance->unregister_event_handler(instance, UDS_DYNAMIC_REG_ID_1);
+  ret = instance->unregister_event_handler(instance, dynamic_id_1);
   zassert_ok(ret);
 
   // Verify custom unregister function was called
@@ -192,7 +191,7 @@ ZTEST_F(lib_uds, test_two_dynamic_registration) {
 
   reset_global_counters();
 
-  ret = instance->unregister_event_handler(instance, UDS_DYNAMIC_REG_ID_2);
+  ret = instance->unregister_event_handler(instance, dynamic_id_2);
   zassert_ok(ret);
 
   ret = receive_rdbid_event(instance, &arg2);
@@ -216,47 +215,6 @@ ZTEST_F(lib_uds, test_unregistering_non_existing_registration) {
   uint32_t reg_id = 0xFFFFFFFF;
   int ret = instance->unregister_event_handler(instance, reg_id);
   zassert_equal(ret, -ENOENT);
-}
-
-ZTEST_F(lib_uds, test_duplicate_id_registration) {
-  struct uds_instance_t *instance = fixture->instance;
-
-  reset_global_counters();
-
-  // Create first dynamic registration
-  struct uds_registration_t reg1;
-  reg1.type = UDS_REGISTRATION_TYPE__DATA_IDENTIFIER;
-  reg1.data_identifier.data_id = UDS_DYNAMIC_DATA_ID_1;
-  reg1.data_identifier.read.check = custom_check_for_dynamic_reg1;
-  reg1.data_identifier.read.action = custom_action_for_dynamic_reg1;
-  reg1.data_identifier.write.check = NULL;
-  reg1.data_identifier.write.action = NULL;
-  reg1.data_identifier.io_control.check = NULL;
-  reg1.data_identifier.io_control.action = NULL;
-  reg1.unregister_registration_fn = NULL;
-
-  uint32_t duplicate_id = 0x11111111;
-  int ret = instance->register_event_handler(instance, reg1, duplicate_id);
-  zassert_ok(ret);
-
-  // Try to register with the same ID - should fail
-  struct uds_registration_t reg2;
-  reg2.type = UDS_REGISTRATION_TYPE__DATA_IDENTIFIER;
-  reg2.data_identifier.data_id = UDS_DYNAMIC_DATA_ID_2;
-  reg2.data_identifier.read.check = custom_check_for_dynamic_reg2;
-  reg2.data_identifier.read.action = custom_action_for_dynamic_reg2;
-  reg2.data_identifier.write.check = NULL;
-  reg2.data_identifier.write.action = NULL;
-  reg2.data_identifier.io_control.check = NULL;
-  reg2.data_identifier.io_control.action = NULL;
-  reg2.unregister_registration_fn = NULL;
-
-  ret = instance->register_event_handler(instance, reg2, duplicate_id);
-  zassert_equal(ret, -EEXIST);
-
-  // Clean up
-  ret = instance->unregister_event_handler(instance, duplicate_id);
-  zassert_ok(ret);
 }
 
 #endif  // CONFIG_UDS_USE_DYNAMIC_REGISTRATION

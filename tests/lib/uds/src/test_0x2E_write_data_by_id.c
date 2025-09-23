@@ -245,8 +245,8 @@ ZTEST_F(lib_uds, test_0x2E_write_by_id_dynamic_registration) {
   reg.data_identifier.write.check = custom_check_for_dynamic_registration;
   reg.data_identifier.write.action = custom_action_for_dynamic_registration;
 
-  uint32_t reg_id = 1;
-  int ret = instance->register_event_handler(instance, reg, reg_id);
+  uint32_t reg_id;
+  int ret = instance->register_event_handler(instance, reg, &reg_id);
   zassert_ok(ret);
 
   uint32_t data = 0x11223344;
@@ -279,8 +279,8 @@ ZTEST_F(
   reg.data_identifier.write.check = NULL;
   reg.data_identifier.write.action = NULL;
 
-  uint32_t reg_id = 1;
-  int ret = instance->register_event_handler(instance, reg, reg_id);
+  uint32_t reg_id;
+  int ret = instance->register_event_handler(instance, reg, &reg_id);
   zassert_ok(ret);
 
   uint32_t data = 0x11223344;

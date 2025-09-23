@@ -210,8 +210,8 @@ ZTEST_F(lib_uds, test_0x22_read_by_id_dynamic_registration) {
   reg.data_identifier.write.check = NULL;
   reg.data_identifier.write.action = NULL;
 
-  uint32_t reg_id = 1;
-  int ret = instance->register_event_handler(instance, reg, reg_id);
+  uint32_t reg_id;
+  int ret = instance->register_event_handler(instance, reg, &reg_id);
   zassert_ok(ret);
 
   UDSRDBIArgs_t arg = {
@@ -240,8 +240,8 @@ ZTEST_F(lib_uds,
   reg.data_identifier.write.check = NULL;
   reg.data_identifier.write.action = NULL;
 
-  uint32_t reg_id = 1;
-  int ret = instance->register_event_handler(instance, reg, reg_id);
+  uint32_t reg_id;
+  int ret = instance->register_event_handler(instance, reg, &reg_id);
   zassert_ok(ret);
 
   UDSRDBIArgs_t arg = {
