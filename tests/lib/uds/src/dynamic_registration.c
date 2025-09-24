@@ -109,7 +109,8 @@ ZTEST_F(lib_uds, test_two_dynamic_registration) {
   reg1.unregister_registration_fn = custom_unregister_for_dynamic_reg1;
 
   uint32_t dynamic_id_1;
-  int ret = instance->register_event_handler(instance, reg1, &dynamic_id_1);
+  int ret =
+      instance->register_event_handler(instance, reg1, &dynamic_id_1, NULL);
   zassert_ok(ret);
 
   // Create second dynamic registration
@@ -125,7 +126,7 @@ ZTEST_F(lib_uds, test_two_dynamic_registration) {
   reg2.unregister_registration_fn = NULL;
 
   uint32_t dynamic_id_2;
-  ret = instance->register_event_handler(instance, reg2, &dynamic_id_2);
+  ret = instance->register_event_handler(instance, reg2, &dynamic_id_2, NULL);
   zassert_ok(ret);
 
   // Test first dynamic registration

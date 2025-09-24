@@ -83,6 +83,12 @@ enum uds_routine_control_subfunc {
   UDS_ROUTINE_CONTROL__REQUEST_ROUTINE_RESULTS = 0x03,
 };
 
+enum uds_dynamically_define_data_ids_subfunc {
+  UDS_DYNAMICALLY_DEFINED_DATA_IDS__DEFINE_BY_DATA_ID = 0x01,
+  UDS_DYNAMICALLY_DEFINED_DATA_IDS__DEFINE_BY_MEMORY_ADDRESS = 0x02,
+  UDS_DYNAMICALLY_DEFINED_DATA_IDS__CLEAR = 0x03,
+};
+
 /**
  * @brief Context provided to Event handlers on an event
  */
@@ -180,16 +186,22 @@ struct uds_actor {
  *
  * @param inst Pointer to the UDS server instance.
  * @param registration The registration information for the new event handler.
- * @param dynamic_id_out Pointer to store the assigned unique ID for this registration.
+ * @param dynamic_id_out Pointer to store the assigned unique ID for this
+ * registration.
+ * @param registration_out Optional pointer to return a pointer to the allocated
+ * registration object. Can be NULL if not needed.
  *
  * @returns 0 on success
- * @returns -ENOSPC if no free ID is available (all IDs from 1 to UINT32_MAX are taken)
+ * @returns -ENOSPC if no free ID is available (all IDs from 1 to UINT32_MAX are
+ * taken)
  * @returns <0 on other failures
  *
  */
-typedef int (*register_event_handler_fn)(struct uds_instance_t *inst,
-                                         struct uds_registration_t registration,
-                                         uint32_t *dynamic_id_out);
+typedef int (*register_event_handler_fn)(
+    struct uds_instance_t *inst,
+    struct uds_registration_t registration,
+    uint32_t *dynamic_id_out,
+    struct uds_registration_t **registration_out);
 
 /**
  * @brief Function to unregister a dynamically registered event handler at
@@ -246,6 +258,33 @@ enum uds_registration_type_t {
   UDS_REGISTRATION_TYPE__ROUTINE_CONTROL,
   UDS_REGISTRATION_TYPE__SECURITY_ACCESS,
   UDS_REGISTRATION_TYPE__COMMUNICATION_CONTROL,
+  UDS_REGISTRATION_TYPE__DYNAMIC_DEFINE_DATA_IDS,
+};
+
+enum uds_dynamically_defined_data_type {
+  UDS_DYNAMICALLY_DEFINED_DATA_TYPE__ID = 1,
+  UDS_DYNAMICALLY_DEFINED_DATA_TYPE__MEMORY = 2,
+};
+
+struct uds_dynamically_defined_data {
+  sys_snode_t node;
+  enum uds_dynamically_defined_data_type type;
+  union {
+    struct {
+      uint16_t id;
+      uint8_t position;
+      uint8_t size;
+    } id;
+    struct {
+      void *memAddr;
+      size_t memSize;
+    } memory;
+  };
+};
+
+struct dynamic_registration_id_sll_item {
+  sys_snode_t node;
+  uint32_t dynamic_registration_id;
 };
 
 /**
@@ -444,6 +483,29 @@ struct uds_registration_t {
        */
       struct uds_actor actor;
     } communication_control;
+
+    /**
+     * @brief Data for the Dynamically Define Data ID event handler
+     *
+     * Handles *UDS_EVT_DynamicDefineDataId* events
+     */
+    struct {
+      /**
+       * @brief User-defined context pointer
+       */
+      void *user_context;
+
+      /**
+       * @brief list of `struct dynamic_registration_id_sll_item` to hold all
+       * dynamic registration IDs created.
+       */
+      sys_slist_t dynamic_registration_id_list;
+
+      /**
+       * @brief Actor for *UDS_EVT_CommCtrl* events
+       */
+      struct uds_actor actor;
+    } dynamically_define_data_ids;
   };
 
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
@@ -459,7 +521,7 @@ struct uds_registration_t {
   /**
    * @brief Unique ID of this dynamic registration
    */
-  uint32_t dynamic_id;
+  uint32_t dynamic_registration_id;
 
   /**
    * @brief Function to unregister this registration
@@ -530,6 +592,20 @@ UDSErr_t uds_check_default_memory_by_addr_write(
  * Writes to RAM and Flash
  */
 UDSErr_t uds_action_default_memory_by_addr_write(
+    struct uds_context *const context, bool *consume_event);
+
+/**
+ * @brief Default check function for the default dynamically define data IDs
+ * handler
+ */
+UDSErr_t uds_check_default_dynamically_define_data_ids(
+    const struct uds_context *const context, bool *apply_action);
+
+/**
+ * @brief Default action function for the default dynamically define data IDs
+ * handler
+ */
+UDSErr_t uds_action_default_dynamically_define_data_ids(
     struct uds_context *const context, bool *consume_event);
 
 // Include macro declarations after all types are defined

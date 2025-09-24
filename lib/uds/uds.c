@@ -158,7 +158,7 @@ static uint32_t find_next_dynamic_id(struct uds_instance_t* inst) {
     // Check if this ID is already in use
     struct uds_registration_t* reg;
     SYS_SLIST_FOR_EACH_CONTAINER (&inst->dynamic_registrations, reg, node) {
-      if (reg->dynamic_id == candidate_id) {
+      if (reg->dynamic_registration_id == candidate_id) {
         id_in_use = true;
         break;
       }
@@ -186,9 +186,11 @@ static uint32_t find_next_dynamic_id(struct uds_instance_t* inst) {
 
 // Registration function to dynamically register new handlers at runtime
 // (Heap allocated)
-static int uds_register_event_handler(struct uds_instance_t* inst,
-                                      struct uds_registration_t registration,
-                                      uint32_t* dynamic_id) {
+static int uds_register_event_handler(
+    struct uds_instance_t* inst,
+    struct uds_registration_t registration,
+    uint32_t* dynamic_id,
+    struct uds_registration_t** registration_out) {
   registration.instance = inst;
 
   uint32_t next_id = find_next_dynamic_id(inst);
@@ -206,12 +208,16 @@ static int uds_register_event_handler(struct uds_instance_t* inst,
 
   // Never append a node that might contain garbage pointers
   heap_registration->node = (sys_snode_t){0};
-  heap_registration->dynamic_id = next_id;
+  heap_registration->dynamic_registration_id = next_id;
 
   sys_slist_append(&inst->dynamic_registrations, &heap_registration->node);
 
   // Return the assigned ID to the caller
   *dynamic_id = next_id;
+
+  if (registration_out) {
+    *registration_out = heap_registration;
+  }
 
   return 0;
 }
@@ -223,7 +229,7 @@ int uds_unregister_event_handler(struct uds_instance_t* inst,
 
   SYS_SLIST_FOR_EACH_CONTAINER_SAFE (&inst->dynamic_registrations, reg, tmp,
                                      node) {
-    if (reg->dynamic_id == dynamic_id) {
+    if (reg->dynamic_registration_id == dynamic_id) {
       /* Call custom unregister function if provided */
       if (reg->unregister_registration_fn) {
         int ret = reg->unregister_registration_fn(reg);

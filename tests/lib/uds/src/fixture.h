@@ -65,4 +65,11 @@ UDSErr_t receive_event(struct uds_instance_t *inst,
  */
 void assert_copy_data(const uint8_t *data, uint32_t len);
 
+/**
+ * @brief same as `assert_copy_data` but allows to specify an offset
+ */
+void assert_copy_data_offset(const uint8_t *data,
+                             uint32_t len,
+                             uint32_t offset);
+
 #endif  // APP_TESTS_LIB_ISO14229_SRC_FIXTURE_H_

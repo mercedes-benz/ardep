@@ -676,4 +676,59 @@
 
 // #endregion COMMUNICATION_CONTROL
 
+// #region DYNAMICALLY_DEFINE_DATA_IDS
+
+// clang-format off
+
+/**
+ * @brief Register a new dynamically define data IDs event handler
+ * 
+ * @param _instance Pointer to associated the UDS server instance
+ * @param _check Check if the associated action should be executed
+ * @param _act Execute the handler for the dynamically define data IDs event
+ * @param _user_context Optional context provided by the user
+ * 
+ */
+#define UDS_REGISTER_DYNAMICALLY_DEFINE_DATA_IDS_HANDLER(                      \
+  _instance,                                                                   \
+  _check,                                                                      \
+  _act,                                                                        \
+  _user_context                                                                \
+)                                                                              \
+  STRUCT_SECTION_ITERABLE(uds_registration_t,                                  \
+        _UDS_CAT_EXPAND(__uds_registration_dyn_data_ids_, __COUNTER__)) = {    \
+    .instance = _instance,                                                     \
+    .type = UDS_REGISTRATION_TYPE__DYNAMIC_DEFINE_DATA_IDS,                    \
+    .dynamically_define_data_ids = {                                           \
+      .user_context = _user_context,                                           \
+      .dynamic_registration_id_list = SYS_SLIST_STATIC_INIT(                   \
+        &_UDS_CAT_EXPAND(__uds_registration_dyn_data_ids_, __COUNTER__ - 1)    \
+          .dynamically_define_data_ids.dynamic_registration_id_list            \
+      ),                                                                       \
+      .actor = {                                                               \
+        .check = _check,                                                       \
+        .action = _act,                                                        \
+      },                                                                       \
+    },                                                                         \
+  };
+
+/**
+ * @brief Register the default dynamically define data IDs event handler
+ * 
+ * @param _instance Pointer to associated the UDS server instance
+ */
+#define UDS_REGISTER_DYNAMICALLY_DEFINE_DATA_IDS_DEFAULT_HANDLER(            \
+  _instance                                                                  \
+)                                                                            \
+  UDS_REGISTER_DYNAMICALLY_DEFINE_DATA_IDS_HANDLER(                          \
+    _instance,                                                               \
+    uds_check_default_dynamically_define_data_ids,                           \
+    uds_action_default_dynamically_define_data_ids,                          \
+    NULL                                                                     \
+  )
+
+// clang-format on
+
+// #endregion DYNAMICALLY_DEFINE_DATA_IDS
+
 #endif  // ARDEP_UDS_MACRO_H

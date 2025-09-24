@@ -5,6 +5,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+#include "ardep/uds_macro.h"
 #include "fixture.h"
 
 #include <string.h>
@@ -157,6 +158,8 @@ UDS_REGISTER_COMMUNICATION_CONTROL_HANDLER(&fixture_uds_instance,
                                            data_id_action_fn,
                                            NULL)
 
+UDS_REGISTER_DYNAMICALLY_DEFINE_DATA_IDS_DEFAULT_HANDLER(&fixture_uds_instance);
+
 static const UDSISOTpCConfig_t default_cfg = {
   // Hardware Addresses
   .source_addr = 0x7E8,  // Can ID Server (us)
@@ -170,10 +173,16 @@ static const UDSISOTpCConfig_t default_cfg = {
 static uint8_t copied_data[4096];
 static uint32_t copied_len;
 
-void assert_copy_data(const uint8_t *data, uint32_t len) {
-  zassert_equal(copied_len, len, "Expected length %u, but got %u", len,
+void assert_copy_data_offset(const uint8_t *data,
+                             uint32_t len,
+                             uint32_t offset) {
+  zassert_equal(copied_len, len + offset, "Expected length %u, but got %u", len,
                 copied_len);
-  zassert_mem_equal(copied_data, data, len);
+  zassert_mem_equal(copied_data + offset, data, len);
+}
+
+void assert_copy_data(const uint8_t *data, uint32_t len) {
+  assert_copy_data_offset(data, len, 0);
 }
 
 UDSErr_t receive_event(struct uds_instance_t *inst,
@@ -185,8 +194,8 @@ UDSErr_t receive_event(struct uds_instance_t *inst,
 static uint8_t custom_copy(UDSServer_t *server,
                            const void *data,
                            uint16_t len) {
-  copied_len = len;
-  memcpy(copied_data, data, len);
+  memcpy(copied_data + copied_len, data, len);
+  copied_len += len;
 
   return 0;
 }
@@ -223,6 +232,21 @@ static void uds_before(void *f) {
 
   test_dynamic_registration_check_invoked = false;
   test_dynamic_registration_action_invoked = false;
+
+  data_id_r_data[0] = 0x12;
+  data_id_r_data[1] = 0x34;
+  data_id_r_data[2] = 0x56;
+  data_id_r_data[3] = 0x78;
+
+  data_id_rw_data[0] = 0x87;
+  data_id_rw_data[1] = 0x65;
+  data_id_rw_data[2] = 0x43;
+  data_id_rw_data[3] = 0x21;
+
+  data_id_rw_duplicated_data[0] = 0x11;
+  data_id_rw_duplicated_data[1] = 0x22;
+  data_id_rw_duplicated_data[2] = 0x33;
+  data_id_rw_duplicated_data[3] = 0x44;
 
   memset(copied_data, 0, sizeof(copied_data));
   copied_len = 0;
