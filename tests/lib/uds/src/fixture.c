@@ -158,6 +158,11 @@ UDS_REGISTER_COMMUNICATION_CONTROL_HANDLER(&fixture_uds_instance,
                                            data_id_action_fn,
                                            NULL)
 
+UDS_REGISTER_CONTROL_DTC_SETTING_HANDLER(&fixture_uds_instance,
+                                         data_id_check_fn,
+                                         data_id_action_fn,
+                                         NULL)
+
 UDS_REGISTER_DYNAMICALLY_DEFINE_DATA_IDS_DEFAULT_HANDLER(&fixture_uds_instance);
 
 static const UDSISOTpCConfig_t default_cfg = {

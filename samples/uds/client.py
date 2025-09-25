@@ -181,6 +181,10 @@ def dtc_information(client: Client):
         status_mask=0x84,
     )
     print(f"\t\tDTC count: {dtc_data.service_data.dtc_count}")
+    for dtc in dtc_data.service_data.dtcs:
+        print(
+            f"\t\t\tDTC: 0x{dtc.id:06X} with status 0x{dtc.status.get_byte_as_int():02X}"
+        )
 
     print("\tClearing DTC information...")
     client.clear_dtc(group=0xFFFFFF)
@@ -191,6 +195,10 @@ def dtc_information(client: Client):
         status_mask=0x84,
     )
     print(f"\t\tDTC count: {dtc_data.service_data.dtc_count}")
+    for dtc in dtc_data.service_data.dtcs:
+        print(
+            f"\t\t\tDTC: 0x{dtc.id:06X} with status 0x{dtc.status.get_byte_as_int():02X}"
+        )
 
     time.sleep(1.5)
 
@@ -200,6 +208,134 @@ def dtc_information(client: Client):
         status_mask=0x84,
     )
     print(f"\t\tDTC count: {dtc_data.service_data.dtc_count}")
+    for dtc in dtc_data.service_data.dtcs:
+        print(
+            f"\t\t\tDTC: 0x{dtc.id:06X} with status 0x{dtc.status.get_byte_as_int():02X}"
+        )
+
+    # Control DTC Setting demonstration
+    print("\n\tControl DTC Setting demonstration:")
+
+    # First read current DTCs to see initial status
+    print("\t\tReading initial DTC status...")
+    try:
+        dtc_data = client.read_dtc_information(
+            subfunction=0x02,  # DTC by status mask
+            status_mask=0xFF,  # All status bits
+        )
+        print(f"\t\t\tInitial DTC count: {dtc_data.service_data.dtc_count}")
+        for dtc in dtc_data.service_data.dtcs:
+            print(
+                f"\t\t\tDTC: 0x{dtc.id:06X} with status 0x{dtc.status.get_byte_as_int():02X}"
+            )
+    except NegativeResponseException as e:
+        print(
+            f"\t\t\tFailed to read DTCs: {e.response.code_name} (0x{e.response.code:02X})"
+        )
+
+    # Wait a bit to see DTC status changes
+    print("\t\tWaiting 200ms to observe DTC status changes...")
+    time.sleep(0.2)
+
+    # Read DTCs again to see status increments
+    try:
+        dtc_data = client.read_dtc_information(
+            subfunction=0x02,
+            status_mask=0xFF,
+        )
+        print(f"\t\t\tDTC count after 200ms: {dtc_data.service_data.dtc_count}")
+        for dtc in dtc_data.service_data.dtcs:
+            print(
+                f"\t\t\t\tDTC: 0x{dtc.id:06X} with status 0x{dtc.status.get_byte_as_int():02X}"
+            )
+    except NegativeResponseException as e:
+        print(
+            f"\t\t\tFailed to read DTCs: {e.response.code_name} (0x{e.response.code:02X})"
+        )
+
+    # Now freeze DTC updates using Control DTC Setting OFF
+    print("\t\tSending DTC Setting OFF (0x02) - freezing DTC status updates...")
+    try:
+        response = client.control_dtc_setting(0x02)  # (DTCSettingOff)
+
+        if response.positive:
+            print("\t\t\tDTC Setting OFF successful - DTC updates are now frozen")
+        else:
+            print(
+                f"\t\t\tDTC Setting OFF failed: {response.code_name} (0x{response.code:02X})"
+            )
+    except NegativeResponseException as e:
+        print(f"\t\t\tError sending DTC Setting OFF: {e}")
+
+    try:
+        dtc_data = client.read_dtc_information(
+            subfunction=0x02,
+            status_mask=0xFF,
+        )
+        print(
+            f"\t\t\tDTC count directly after frozen: {dtc_data.service_data.dtc_count}"
+        )
+        for dtc in dtc_data.service_data.dtcs:
+            print(
+                f"\t\t\t\tDTC: 0x{dtc.id:06X} with status 0x{dtc.status.get_byte_as_int():02X}"
+            )
+    except NegativeResponseException as e:
+        print(
+            f"\t\t\tFailed to read DTCs: {e.response.code_name} (0x{e.response.code:02X})"
+        )
+
+    # Wait and verify DTCs don't change
+    print("\t\tWaiting 200ms to verify DTC status is frozen...")
+    time.sleep(0.2)
+
+    try:
+        dtc_data = client.read_dtc_information(
+            subfunction=0x02,
+            status_mask=0xFF,
+        )
+        print(f"\t\t\tDTC count while frozen: {dtc_data.service_data.dtc_count}")
+        for dtc in dtc_data.service_data.dtcs:
+            print(
+                f"\t\t\t\tDTC: 0x{dtc.id:06X} with status 0x{dtc.status.get_byte_as_int():02X}"
+            )
+    except NegativeResponseException as e:
+        print(
+            f"\t\t\tFailed to read DTCs: {e.response.code_name} (0x{e.response.code:02X})"
+        )
+
+    # Resume DTC updates using Control DTC Setting ON
+    print("\t\tSending DTC Setting ON (0x01) - resuming DTC status updates...")
+    try:
+        response = client.control_dtc_setting(0x01)  # DTCSettingOn
+        if response.positive:
+            print("\t\t\tDTC Setting ON successful - DTC updates are now resumed")
+        else:
+            print(
+                f"\t\t\tDTC Setting ON failed: {response.code_name} (0x{response.code:02X})"
+            )
+    except NegativeResponseException as e:
+        print(f"\t\t\tError sending DTC Setting ON: {e}")
+
+    # Wait and verify DTCs are updating again
+    print("\t\tWaiting 200ms to verify DTC status updates have resumed...")
+    time.sleep(0.2)
+
+    try:
+        dtc_data = client.read_dtc_information(
+            subfunction=0x02,
+            status_mask=0xFF,
+        )
+        print(f"\t\t\tDTC count after resume: {dtc_data.service_data.dtc_count}")
+        for dtc in dtc_data.service_data.dtcs:
+            print(
+                f"\t\t\t\tDTC: 0x{dtc.id:06X} with status 0x{dtc.status.get_byte_as_int():02X}"
+            )
+    except NegativeResponseException as e:
+        print(
+            f"\t\t\tFailed to read DTCs: {e.response.code_name} (0x{e.response.code:02X})"
+        )
+
+    print("\t\tControl DTC Setting demonstration completed.")
 
 
 def ecu_reset(client: Client):

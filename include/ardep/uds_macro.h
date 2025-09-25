@@ -676,6 +676,42 @@
 
 // #endregion COMMUNICATION_CONTROL
 
+// #region CONTROL_DTC_SETTING
+
+// clang-format off
+
+/**
+ * @brief Register a new control DTC setting event handler
+ * 
+ * @param _instance Pointer to associated the UDS server instance
+ * @param _check Check if the associated action should be executed
+ * @param _act Execute the handler for the control DTC setting event
+ * @param _user_context Optional context provided by the user
+ * 
+ */
+#define UDS_REGISTER_CONTROL_DTC_SETTING_HANDLER(                                  \
+  _instance,                                                                       \
+  _check,                                                                          \
+  _act,                                                                            \
+  _user_context                                                                    \
+)                                                                                  \
+  STRUCT_SECTION_ITERABLE(uds_registration_t,                                      \
+        _UDS_CAT_EXPAND(__uds_registration_control_dtc_setting_, __COUNTER__)) = { \
+    .instance = _instance,                                                         \
+    .type = UDS_REGISTRATION_TYPE__CONTROL_DTC_SETTING,                            \
+    .control_dtc_setting = {                                                       \
+      .user_context = _user_context,                                               \
+      .actor = {                                                                   \
+        .check = _check,                                                           \
+        .action = _act,                                                            \
+      },                                                                           \
+    },                                                                             \
+  };
+
+// clang-format on
+
+// #endregion CONTROL_DTC_SETTING
+
 // #region DYNAMICALLY_DEFINE_DATA_IDS
 
 // clang-format off

@@ -259,6 +259,7 @@ enum uds_registration_type_t {
   UDS_REGISTRATION_TYPE__SECURITY_ACCESS,
   UDS_REGISTRATION_TYPE__COMMUNICATION_CONTROL,
   UDS_REGISTRATION_TYPE__DYNAMIC_DEFINE_DATA_IDS,
+  UDS_REGISTRATION_TYPE__CONTROL_DTC_SETTING,
 };
 
 enum uds_dynamically_defined_data_type {
@@ -414,6 +415,21 @@ struct uds_registration_t {
        */
       struct uds_actor actor;
     } read_dtc;
+    /**
+     * @brief Data for the Control DTC Settings event handler
+     *
+     * Handles *UDS_EVT_ControlDTCSetting* events with all its sub-Functions
+     */
+    struct {
+      /**
+       * @brief User-defined context pointer
+       */
+      void *user_context;
+      /**
+       * @brief Actor for *UDS_EVT_ControlDTCSetting* events
+       */
+      struct uds_actor actor;
+    } control_dtc_setting;
     /**
      * @brief Data for the Clear Diagnostic Information event handler
      *
