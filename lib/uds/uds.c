@@ -260,6 +260,7 @@ int uds_init(struct uds_instance_t* inst,
              const struct device* can_dev,
              void* user_context) {
   inst->user_context = user_context;
+  inst->can_dev = can_dev;
 
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
   sys_slist_init(&inst->dynamic_registrations);

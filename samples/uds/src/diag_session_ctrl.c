@@ -24,7 +24,9 @@ UDSErr_t diag_session_ctrl_action(struct uds_context *const context,
   UDSDiagSessCtrlArgs_t *args = context->arg;
   LOG_INF("Changing diagnostic session to 0x%02X", args->type);
 
-  *consume_event = true;
+  // We don't want to consume the event here, because the LinkControl handler
+  // must know about it so it can reset the bitrate to its default value
+  *consume_event = false;
 
   return UDS_PositiveResponse;
 }
@@ -40,7 +42,9 @@ UDSErr_t diag_session_timeout_action(struct uds_context *const context,
                                      bool *consume_event) {
   LOG_INF("Diagnostic Session Timeout handled");
 
-  *consume_event = true;
+  // We don't want to consume the event here, because the LinkControl handler
+  // must know about it so it can reset the bitrate to its default value
+  *consume_event = false;
 
   return UDS_PositiveResponse;
 }

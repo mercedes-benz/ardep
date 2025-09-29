@@ -19,6 +19,7 @@ from argparse import ArgumentParser, Namespace
 
 import isotp
 import udsoncan
+from udsoncan import Baudrate
 from udsoncan.client import Client, MemoryLocation
 from udsoncan.connections import IsoTPSocketConnection
 from udsoncan.exceptions import (

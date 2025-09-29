@@ -21,15 +21,6 @@ uds_action_fn uds_get_action_for_diag_session_ctrl(
 }
 
 STRUCT_SECTION_ITERABLE(uds_event_handler_data,
-                        __uds_event_handler_data_err_) = {
-  .event = UDS_EVT_Err,
-  .get_check = uds_get_check_for_diag_session_ctrl,
-  .get_action = uds_get_action_for_diag_session_ctrl,
-  .default_nrc = UDS_PositiveResponse,
-  .registration_type = UDS_REGISTRATION_TYPE__DIAG_SESSION_CTRL,
-};
-
-STRUCT_SECTION_ITERABLE(uds_event_handler_data,
                         __uds_event_handler_data_diag_sess_ctrl_) = {
   .event = UDS_EVT_DiagSessCtrl,
   .get_check = uds_get_check_for_diag_session_ctrl,

@@ -18,6 +18,18 @@
 struct uds_instance_t;
 struct uds_registration_t;
 
+enum uds_diagnostic_session {
+  UDS_DIAG_SESSION__DEFAULT = 0x01,
+  UDS_DIAG_SESSION__PROGRAMMING = 0x02,
+  UDS_DIAG_SESSION__EXTENDED = 0x03,
+  UDS_DIAG_SESSION__SAFETY_SYSTEM = 0x04,
+  UDS_DIAG_SESSION__VEHICLE_MANUFACTURER_SPECIFIC_START = 0x40,
+  UDS_DIAG_SESSION__VEHICLE_MANUFACTURER_SPECIFIC_END = 0x5F,
+  UDS_DIAG_SESSION__SYSTEM_SUPPLIER_SPECIFIC_START = 0x60,
+  UDS_DIAG_SESSION__SYSTEM_SUPPLIER_SPECIFIC_END = 0x7E,
+
+};
+
 enum uds_ecu_reset_type {
   ECU_RESET__HARD = 1,
   ECU_RESET__KEY_OFF_ON = 2,
@@ -88,6 +100,40 @@ enum uds_dynamically_define_data_ids_subfunc {
   UDS_DYNAMICALLY_DEFINED_DATA_IDS__DEFINE_BY_MEMORY_ADDRESS = 0x02,
   UDS_DYNAMICALLY_DEFINED_DATA_IDS__CLEAR = 0x03,
 };
+
+enum uds_link_control_subfunc {
+  UDS_LINK_CONTROL__VERIFY_MODE_TRANSITION_WITH_FIXED_PARAMETER = 0x01,
+  UDS_LINK_CONTROL__VERIFY_MODE_TRANSITION_WITH_SPECIFIC_PARAMETER = 0x02,
+  UDS_LINK_CONTROL__TRANSITION_MODE = 0x03,
+  UDS_LINK_CONTROL__VEHICLE_MANUFACTURER_SPECIFIC_START = 0x40,
+  UDS_LINK_CONTROL__VEHICLE_MANUFACTURER_SPECIFIC_END = 0x5F,
+  UDS_LINK_CONTROL__SYSTEM_SUPPLIER_SPECIFIC_START = 0x60,
+  UDS_LINK_CONTROL__SYSTEM_SUPPLIER_SPECIFIC_END = 0x7E,
+};
+
+enum uds_link_control_modifier {
+  UDS_LINK_CONTROL_MODIFIER__PC_9600_BAUD = 0x01,
+  UDS_LINK_CONTROL_MODIFIER__PC_1920_BAUD = 0x02,
+  UDS_LINK_CONTROL_MODIFIER__PC_38400_BAUD = 0x03,
+  UDS_LINK_CONTROL_MODIFIER__PC_57600_BAUD = 0x04,
+  UDS_LINK_CONTROL_MODIFIER__PC_115200_BAUD = 0x05,
+  UDS_LINK_CONTROL_MODIFIER__CAN_125000_BAUD = 0x10,
+  UDS_LINK_CONTROL_MODIFIER__CAN_250000_BAUD = 0x11,
+  UDS_LINK_CONTROL_MODIFIER__CAN_500000_BAUD = 0x12,
+  UDS_LINK_CONTROL_MODIFIER__CAN_1000000_BAUD = 0x13,
+  UDS_LINK_CONTROL_MODIFIER__PROGRAMMING_SETUP = 0x20,
+};
+
+/**
+ * @brief Get the baudrate associated with the `enum uds_link_control_modifier`
+ * entry
+ *
+ * @returns The baudrate in bit/s
+ * @returns 0 if the modifier is unknown or
+ *          `UDS_LINK_CONTROL_MODIFIER__PROGRAMMING_SETUP`
+ */
+uint32_t uds_link_control_modifier_to_baudrate(
+    enum uds_link_control_modifier modifier);
 
 /**
  * @brief Context provided to Event handlers on an event
@@ -230,6 +276,8 @@ struct uds_instance_t {
 
   void *user_context;
 
+  const struct device *can_dev;
+
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
   /**
    * @brief Singly linked list of dynamic registrations
@@ -260,6 +308,7 @@ enum uds_registration_type_t {
   UDS_REGISTRATION_TYPE__COMMUNICATION_CONTROL,
   UDS_REGISTRATION_TYPE__DYNAMIC_DEFINE_DATA_IDS,
   UDS_REGISTRATION_TYPE__CONTROL_DTC_SETTING,
+  UDS_REGISTRATION_TYPE__LINK_CONTROL,
 };
 
 enum uds_dynamically_defined_data_type {
@@ -522,6 +571,21 @@ struct uds_registration_t {
        */
       struct uds_actor actor;
     } dynamically_define_data_ids;
+    /**
+     * @brief Data for the Link Control event handler
+     *
+     * Handles *UDS_EVT_LinkControl* events
+     */
+    struct {
+      /**
+       * @brief User-defined context pointer
+       */
+      void *user_context;
+      /**
+       * @brief Actor for *UDS_EVT_LinkControl* events
+       */
+      struct uds_actor actor;
+    } link_control;
   };
 
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
@@ -553,6 +617,29 @@ struct uds_registration_t {
   int (*unregister_registration_fn)(struct uds_registration_t *this);
 #endif  // CONFIG_UDS_USE_DYNAMIC_REGISTRATION
 };
+
+#if CONFIG_UDS_USE_LINK_CONTROL
+
+/**
+ * @brief Transitions the CAN controller to the specified baudrate
+ *
+ * @param can_dev the CAN device
+ * @param baud_rate the target baudrate in bit/s
+ * @return UDS_OK on success, otherwise an appropriate negative error code
+ */
+UDSErr_t uds_set_can_bitrate(const struct device *can_dev, uint32_t baud_rate);
+
+/**
+ * @brief Transitions the CAN controller to the default bitrate
+ *
+ * The default bitrate is configured via `CONFIG_UDS_DEFAULT_CAN_BITRATE`
+ *
+ * @param can_dev the CAN device
+ * @return same as `uds_set_can_bitrate`
+ */
+UDSErr_t uds_set_can_default_bitrate(const struct device *can_dev);
+
+#endif  // CONFIG_UDS_USE_LINK_CONTROL
 
 /**
  * @brief Default check function for the default ECU Hard Reset handler
@@ -622,6 +709,32 @@ UDSErr_t uds_check_default_dynamically_define_data_ids(
  * handler
  */
 UDSErr_t uds_action_default_dynamically_define_data_ids(
+    struct uds_context *const context, bool *consume_event);
+
+/**
+ * @brief Default check function for the default link control handler
+ */
+UDSErr_t uds_check_default_link_control(const struct uds_context *const context,
+                                        bool *apply_action);
+
+/**
+ * @brief Default action function for the default link control handler
+ */
+UDSErr_t uds_action_default_link_control(struct uds_context *const context,
+                                         bool *consume_event);
+
+/**
+ * @brief Default check function for  diagnostic session events for the
+ * default link control handler
+ */
+UDSErr_t uds_check_default_link_control_change_diag_session(
+    const struct uds_context *const context, bool *apply_action);
+
+/**
+ * @brief Default action function for diagnostic session events for the default
+ * link control handler
+ */
+UDSErr_t uds_action_default_link_control_change_diag_session(
     struct uds_context *const context, bool *consume_event);
 
 // Include macro declarations after all types are defined

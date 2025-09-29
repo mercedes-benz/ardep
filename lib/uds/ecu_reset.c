@@ -70,7 +70,9 @@ UDSErr_t uds_action_ecu_hard_reset(struct uds_context* const context,
 
   // Issue reset just after Confirmation to ECU Reset request
   args->powerDownTimeMillis = context->instance->iso14229.server.p2_ms;
-  *consume_event = true;
+  // Do not consume event because we might have another event handler from the
+  // 0x87 LinkControl function
+  *consume_event = false;
   return UDS_OK;
 }
 

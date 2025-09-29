@@ -62,3 +62,5 @@ int main(void) {
   instance.iso14229.thread_start(&instance.iso14229);
   LOG_INF("UDS thread started");
 }
+
+UDS_REGISTER_LINK_CONTROL_DEFAULT_HANDLER(&instance);
