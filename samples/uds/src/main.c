@@ -22,8 +22,19 @@ struct uds_instance_t instance;
 
 UDS_REGISTER_ECU_DEFAULT_HARD_RESET_HANDLER(&instance);
 
+int mount_fs(void) {
+  return 0;
+}
+
 int main(void) {
+  int err;
   LOG_INF("ARDEP UDS Sample");
+
+  err = mount_fs();
+  if (err) {
+    LOG_ERR("Failed to mount filesystem: %d", err);
+    return err;
+  }
 
   UDSISOTpCConfig_t cfg = {
     // Hardware Addresses
@@ -37,7 +48,6 @@ int main(void) {
 
   uds_init(&instance, &cfg, can_dev, &instance);
 
-  int err;
   if (!device_is_ready(can_dev)) {
     LOG_INF("CAN device not ready");
     return -ENODEV;

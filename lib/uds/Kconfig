@@ -18,6 +18,21 @@ if UDS
         bool "Allow registering new event handlers at runtime"
         default n
 
+    menuconfig UDS_UPLOAD_DOWNLOAD_MODULE
+        bool "module to allow uploading and downloading of big chunks for data"
+        select FLASH
+        select FLASH_MAP
+        default y
+
+    if UDS_UPLOAD_DOWNLOAD_MODULE
+
+        config UDS_FILE_TRANSFER
+            bool "feature of upload download moduel that allows file transfer"
+            depends on FILE_SYSTEM
+            default y
+
+    endif # UDS_UPLOAD_DOWNLOAD_MODULE
+
     menuconfig UDS_USE_LINK_CONTROL
         bool "Enable LinkControl service (0x87)"
         default n
@@ -35,7 +50,5 @@ if UDS
               function and the can interface gets reset to its default bitrate,
               this value is used.
     
-    endif
-        
-
+    endif # UDS_USE_LINK_CONTROL
 endif # UDS

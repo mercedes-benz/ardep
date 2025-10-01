@@ -5,8 +5,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifdef CONFIG_UDS_USE_LINK_CONTROL
-
 #include <zephyr/logging/log.h>
 LOG_MODULE_DECLARE(uds, CONFIG_UDS_LOG_LEVEL);
 
@@ -123,5 +121,3 @@ UDSErr_t uds_action_default_link_control_change_diag_session(
   *consume_event = false;
   return uds_set_can_default_bitrate(context->instance->can_dev);
 }
-
-#endif  // CONFIG_UDS_USE_LINK_CONTROL
