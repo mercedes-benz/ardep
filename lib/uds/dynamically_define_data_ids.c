@@ -157,75 +157,71 @@ static int uds_unregister_dynamic_identifier(struct uds_registration_t* this) {
 
 static UDSErr_t uds_append_dynamic_data_identifiers_to_registration(
     UDSDDDIArgs_t* args, sys_slist_t* data_list) {
-  for (uint32_t i = 0; i < args->subFuncArgs.defineById.len; i++) {
-    uint16_t id = args->subFuncArgs.defineById.sources[i].sourceDataId;
-    uint8_t position = args->subFuncArgs.defineById.sources[i].position;
-    uint8_t size = args->subFuncArgs.defineById.sources[i].size;
+  uint16_t id = args->subFuncArgs.defineById.sourceDataId;
+  uint8_t position = args->subFuncArgs.defineById.position;
+  uint8_t size = args->subFuncArgs.defineById.size;
 
-    // Allocate data list item to hold sub-item [DATA_ITEM]
-    // FREED: [DATA_ITEM] via uds_unregister_dynamic_identifier, error cleanup,
-    // or caller error cleanup
-    struct uds_dynamically_defined_data* data =
-        k_malloc(sizeof(struct uds_dynamically_defined_data));
-    if (!data) {
-      // Cleanup all previously allocated items in this list
-      sys_snode_t* node;
-      sys_snode_t* next_node;
-      SYS_SLIST_FOR_EACH_NODE_SAFE (data_list, node, next_node) {
-        struct uds_dynamically_defined_data* cleanup_data =
-            CONTAINER_OF(node, struct uds_dynamically_defined_data, node);
-        sys_slist_remove(data_list, NULL, &cleanup_data->node);
-        k_free(cleanup_data);  // FREE: [DATA_ITEM] - error cleanup in append
-                               // function
-      }
-      LOG_ERR("Failed to allocate memory for dynamic data identifier");
-      return UDS_NRC_GeneralReject;
+  // Allocate data list item to hold sub-item [DATA_ITEM]
+  // FREED: [DATA_ITEM] via uds_unregister_dynamic_identifier, error cleanup,
+  // or caller error cleanup
+  struct uds_dynamically_defined_data* data =
+      k_malloc(sizeof(struct uds_dynamically_defined_data));
+  if (!data) {
+    // Cleanup all previously allocated items in this list
+    sys_snode_t* node;
+    sys_snode_t* next_node;
+    SYS_SLIST_FOR_EACH_NODE_SAFE (data_list, node, next_node) {
+      struct uds_dynamically_defined_data* cleanup_data =
+          CONTAINER_OF(node, struct uds_dynamically_defined_data, node);
+      sys_slist_remove(data_list, NULL, &cleanup_data->node);
+      k_free(cleanup_data);  // FREE: [DATA_ITEM] - error cleanup in append
+                             // function
     }
-
-    data->type = UDS_DYNAMICALLY_DEFINED_DATA_TYPE__ID;
-    data->id.id = id;
-    data->id.position = position;
-    data->id.size = size;
-    data->node = (sys_snode_t){0};
-
-    sys_slist_append(data_list, &data->node);
+    LOG_ERR("Failed to allocate memory for dynamic data identifier");
+    return UDS_NRC_GeneralReject;
   }
+
+  data->type = UDS_DYNAMICALLY_DEFINED_DATA_TYPE__ID;
+  data->id.id = id;
+  data->id.position = position;
+  data->id.size = size;
+  data->node = (sys_snode_t){0};
+
+  sys_slist_append(data_list, &data->node);
   return UDS_OK;
 }
 
 static UDSErr_t uds_append_dynamic_memory_addresses_to_registration(
     UDSDDDIArgs_t* args, sys_slist_t* data_list) {
-  for (uint32_t i = 0; i < args->subFuncArgs.defineByMemAddress.len; i++) {
-    void* memAddr = args->subFuncArgs.defineByMemAddress.sources[i].memAddr;
-    size_t memSize = args->subFuncArgs.defineByMemAddress.sources[i].memSize;
+  void* memAddr = args->subFuncArgs.defineByMemAddress.memAddr;
+  size_t memSize = args->subFuncArgs.defineByMemAddress.memSize;
 
-    // Allocate data list item to hold sub-item [DATA_ITEM]
-    // FREED: [DATA_ITEM] via uds_unregister_dynamic_identifier, error cleanup,
-    // or caller error cleanup
-    struct uds_dynamically_defined_data* data =
-        k_malloc(sizeof(struct uds_dynamically_defined_data));
-    if (!data) {
-      // Cleanup all previously allocated items in this list
-      sys_snode_t* node;
-      sys_snode_t* next_node;
-      SYS_SLIST_FOR_EACH_NODE_SAFE (data_list, node, next_node) {
-        struct uds_dynamically_defined_data* cleanup_data =
-            CONTAINER_OF(node, struct uds_dynamically_defined_data, node);
-        sys_slist_remove(data_list, NULL, &cleanup_data->node);
-        k_free(cleanup_data);  // FREE: [DATA_ITEM] - error cleanup in append
-                               // function
-      }
-      LOG_ERR("Failed to allocate memory for dynamic memory address");
-      return UDS_NRC_GeneralReject;
+  // Allocate data list item to hold sub-item [DATA_ITEM]
+  // FREED: [DATA_ITEM] via uds_unregister_dynamic_identifier, error cleanup,
+  // or caller error cleanup
+  struct uds_dynamically_defined_data* data =
+      k_malloc(sizeof(struct uds_dynamically_defined_data));
+  if (!data) {
+    // Cleanup all previously allocated items in this list
+    sys_snode_t* node;
+    sys_snode_t* next_node;
+    SYS_SLIST_FOR_EACH_NODE_SAFE (data_list, node, next_node) {
+      struct uds_dynamically_defined_data* cleanup_data =
+          CONTAINER_OF(node, struct uds_dynamically_defined_data, node);
+      sys_slist_remove(data_list, NULL, &cleanup_data->node);
+      k_free(cleanup_data);  // FREE: [DATA_ITEM] - error cleanup in append
+                             // function
     }
-
-    data->type = UDS_DYNAMICALLY_DEFINED_DATA_TYPE__MEMORY;
-    data->memory.memAddr = memAddr;
-    data->memory.memSize = memSize;
-    data->node = (sys_snode_t){0};
-
-    sys_slist_append(data_list, &data->node);
+    LOG_ERR("Failed to allocate memory for dynamic memory address");
+    return UDS_NRC_GeneralReject;
   }
+
+  data->type = UDS_DYNAMICALLY_DEFINED_DATA_TYPE__MEMORY;
+  data->memory.memAddr = memAddr;
+  data->memory.memSize = memSize;
+  data->node = (sys_snode_t){0};
+
+  sys_slist_append(data_list, &data->node);
   return UDS_OK;
 }
 
