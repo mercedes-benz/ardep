@@ -5,6 +5,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+#include "iso14229.h"
+
 #include <zephyr/logging/log.h>
 LOG_MODULE_DECLARE(uds_sample, LOG_LEVEL_DBG);
 
@@ -23,6 +25,10 @@ char string[] = "Hello from UDS";
 // Include NULL as string terminator
 uint16_t string_size = sizeof(string);
 
+const uint16_t authenticated_type_id = 0x150;
+uint8_t authenticated_type = 0x42;
+uint16_t authenticated_type_size = sizeof(authenticated_type);
+
 UDSErr_t read_data_by_id_check(const struct uds_context *const context,
                                bool *apply_action) {
   UDSRDBIArgs_t *args = context->arg;
@@ -31,9 +37,23 @@ UDSErr_t read_data_by_id_check(const struct uds_context *const context,
   if (args->dataId != context->registration->data_identifier.data_id) {
     return UDS_OK;
   }
-  if (args->dataId != primitive_type_id && args->dataId != string_id) {
+  if (args->dataId != primitive_type_id && args->dataId != string_id &&
+      args->dataId != authenticated_type_id) {
     return UDS_OK;
   }
+
+  if (args->dataId == authenticated_type_id) {
+    struct authentication_data *auth = context->instance->user_context;
+    if (!auth->authenticated) {
+      LOG_WRN("Access to data id 0x%02X denied - client not authenticated",
+              context->registration->data_identifier.data_id);
+      return UDS_NRC_ConditionsNotCorrect;
+    } else {
+      LOG_INF("Access to data id 0x%02X granted - client authenticated",
+              context->registration->data_identifier.data_id);
+    }
+  }
+
   LOG_INF("Check to read data id: 0x%02X successful",
           context->registration->data_identifier.data_id);
   // Set to true, when we want to handle this event
@@ -59,8 +79,11 @@ UDSErr_t read_data_by_id_action(struct uds_context *const context,
     uint16_t size =
         *(uint16_t *)context->registration->data_identifier.user_context;
     memcpy(temp, context->registration->data_identifier.data, size);
+  } else if (args->dataId == authenticated_type_id) {
+    uint16_t size =
+        *(uint16_t *)context->registration->data_identifier.user_context;
+    memcpy(temp, context->registration->data_identifier.data, size);
   }
-
   // Signal this action consumes the event
   *consume_event = true;
 
@@ -123,6 +146,17 @@ UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(&instance,
                                         NULL,
                                         NULL,
                                         &string_size);
+
+UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(&instance,
+                                        authenticated_type_id,
+                                        &authenticated_type,
+                                        read_data_by_id_check,
+                                        read_data_by_id_action,
+                                        NULL,
+                                        NULL,
+                                        NULL,
+                                        NULL,
+                                        &authenticated_type_size);
 
 #define LED0_NODE DT_ALIAS(led0)
 

@@ -767,6 +767,50 @@
 
 // #endregion DYNAMICALLY_DEFINE_DATA_IDS
 
+// #region Authentication
+
+// clang-format off
+
+/**
+ * @brief Register a new authentication event handler
+ * 
+ * @param _instance Pointer to associated the UDS server instance
+ * @param _auth_check Check if the associated action should be executed
+ * @param _auth_act Execute the handler for the authentication event
+ * @param _timeout_check Check if the associated action should be executed
+ * @param _timeout_act Execute the handler for the authentication timeout event
+ * @param _user_context Optional context provided by the user
+ * 
+ */
+#define UDS_REGISTER_AUTHENTICATION_HANDLER(                                   \
+  _instance,                                                                   \
+  _auth_check,                                                                 \
+  _auth_act,                                                                   \
+  _timeout_check,                                                              \
+  _timeout_act,                                                                \
+  _user_context                                                                \
+)                                                                              \
+  STRUCT_SECTION_ITERABLE(uds_registration_t,                                  \
+        _UDS_CAT_EXPAND(__uds_registration_authentication_, __COUNTER__)) = {  \
+    .instance = _instance,                                                     \
+    .type = UDS_REGISTRATION_TYPE__AUTHENTICATION,                             \
+    .auth = {                                                                  \
+      .user_context = _user_context,                                           \
+      .auth = {                                                                \
+        .check = _auth_check,                                                  \
+        .action = _auth_act,                                                   \
+      },                                                                       \
+      .timeout = {                                                             \
+        .check = _timeout_check,                                               \
+        .action = _timeout_act,                                                \
+      },                                                                       \
+    },                                                                         \
+  };
+
+// clang-format on
+
+// #endregion Authentication
+
 #ifdef CONFIG_UDS_USE_LINK_CONTROL
 
 // #region LINK_CONTROL

@@ -7,6 +7,7 @@
 
 #include "ardep/uds_macro.h"
 #include "fixture.h"
+#include "iso14229.h"
 
 #include <string.h>
 
@@ -23,6 +24,8 @@ DEFINE_FFF_GLOBALS;
 
 DEFINE_FAKE_VALUE_FUNC(uint8_t, copy, UDSServer_t *, const void *, uint16_t);
 
+DEFINE_FAKE_VALUE_FUNC(uint8_t, set_auth_state, UDSServer_t *, uint8_t);
+
 DEFINE_FAKE_VALUE_FUNC(UDSErr_t,
                        data_id_check_fn,
                        const struct uds_context *const,
@@ -35,6 +38,7 @@ DEFINE_FAKE_VALUE_FUNC(UDSErr_t,
 
 #define FFF_FAKES_LIST(FAKE) \
   FAKE(copy)                 \
+  FAKE(set_auth_state)       \
   FAKE(data_id_check_fn)     \
   FAKE(data_id_action_fn)
 
@@ -173,6 +177,13 @@ UDS_REGISTER_LINK_CONTROL_HANDLER(&fixture_uds_instance,
                                   data_id_action_fn,
                                   NULL)
 
+UDS_REGISTER_AUTHENTICATION_HANDLER(&fixture_uds_instance,
+                                    data_id_check_fn,
+                                    data_id_action_fn,
+                                    data_id_check_fn,
+                                    data_id_action_fn,
+                                    NULL)
+
 UDS_REGISTER_DYNAMICALLY_DEFINE_DATA_IDS_DEFAULT_HANDLER(&fixture_uds_instance)
 
 static const UDSISOTpCConfig_t default_cfg = {
@@ -213,6 +224,17 @@ static uint8_t custom_copy(UDSServer_t *server,
   copied_len += len;
 
   return 0;
+}
+
+static uint8_t auth_state_data;
+
+void assert_auth_state(uint8_t expected_state) {
+  zassert_equal(expected_state, auth_state_data);
+}
+
+static uint8_t custom_set_auth_state(UDSServer_t *server, uint8_t state) {
+  auth_state_data = state;
+  return UDS_OK;
 }
 
 static void *uds_setup(void) {
@@ -273,6 +295,7 @@ static void uds_before(void *f) {
   FFF_RESET_HISTORY();
 
   copy_fake.custom_fake = custom_copy;
+  set_auth_state_fake.custom_fake = custom_set_auth_state;
 
   int ret = uds_init(uds_instance, &default_cfg, dev, fixture);
   assert(ret == 0);
@@ -300,6 +323,8 @@ static void uds_before(void *f) {
 
   memset(copied_data, 0, sizeof(copied_data));
   copied_len = 0;
+
+  auth_state_data = 0;
 }
 
 static void uds_after(void *f) {

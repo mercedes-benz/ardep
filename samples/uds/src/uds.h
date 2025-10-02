@@ -12,4 +12,13 @@
 
 extern struct uds_instance_t instance;
 
+struct authentication_data {
+  bool authenticated;
+  uint8_t seeed[16];
+  uint8_t algorithm_authenticator[16];
+};
+
+// Authentication data get assigned as the instance user context
+extern struct authentication_data auth_data;
+
 #endif  // ARDEP_SAMPLES_UDS_SRC_UDS_H

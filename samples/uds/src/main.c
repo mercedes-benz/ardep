@@ -46,7 +46,7 @@ int main(void) {
     .target_addr_func = UDS_TP_NOOP_ADDR,
   };
 
-  uds_init(&instance, &cfg, can_dev, &instance);
+  uds_init(&instance, &cfg, can_dev, &auth_data);
 
   if (!device_is_ready(can_dev)) {
     LOG_INF("CAN device not ready");
@@ -73,4 +73,8 @@ int main(void) {
   LOG_INF("UDS thread started");
 }
 
+#ifdef CONFIG_UDS_USE_LINK_CONTROL
+
 UDS_REGISTER_LINK_CONTROL_DEFAULT_HANDLER(&instance);
+
+#endif  // CONFIG_UDS_USE_LINK_CONTROL

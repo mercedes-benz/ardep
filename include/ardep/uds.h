@@ -310,6 +310,7 @@ enum uds_registration_type_t {
   UDS_REGISTRATION_TYPE__CONTROL_DTC_SETTING,
   UDS_REGISTRATION_TYPE__UPLOAD_DOWNLOAD,
   UDS_REGISTRATION_TYPE__LINK_CONTROL,
+  UDS_REGISTRATION_TYPE__AUTHENTICATION,
 };
 
 enum uds_dynamically_defined_data_type {
@@ -587,6 +588,25 @@ struct uds_registration_t {
        */
       struct uds_actor actor;
     } link_control;
+    /**
+     * @brief Data for the Authentication event handler
+     *
+     * Handles *UDS_EVT_Auth* and *UDS_EVT_AuthTimeout* events
+     */
+    struct {
+      /**
+       * @brief User-defined context pointer
+       */
+      void *user_context;
+      /**
+       * @brief Actor for *UDS_EVT_Auth* events
+       */
+      struct uds_actor auth;
+      /**
+       * @brief Actor for *UDS_EVT_AuthTimeout* events
+       */
+      struct uds_actor timeout;
+    } auth;
   };
 
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION

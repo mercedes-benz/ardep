@@ -18,6 +18,8 @@
 
 DECLARE_FAKE_VALUE_FUNC(uint8_t, copy, UDSServer_t *, const void *, uint16_t);
 
+DECLARE_FAKE_VALUE_FUNC(uint8_t, set_auth_state, UDSServer_t *, uint8_t);
+
 DECLARE_FAKE_VALUE_FUNC(UDSErr_t,
                         data_id_check_fn,
                         const struct uds_context *const,
@@ -71,5 +73,10 @@ void assert_copy_data(const uint8_t *data, uint32_t len);
 void assert_copy_data_offset(const uint8_t *data,
                              uint32_t len,
                              uint32_t offset);
+
+/**
+ * @brief Assert that when using authentication, the correct returnValue is set
+ */
+void assert_auth_state(uint8_t expected_state);
 
 #endif  // APP_TESTS_LIB_ISO14229_SRC_FIXTURE_H_

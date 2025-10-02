@@ -26,6 +26,8 @@ from udsoncan.exceptions import (
     NegativeResponseException,
 )
 from udsoncan.services import DiagnosticSessionControl, ECUReset
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+import pathlib, binascii
 
 
 def change_session(client: Client):
@@ -483,6 +485,97 @@ def security_algorithm(level: int, seed: bytes, params: Any) -> bytes:
     return bytes(~b & 0xFF for b in seed)
 
 
+algo_indicator: bytes = bytes(
+    [
+        0x06,
+        0x09,
+        0x60,
+        0x86,
+        0x48,
+        0x01,
+        0x65,
+        0x03,
+        0x04,
+        0x01,
+        0x02,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+    ]
+)
+
+
+def read_key(path: str) -> bytes:
+    key = pathlib.Path(path).read_bytes()
+    if len(key) != 16:
+        raise ValueError(f"Expected 16 bytes, got {len(key)}")
+    return key
+
+
+def encrypt_seed(seed: bytes, key: bytes) -> bytes:
+    cipher = Cipher(algorithms.AES(key), modes.ECB())
+    encryptor = cipher.encryptor()
+    ct = encryptor.update(seed) + encryptor.finalize()
+    return ct
+
+
+def authentication(client: Client, key_file: str):
+    print("Authentication:")
+
+    data_id: int = 0x0150
+    print(
+        f"\tTry reading secure data with id 0x{data_id:04X} without authentication..."
+    )
+    try:
+        data = client.read_data_by_identifier([data_id])
+        print(
+            f'\t\tReading data from identifier\t0x{data_id:04X} should have failed but succeeded with data "{data.service_data.values[data_id]}". Are we still authenticated?'
+        )
+    except NegativeResponseException as e:
+        if e.response.code == 0x22:  # Conditions Not Correct
+            print(
+                f"\t\tAccess denied as expected: {e.response.code_name} (0x{e.response.code:02X})"
+            )
+        else:
+            raise
+
+    response = client.authentication(
+        authentication_task=5,
+        communication_configuration=0,
+        algorithm_indicator=algo_indicator,
+    )
+
+    seed: bytes = response.service_data.challenge_server
+
+    print("\tSeed (hex):\t\t", seed.hex())
+    key: bytes = read_key(key_file)
+
+    ct = encrypt_seed(seed, key)
+    print("\tCiphertext (hex):\t", ct.hex())
+
+    client.authentication(
+        authentication_task=6,
+        proof_of_ownership_client=ct,
+        algorithm_indicator=algo_indicator,
+    )
+
+    print("\tAuthentication successful!")
+
+    print(f"\tTry reading secure data with id 0x{data_id:04X} with authentication...")
+    data = client.read_data_by_identifier([data_id])
+    print(
+        f"\t\tReading data from secured identifier\t0x{data_id:04X}:\t0x{data.service_data.values[data_id]:02X}"
+    )
+
+    client.authentication(
+        authentication_task=0,
+    )
+
+    print("\tDe-Authentication successful!")
+
+
 class CustomUint16Codec(udsoncan.DidCodec):
     def encode(self, *did_value: Any):
         return struct.pack(">H", *did_value)  # Big endian, 16 bit value
@@ -549,6 +642,7 @@ def try_run(runnable):
 def main(args: Namespace):
     can: str = args.can
     reset: bool = args.reset
+    aes_key_file = args.key_file
 
     addr = isotp.Address(isotp.AddressingMode.Normal_11bits, rxid=0x7E0, txid=0x7E8)
     conn = IsoTPSocketConnection(can, addr)
@@ -558,6 +652,7 @@ def main(args: Namespace):
         "default": ">H",  # Default codec is a struct.pack/unpack string. 16bits little endian
         0x0050: CustomUint16Codec,
         0x0100: StringCodec,
+        0x0150: CustomUint8Codec,
         0x0200: CustomUint8Codec,
         0x0300: SecureDataCodec,
     }
@@ -575,6 +670,7 @@ def main(args: Namespace):
         try_run(lambda: dtc_information(client))
         try_run(lambda: routine_control(client))
         try_run(lambda: security_access(client))
+        try_run(lambda: authentication(client, aes_key_file))
 
         if reset:
             try_run(lambda: ecu_reset(client))
@@ -588,6 +684,12 @@ if __name__ == "__main__":
         "-c", "--can", default="vcan0", help="CAN interface (default: vcan0)"
     )
     parser.add_argument("-r", "--reset", action="store_true", help="Perform ECU reset")
+    parser.add_argument(
+        "-k",
+        "--key-file",
+        default=str(pathlib.Path(__file__).parent / "uds_aes_key.bin"),
+        help="Path to AES key file used for authentication (default: uds_aes_key.bin in script directory)",
+    )
     parsed_args = parser.parse_args()
 
     main(parsed_args)
