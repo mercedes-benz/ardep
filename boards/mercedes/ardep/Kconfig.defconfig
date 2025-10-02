@@ -32,4 +32,19 @@ if !MCUBOOT
 		default "bootloader/mcuboot/root-rsa-2048.pem"
 endif # !MCUBOOT
 
+if MCUBOOT
+	config BOOT_FIRMWARE_LOADER
+		default y
+
+	config BOOT_FIRMWARE_LOADER_BOOT_MODE
+		default y
+
+	config BOOT_FIRMWARE_LOADER_NO_APPLICATION
+		default y
+
+endif # MCUBOOT
+
+config CONFIG_RETENTION_BOOT_MODE
+	default y
+
 endif # BOARD_ARDEP

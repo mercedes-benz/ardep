@@ -11,6 +11,7 @@
 #include <st/g4/stm32g474v(b-c-e)tx-pinctrl.dtsi>
 #include "arduino_r3_connector.dtsi"
 #include "adc.dtsi"
+#include "bootmode.dtsi"
 #include "can.dtsi"
 #include "clock.dtsi"
 #include "uart.dtsi"
