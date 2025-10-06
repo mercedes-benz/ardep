@@ -107,4 +107,22 @@ int iso14229_zephyr_init(struct iso14229_zephyr_instance* inst,
                          const struct device* can_dev,
                          void* user_context);
 
+/**
+ * @brief Inject a received CAN frame into the UDS server instance
+ *
+ * Use this function to inject a CAN frame into the UDS server instance
+ * The result of this may be a response to the received frame, which gets send
+ * out via the real CAN device.
+ *
+ * This can be used e.g. when jumping between applications during an ongoing UDS
+ * request to simulate the request in the new application.
+ *
+ * @note Timing information for the call are (naturally) not preserved so act
+ * fast to not run into a timeout on the client side!
+ *
+ * @param inst Pointer to the UDS server instance
+ * @param frame Pointer to the received CAN frame
+ */
+void iso14229_inject_can_frame_rx(struct iso14229_zephyr_instance* inst,
+                                  struct can_frame* frame);
 #endif  // ARDEP_ISO14229_H

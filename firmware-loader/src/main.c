@@ -17,8 +17,7 @@ LOG_MODULE_REGISTER(firmware_loader, CONFIG_APP_LOG_LEVEL);
 
 #include <ardep/iso14229.h>
 
-const struct device *retention0 = DEVICE_DT_GET(DT_NODELABEL(retention0));
-const struct device *retention1 = DEVICE_DT_GET(DT_NODELABEL(retention1));
+const struct device *retention_data = DEVICE_DT_GET(DT_NODELABEL(retention1));
 
 const struct device *can_dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_canbus));
 
@@ -29,21 +28,14 @@ UDS_REGISTER_ECU_DEFAULT_HARD_RESET_HANDLER(&instance);
 int main() {
   LOG_INF("Hello firmware-loader");
 
-  uint8_t data;
+  uint8_t session_type;
 
-  int ret = retention_read(retention0, 0, &data, 1);
-  if (ret != 0) {
-    LOG_ERR("Failed to read from retention 0: %d", ret);
-    return ret;
-  }
-  LOG_INF("Read data from retention 0: %02x", data);
-
-  ret = retention_read(retention1, 0, &data, 1);
+  int ret = retention_read(retention_data, 0, &session_type, 1);
   if (ret != 0) {
     LOG_ERR("Failed to read from retention 1: %d", ret);
     return ret;
   }
-  LOG_INF("Read data from retention 1: %02x", data);
+  LOG_INF("Read stored session type from retention data: %02x", session_type);
 
   LOG_INF("Configuring UDS...");
 
@@ -68,6 +60,20 @@ int main() {
   if (err) {
     LOG_ERR("Failed to set CAN mode: %d", err);
     return err;
+  }
+
+  if (session_type == UDS_DIAG_SESSION__PROGRAMMING) {
+    LOG_INF("Injecting DiagnosticSessionControl (Programming) frame");
+    struct can_frame frame = {
+      .id = cfg.source_addr,
+      .dlc = 3,
+      .flags = 0,
+    };
+    frame.data[0] = 0x02;  // PCI (single frame, 2 bytes of data)
+    frame.data[1] = 0x10;  // SID (DiagnosticSessionControl)
+    frame.data[2] = 0x02;  // DS  (Programming Session)
+
+    iso14229_inject_can_frame_rx(&instance.iso14229, &frame);
   }
 
   err = can_start(can_dev);

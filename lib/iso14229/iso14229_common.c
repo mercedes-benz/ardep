@@ -34,6 +34,14 @@ static void can_rx_cb(const struct device *dev,
   k_msgq_put((struct k_msgq *)user_data, frame, K_NO_WAIT);
 }
 
+void iso14229_inject_can_frame_rx(struct iso14229_zephyr_instance *inst,
+                                  struct can_frame *frame) {
+  LOG_INF("Injecting Received CAN Frame: %03x [%u] %x ...", frame->id,
+          frame->dlc, frame->data[0]);
+  can_rx_cb((const struct device *)inst->tp.phys_link.user_send_can_arg, frame,
+            &inst->can_phys_msgq);
+}
+
 int iso14229_zephyr_set_callback(struct iso14229_zephyr_instance *inst,
                                  uds_callback callback) {
   LOG_DBG("Setting UDS callback");

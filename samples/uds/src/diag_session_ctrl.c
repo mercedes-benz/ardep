@@ -11,9 +11,12 @@ LOG_MODULE_DECLARE(uds_sample, LOG_LEVEL_DBG);
 #include "uds.h"
 
 #include <zephyr/retention/bootmode.h>
+#include <zephyr/retention/retention.h>
 #include <zephyr/sys/reboot.h>
 
 #include <ardep/uds.h>
+
+const struct device *retention_data = DEVICE_DT_GET(DT_NODELABEL(retention1));
 
 // Check function for the Diagnostic Session Control event
 UDSErr_t diag_session_ctrl_check(const struct uds_context* const context,
@@ -41,7 +44,14 @@ UDSErr_t diag_session_ctrl_action(struct uds_context* const context,
 
   if (args->type == UDS_DIAG_SESSION__PROGRAMMING) {
     LOG_INF("Switching to programming session in firmware loader");
-    int ret = bootmode_set(BOOT_MODE_TYPE_BOOTLOADER);
+    int ret =
+        retention_write(retention_data, 0, &args->type, sizeof(args->type));
+    if (ret != 0) {
+      LOG_ERR("Failed to write retention: %d", ret);
+      return UDS_NRC_ConditionsNotCorrect;
+    }
+
+    ret = bootmode_set(BOOT_MODE_TYPE_BOOTLOADER);
     if (ret != 0) {
       LOG_ERR("Failed to set bootmode to bootloader: %d", ret);
       return UDS_NRC_ConditionsNotCorrect;
