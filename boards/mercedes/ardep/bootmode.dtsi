@@ -1,7 +1,7 @@
 / {
-        sram@2001FFFF {
+        sram@2001FFFE {
                 compatible = "zephyr,memory-region", "mmio-sram";
-                reg = <0x2001FFFF 0x1>;
+                reg = <0x2001FFFE 0x1>;
                 zephyr,memory-region = "RetainedMem";
                 status = "okay";
 
@@ -16,15 +16,22 @@
                                 status = "okay";
                                 reg = <0x0 0x1>;
                         };
+
+                        retention1: retention@1 {
+                                compatible = "zephyr,retention";
+                                status = "okay";
+                                reg = <0x1 0x1>;
+                        };
                 };
         };
 
         chosen {
                 zephyr,boot-mode = &retention0;
+                zephyr,firmware-loader-args = &retention1;
         };
 };
 
 /* Reduce SRAM0 usage by 1 byte to account for non-init area */
 &sram0 {
-        reg = <0x20000000 0x1FFFF>;
+        reg = <0x20000000 0x1FFFE>;
 };
