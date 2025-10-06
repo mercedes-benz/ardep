@@ -42,9 +42,9 @@ def print_indented(text: str, indent: int = 1):
 
 
 def change_session(client: Client):
-    print_headline("Changing to programming session")
-    client.change_session(DiagnosticSessionControl.Session.programmingSession)
-    print_indented("Session change successful")
+    print("Changing to extended diagnostic session...")
+    client.change_session(DiagnosticSessionControl.Session.extendedDiagnosticSession)
+    print("\tSession change successful")
 
 
 def data_by_identifier_string(client: Client):
