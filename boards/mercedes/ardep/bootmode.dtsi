@@ -1,7 +1,7 @@
 / {
         sram@2001FFFE {
                 compatible = "zephyr,memory-region", "mmio-sram";
-                reg = <0x2001FFFE 0x1>;
+                reg = <0x2001FFFE 0x2>;
                 zephyr,memory-region = "RetainedMem";
                 status = "okay";
 
@@ -31,7 +31,7 @@
         };
 };
 
-/* Reduce SRAM0 usage by 1 byte to account for non-init area */
+/* Reduce SRAM0 usage by 2 bytes to account for non-init area */
 &sram0 {
-        reg = <0x20000000 0x1FFFE>;
+        reg = <0x20000000 0x1FFFC>;
 };
