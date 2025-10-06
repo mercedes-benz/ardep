@@ -182,7 +182,7 @@ static UDSErr_t async_routine_control_action(struct uds_context *const context,
 
     case UDS_ROUTINE_CONTROL__REQUEST_ROUTINE_RESULTS: {
       k_mutex_lock(&async_work_mutex, K_FOREVER);
-      LOG_INF("Sending async routine resulrs");
+      LOG_INF("Sending async routine result");
 
       uint8_t output[5] = {0};
       output[0] = data->work_data->status;

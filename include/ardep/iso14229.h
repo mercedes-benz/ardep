@@ -56,7 +56,7 @@ struct iso14229_zephyr_instance {
 
   k_tid_t thread_id;
   struct k_thread thread_data;
-  K_KERNEL_STACK_MEMBER(thread_stack, 1024);
+  K_KERNEL_STACK_MEMBER(thread_stack, CONFIG_ISO14229_THREAD_STACK_SIZE);
   bool thread_running;
   atomic_t thread_stop_requested;
   struct k_mutex thread_mutex;
