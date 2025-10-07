@@ -32,4 +32,12 @@ if ISO14229
                   
         endif # ISO14229_THREAD
 
+    config ISO14229_THREAD_SLEEP_US
+        int "ISO14229 thread sleep time"
+        default 1000
+        help
+          Sleep time for the ISO14229 thread in microseconds. In this thread, all incoming CAN
+          messages and events are handled. A lower value means lower latency,
+          but higher CPU usage.
+
 endif # ISO14229

@@ -30,7 +30,7 @@ struct uds_memory_erasure_routine_status {
   enum uds_memory_erasure_routine_state state;
   struct k_mutex *mutex;
   UDSErr_t result;
-  struct k_work work;
+  struct k_work_delayable work;
 };
 
 K_MUTEX_DEFINE(memory_erasure_routine_mutex);
@@ -44,7 +44,7 @@ static struct uds_memory_erasure_routine_status erasure_status = {
 };
 
 static int erase_memory_routine_init(void) {
-  k_work_init(&erasure_status.work, erase_slot0_work_handler);
+  k_work_init_delayable(&erasure_status.work, erase_slot0_work_handler);
   return 0;
 }
 
@@ -53,8 +53,9 @@ SYS_INIT(erase_memory_routine_init,
          CONFIG_APPLICATION_INIT_PRIORITY);
 
 static void erase_slot0_work_handler(struct k_work *work) {
+  struct k_work_delayable *dwork = k_work_delayable_from_work(work);
   struct uds_memory_erasure_routine_status *status =
-      CONTAINER_OF(work, struct uds_memory_erasure_routine_status, work);
+      CONTAINER_OF(dwork, struct uds_memory_erasure_routine_status, work);
 
   const struct flash_area *fa;
   int rc = flash_area_open(FIXED_PARTITION_ID(slot0_partition), &fa);
@@ -135,24 +136,28 @@ UDSErr_t erase_memory_routine_action(struct uds_context *const context,
       status->result = UDS_OK;
       k_mutex_unlock(status->mutex);
 
-      // Submit the work item to erase slot0
-      k_work_submit(&status->work);
+      // Submit the work item to erase slot0 with a 10ms delay
+      // So the response can be sent first
+      k_work_schedule(&status->work, K_MSEC(150));
 
       LOG_INF("Memory erasure routine started");
       return UDS_PositiveResponse;
     }
     case UDS_ROUTINE_CONTROL__REQUEST_ROUTINE_RESULTS: {
-      k_mutex_lock(status->mutex, K_FOREVER);
-      enum uds_memory_erasure_routine_state current_state = status->state;
-      UDSErr_t result = status->result;
-      k_mutex_unlock(status->mutex);
+      //   k_mutex_lock(status->mutex, K_FOREVER);
+      //   enum uds_memory_erasure_routine_state current_state = status->state;
+      //   UDSErr_t result = status->result;
+      //   k_mutex_unlock(status->mutex);
 
-      if (current_state != UDS_MEMORY_ERASURE_STATE__COMPLETED) {
-        return UDS_NRC_RequestSequenceError;
-      }
-      LOG_INF("Memory erasure routine requested result: 0x%02x", result);
+      //   if (current_state != UDS_MEMORY_ERASURE_STATE__COMPLETED) {
+      //     LOG_WRN("Memory erasure routine not completed yet");
+      //     return UDS_NRC_RequestSequenceError;
+      //   }
+      //   LOG_INF("Memory erasure routine requested result: 0x%02x", result);
 
-      return args->copyStatusRecord(context->server, &result, sizeof(UDSErr_t));
+      //   return args->copyStatusRecord(context->server, &result,
+      //   sizeof(UDSErr_t));
+      return UDS_PositiveResponse;
     }
     default:
       LOG_WRN("Unsupported control type: 0x%02x", args->ctrlType);

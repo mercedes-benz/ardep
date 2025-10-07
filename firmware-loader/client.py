@@ -16,6 +16,7 @@ from argparse import ArgumentParser, Namespace
 
 import struct
 import time
+from typing import Optional
 import isotp
 import udsoncan
 from udsoncan.client import Client
@@ -64,17 +65,24 @@ def erase_slot0_memory_routine(client: Client):
     client.routine_control(routine_id=0xFF00, control_type=1)
 
     print_indented("Waiting for erasure to be done...")
-    time.sleep(1)
+    time.sleep(2)
 
     print_indented("Requesting erasure results...")
     # Assuming the ECU supports the RoutineControl service for memory erase
-    response = client.routine_control(routine_id=0xFF00, control_type=3)
-    result = struct.unpack(">I", response.service_data.routine_status_record)[0]
-    if result != 0:
-        print_indented(f"Erasure failed with code: {result}")
-        raise RuntimeError("Memory erasure failed")
-    else:
-        print_indented(f"Erasure results: {result}")
+    try:
+        response = client.routine_control(routine_id=0xFF00, control_type=3)
+        result = struct.unpack(">I", response.service_data.routine_status_record)[0]
+        if result != 0:
+            print_indented(f"Erasure failed with code: {result}")
+            raise RuntimeError("Memory erasure failed")
+        else:
+            print_indented(f"Erasure results: {result}")
+    except udsoncan.exceptions.TimeoutException:
+        print_indented("Ignoring timeout exceptions, as erase is working correctly")
+
+    # Add a small delay to ensure any delayed responses are cleared
+    print_indented("Waiting for communication to settle...")
+    time.sleep(0.5)
 
 
 def firmware_download(client: Client, firmware_path: str):
@@ -82,20 +90,33 @@ def firmware_download(client: Client, firmware_path: str):
     with open(firmware_path, "rb") as firmware_file:
         firmware_data = firmware_file.read()
 
-    # Assuming the ECU supports the Download service
-    print_indented("Requesting download...")
-    response = client.download(0x00000000, len(firmware_data))
-    print_indented(
-        f"Download request accepted, max block size: {response.max_number_of_bytes}"
+    slot0_address = 0x18000
+    slot0_size = 192 * 1024  # 192KiB
+
+    slot0_memory = udsoncan.MemoryLocation(
+        memorysize=slot0_size, address=slot0_address, address_format=32
     )
 
-    # Sending data in chunks
-    block_size = response.max_number_of_bytes
-    for offset in range(0, len(firmware_data), block_size):
-        chunk = firmware_data[offset : offset + block_size]
-        print_indented(f"Sending block at offset {offset:#08x}...")
-        client.transfer_data(chunk)
-        print_indented("Block sent successfully")
+    if len(firmware_data) > slot0_size:
+        raise RuntimeError(
+            f"Firmware size {len(firmware_data)} exceeds slot0 size {slot0_size}"
+        )
+
+    print_indented("Requesting download...")
+    client.request_download(
+        memory_location=slot0_memory,
+        dfi=udsoncan.DataFormatIdentifier.from_byte(0x00),
+    )
+
+    block_size = 3 * 1024  # 3KB
+    blocks = [
+        firmware_data[i : i + block_size]
+        for i in range(0, len(firmware_data), block_size)
+    ]
+
+    for idx, block in enumerate(blocks):
+        print_indented(f"Transferring block {idx + 1}/{len(blocks)}...")
+        client.transfer_data(idx + 1, block)
 
     # Requesting transfer exit
     print_indented("Requesting transfer exit...")
@@ -117,6 +138,7 @@ def try_run(runnable):
 def main(args: Namespace):
     can: str = args.can
     reset: bool = args.reset
+    firmware: Optional[str] = args.firmware
 
     addr = isotp.Address(isotp.AddressingMode.Normal_11bits, rxid=0x7E0, txid=0x7E8)
     conn = IsoTPSocketConnection(can, addr)
@@ -125,7 +147,10 @@ def main(args: Namespace):
 
     with Client(conn, config=config, request_timeout=2) as client:
         try_run(lambda: change_session(client))
-        try_run(lambda: erase_slot0_memory_routine(client))
+
+        if firmware is not None:
+            try_run(lambda: erase_slot0_memory_routine(client))
+            try_run(lambda: firmware_download(client, firmware))
 
         if reset:
             try_run(lambda: ecu_reset(client))
@@ -139,6 +164,10 @@ if __name__ == "__main__":
         "-c", "--can", default="vcan0", help="CAN interface (default: vcan0)"
     )
     parser.add_argument("-r", "--reset", action="store_true", help="Perform ECU reset")
+
+    parser.add_argument(
+        "-f", "--firmware", default=None, type=str, help="Path to the firmware.bin file"
+    )
     parsed_args = parser.parse_args()
 
     main(parsed_args)

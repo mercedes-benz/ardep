@@ -76,7 +76,7 @@ static void iso14229_thread_entry(void *p1, void *p2, void *p3) {
 
   while (atomic_get(&inst->thread_stop_requested) == 0) {
     iso14229_zephyr_event_loop_tick(inst);
-    k_sleep(K_MSEC(1));
+    k_usleep(CONFIG_ISO14229_THREAD_SLEEP_US);
   }
 
   k_mutex_lock(&inst->thread_mutex, K_FOREVER);
