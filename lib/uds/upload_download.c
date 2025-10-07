@@ -9,9 +9,7 @@
 LOG_MODULE_DECLARE(uds, CONFIG_UDS_LOG_LEVEL);
 
 #include "uds.h"
-#include "upload_download_file_transfer.h"
 
-#include <errno.h>
 #include <string.h>
 
 #include <zephyr/device.h>
@@ -69,6 +67,10 @@ static UDSErr_t start_download(const struct uds_context* const context) {
   if (args->dataFormatIdentifier != 0x00) {
     return UDS_NRC_RequestOutOfRange;
   }
+
+  LOG_INF("FLASH_BASE_ADDRESS = 0x%08x", FLASH_BASE_ADDRESS);
+  LOG_INF("Starting download to addr 0x%08lx, size %zu",
+          (uintptr_t)(args->addr), args->size);
 
   upload_download_state.start_address =
       (uintptr_t)(args->addr) - FLASH_BASE_ADDRESS;

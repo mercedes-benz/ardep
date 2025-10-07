@@ -42,13 +42,13 @@ def change_session(client: Client):
     client.change_session(DiagnosticSessionControl.Session.programmingSession)
     print_indented("Session change successful")
 
-    print_indented("Changing to extended diagnostic session")
-    client.change_session(DiagnosticSessionControl.Session.extendedDiagnosticSession)
-    print_indented("Session change successful")
+    # print_indented("Changing to extended diagnostic session")
+    # client.change_session(DiagnosticSessionControl.Session.extendedDiagnosticSession)
+    # print_indented("Session change successful")
 
-    print_indented("Changing to programming session")
-    client.change_session(DiagnosticSessionControl.Session.programmingSession)
-    print_indented("Session change successful")
+    # print_indented("Changing to programming session")
+    # client.change_session(DiagnosticSessionControl.Session.programmingSession)
+    # print_indented("Session change successful")
 
 
 def ecu_reset(client: Client):
@@ -65,7 +65,10 @@ def erase_slot0_memory_routine(client: Client):
     client.routine_control(routine_id=0xFF00, control_type=1)
 
     print_indented("Waiting for erasure to be done...")
-    time.sleep(2)
+
+    for _ in range(5):
+        time.sleep(1)
+        client.tester_present()
 
     print_indented("Requesting erasure results...")
     # Assuming the ECU supports the RoutineControl service for memory erase
@@ -149,7 +152,7 @@ def main(args: Namespace):
         try_run(lambda: change_session(client))
 
         if firmware is not None:
-            try_run(lambda: erase_slot0_memory_routine(client))
+            # try_run(lambda: erase_slot0_memory_routine(client))
             try_run(lambda: firmware_download(client, firmware))
 
         if reset:

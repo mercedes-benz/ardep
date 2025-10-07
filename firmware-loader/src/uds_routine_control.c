@@ -89,6 +89,7 @@ static void erase_slot0_work_handler(struct k_work *work) {
 
 UDSErr_t erase_memory_routine_check(const struct uds_context *const context,
                                     bool *apply_action) {
+  LOG_INF("Routine Control CHECK");
   UDSRoutineCtrlArgs_t *args = (UDSRoutineCtrlArgs_t *)context->arg;
 
   struct uds_memory_erasure_routine_status *status =
@@ -116,11 +117,13 @@ UDSErr_t erase_memory_routine_check(const struct uds_context *const context,
   }
 
   *apply_action = true;
+  LOG_INF("Routine Control CHECK finished");
   return UDS_OK;
 }
 
 UDSErr_t erase_memory_routine_action(struct uds_context *const context,
                                      bool *consume_event) {
+  LOG_INF("Routine Control Action");
   UDSRoutineCtrlArgs_t *args = (UDSRoutineCtrlArgs_t *)context->arg;
 
   struct uds_memory_erasure_routine_status *status =
@@ -144,20 +147,19 @@ UDSErr_t erase_memory_routine_action(struct uds_context *const context,
       return UDS_PositiveResponse;
     }
     case UDS_ROUTINE_CONTROL__REQUEST_ROUTINE_RESULTS: {
-      //   k_mutex_lock(status->mutex, K_FOREVER);
-      //   enum uds_memory_erasure_routine_state current_state = status->state;
-      //   UDSErr_t result = status->result;
-      //   k_mutex_unlock(status->mutex);
+      k_mutex_lock(status->mutex, K_FOREVER);
+      enum uds_memory_erasure_routine_state current_state = status->state;
+      UDSErr_t result = status->result;
+      k_mutex_unlock(status->mutex);
 
-      //   if (current_state != UDS_MEMORY_ERASURE_STATE__COMPLETED) {
-      //     LOG_WRN("Memory erasure routine not completed yet");
-      //     return UDS_NRC_RequestSequenceError;
-      //   }
-      //   LOG_INF("Memory erasure routine requested result: 0x%02x", result);
+      if (current_state != UDS_MEMORY_ERASURE_STATE__COMPLETED) {
+        LOG_WRN("Memory erasure routine not completed yet");
+        return UDS_NRC_RequestSequenceError;
+      }
+      LOG_INF("Memory erasure routine requested result: 0x%02x", result);
 
-      //   return args->copyStatusRecord(context->server, &result,
-      //   sizeof(UDSErr_t));
-      return UDS_PositiveResponse;
+      return args->copyStatusRecord(context->server, &result, sizeof(UDSErr_t));
+      //   return UDS_PositiveResponse;
     }
     default:
       LOG_WRN("Unsupported control type: 0x%02x", args->ctrlType);
