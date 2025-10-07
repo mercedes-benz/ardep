@@ -9,7 +9,7 @@
 
 LOG_MODULE_DECLARE(firmware_loader, CONFIG_APP_LOG_LEVEL);
 
-#include "main.h"
+#include "uds.h"
 
 #include <zephyr/sys/reboot.h>
 #include <zephyr/sys/util.h>

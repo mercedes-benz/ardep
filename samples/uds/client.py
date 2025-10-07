@@ -41,6 +41,12 @@ def print_indented(text: str, indent: int = 1):
     print("\t" * indent + text)
 
 
+def change_session_prog(client: Client):
+    print("Changing to programming session...")
+    client.change_session(DiagnosticSessionControl.Session.programmingSession)
+    print("\tSession change successful")
+
+
 def change_session(client: Client):
     print("Changing to extended diagnostic session...")
     client.change_session(DiagnosticSessionControl.Session.extendedDiagnosticSession)
@@ -781,16 +787,17 @@ def main(args: Namespace):
     config["security_algo"] = security_algorithm
 
     with Client(conn, config=config, request_timeout=2) as client:
-        try_run(lambda: change_session(client))
-        try_run(lambda: data_by_identifier(client))
-        try_run(lambda: read_write_memory_by_address(client))
-        try_run(lambda: dtc_information(client))
-        try_run(lambda: routine_control(client))
-        try_run(lambda: security_access(client))
-        try_run(lambda: authentication(client, aes_key_file))
+        try_run(lambda: change_session_prog(client))
+        # try_run(lambda: change_session(client))
+        # try_run(lambda: data_by_identifier(client))
+        # try_run(lambda: read_write_memory_by_address(client))
+        # try_run(lambda: dtc_information(client))
+        # try_run(lambda: routine_control(client))
+        # try_run(lambda: security_access(client))
+        # try_run(lambda: authentication(client, aes_key_file))
 
-        if reset:
-            try_run(lambda: ecu_reset(client))
+        # if reset:
+        #     try_run(lambda: ecu_reset(client))
 
         print_headline("Demo finished")
 

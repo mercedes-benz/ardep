@@ -5,10 +5,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "zephyr/logging/log.h"
+#include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(firmware_loader, CONFIG_APP_LOG_LEVEL);
 
-#include "main.h"
+#include "uds.h"
 
 #include <zephyr/device.h>
 #include <zephyr/kernel.h>
@@ -16,6 +16,7 @@ LOG_MODULE_REGISTER(firmware_loader, CONFIG_APP_LOG_LEVEL);
 #include <zephyr/retention/retention.h>
 
 #include <ardep/iso14229.h>
+#include <ardep/uds.h>
 
 const struct device *retention_data = DEVICE_DT_GET(DT_NODELABEL(retention1));
 
