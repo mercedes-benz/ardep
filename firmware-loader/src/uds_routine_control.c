@@ -15,6 +15,7 @@ LOG_MODULE_DECLARE(firmware_loader, CONFIG_APP_LOG_LEVEL);
 #include <zephyr/init.h>
 #include <zephyr/kernel.h>
 #include <zephyr/storage/flash_map.h>
+#include <zephyr/sys/byteorder.h>
 #include <zephyr/sys/reboot.h>
 #include <zephyr/sys/util.h>
 
@@ -29,7 +30,7 @@ enum uds_memory_erasure_routine_state {
 struct uds_memory_erasure_routine_status {
   enum uds_memory_erasure_routine_state state;
   struct k_mutex *mutex;
-  UDSErr_t result;
+  int32_t result;
   struct k_work_delayable work;
 };
 
@@ -60,7 +61,7 @@ static void erase_slot0_work_handler(struct k_work *work) {
   const struct flash_area *fa;
   int rc = flash_area_open(FIXED_PARTITION_ID(slot0_partition), &fa);
 
-  UDSErr_t result = UDS_OK;
+  int32_t result = UDS_OK;
 
   if (rc < 0) {
     LOG_ERR("Failed to open slot0 partition: %d", rc);
@@ -73,7 +74,6 @@ static void erase_slot0_work_handler(struct k_work *work) {
 
     if (rc < 0) {
       LOG_ERR("Failed to erase slot0 partition: %d", rc);
-      result = UDS_NRC_GeneralProgrammingFailure;
     } else {
       LOG_INF("Successfully erased slot0 partition");
     }
@@ -149,7 +149,7 @@ UDSErr_t erase_memory_routine_action(struct uds_context *const context,
     case UDS_ROUTINE_CONTROL__REQUEST_ROUTINE_RESULTS: {
       k_mutex_lock(status->mutex, K_FOREVER);
       enum uds_memory_erasure_routine_state current_state = status->state;
-      UDSErr_t result = status->result;
+      int32_t result = status->result;
       k_mutex_unlock(status->mutex);
 
       if (current_state != UDS_MEMORY_ERASURE_STATE__COMPLETED) {
@@ -158,8 +158,9 @@ UDSErr_t erase_memory_routine_action(struct uds_context *const context,
       }
       LOG_INF("Memory erasure routine requested result: 0x%02x", result);
 
-      return args->copyStatusRecord(context->server, &result, sizeof(UDSErr_t));
-      //   return UDS_PositiveResponse;
+      int32_t be_result = sys_cpu_to_be32(result);
+      return args->copyStatusRecord(context->server, &be_result,
+                                    sizeof(be_result));
     }
     default:
       LOG_WRN("Unsupported control type: 0x%02x", args->ctrlType);

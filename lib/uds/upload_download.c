@@ -22,7 +22,9 @@ LOG_MODULE_DECLARE(uds, CONFIG_UDS_LOG_LEVEL);
 
 static const struct device* const flash_controller =
     DEVICE_DT_GET_OR_NULL(DT_CHOSEN(zephyr_flash_controller));
-#define FLASH_BASE_ADDRESS DT_REG_ADDR(DT_CHOSEN(zephyr_flash_controller))
+/* Flash memory base address for STM32 - the actual memory, not the controller
+ */
+#define FLASH_BASE_ADDRESS DT_REG_ADDR(DT_CHOSEN(zephyr_flash))
 
 enum UploadDownloadState {
   UDS_UPDOWN__IDLE,
@@ -80,14 +82,14 @@ static UDSErr_t start_download(const struct uds_context* const context) {
 
 #if defined(CONFIG_FLASH_HAS_EXPLICIT_ERASE)
   // prepare flash by erasing necessary sectors
-  int rc = flash_erase(flash_controller, upload_download_state.start_address,
-                       upload_download_state.total_size);
-  if (rc != 0) {
-    LOG_ERR("Flash erase failed at addr 0x%08lx, size %zu, err %d",
-            upload_download_state.start_address,
-            upload_download_state.total_size, rc);
-    return UDS_NRC_GeneralProgrammingFailure;
-  }
+  // int rc = flash_erase(flash_controller, upload_download_state.start_address,
+  //                      upload_download_state.total_size);
+  // if (rc != 0) {
+  //   LOG_ERR("Flash erase failed at addr 0x%08lx, size %zu, err %d",
+  //           upload_download_state.start_address,
+  //           upload_download_state.total_size, rc);
+  //   return UDS_NRC_GeneralProgrammingFailure;
+  // }
 #endif
 
   upload_download_state.state = UDS_UPDOWN__DOWNLOAD_IN_PROGRESS;
@@ -131,8 +133,12 @@ static UDSErr_t continue_download(const struct uds_context* const context) {
     return UDS_NRC_RequestOutOfRange;
   }
 
+  LOG_INF("Writing to flash at addr 0x%08lx, size %u",
+          upload_download_state.current_address, args->len);
+
   int rc = flash_write(flash_controller, upload_download_state.current_address,
                        args->data, args->len);
+  LOG_INF("Write finished");
 
   if (rc != 0) {
     LOG_ERR("Flash write failed at addr 0x%08lx, size %u, err %d",

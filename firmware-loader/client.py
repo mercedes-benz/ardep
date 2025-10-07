@@ -62,13 +62,14 @@ def erase_slot0_memory_routine(client: Client):
     print_headline("Erasing Slot0 Memory")
     print_indented("Starting memory erase routine...")
     # Assuming the ECU supports the RoutineControl service for memory erase
-    client.routine_control(routine_id=0xFF00, control_type=1)
+    with client.suppress_positive_response():
+        client.routine_control(routine_id=0xFF00, control_type=1)
 
-    print_indented("Waiting for erasure to be done...")
+        print_indented("Waiting for erasure to be done...")
 
-    for _ in range(5):
-        time.sleep(1)
-        client.tester_present()
+        for _ in range(5):
+            time.sleep(1)
+            client.tester_present()
 
     print_indented("Requesting erasure results...")
     # Assuming the ECU supports the RoutineControl service for memory erase
@@ -89,11 +90,16 @@ def erase_slot0_memory_routine(client: Client):
 
 
 def firmware_download(client: Client, firmware_path: str):
+    for _ in range(2):
+        client.tester_present()
+        time.sleep(1)
+
     print_headline("Starting Firmware Download")
     with open(firmware_path, "rb") as firmware_file:
         firmware_data = firmware_file.read()
 
-    slot0_address = 0x18000
+    # STM32G4 flash base address + slot0 offset
+    slot0_address = 0x08000000 + 0x18000
     slot0_size = 192 * 1024  # 192KiB
 
     slot0_memory = udsoncan.MemoryLocation(
@@ -108,10 +114,14 @@ def firmware_download(client: Client, firmware_path: str):
     print_indented("Requesting download...")
     client.request_download(
         memory_location=slot0_memory,
-        dfi=udsoncan.DataFormatIdentifier.from_byte(0x00),
+        # dfi=udsoncan.DataFormatIdentifier.from_byte(0x00),
     )
 
-    block_size = 3 * 1024  # 3KB
+    for _ in range(2):
+        client.tester_present()
+        time.sleep(1)
+
+    block_size = 1 * 1024
     blocks = [
         firmware_data[i : i + block_size]
         for i in range(0, len(firmware_data), block_size)
@@ -120,6 +130,7 @@ def firmware_download(client: Client, firmware_path: str):
     for idx, block in enumerate(blocks):
         print_indented(f"Transferring block {idx + 1}/{len(blocks)}...")
         client.transfer_data(idx + 1, block)
+        time.sleep(1)
 
     # Requesting transfer exit
     print_indented("Requesting transfer exit...")
@@ -152,7 +163,7 @@ def main(args: Namespace):
         try_run(lambda: change_session(client))
 
         if firmware is not None:
-            # try_run(lambda: erase_slot0_memory_routine(client))
+            try_run(lambda: erase_slot0_memory_routine(client))
             try_run(lambda: firmware_download(client, firmware))
 
         if reset:
