@@ -6,13 +6,15 @@
  */
 
 #include "iso14229.h"
-#include "zephyr/kernel.h"
 
 #include <zephyr/logging/log.h>
 LOG_MODULE_DECLARE(firmware_loader, CONFIG_APP_LOG_LEVEL);
 
 #include "uds.h"
 
+#include <zephyr/init.h>
+#include <zephyr/kernel.h>
+#include <zephyr/storage/flash_map.h>
 #include <zephyr/sys/reboot.h>
 #include <zephyr/sys/util.h>
 
@@ -27,16 +29,62 @@ enum uds_memory_erasure_routine_state {
 struct uds_memory_erasure_routine_status {
   enum uds_memory_erasure_routine_state state;
   struct k_mutex *mutex;
-  uint8_t result;
+  UDSErr_t result;
+  struct k_work work;
 };
 
 K_MUTEX_DEFINE(memory_erasure_routine_mutex);
 
+static void erase_slot0_work_handler(struct k_work *work);
+
 static struct uds_memory_erasure_routine_status erasure_status = {
   .state = UDS_MEMORY_ERASURE_STATE__NOT_STARTED,
-  .result = 0,
+  .result = UDS_OK,
   .mutex = &memory_erasure_routine_mutex,
 };
+
+static int erase_memory_routine_init(void) {
+  k_work_init(&erasure_status.work, erase_slot0_work_handler);
+  return 0;
+}
+
+SYS_INIT(erase_memory_routine_init,
+         APPLICATION,
+         CONFIG_APPLICATION_INIT_PRIORITY);
+
+static void erase_slot0_work_handler(struct k_work *work) {
+  struct uds_memory_erasure_routine_status *status =
+      CONTAINER_OF(work, struct uds_memory_erasure_routine_status, work);
+
+  const struct flash_area *fa;
+  int rc = flash_area_open(FIXED_PARTITION_ID(slot0_partition), &fa);
+
+  UDSErr_t result = UDS_OK;
+
+  if (rc < 0) {
+    LOG_ERR("Failed to open slot0 partition: %d", rc);
+    result = UDS_NRC_GeneralProgrammingFailure;
+  } else {
+    LOG_INF("Erasing slot0 partition at 0x%08x, size: %zu bytes",
+            (uint32_t)fa->fa_off, fa->fa_size);
+
+    rc = flash_area_erase(fa, 0, fa->fa_size);
+
+    if (rc < 0) {
+      LOG_ERR("Failed to erase slot0 partition: %d", rc);
+      result = UDS_NRC_GeneralProgrammingFailure;
+    } else {
+      LOG_INF("Successfully erased slot0 partition");
+    }
+
+    flash_area_close(fa);
+  }
+
+  k_mutex_lock(status->mutex, K_FOREVER);
+  status->result = result;
+  status->state = UDS_MEMORY_ERASURE_STATE__COMPLETED;
+  k_mutex_unlock(status->mutex);
+}
 
 UDSErr_t erase_memory_routine_check(const struct uds_context *const context,
                                     bool *apply_action) {
@@ -48,18 +96,21 @@ UDSErr_t erase_memory_routine_check(const struct uds_context *const context,
 
   if (args->ctrlType == UDS_ROUTINE_CONTROL__START_ROUTINE &&
       status->state == UDS_MEMORY_ERASURE_STATE__IN_PROGRESS) {
+    LOG_WRN("Memory erasure routine already in progress");
     *apply_action = false;
     return UDS_NRC_RequestSequenceError;
   }
 
   if (args->ctrlType == UDS_ROUTINE_CONTROL__REQUEST_ROUTINE_RESULTS &&
       status->state != UDS_MEMORY_ERASURE_STATE__COMPLETED) {
+    LOG_WRN("Memory erasure routine not completed yet");
     *apply_action = false;
     return UDS_NRC_RequestSequenceError;
   }
 
   if (args->ctrlType == UDS_ROUTINE_CONTROL__STOP_ROUTINE) {
     *apply_action = false;
+    LOG_WRN("Stop routine not supported");
     return UDS_NRC_SubFunctionNotSupported;
   }
 
@@ -75,10 +126,38 @@ UDSErr_t erase_memory_routine_action(struct uds_context *const context,
       (struct uds_memory_erasure_routine_status *)
           context->registration->routine_control.user_context;
 
-  if (args->ctrlType == UDS_ROUTINE_CONTROL__START_ROUTINE) {
-    k_mutex_lock(status->mutex, K_FOREVER);
-    status->state = UDS_MEMORY_ERASURE_STATE__IN_PROGRESS;
-    k_mutex_unlock(status->mutex);
+  *consume_event = true;
+
+  switch (args->ctrlType) {
+    case UDS_ROUTINE_CONTROL__START_ROUTINE: {
+      k_mutex_lock(status->mutex, K_FOREVER);
+      status->state = UDS_MEMORY_ERASURE_STATE__IN_PROGRESS;
+      status->result = UDS_OK;
+      k_mutex_unlock(status->mutex);
+
+      // Submit the work item to erase slot0
+      k_work_submit(&status->work);
+
+      LOG_INF("Memory erasure routine started");
+      return UDS_PositiveResponse;
+    }
+    case UDS_ROUTINE_CONTROL__REQUEST_ROUTINE_RESULTS: {
+      k_mutex_lock(status->mutex, K_FOREVER);
+      enum uds_memory_erasure_routine_state current_state = status->state;
+      UDSErr_t result = status->result;
+      k_mutex_unlock(status->mutex);
+
+      if (current_state != UDS_MEMORY_ERASURE_STATE__COMPLETED) {
+        return UDS_NRC_RequestSequenceError;
+      }
+      LOG_INF("Memory erasure routine requested result: 0x%02x", result);
+
+      return args->copyStatusRecord(context->server, &result, sizeof(UDSErr_t));
+    }
+    default:
+      LOG_WRN("Unsupported control type: 0x%02x", args->ctrlType);
+      *consume_event = false;
+      return UDS_NRC_SubFunctionNotSupported;
   }
 }
 

@@ -125,6 +125,7 @@ def main(args: Namespace):
 
     with Client(conn, config=config, request_timeout=2) as client:
         try_run(lambda: change_session(client))
+        try_run(lambda: erase_slot0_memory_routine(client))
 
         if reset:
             try_run(lambda: ecu_reset(client))
