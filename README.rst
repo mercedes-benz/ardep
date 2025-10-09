@@ -54,3 +54,9 @@ If you want to see the raw command, execute the above and look at the first line
         {...}/ardep-workspace/bootloader/mcuboot/boot/zephyr -- \
         -DEXTRA_CONF_FILE={...}/ardep-workspace/ardep/boards/arm/ardep/mcuboot.conf \
         -DEXTRA_DTC_OVERLAY_FILE={...}/ardep-workspace/ardep/boards/arm/ardep/mcuboot.overlay
+
+License
+=======
+Copyright Mercedes-Benz AG
+
+This project is licensed under the `Apache 2.0 license <LICENSE>`_.
