@@ -30,98 +30,142 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 import pathlib, binascii
 
 
+def print_headline(text: str, suppress_trailing_newline: bool = False):
+    print(f"\n=== {text} ===\n", end="" if suppress_trailing_newline else "\n")
+
+
+def print_sub_headline(text: str):
+    print(f"\n\t--- {text} ---\n")
+
+
+def print_indented(text: str, indent: int = 1):
+    print("\t" * indent + text)
+
+
 def change_session(client: Client):
-    print("Changing to programming session...")
+    print_headline("Changing to programming session")
     client.change_session(DiagnosticSessionControl.Session.programmingSession)
-    print("\tSession change successful")
+    print_indented("Session change successful")
 
 
-def data_by_identifier(client: Client):
-    print("Data By Identifier:")
-
+def data_by_identifier_string(client: Client):
     data_id: int = 0x0100
+    print_sub_headline(f"Read a String from Data Identifier: 0x{data_id:04X}")
     data = client.read_data_by_identifier([data_id])
-    print(
-        f'\tReading data from identifier\t0x{data_id:04X}:\t"{data.service_data.values[data_id]}"'
+    print_indented(
+        f'Reading data from identifier\t0x{data_id:04X}:\t"{data.service_data.values[data_id]}"',
+        indent=2,
     )
 
+
+def data_by_identifier_primitive(client: Client):
     data_id = 0x0050
+    print_sub_headline(
+        f"Read and write primitive data from Data Identifier: 0x{data_id:04X}"
+    )
     data = client.read_data_by_identifier_first([data_id])
-    print(f"\tReading data from identifier\t0x{data_id:04X}:\t0x{data:04X}")
+    print_indented(
+        f"Reading data from identifier\t0x{data_id:04X}:\t0x{data:04X}", indent=2
+    )
 
     write_data = 0x1234
     data = client.write_data_by_identifier(data_id, write_data)
-    print(f"\tWriting data to identifier\t0x{data_id:04X}:\t0x{write_data:04X}")
+    print_indented(
+        f"Writing data to identifier\t0x{data_id:04X}:\t0x{write_data:04X}", indent=2
+    )
 
     data = client.read_data_by_identifier_first([data_id])
-    print(f"\tReading data from identifier\t0x{data_id:04X}:\t0x{data:04X}")
+    print_indented(
+        f"Reading data from identifier\t0x{data_id:04X}:\t0x{data:04X}", indent=2
+    )
 
     write_data = 0xBEEF
     data = client.write_data_by_identifier(data_id, write_data)
-    print(f"\tWriting data to identifier\t0x{data_id:04X}:\t0x{write_data:04X}")
+    print_indented(
+        f"Writing data to identifier\t0x{data_id:04X}:\t0x{write_data:04X}", indent=2
+    )
 
     data = client.read_data_by_identifier_first([data_id])
-    print(f"\tReading data from identifier\t0x{data_id:04X}:\t0x{data:04X}")
+    print_indented(
+        f"Reading data from identifier\t0x{data_id:04X}:\t0x{data:04X}", indent=2
+    )
 
+
+def data_by_id_io_control(client: Client):
     led_id = 0x0200
+    print_sub_headline(
+        f"Demonstrate IOControl with LED from Data Identifier: 0x{led_id:04X}"
+    )
     data = client.read_data_by_identifier_first([led_id])
-    print(f"\tReading LED state:\t\t\t0x{data:02X}")
+    print_indented(f"Reading LED state:\t\t\t\t\t\t\t0x{data:02X}", indent=2)
 
     write_data = 0x01
     data = client.write_data_by_identifier(led_id, write_data)
-    print(f"\tTurning LED ON, writing:\t\t0x{write_data:02X}")
+    print_indented(f"Turning LED ON, writing:\t\t\t\t\t\t0x{write_data:02X}", indent=2)
 
     time.sleep(1)
 
     io_control_param = 0x03  # short term adjustment
     io_control_data = 0x00
     client.io_control(led_id, control_param=io_control_param, values=[io_control_data])
-    print(
-        f"\tTemporarily overriding LED state via IO control. Setting LED state: 0x{io_control_data:02X}"
+    print_indented(
+        f"Temporarily overriding LED state via IO control. Setting LED state:\t0x{io_control_data:02X}",
+        indent=2,
     )
 
     time.sleep(1)
 
     io_control_data = 0x01
     client.io_control(led_id, control_param=io_control_param, values=[io_control_data])
-    print(
-        f"\tTemporarily overriding LED state via IO control. Setting LED state: 0x{io_control_data:02X}"
+    print_indented(
+        f"Temporarily overriding LED state via IO control. Setting LED state:\t0x{io_control_data:02X}",
+        indent=2,
     )
 
     time.sleep(1)
 
     io_control_param = 0x01  # reset to Default
     client.io_control(led_id, control_param=io_control_param)
-    print("\tResetting LED state to default (OFF)")
+    print_indented("Resetting LED state to default (OFF)", indent=2)
 
     time.sleep(1)
 
     io_control_param = 0x00  # return control to ECU
     client.io_control(led_id, control_param=io_control_param)
-    print("\tReturning control of LED back to the ECU")
+    print_indented("Returning control of LED back to the ECU", indent=2)
 
     time.sleep(1)
 
     write_data = 0x01
     data = client.write_data_by_identifier(led_id, write_data)
-    print(f"\tTurning LED ON, writing:\t\t0x{write_data:02X}")
+    print_indented(f"Turning LED ON, writing:\t\t\t\t\t\t0x{write_data:02X}", indent=2)
 
     time.sleep(1)
 
     write_data = 0x00
     data = client.write_data_by_identifier(led_id, write_data)
-    print(f"\tTurning LED OFF, writing:\t\t0x{write_data:02X}")
+    print_indented(f"Turning LED OFF, writing:\t\t\t\t\t\t0x{write_data:02X}", indent=2)
     time.sleep(1)
 
 
+def data_by_identifier(client: Client):
+    print_headline("Data By Identifier", suppress_trailing_newline=True)
+
+    data_by_identifier_string(client)
+    data_by_identifier_primitive(client)
+    data_by_id_io_control(client)
+
+
 def read_write_memory_by_address(client: Client):
-    print("Memory By Address:")
+    print_headline("Memory By Address")
 
     address: int = 0x00001000
     memory_location = MemoryLocation(address=address, memorysize=16)
 
     data = client.read_memory_by_address(memory_location)
-    print(f"\tReading 16 bytes:\t\t\t{' '.join(f'{b:02X}' for b in data.data)}")
+    print_indented(
+        f"Reading 16 bytes:\t\t\t{' '.join(f'{b:02X}' for b in data.data)}", indent=1
+    )
     read_data = data.data
 
     write_data = bytes(
@@ -148,96 +192,114 @@ def read_write_memory_by_address(client: Client):
         memory_location,
         write_data,
     )
-    print(f"\tWriting 16 bytes:\t\t\t{' '.join(f'{b:02X}' for b in write_data)}")
+    print_indented(
+        f"Writing 16 bytes:\t\t\t{' '.join(f'{b:02X}' for b in write_data)}", indent=1
+    )
 
     data = client.read_memory_by_address(memory_location)
-    print(f"\tReading updated 16 bytes:\t\t{' '.join(f'{b:02X}' for b in data.data)}")
+    print_indented(
+        f"Reading updated 16 bytes:\t\t{' '.join(f'{b:02X}' for b in data.data)}",
+        indent=1,
+    )
 
     data = client.write_memory_by_address(
         memory_location,
         read_data,
     )
-    print(
-        f"\tRestoring original 16 bytes:\t\t{' '.join(f'{b:02X}' for b in read_data)}"
+    print_indented(
+        f"Restoring original 16 bytes:\t\t{' '.join(f'{b:02X}' for b in read_data)}",
+        indent=1,
     )
 
     data = client.read_memory_by_address(memory_location)
-    print(f"\tReading restored 16 bytes:\t\t{' '.join(f'{b:02X}' for b in data.data)}")
+    print_indented(
+        f"Reading restored 16 bytes:\t\t{' '.join(f'{b:02X}' for b in data.data)}",
+        indent=1,
+    )
 
 
 def dtc_information(client: Client):
-    print("Reading DTC information...")
+    print_headline("Reading DTC information")
 
-    print("\tRequesting DTC Snapshot Identification (unimplemented subFunc)...")
+    print_sub_headline("Requesting DTC Snapshot Identification (unimplemented subFunc)")
     try:
         client.read_dtc_information(
             subfunction=0x03,
         )
     except NegativeResponseException as e:
-        print(
-            f'\t\tServer refused our request with code "{e.response.code_name}" (0x{e.response.code:02X})'
+        print_indented(
+            f'Server refused our request with code "{e.response.code_name}" (0x{e.response.code:02X})',
+            indent=2,
         )
 
-    print("\tRequesting DTCs with status mask 0x84...")
+    print_sub_headline("Requesting DTCs with status mask 0x84")
     dtc_data = client.read_dtc_information(
         subfunction=0x02,
         status_mask=0x84,
     )
-    print(f"\t\tDTC count: {dtc_data.service_data.dtc_count}")
+    print_indented(f"DTC count: {dtc_data.service_data.dtc_count}", indent=2)
     for dtc in dtc_data.service_data.dtcs:
-        print(
-            f"\t\t\tDTC: 0x{dtc.id:06X} with status 0x{dtc.status.get_byte_as_int():02X}"
+        print_indented(
+            f"DTC: 0x{dtc.id:06X} with status 0x{dtc.status.get_byte_as_int():02X}",
+            indent=3,
         )
 
-    print("\tClearing DTC information...")
+    print_sub_headline("Clearing DTC information")
     client.clear_dtc(group=0xFFFFFF)
 
-    print("\tRequesting DTCs with status mask 0x84 again...")
+    print_sub_headline("Requesting DTCs with status mask 0x84 again")
     dtc_data = client.read_dtc_information(
         subfunction=0x02,
         status_mask=0x84,
     )
-    print(f"\t\tDTC count: {dtc_data.service_data.dtc_count}")
+    print_indented(f"DTC count: {dtc_data.service_data.dtc_count}", indent=2)
     for dtc in dtc_data.service_data.dtcs:
-        print(
-            f"\t\t\tDTC: 0x{dtc.id:06X} with status 0x{dtc.status.get_byte_as_int():02X}"
+        print_indented(
+            f"DTC: 0x{dtc.id:06X} with status 0x{dtc.status.get_byte_as_int():02X}",
+            indent=3,
         )
 
     time.sleep(1.5)
 
-    print("\tRequesting DTCs with status mask 0x84 after delay...")
+    print_sub_headline("Requesting DTCs with status mask 0x84 after delay")
     dtc_data = client.read_dtc_information(
         subfunction=0x02,
         status_mask=0x84,
     )
-    print(f"\t\tDTC count: {dtc_data.service_data.dtc_count}")
+    print_indented(f"DTC count: {dtc_data.service_data.dtc_count}", indent=2)
     for dtc in dtc_data.service_data.dtcs:
-        print(
-            f"\t\t\tDTC: 0x{dtc.id:06X} with status 0x{dtc.status.get_byte_as_int():02X}"
+        print_indented(
+            f"DTC: 0x{dtc.id:06X} with status 0x{dtc.status.get_byte_as_int():02X}",
+            indent=3,
         )
 
     # Control DTC Setting demonstration
-    print("\n\tControl DTC Setting demonstration:")
+    print_sub_headline("Control DTC Setting demonstration:")
 
     # First read current DTCs to see initial status
-    print("\t\tReading initial DTC status...")
+    print_indented("Reading initial DTC status", indent=2)
     try:
         dtc_data = client.read_dtc_information(
             subfunction=0x02,  # DTC by status mask
             status_mask=0xFF,  # All status bits
         )
-        print(f"\t\t\tInitial DTC count: {dtc_data.service_data.dtc_count}")
+        print_indented(
+            f"Initial DTC count: {dtc_data.service_data.dtc_count}", indent=3
+        )
         for dtc in dtc_data.service_data.dtcs:
-            print(
-                f"\t\t\tDTC: 0x{dtc.id:06X} with status 0x{dtc.status.get_byte_as_int():02X}"
+            print_indented(
+                f"DTC: 0x{dtc.id:06X} with status 0x{dtc.status.get_byte_as_int():02X}",
+                indent=4,
             )
     except NegativeResponseException as e:
-        print(
-            f"\t\t\tFailed to read DTCs: {e.response.code_name} (0x{e.response.code:02X})"
+        print_indented(
+            f"Failed to read DTCs: {e.response.code_name} (0x{e.response.code:02X})",
+            indent=3,
         )
 
     # Wait a bit to see DTC status changes
-    print("\t\tWaiting 200ms to observe DTC status changes...")
+    print()
+    print_indented("Waiting 200ms to observe DTC status changes", indent=2)
     time.sleep(0.2)
 
     # Read DTCs again to see status increments
@@ -246,49 +308,63 @@ def dtc_information(client: Client):
             subfunction=0x02,
             status_mask=0xFF,
         )
-        print(f"\t\t\tDTC count after 200ms: {dtc_data.service_data.dtc_count}")
+        print_indented(
+            f"DTC count after 200ms: {dtc_data.service_data.dtc_count}", indent=3
+        )
         for dtc in dtc_data.service_data.dtcs:
-            print(
-                f"\t\t\t\tDTC: 0x{dtc.id:06X} with status 0x{dtc.status.get_byte_as_int():02X}"
+            print_indented(
+                f"DTC: 0x{dtc.id:06X} with status 0x{dtc.status.get_byte_as_int():02X}",
+                indent=4,
             )
     except NegativeResponseException as e:
-        print(
-            f"\t\t\tFailed to read DTCs: {e.response.code_name} (0x{e.response.code:02X})"
+        print_indented(
+            f"Failed to read DTCs: {e.response.code_name} (0x{e.response.code:02X})",
+            indent=3,
         )
 
     # Now freeze DTC updates using Control DTC Setting OFF
-    print("\t\tSending DTC Setting OFF (0x02) - freezing DTC status updates...")
+    print()
+    print_indented(
+        "Sending DTC Setting 'OFF' (0x02)\t-> freezing DTC status updates", indent=2
+    )
     try:
         response = client.control_dtc_setting(0x02)  # (DTCSettingOff)
 
         if response.positive:
-            print("\t\t\tDTC Setting OFF successful - DTC updates are now frozen")
+            print_indented(
+                "DTC Setting 'OFF' successful\t-> DTC updates are now frozen", indent=3
+            )
         else:
-            print(
-                f"\t\t\tDTC Setting OFF failed: {response.code_name} (0x{response.code:02X})"
+            print_indented(
+                f"DTC Setting 'OFF' failed: {response.code_name} (0x{response.code:02X})",
+                indent=3,
             )
     except NegativeResponseException as e:
-        print(f"\t\t\tError sending DTC Setting OFF: {e}")
+        print_indented(f"Error sending DTC Setting OFF: {e}", indent=3)
 
     try:
         dtc_data = client.read_dtc_information(
             subfunction=0x02,
             status_mask=0xFF,
         )
-        print(
-            f"\t\t\tDTC count directly after frozen: {dtc_data.service_data.dtc_count}"
+        print_indented(
+            f"DTC count directly after frozen: {dtc_data.service_data.dtc_count}",
+            indent=3,
         )
         for dtc in dtc_data.service_data.dtcs:
-            print(
-                f"\t\t\t\tDTC: 0x{dtc.id:06X} with status 0x{dtc.status.get_byte_as_int():02X}"
+            print_indented(
+                f"DTC: 0x{dtc.id:06X} with status 0x{dtc.status.get_byte_as_int():02X}",
+                indent=4,
             )
     except NegativeResponseException as e:
-        print(
-            f"\t\t\tFailed to read DTCs: {e.response.code_name} (0x{e.response.code:02X})"
+        print_indented(
+            f"Failed to read DTCs: {e.response.code_name} (0x{e.response.code:02X})",
+            indent=3,
         )
 
     # Wait and verify DTCs don't change
-    print("\t\tWaiting 200ms to verify DTC status is frozen...")
+    print()
+    print_indented("Waiting 200ms to verify DTC status is frozen", indent=2)
     time.sleep(0.2)
 
     try:
@@ -296,31 +372,42 @@ def dtc_information(client: Client):
             subfunction=0x02,
             status_mask=0xFF,
         )
-        print(f"\t\t\tDTC count while frozen: {dtc_data.service_data.dtc_count}")
+        print_indented(
+            f"DTC count while frozen: {dtc_data.service_data.dtc_count}", indent=3
+        )
         for dtc in dtc_data.service_data.dtcs:
-            print(
-                f"\t\t\t\tDTC: 0x{dtc.id:06X} with status 0x{dtc.status.get_byte_as_int():02X}"
+            print_indented(
+                f"DTC: 0x{dtc.id:06X} with status 0x{dtc.status.get_byte_as_int():02X}",
+                indent=4,
             )
     except NegativeResponseException as e:
-        print(
-            f"\t\t\tFailed to read DTCs: {e.response.code_name} (0x{e.response.code:02X})"
+        print_indented(
+            f"Failed to read DTCs: {e.response.code_name} (0x{e.response.code:02X})",
+            indent=3,
         )
 
     # Resume DTC updates using Control DTC Setting ON
-    print("\t\tSending DTC Setting ON (0x01) - resuming DTC status updates...")
+    print()
+    print_indented(
+        "Sending DTC Setting ON (0x01)\t\t-> resuming DTC status updates", indent=2
+    )
     try:
         response = client.control_dtc_setting(0x01)  # DTCSettingOn
         if response.positive:
-            print("\t\t\tDTC Setting ON successful - DTC updates are now resumed")
+            print_indented(
+                "DTC Setting ON successful\t-> DTC updates are now resumed", indent=3
+            )
         else:
-            print(
-                f"\t\t\tDTC Setting ON failed: {response.code_name} (0x{response.code:02X})"
+            print_indented(
+                f"DTC Setting ON failed: {response.code_name} (0x{response.code:02X})",
+                indent=3,
             )
     except NegativeResponseException as e:
-        print(f"\t\t\tError sending DTC Setting ON: {e}")
+        print_indented(f"Error sending DTC Setting ON: {e}", indent=3)
 
     # Wait and verify DTCs are updating again
-    print("\t\tWaiting 200ms to verify DTC status updates have resumed...")
+    print()
+    print_indented("Waiting 200ms to verify DTC status updates have resumed", indent=2)
     time.sleep(0.2)
 
     try:
@@ -328,33 +415,38 @@ def dtc_information(client: Client):
             subfunction=0x02,
             status_mask=0xFF,
         )
-        print(f"\t\t\tDTC count after resume: {dtc_data.service_data.dtc_count}")
+        print_indented(
+            f"DTC count after resume: {dtc_data.service_data.dtc_count}", indent=3
+        )
         for dtc in dtc_data.service_data.dtcs:
-            print(
-                f"\t\t\t\tDTC: 0x{dtc.id:06X} with status 0x{dtc.status.get_byte_as_int():02X}"
+            print_indented(
+                f"DTC: 0x{dtc.id:06X} with status 0x{dtc.status.get_byte_as_int():02X}",
+                indent=4,
             )
     except NegativeResponseException as e:
-        print(
-            f"\t\t\tFailed to read DTCs: {e.response.code_name} (0x{e.response.code:02X})"
+        print_indented(
+            f"Failed to read DTCs: {e.response.code_name} (0x{e.response.code:02X})",
+            indent=3,
         )
 
-    print("\t\tControl DTC Setting demonstration completed.")
+    print()
+    print_indented("Control DTC Setting demonstration completed.", indent=2)
 
 
 def ecu_reset(client: Client):
     # Send ECU reset request (hard reset)
-    print("Sending ECU hard reset request...")
+    print_headline("Sending ECU hard reset request")
     client.ecu_reset(ECUReset.ResetType.hardReset)
-    print("\tECU reset request sending successfully")
+    print_indented("ECU reset request sending successfully", indent=1)
 
 
 def routine_control(client: Client):
-    print("Routine Control:")
+    print_headline("Routine Control", suppress_trailing_newline=True)
 
     routine_id = 0x1234
     input_value = ~0xDEADBEEF & 0xFFFFFFFF
 
-    print(f"\tExecuting synchronous routine 0x{routine_id:04X}...")
+    print_sub_headline(f"Executing synchronous routine 0x{routine_id:04X}")
     try:
         response = client.routine_control(
             routine_id=routine_id,
@@ -364,40 +456,48 @@ def routine_control(client: Client):
 
         # The first byte is the status, the next 4 bytes are the BE uint32 result
         result = struct.unpack(">I", response.service_data.routine_status_record)[0]
-        print(f"\t\tRoutine input : 0x{input_value:08X}")
-        print(f"\t\tRoutine result: 0x{result:08X}")
-        print("\t\tRoutine executed successfully")
+        print_indented(f"Routine input : 0x{input_value:08X}", indent=2)
+        print_indented(f"Routine result: 0x{result:08X}", indent=2)
+        print_indented("Routine executed successfully", indent=2)
 
     except NegativeResponseException as e:
-        print(
-            f"\t\tRoutine control failed: {e.response.code_name} (0x{e.response.code:02X})"
+        print_indented(
+            f"Routine control failed: {e.response.code_name} (0x{e.response.code:02X})",
+            indent=2,
         )
         raise
     except Exception as e:
-        print(f"\t\tUnexpected error during routine control: {e}")
+        print_indented(f"Unexpected error during routine control: {e}", indent=2)
         raise
 
-    print(f"\tExecuting asynchronous routine 0x{routine_id:04X}...")
+    print_sub_headline(f"Executing asynchronous routine 0x{routine_id:04X}")
 
     routine_id = 0x5678
     try:
-        print(f"\t\tStarting asynchronous routine 0x{routine_id:04X}...")
+        print_indented(f"Starting asynchronous routine 0x{routine_id:04X}", indent=2)
         client.routine_control(
             routine_id=routine_id,
             control_type=1,  # Start routine
         )
-        print(f"\t\tAsynchronous routine 0x{routine_id:04X} started successfully\n")
+        print_indented(
+            f"Asynchronous routine 0x{routine_id:04X} started successfully\n", indent=2
+        )
 
         time.sleep(0.1)  # Wait a bit before requesting status
 
-        print(f"\t\tStopping asynchronous routine 0x{routine_id:04X}...")
+        print_indented(f"Stopping asynchronous routine 0x{routine_id:04X}", indent=2)
         client.routine_control(
             routine_id=routine_id,
             control_type=2,  # Stop routine
         )
-        print(f"\t\tAsynchronous routine 0x{routine_id:04X} stopped successfully\n")
+        print_indented(
+            f"Asynchronous routine 0x{routine_id:04X} stopped successfully\n", indent=2
+        )
 
-        print(f"\t\tRequesting results from asynchronous routine 0x{routine_id:04X}...")
+        print_indented(
+            f"Requesting results from asynchronous routine 0x{routine_id:04X}...",
+            indent=2,
+        )
         response = client.routine_control(
             routine_id=routine_id,
             control_type=3,  # Request routine results
@@ -408,77 +508,89 @@ def routine_control(client: Client):
             if len(status_data) >= 5:
                 status = status_data[0]
                 progress = struct.unpack(">I", status_data[1:5])[0]
-                print(f"\t\tRoutine status: {status}, Progress: {progress}")
+                print_indented(
+                    f"Routine status: {status}, Progress: {progress}", indent=2
+                )
             else:
-                print(
-                    f"\t\tRoutine status data: {' '.join(f'{b:02X}' for b in status_data)}"
+                print_indented(
+                    f"Routine status data: {' '.join(f'{b:02X}' for b in status_data)}",
+                    indent=2,
                 )
 
     except NegativeResponseException as e:
-        print(
-            f"\t\tRoutine control failed: {e.response.code_name} (0x{e.response.code:02X})"
+        print_indented(
+            f"Routine control failed: {e.response.code_name} (0x{e.response.code:02X})",
+            indent=2,
         )
         raise
     except Exception as e:
-        print(f"\t\tUnexpected error during routine control: {e}")
+        print_indented(f"Unexpected error during routine control: {e}", indent=2)
         raise
 
 
 def security_access(client: Client):
-    print("Security Access:")
+    print_headline("Security Access")
 
     secure_data_id = 0x0300
 
     # First, try to read the secure data without authentication
-    print(
-        f"\tTrying to read secure data (ID: 0x{secure_data_id:04X}) without authentication..."
+    print_sub_headline(
+        f"Trying to read secure data (ID: 0x{secure_data_id:04X}) without authentication"
     )
     try:
         data = client.read_data_by_identifier([secure_data_id])
-        print(f'\t\tUnexpected success: "{data.service_data.values[secure_data_id]}"')
+        print_indented(
+            f'Unexpected success: "{data.service_data.values[secure_data_id]}"',
+            indent=2,
+        )
     except NegativeResponseException as e:
         if e.response.code == 0x33:  # Security Access Denied
-            print(
-                f"\t\tAccess denied as expected: {e.response.code_name} (0x{e.response.code:02X})"
+            print_indented(
+                f"Access denied as expected: {e.response.code_name} (0x{e.response.code:02X})",
+                indent=2,
             )
         else:
-            print(
-                f"\t\tUnexpected error: {e.response.code_name} (0x{e.response.code:02X})"
+            print_indented(
+                f"Unexpected error: {e.response.code_name} (0x{e.response.code:02X})",
+                indent=2,
             )
 
     # Now perform security access authentication
-    print("\tPerforming security access authentication for level 1...")
+    print_sub_headline("Performing security access authentication for level 1")
 
     try:
         # Step 1: Request seed for security level 1
-        print("\t\tRequesting seed for security level 1...")
+        print_indented("Requesting seed for security level 1", indent=2)
         client.unlock_security_access(1)
 
-        print("\t\tSecurity access successful! Level 1 unlocked.")
+        print_indented("Security access successful! Level 1 unlocked.", indent=2)
 
     except NegativeResponseException as e:
-        print(
-            f"\t\tSecurity access failed: {e.response.code_name} (0x{e.response.code:02X})"
+        print_indented(
+            f"Security access failed: {e.response.code_name} (0x{e.response.code:02X})",
+            indent=2,
         )
         return
     except Exception as e:
-        print(f"\t\tUnexpected error during security access: {e}")
+        print_indented(f"Unexpected error during security access: {e}", indent=2)
         return
 
     # Now try to read the secure data with authentication
-    print(
-        f"\tTrying to read secure data (ID: 0x{secure_data_id:04X}) with authentication..."
+    print_sub_headline(
+        f"Trying to read secure data (ID: 0x{secure_data_id:04X}) with authentication",
     )
     try:
         data = client.read_data_by_identifier([secure_data_id])
         secure_content = data.service_data.values[secure_data_id]
-        print(f'\t\tSuccess! Secure data: "{secure_content}"')
+        print_indented(f'Success! Secure data: "{secure_content}"', indent=2)
     except NegativeResponseException as e:
-        print(f"\t\tStill denied: {e.response.code_name} (0x{e.response.code:02X})")
+        print_indented(
+            f"Still denied: {e.response.code_name} (0x{e.response.code:02X})", indent=2
+        )
     except Exception as e:
-        print(f"\t\tUnexpected error: {e}")
+        print_indented(f"Unexpected error: {e}", indent=2)
 
-    print("\tSecurity access demonstration completed.")
+    print_indented("Security access demonstration completed.", indent=2)
 
 
 def security_algorithm(level: int, seed: bytes, params: Any) -> bytes:
@@ -522,16 +634,17 @@ def encrypt_seed(seed: bytes, key: bytes) -> bytes:
 
 
 def authentication(client: Client, key_file: str):
-    print("Authentication:")
+    print_headline("Authentication")
 
     data_id: int = 0x0150
-    print(
-        f"\tTry reading secure data with id 0x{data_id:04X} without authentication..."
+    print_sub_headline(
+        f"Try reading secure data with id 0x{data_id:04X} without authentication"
     )
     try:
         data = client.read_data_by_identifier([data_id])
-        print(
-            f'\t\tReading data from identifier\t0x{data_id:04X} should have failed but succeeded with data "{data.service_data.values[data_id]}". Are we still authenticated?'
+        print_indented(
+            f'Reading data from identifier\t0x{data_id:04X} should have failed but succeeded with data "{data.service_data.values[data_id]}". Are we still authenticated?',
+            indent=2,
         )
     except NegativeResponseException as e:
         if e.response.code == 0x22:  # Conditions Not Correct
@@ -549,11 +662,11 @@ def authentication(client: Client, key_file: str):
 
     seed: bytes = response.service_data.challenge_server
 
-    print("\tSeed (hex):\t\t", seed.hex())
+    print_indented("Seed (hex):\t\t" + seed.hex(), indent=2)
     key: bytes = read_key(key_file)
 
     ct = encrypt_seed(seed, key)
-    print("\tCiphertext (hex):\t", ct.hex())
+    print_indented("Ciphertext (hex):\t" + ct.hex(), indent=2)
 
     client.authentication(
         authentication_task=6,
@@ -561,19 +674,22 @@ def authentication(client: Client, key_file: str):
         algorithm_indicator=algo_indicator,
     )
 
-    print("\tAuthentication successful!")
+    print_sub_headline("Authentication successful!")
 
-    print(f"\tTry reading secure data with id 0x{data_id:04X} with authentication...")
+    print_sub_headline(
+        f"Try reading secure data with id 0x{data_id:04X} with authentication"
+    )
     data = client.read_data_by_identifier([data_id])
-    print(
-        f"\t\tReading data from secured identifier\t0x{data_id:04X}:\t0x{data.service_data.values[data_id]:02X}"
+    print_indented(
+        f"Reading data from secured identifier\t0x{data_id:04X}:\t0x{data.service_data.values[data_id]:02X}",
+        indent=2,
     )
 
     client.authentication(
         authentication_task=0,
     )
 
-    print("\tDe-Authentication successful!")
+    print_sub_headline("De-Authentication successful!")
 
 
 class CustomUint16Codec(udsoncan.DidCodec):
@@ -675,7 +791,7 @@ def main(args: Namespace):
         if reset:
             try_run(lambda: ecu_reset(client))
 
-        print("\n=== Demo finished ===\n")
+        print_headline("Demo finished")
 
 
 if __name__ == "__main__":

@@ -49,6 +49,10 @@ Test with board
     .. code-block:: bash
 
         python samples/uds/client.py --can can0
+        
+    .. note::
+
+        If you want to remove the error output, you can redirect stderr to ``/dev/null`` by appending ``2&> /dev/null`` to the python command.
 
 Test Link Control functionality with board
 ==========================================

@@ -37,11 +37,14 @@ UDSErr_t read_data_by_id_check(const struct uds_context *const context,
   if (args->dataId != context->registration->data_identifier.data_id) {
     return UDS_OK;
   }
+
+  // Check if it is an ID that is handled with this action function
   if (args->dataId != primitive_type_id && args->dataId != string_id &&
       args->dataId != authenticated_type_id) {
     return UDS_OK;
   }
 
+  // Check for authentication if required
   if (args->dataId == authenticated_type_id) {
     struct authentication_data *auth = context->instance->user_context;
     if (!auth->authenticated) {
@@ -69,6 +72,9 @@ UDSErr_t read_data_by_id_action(struct uds_context *const context,
 
   uint8_t temp[50] = {0};
 
+  uint16_t size =
+      *(uint16_t *)context->registration->data_identifier.user_context;
+
   if (args->dataId == primitive_type_id) {
     // Convert to MSB-First as defined in ISO 14229
     uint16_t t = sys_cpu_to_be16(
@@ -76,20 +82,14 @@ UDSErr_t read_data_by_id_action(struct uds_context *const context,
     memcpy(temp, &t, sizeof(t));
   } else if (args->dataId == string_id) {
     // Transport string as raw data without conversion
-    uint16_t size =
-        *(uint16_t *)context->registration->data_identifier.user_context;
     memcpy(temp, context->registration->data_identifier.data, size);
   } else if (args->dataId == authenticated_type_id) {
-    uint16_t size =
-        *(uint16_t *)context->registration->data_identifier.user_context;
     memcpy(temp, context->registration->data_identifier.data, size);
   }
   // Signal this action consumes the event
   *consume_event = true;
 
-  return args->copy(
-      context->server, temp,
-      *(uint16_t *)context->registration->data_identifier.user_context);
+  return args->copy(context->server, temp, size);
 }
 
 UDSErr_t write_data_by_id_check(const struct uds_context *const context,
