@@ -90,10 +90,6 @@ def erase_slot0_memory_routine(client: Client):
 
 
 def firmware_download(client: Client, firmware_path: str):
-    for _ in range(2):
-        client.tester_present()
-        time.sleep(1)
-
     print_headline("Starting Firmware Download")
     with open(firmware_path, "rb") as firmware_file:
         firmware_data = firmware_file.read()
@@ -117,11 +113,7 @@ def firmware_download(client: Client, firmware_path: str):
         # dfi=udsoncan.DataFormatIdentifier.from_byte(0x00),
     )
 
-    for _ in range(2):
-        client.tester_present()
-        time.sleep(1)
-
-    block_size = 1 * 1024
+    block_size = 3 * 1024
     blocks = [
         firmware_data[i : i + block_size]
         for i in range(0, len(firmware_data), block_size)
@@ -129,8 +121,31 @@ def firmware_download(client: Client, firmware_path: str):
 
     for idx, block in enumerate(blocks):
         print_indented(f"Transferring block {idx + 1}/{len(blocks)}...")
-        client.transfer_data(idx + 1, block)
-        time.sleep(1)
+
+        # Verify device is still responsive before transfer
+        if idx > 0 and idx % 5 == 0:  # Check every 5 blocks
+            try:
+                print_indented("Verifying device connectivity...", indent=2)
+                client.tester_present()
+            except Exception as e:
+                print_indented(f"Device connectivity check failed: {e}", indent=2)
+                raise RuntimeError(
+                    "Device appears to have reset or disconnected"
+                ) from e
+
+        try:
+            client.transfer_data(idx + 1, block)
+        except udsoncan.exceptions.TimeoutException:
+            print_indented(
+                f"Timeout on block {idx + 1}. Device may have reset.", indent=2
+            )
+            print_indented(
+                "Check server logs for reboot messages after flash write.", indent=2
+            )
+            raise
+
+        # Small delay to allow device to process, but much shorter than before
+        time.sleep(0.1)
 
     # Requesting transfer exit
     print_indented("Requesting transfer exit...")

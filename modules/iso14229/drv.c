@@ -33,6 +33,7 @@ int isotp_user_send_can(const uint32_t arbitration_id,
   memcpy(frame.data, data, size);
   frame.flags = 0;
   const struct device* can_dev = arg;
+  // LOG_WRN("CAN TX: %03x [%d] %02x ...", frame.id, frame.dlc, frame.data[0]);
   LOG_DBG("CAN TX: %03x [%d] %02x ...", frame.id, frame.dlc, frame.data[0]);
   int ret = can_send(can_dev, &frame, K_FOREVER, NULL, &frame);
 
