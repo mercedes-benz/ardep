@@ -1,7 +1,7 @@
 / {
     chosen {
-		zephyr,code-partition = &slot1_partition;
-        zephyr,console = &uart_a;
-        zephyr,shell-uart = &uart_a;
-	};
+      zephyr,code-partition = &slot1_partition;
+      zephyr,console = &uart_a;
+      zephyr,shell-uart = &uart_a;
+  };
 };
