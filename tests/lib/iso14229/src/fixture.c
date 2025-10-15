@@ -47,7 +47,7 @@ static uint32_t send_can_frame_count = 0;
 bool session_timeout_event_fired = false;
 
 void tick_thread(struct iso14229_zephyr_instance *instance) {
-  instance->thread_tick(instance);
+  instance->event_loop_tick(instance);
 }
 
 void advance_time_and_tick_thread_num(struct iso14229_zephyr_instance *instance,

@@ -16,6 +16,7 @@ Welcome to the ARDEP documentation!
    console/index.rst
    error_handling/index.rst
    README.rst
+   lib/index.rst
    scripts/ardep.rst
    boards/mercedes/ardep/doc/index.rst
    boards/shields/hv_shield/doc/index.rst

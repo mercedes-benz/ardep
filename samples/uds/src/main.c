@@ -22,9 +22,7 @@ struct uds_instance_t instance;
 
 UDS_REGISTER_ECU_DEFAULT_HARD_RESET_HANDLER(&instance);
 
-int mount_fs(void) {
-  return 0;
-}
+int mount_fs(void) { return 0; }
 
 int main(void) {
   int err;

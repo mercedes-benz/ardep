@@ -28,7 +28,11 @@ static UDSErr_t uds_check_with_subfunc_fn(
     return UDS_OK;
   }
 
-  return reg->read_dtc.actor.check(context, apply_action);
+  if (reg->read_dtc.actor.check) {
+    return reg->read_dtc.actor.check(context, apply_action);
+  }
+
+  return UDS_OK;
 }
 
 uds_check_fn uds_get_check_for_read_dtc_info(

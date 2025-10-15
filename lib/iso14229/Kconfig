@@ -14,11 +14,22 @@ if ISO14229
     module-str = iso14229
     source "subsys/logging/Kconfig.template.log_config"
     
-    config ISO14229_THREAD_STACK_SIZE
-        int "ISO14229 thread stack size"
-        default 1024
+    menuconfig ISO14229_THREAD
+        bool "Enable ISO14229 thread"
+        default y
         help
-          Stack size for the ISO14229 thread. In this thread, all incoming CAN
-          messages and events are handled.    
+          Enable this option to run the ISO14229 protocol in its own thread.
+          This is recommended for most applications.
+          
+        if ISO14229_THREAD
+    
+            config ISO14229_THREAD_STACK_SIZE
+                int "ISO14229 thread stack size"
+                default 1024
+                help
+                  Stack size for the ISO14229 thread. In this thread, all incoming CAN
+                  messages and events are handled.    
+                  
+        endif # ISO14229_THREAD
 
 endif # ISO14229

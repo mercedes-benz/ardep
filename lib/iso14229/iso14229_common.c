@@ -43,7 +43,8 @@ int iso14229_zephyr_set_callback(struct iso14229_zephyr_instance *inst,
   return 0;
 }
 
-void iso14229_zephyr_thread_tick(struct iso14229_zephyr_instance *inst) {
+static void iso14229_zephyr_event_loop_tick(
+    struct iso14229_zephyr_instance *inst) {
   struct can_frame frame_phys;
   struct can_frame frame_func;
   int ret_phys = k_msgq_get(&inst->can_phys_msgq, &frame_phys, K_NO_WAIT);
@@ -60,11 +61,13 @@ void iso14229_zephyr_thread_tick(struct iso14229_zephyr_instance *inst) {
   UDSServerPoll(&inst->server);
 }
 
+#ifdef CONFIG_ISO14229_THREAD
+
 static void iso14229_thread_entry(void *p1, void *p2, void *p3) {
   struct iso14229_zephyr_instance *inst = (struct iso14229_zephyr_instance *)p1;
 
   while (atomic_get(&inst->thread_stop_requested) == 0) {
-    iso14229_zephyr_thread_tick(inst);
+    iso14229_zephyr_event_loop_tick(inst);
     k_sleep(K_MSEC(1));
   }
 
@@ -122,30 +125,20 @@ int iso14229_zephyr_thread_stop(struct iso14229_zephyr_instance *inst) {
   return 0;
 }
 
+#endif  // CONFIG_ISO14229_THREAD
+
 int iso14229_zephyr_init(struct iso14229_zephyr_instance *inst,
                          const UDSISOTpCConfig_t *iso_tp_config,
                          const struct device *can_dev,
                          void *user_context) {
   inst->user_context = user_context;
   inst->set_callback = iso14229_zephyr_set_callback;
-  inst->thread_tick = iso14229_zephyr_thread_tick;
-  inst->thread_start = iso14229_zephyr_thread_start;
-  inst->thread_stop = iso14229_zephyr_thread_stop;
 
   int ret = k_mutex_init(&inst->event_callback_mutex);
   if (ret != 0) {
     LOG_ERR("Failed to initialize event callback mutex");
     return ret;
   }
-
-  ret = k_mutex_init(&inst->thread_mutex);
-  if (ret != 0) {
-    LOG_ERR("Failed to initialize thread mutex");
-    return ret;
-  }
-
-  inst->thread_running = false;
-  atomic_set(&inst->thread_stop_requested, 0);
 
   k_msgq_init(&inst->can_phys_msgq, inst->can_phys_buffer,
               sizeof(struct can_frame),
@@ -186,6 +179,22 @@ int iso14229_zephyr_init(struct iso14229_zephyr_instance *inst,
     printk("Failed to add RX filter for functional address: %d\n", err);
     return err;
   }
+
+  inst->event_loop_tick = iso14229_zephyr_event_loop_tick;
+
+#ifdef CONFIG_ISO14229_THREAD
+  inst->thread_start = iso14229_zephyr_thread_start;
+  inst->thread_stop = iso14229_zephyr_thread_stop;
+
+  ret = k_mutex_init(&inst->thread_mutex);
+  if (ret != 0) {
+    LOG_ERR("Failed to initialize thread mutex");
+    return ret;
+  }
+
+  inst->thread_running = false;
+  atomic_set(&inst->thread_stop_requested, 0);
+#endif  // CONFIG_ISO14229_THREAD
 
   return 0;
 }

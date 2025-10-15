@@ -858,6 +858,9 @@
  * @brief Register the default Link Control event handler
  * 
  * @param _instance Pointer to associated the UDS server instance
+ * 
+ * @note The default handler required handling of change diagnostic session
+ *       events so don't consume these events if you use this feature
  */
 #define UDS_REGISTER_LINK_CONTROL_DEFAULT_HANDLER(     \
   _instance                                            \

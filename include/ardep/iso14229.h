@@ -54,12 +54,14 @@ struct iso14229_zephyr_instance {
 
   void* user_context;
 
+#ifdef CONFIG_ISO14229_THREAD
   k_tid_t thread_id;
   struct k_thread thread_data;
   K_KERNEL_STACK_MEMBER(thread_stack, CONFIG_ISO14229_THREAD_STACK_SIZE);
   bool thread_running;
   atomic_t thread_stop_requested;
   struct k_mutex thread_mutex;
+#endif  // CONFIG_ISO14229_THREAD
 
   /**
    * @brief Set the UDS event callback that gets called when a
@@ -67,13 +69,16 @@ struct iso14229_zephyr_instance {
    */
   int (*set_callback)(struct iso14229_zephyr_instance* inst,
                       uds_callback callback);
+
   /**
-   * @brief Handle a single iteration of the UDS server thread
+   * @brief Runs one iteration of the iso14229 event loop.
    *
-   * @note This function must be called periodically when the UDS
-   *       thread is not started by @ref thread_start.
+   * @note This function must be called periodically. Either inside the
+   *       provided thread using @ref thread_start or by the user
    */
-  void (*thread_tick)(struct iso14229_zephyr_instance* inst);
+  void (*event_loop_tick)(struct iso14229_zephyr_instance* inst);
+
+#ifdef CONFIG_ISO14229_THREAD
   /**
    * @brief Start the UDS server thread
    */
@@ -82,6 +87,7 @@ struct iso14229_zephyr_instance {
    * @brief Stop the UDS server thread
    */
   int (*thread_stop)(struct iso14229_zephyr_instance* inst);
+#endif  // CONFIG_ISO14229_THREAD
 };
 
 /**

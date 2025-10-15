@@ -83,8 +83,7 @@ ZTEST_F(lib_uds, test_0x2E_write_by_id_applies_action_when_check_succeeds) {
 UDSErr_t custom_check_for_0x2E_consume_event_by_default_on_action(
     const struct uds_context *const context, bool *apply_action) {
   if (context->registration->type == UDS_REGISTRATION_TYPE__DATA_IDENTIFIER &&
-      context->registration->data_identifier.data_id ==
-          data_id_rw_duplicated1 &&
+      context->registration->data_identifier.data_id == data_id_rw &&
       context->event == UDS_EVT_WriteDataByIdent) {
     *apply_action = true;
   }
@@ -195,7 +194,7 @@ ZTEST_F(lib_uds, test_0x2E_write_by_id_returns_action_returncode) {
   uint32_t data = 0x11223344;
 
   UDSWDBIArgs_t arg = {
-    .dataId = data_id_rw,
+    .dataId = data_id_rw_duplicated1,
     .data = (uint8_t *)&data,
     .len = sizeof(data),
   };
@@ -252,7 +251,7 @@ ZTEST_F(lib_uds, test_0x2E_write_by_id_dynamic_registration) {
   uint32_t data = 0x11223344;
 
   UDSWDBIArgs_t arg = {
-    .dataId = data_id_rw,
+    .dataId = UDS_UNIQUE_DATA_ID,
     .data = (uint8_t *)&data,
     .len = sizeof(data),
   };

@@ -23,7 +23,11 @@ static UDSErr_t uds_check_with_routine_id_fn(
     return UDS_OK;
   }
 
-  return reg->routine_control.actor.check(context, apply_action);
+  if (reg->routine_control.actor.check) {
+    return reg->routine_control.actor.check(context, apply_action);
+  }
+
+  return UDS_OK;
 }
 
 uds_check_fn uds_get_check_for_routine_control(

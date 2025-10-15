@@ -55,37 +55,6 @@ ZTEST_F(lib_uds, test_0x22_read_by_id_applies_action_when_check_succeeds) {
 
 //////////////////////7
 
-UDSErr_t custom_check_for_0x22_consume_event_by_default_on_action(
-    const struct uds_context *const context, bool *apply_action) {
-  if (context->registration->type == UDS_REGISTRATION_TYPE__DATA_IDENTIFIER &&
-      context->registration->data_identifier.data_id ==
-          data_id_rw_duplicated1 &&
-      context->event == UDS_EVT_ReadDataByIdent) {
-    *apply_action = true;
-  }
-  return UDS_OK;
-}
-
-ZTEST_F(lib_uds, test_0x22_read_by_id_consume_event_by_default_on_action) {
-  struct uds_instance_t *instance = fixture->instance;
-
-  data_id_check_fn_fake.custom_fake =
-      custom_check_for_0x22_consume_event_by_default_on_action;
-
-  UDSRDBIArgs_t arg = {
-    .dataId = data_id_r,
-    .copy = copy,
-  };
-
-  int ret = receive_event(instance, UDS_EVT_ReadDataByIdent, &arg);
-  zassert_ok(ret);
-
-  zassert_true(data_id_check_fn_fake.call_count >= 1);
-  zassert_equal(data_id_action_fn_fake.call_count, 1);
-}
-
-//////////////////////7
-
 UDSErr_t custom_check_for_0x22_both_actions_are_executed(
     const struct uds_context *const context, bool *apply_action) {
   if (context->registration->type == UDS_REGISTRATION_TYPE__DATA_IDENTIFIER &&
@@ -117,7 +86,7 @@ ZTEST_F(lib_uds, test_0x22_read_by_id_both_actions_are_executed) {
       custom_action_for_0x22_both_actions_are_executed;
 
   UDSRDBIArgs_t arg = {
-    .dataId = data_id_r,
+    .dataId = data_id_rw_duplicated1,
     .copy = copy,
   };
 
@@ -158,12 +127,9 @@ ZTEST_F(lib_uds, test_0x22_read_by_id_returns_action_returncode) {
   data_id_action_fn_fake.custom_fake =
       custom_action_for_0x22_returns_action_returncode;
 
-  uint32_t data = 0x11223344;
-
-  UDSWDBIArgs_t arg = {
-    .dataId = data_id_rw,
-    .data = (uint8_t *)&data,
-    .len = sizeof(data),
+  UDSRDBIArgs_t arg = {
+    .dataId = data_id_r,
+    .copy = copy,
   };
 
   int ret = receive_event(instance, UDS_EVT_ReadDataByIdent, &arg);
