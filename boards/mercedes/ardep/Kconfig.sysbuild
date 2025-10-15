@@ -10,6 +10,15 @@ choice ARDEP_BOOT_LOGIC
 endchoice
 
 
+# Setup mcuboot as bootloader
+if BOOT_LOGIC_LEGACY || BOOT_LOGIC_UDS_FIRMWARE_LOADER
+  choice BOOTLOADER
+	  default BOOTLOADER_MCUBOOT
+  endchoice
+  choice BOOT_SIGNATURE_TYPE
+    default BOOT_SIGNATURE_TYPE_NONE
+  endchoice
+endif
 
 if BOOT_LOGIC_UDS_FIRMWARE_LOADER
   choice MCUBOOT_MODE
@@ -17,8 +26,4 @@ if BOOT_LOGIC_UDS_FIRMWARE_LOADER
   endchoice
 endif
 
-if BOOT_LOGIC_LEGACY || BOOT_LOGIC_UDS_FIRMWARE_LOADER
-  choice BOOTLOADER
-	  default BOOTLOADER_MCUBOOT
-  endchoice
-endif
+
