@@ -11,6 +11,7 @@ LOG_MODULE_DECLARE(firmware_loader, CONFIG_APP_LOG_LEVEL);
 
 #include "uds.h"
 
+#include <zephyr/logging/log_ctrl.h>
 #include <zephyr/sys/reboot.h>
 #include <zephyr/sys/util.h>
 
@@ -53,13 +54,12 @@ UDSErr_t on_session_timeout_check(const struct uds_context *const context,
 
 UDSErr_t on_session_timeout_action(struct uds_context *const context,
                                    bool *consume_event) {
-  sys_reboot(SYS_REBOOT_COLD);
-
   LOG_INF("Reboot due to session timeout failed!");
 
-  // Give Logging time to process
-  k_msleep(100);
+  // Flush logs
+  log_flush();
 
+  sys_reboot(SYS_REBOOT_COLD);
   // We should never reach this point
   CODE_UNREACHABLE;
 }
