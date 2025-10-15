@@ -27,9 +27,6 @@ if !MCUBOOT # These options are only relevant if we build MCUBOOT
 		default y
 
 	rsource "Kconfig.uds"
-
-	config MCUBOOT_SIGNATURE_KEY_FILE
-		default "bootloader/mcuboot/root-rsa-2048.pem"
 endif # !MCUBOOT
 
 config RETAINED_MEM
