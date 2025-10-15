@@ -19,6 +19,9 @@ LOG_MODULE_DECLARE(uds, CONFIG_UDS_LOG_LEVEL);
 
 #include <ardep/uds.h>
 #include <iso14229.h>
+#ifdef CONFIG_UDS_FILE_TRANSFER
+#include "upload_download_file_transfer.h"
+#endif
 
 static const struct device* const flash_controller =
     DEVICE_DT_GET_OR_NULL(DT_CHOSEN(zephyr_flash_controller));
