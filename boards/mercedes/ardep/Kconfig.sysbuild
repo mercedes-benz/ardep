@@ -1,0 +1,24 @@
+choice ARDEP_BOOT_LOGIC
+  prompt "Boot logic choices"
+  default BOOT_LOGIC_LEGACY
+
+  config BOOT_LOGIC_UDS_FIRMWARE_LOADER
+    bool "UDS Firmware Loader"
+
+  config BOOT_LOGIC_LEGACY
+    bool "Legacy Boot Logic"
+endchoice
+
+
+
+if BOOT_LOGIC_UDS_FIRMWARE_LOADER
+  choice MCUBOOT_MODE
+    default MCUBOOT_MODE_FIRMWARE_UPDATER
+  endchoice
+endif
+
+if BOOT_LOGIC_LEGACY || BOOT_LOGIC_UDS_FIRMWARE_LOADER
+  choice BOOTLOADER
+	  default BOOTLOADER_MCUBOOT
+  endchoice
+endif

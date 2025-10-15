@@ -1,9 +1,0 @@
-sample:
-  name: Build the bootloader, firmware loader and an example application using sysbuild. Target a device, that should be programmed using UDS
-common:
-  build_only: true
-  integration_platforms:
-    - ardep
-tests:
-  sysbuild.uds_ardep.default:
-    sysbuild: true

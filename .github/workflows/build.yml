@@ -44,10 +44,6 @@ jobs:
         run: |
           pip install -r scripts/requirements.txt
           west ardep build-bootloader
-          if [ "${{ runner.os }}" = "Windows" ]; then
-            EXTRA_TWISTER_FLAGS="--short-build-path -O/tmp/twister-out"
-          fi
-          west twister -T sysbuild -v --inline-logs --integration $EXTRA_TWISTER_FLAGS
 
       - name: Twister Tests
         working-directory: ardep

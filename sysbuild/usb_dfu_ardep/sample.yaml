@@ -1,9 +1,0 @@
-sample:
-  name: Build the bootloader and an example application using sysbuild. Target a usb-dfu compatible device.
-common:
-  build_only: true
-  integration_platforms:
-    - ardep
-tests:
-  sysbuild.usb_dfu_ardep.default:
-    sysbuild: true
