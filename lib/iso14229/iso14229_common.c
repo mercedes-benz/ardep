@@ -56,14 +56,12 @@ static void iso14229_zephyr_event_loop_tick(
     struct iso14229_zephyr_instance *inst) {
   struct can_frame frame_phys;
   struct can_frame frame_func;
-  int ret_phys = k_msgq_get(&inst->can_phys_msgq, &frame_phys, K_NO_WAIT);
-  int ret_func = k_msgq_get(&inst->can_func_msgq, &frame_func, K_NO_WAIT);
 
-  if (ret_phys == 0) {
+  while (k_msgq_get(&inst->can_phys_msgq, &frame_phys, K_NO_WAIT) == 0) {
     isotp_on_can_message(&inst->tp.phys_link, frame_phys.data, frame_phys.dlc);
   }
 
-  if (ret_func == 0) {
+  while (k_msgq_get(&inst->can_func_msgq, &frame_func, K_NO_WAIT) == 0) {
     isotp_on_can_message(&inst->tp.func_link, frame_func.data, frame_func.dlc);
   }
 

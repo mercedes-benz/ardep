@@ -222,7 +222,7 @@ static UDSErr_t uds_action_upload_download(struct uds_context* context,
   *consume_event = true;
 
   // reset state before start request, as timeout has no event
-  if (context->event == UDS_EVT_RequestTransferExit) {
+  if (context->event == UDS_EVT_RequestTransferExit) {  // todo:?
     LOG_WRN("Transfer Exit");
     int err = transfer_exit(context);
     if (err != UDS_OK && err != UDS_NRC_RequestSequenceError) {
