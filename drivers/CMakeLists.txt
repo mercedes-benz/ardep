@@ -5,4 +5,5 @@
 
 add_subdirectory(can)
 add_subdirectory(hv_shield)
+add_subdirectory(power_io_shield)
 add_subdirectory(lin)

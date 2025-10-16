@@ -1,4 +1,4 @@
-description: HV shield main node binding. Controls gains. Subnodes are for gpios, adcs and dacs
+description: HV shield gpio binding
 
 compatible: "hv-shield-gpio"
 

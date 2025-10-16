@@ -1,0 +1,20 @@
+/*
+ * Copyright (C) Frickly Systems GmbH
+ * Copyright (C) MBition GmbH
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <ardep/dt-bindings/power-io-shield.h>
+
+&i2c2 {
+	status = "okay";
+
+	power_io_shield0: power_io_shield0@20 {
+		compatible = "power-io-shield";
+		int-gpios = <&gpioe 2 GPIO_ACTIVE_LOW>, <&gpioe 5 GPIO_ACTIVE_LOW>;
+		reg = <0x20>;
+		gpio-controller;
+		#gpio-cells = <2>;
+	};
+};

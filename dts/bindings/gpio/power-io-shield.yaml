@@ -1,0 +1,18 @@
+description: Power IO shield gpio driver binding
+
+compatible: "power-io-shield"
+
+include: [gpio-controller.yaml, i2c-device.yaml]
+
+properties:
+  "#gpio-cells":
+    const: 2
+
+  int-gpios:
+    required: false
+    description: "GPIOs used for power io shield interrupts. Can be shared across multiple power io shields"
+    type: "phandle-array"
+
+gpio-cells:
+  - pin
+  - flags
