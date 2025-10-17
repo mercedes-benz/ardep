@@ -1,0 +1,23 @@
+From bd4e35a4b3a04dd4e07a1f750e5dc494d0e7da3a Mon Sep 17 00:00:00 2001
+From: Tim <tim.schrader@frickly.systems>
+Date: Thu, 28 Aug 2025 10:44:44 +0200
+Subject: [PATCH 1/2] chore: add zephyr module.yaml
+
+---
+ zephyr/module.yaml | 4 ++++
+ 1 file changed, 4 insertions(+)
+ create mode 100644 zephyr/module.yaml
+
+diff --git a/zephyr/module.yaml b/zephyr/module.yaml
+new file mode 100644
+index 0000000..672fcfc
+--- /dev/null
++++ b/zephyr/module.yaml
+@@ -0,0 +1,4 @@
++name: iso14229
++build:
++  cmake-ext: True
++  kconfig-ext: True
+-- 
+2.43.0
+

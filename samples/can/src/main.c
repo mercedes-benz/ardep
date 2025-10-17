@@ -112,10 +112,13 @@ int main(void) {
     return filter_id;
   }
 
-  LOG_INF("CAN example started\n");
+  LOG_INF("CAN example started");
 #if CONFIG_CAN_EXAMPLE_USE_CAN_FD
-  LOG_INF("Using CAN FD\n");
+  LOG_INF("Using CAN FD");
 #endif
+
+  LOG_INF("Sending via CAN-A: %s", can_dev_1->name);
+  LOG_INF("Receiving via CAN-B: %s", can_dev_2->name);
 
   while (true) {
     if (k_sem_take(&tx_queue_sem, K_MSEC(100)) == 0) {

@@ -1,0 +1,13 @@
+/ {
+	can_fake: can_fake {
+		compatible = "zephyr,fake-can";
+		status = "okay";
+	};
+	
+	chosen {
+		zephyr,canbus = &can_fake;
+	};
+	
+};
+
+/delete-node/ &can0;

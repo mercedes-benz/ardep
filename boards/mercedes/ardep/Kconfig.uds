@@ -6,10 +6,16 @@
 # enable UDS module per default
 
 config UDS
- 	default y
-config CAN
 	default y
-config ISOTP
+
+config ISO14229
+	default n # Disables minimal UDS support when UDS gets disabled
+
+choice STD_C
+	default STD_C11 # requirement for external iso14229 module
+endchoice
+
+config CAN
 	default y
 
 config FLASH
@@ -26,3 +32,4 @@ config IMG_ERASE_PROGRESSIVELY
 
 config REBOOT
     default y
+

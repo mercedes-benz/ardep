@@ -3,12 +3,22 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-module = CAN_ROUTER
-module-str = CAN Router
-source "subsys/logging/Kconfig.template.log_config"
+menuconfig CAN_ROUTER
+    bool "Can frame router"
+    depends on CAN
+    help
+        Route can frames from one can device to another using filters
 
-config CAN_ROUTER_INIT_PRIORITY
-  int
-  prompt "CAN Router Init priority"
-  default APPLICATION_INIT_PRIORITY
-  depends on CAN_ROUTER
+if CAN_ROUTER
+
+    module = CAN_ROUTER
+    module-str = CAN Router
+    source "subsys/logging/Kconfig.template.log_config"
+
+    config CAN_ROUTER_INIT_PRIORITY
+      int
+      prompt "CAN Router Init priority"
+      default APPLICATION_INIT_PRIORITY
+      depends on CAN_ROUTER
+
+endif # CAN_ROUTER

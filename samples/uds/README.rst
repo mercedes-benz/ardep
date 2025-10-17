@@ -3,9 +3,7 @@
 UDS Sample
 ##########
 
-This sample can be used to test the uds implementation draft.
-The UDS implementation does not support all the services yet, but it is a good starting point.
-The mainly supported use case is the firmware update.
+This sample can be used to test the uds implementation.
 
 Test with virtual CAN on posix
 ==============================
@@ -14,7 +12,7 @@ Test with virtual CAN on posix
 
     .. code-block:: bash
 
-        sudo ip link add dev vcan0 type vcan                                                                                            
+        sudo ip link add dev vcan0 type vcan
         sudo ip link set vcan0 mtu 72  
         sudo ip link set up vcan0
         sudo ip link property add dev vcan0 altname zcan0
@@ -34,7 +32,7 @@ Test with virtual CAN on posix
 
     .. code-block:: bash
 
-        python samples/uds/scripts/test.py
+        python samples/uds/client.py
 
 Test with board
 ===============
@@ -45,3 +43,9 @@ Test with board
 
         sudo ip link set can0 type can bitrate 500000
         sudo ip link set up can0
+
+#. Run test client with *can0* interface
+
+    .. code-block:: bash
+
+        python samples/uds/client.py --can can0
