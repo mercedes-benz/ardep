@@ -19,7 +19,7 @@ Then flash it using dfu-util:
 
 .. code-block:: bash
 
-  west ardep dfu
+  west flash
 
 
 LIN Frames

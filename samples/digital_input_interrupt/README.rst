@@ -23,7 +23,7 @@ The commands assume that you are in the root of the repo, not the workspace.
 
 Flash the app using dfu-util:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        west ardep dfu
+    west flash
     

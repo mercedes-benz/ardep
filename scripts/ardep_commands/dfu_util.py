@@ -57,6 +57,11 @@ Performs a firmware upgrade with the dfu-util tool.
         )
 
     def run(self, args: Namespace):
+        # Print deprecation warning in yellow
+        log.wrn(
+            "Using `west ardep dfu` is deprecated. Use the `west flash` command instead."
+        )
+
         bootloader_mode: bool = args.bootloader
         device: str = self.get_dfu_usb_device(args.device)
         build_dir: str = args.build_dir

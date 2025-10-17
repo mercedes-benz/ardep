@@ -47,6 +47,7 @@ class BuildBootloader:
             "--",
             f"-DEXTRA_CONF_FILE={extra_conf_file}",
             f"-DEXTRA_DTC_OVERLAY_FILE={extra_overlay_file}",
+            "-DBOARD_FLASH_RUNNER=jlink"
         ]
 
         log.inf(f"Building bootloader with: {' '.join(cmd)}\n\n")

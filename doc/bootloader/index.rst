@@ -50,7 +50,7 @@ It is helpful to see the Bootloader console output on ``UART-A`` for this.
 Entering Bootloader mode
 ========================
 
-To enter the bootloader mode, set the ``XXXXX`` Jumper to a HIGH/LOW state while power-cycling or pushing the Reset button.
+To enter the bootloader mode, pull the ``PE4`` pin (labeld *BOOT*) to a LOW (setting the jumper) state while power-cycling or pushing the Reset button.
 
 When the red led light up permanently, the board is in bootloader mode.
 
@@ -66,9 +66,5 @@ Upgrading the firmware
 ======================
 
 - Build the firmware you want to flash (assuming it is in the *build* directory)
-- Perform the upgrade with ``west ardep dfu --bootloader --build-dir build``
-- Wait for the upgrade to complete:
-    - If you can't see the bootloader console, wait >20 seconds.
-    - If you can see the output, wait for the *panic!* message.
-- Perform a manual power cycle. Your new firmware should be running now
-
+- Perform the upgrade with ``west flash``
+- Wait for the upgrade to complete
