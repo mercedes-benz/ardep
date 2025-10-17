@@ -3,7 +3,7 @@
  * Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
-*/
+ */
 
 // Note: this is a poc for using zephyr's isotp stack via lin. To use it this
 // driver translates CAN frames from isotp to lin and vice versa. As CAN can

@@ -7,5 +7,4 @@
 
 config BOARD_ARDEP
 	bool "Automotive Rapid Development Platform (ARDEP)"
-	depends on SOC_STM32G474XX
-
+	select SOC_STM32G474XX

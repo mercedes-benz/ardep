@@ -8,7 +8,7 @@
 &adc2 {
     pinctrl-0 = <&adc2_in2_A0 &adc2_in4_A1>;
     pinctrl-names = "default";
-    st,adc-clock-source = <SYNC>;
+    st,adc-clock-source = "SYNC";
     st,adc-prescaler = <4>;
     status = "okay";
 
@@ -39,7 +39,7 @@
 &adc3 {
     pinctrl-0 = <&adc3_in12_A2 &adc3_in5_A3>;
     pinctrl-names = "default";
-    st,adc-clock-source = <SYNC>;
+    st,adc-clock-source = "SYNC";
     st,adc-prescaler = <4>;
     status = "okay";
 
@@ -70,7 +70,7 @@
 &adc4 {
     pinctrl-0 = <&adc4_in4_A4 &adc4_in3_A5>;
     pinctrl-names = "default";
-    st,adc-clock-source = <SYNC>;
+    st,adc-clock-source = "SYNC";
     st,adc-prescaler = <4>;
     status = "okay";
 

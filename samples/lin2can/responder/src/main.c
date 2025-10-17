@@ -3,7 +3,7 @@
  * Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
-*/
+ */
 
 #include <zephyr/device.h>
 #include <zephyr/devicetree.h>
@@ -37,7 +37,7 @@ int main(void) {
   }
 
   struct can_filter filter = {
-    .flags = CAN_FILTER_DATA,
+    .flags = 0,
     .id = 0x180,
     .mask = CAN_STD_ID_MASK,
   };

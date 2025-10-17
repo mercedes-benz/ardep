@@ -14,13 +14,13 @@ Follow this guide to:
 - Set up your first workspace
 - Build and flash your first sample application
 
-The instructions here build on the `Zephyr RTOS guide <https://docs.zephyrproject.org/3.5.0/develop/getting_started/index.html>`_ focussing on the Ubuntu Linux Distribution and the ardep board. [1]_
+The instructions here build on the `Zephyr RTOS guide <https://docs.zephyrproject.org/4.2.0/develop/getting_started/index.html>`_ focussing on the Ubuntu Linux Distribution and the ardep board. [1]_
 
 
 Install dependencies
 *********************
 
-Follow the `Zephyr RTOS guide (section "Install dependencies") <https://docs.zephyrproject.org/3.5.0/develop/getting_started/index.html#install-dependencies>`_  to install all dependencies for the Zephyr RTOS.
+Follow the `Zephyr RTOS guide (section "Install dependencies") <https://docs.zephyrproject.org/4.2.0/develop/getting_started/index.html#install-dependencies>`_  to install all dependencies for the Zephyr RTOS.
 
 Install the additional dependencies for the ardep board:
 
@@ -33,7 +33,7 @@ Install the additional dependencies for the ardep board:
 Install the Zephyr SDK
 ****************************
 
-Follow `Zephyr's guide (section "Install Zephyr SDK") <https://docs.zephyrproject.org/3.5.0/develop/getting_started/index.html#install-the-zephyr-rtos-sdk>`_ .
+Follow `Zephyr's guide (section "Install Zephyr SDK") <https://docs.zephyrproject.org/4.2.0/develop/getting_started/index.html#install-the-zephyr-rtos-sdk>`_ .
 
 
 Set up your workspace
@@ -67,12 +67,6 @@ Since you will install some python packages, we recommend using a virtual enviro
         cd ardep
         west init -l --mf ./west.yml .
         west update
-        
-#. Export a `Zephyr CMake Package <https://docs.zephyrproject.org/3.5.0/build/zephyr_cmake_package.html#cmake-pkg>`_
-
-    .. code-block:: bash
-
-        west zephyr-export
         
 #. Install the required python dependencies:
     
@@ -109,4 +103,4 @@ Flash the app using dfu-util:
 
         west ardep dfu
 
-.. [1] Tested on Ubuntu 20.04, Zephyr SDK 0.16.5 and Zephyr RTOS 3.5.0
+.. [1] Tested on Ubuntu 24.04, Zephyr SDK 0.17.2 and Zephyr RTOS 4.2.0

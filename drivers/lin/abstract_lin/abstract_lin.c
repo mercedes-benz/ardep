@@ -3,7 +3,7 @@
  * Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
-*/
+ */
 
 #define DT_DRV_COMPAT virtual_abstract_lin
 #include <zephyr/device.h>

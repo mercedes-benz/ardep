@@ -3,7 +3,7 @@
  * Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
-*/
+ */
 
 #include <zephyr/device.h>
 #include <zephyr/devicetree.h>
@@ -24,7 +24,7 @@ static const struct can_router_entry_t entries[] = {
     .filter =
         {
           // catch all
-          .flags = CAN_FILTER_DATA,
+          .flags = 0,
           .id = 0,
           .mask = 0,
         },
@@ -35,7 +35,7 @@ static const struct can_router_entry_t entries[] = {
     .filter =
         {
           // catch all
-          .flags = CAN_FILTER_DATA,
+          .flags = 0,
           .id = 0,
           .mask = 0,
         },

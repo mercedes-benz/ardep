@@ -3,7 +3,7 @@
  * Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
-*/
+ */
 
 #include <zephyr/device.h>
 #include <zephyr/devicetree.h>
@@ -97,7 +97,7 @@ int send_state_update_frame(const struct device *can_dev) {
 }
 
 const struct can_filter receive_config_filter = {
-  .flags = CAN_FILTER_DATA,
+  .flags = 0,
   .id = GPIO_CONFIG_FRAME_ID,
   .mask = CAN_STD_ID_MASK,
 };
@@ -123,7 +123,7 @@ void configure_gpios(struct k_work *item) {
 }
 
 const struct can_filter receive_write_filter = {
-  .flags = CAN_FILTER_DATA,
+  .flags = 0,
   .id = GPIO_WRITE_FRAME_ID,
   .mask = CAN_STD_ID_MASK,
 };

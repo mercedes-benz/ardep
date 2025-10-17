@@ -3,7 +3,7 @@
  * Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
-*/
+ */
 
 #ifndef ARDEP_INCLUDE_DRIVERS_ABSTRACT_LIN_SCHEDULER_H_
 #define ARDEP_INCLUDE_DRIVERS_ABSTRACT_LIN_SCHEDULER_H_

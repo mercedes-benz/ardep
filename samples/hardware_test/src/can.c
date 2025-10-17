@@ -5,9 +5,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "zephyr/drivers/can.h"
 #include "zephyr/device.h"
 #include "zephyr/devicetree.h"
+#include "zephyr/drivers/can.h"
 #include "zephyr/logging/log.h"
 #include "zephyr/sys/printk.h"
 
@@ -16,7 +16,7 @@
 #define LOG_MODULE_NAME sut
 LOG_MODULE_DECLARE(LOG_MODULE_NAME, CONFIG_APP_LOG_LEVEL);
 
-#define DEVICE_DT_BY_PROP_IDX(node_id, prop, idx)                              \
+#define DEVICE_DT_BY_PROP_IDX(node_id, prop, idx) \
   DEVICE_DT_GET(DT_PHANDLE_BY_IDX(node_id, prop, idx))
 
 #define ZEPHYR_USER_NODE DT_PATH(zephyr_user)
@@ -25,7 +25,7 @@ static const struct device *const can_devices[] = {DT_FOREACH_PROP_ELEM_SEP(
     ZEPHYR_USER_NODE, cans, DEVICE_DT_BY_PROP_IDX, (, ))};
 
 #define CAN_CREATE_FUNCTIONS_BY_IDX(node_id, prop, idx)                        \
-  static void init_can_##idx() {                                                      \
+  static void init_can_##idx() {                                               \
     const struct device *dev = can_devices[idx];                               \
     int err;                                                                   \
                                                                                \
@@ -41,7 +41,7 @@ static const struct device *const can_devices[] = {DT_FOREACH_PROP_ELEM_SEP(
     }                                                                          \
   }                                                                            \
                                                                                \
-  static void send_frame_##idx() {                                                    \
+  static void send_frame_##idx() {                                             \
     const struct device *dev = can_devices[idx];                               \
     struct can_frame frame = {0};                                              \
                                                                                \
@@ -57,7 +57,7 @@ static const struct device *const can_devices[] = {DT_FOREACH_PROP_ELEM_SEP(
     }                                                                          \
   }                                                                            \
                                                                                \
-  static void stop_can_##idx() {                                                      \
+  static void stop_can_##idx() {                                               \
     const struct device *dev = can_devices[idx];                               \
     can_stop(dev);                                                             \
   }
