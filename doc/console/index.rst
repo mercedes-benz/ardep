@@ -11,15 +11,28 @@ Fimrware Output
 ===============
 
 Per default, every application build for the *ardep* board will include a cdc-acm driver.
-This means, when connecting the board via usb to your pc, a new serial device should be visible in your system (usually under */dev/ttyACM0* or similar).
+This means, when connecting the board via usb to your pc, a new serial device should be visible in your system.
 You can use this device to communicate with the board. The default baudrate is 115200.
 
-For example, you can use the *screen* command to connect to the board:
+.. tabs::
 
-.. code-block:: bash
+    .. tab:: Linux
+    
+        The serial device is usually displayed as */dev/ttyACMx*, */dev/ttyUSBx* or similar.
 
-    screen /dev/ttyACM0 115200
+        Use a serial terminal emulator (e.g. *screen*, *minicom*, *picocom*) to connect to the device.
+        
+        .. code-block:: bash
 
+            screen /dev/ttyACM0 115200
+
+    .. tab:: Windows
+
+        The serial device is usually displayed in your *Windows Device Manager* under *Ports (COM & LPT)* e.g. as *COM5*.
+
+        Use *putty* or a similar terminal emulator to connect to the device.
+
+        Connect to the COM port by selecting *Serial* in the *Connection type* section and entering the COM port number (e.g. *COM5*) in the *Serial line* field, setting the speed to 115200.
 
 Bootloader Output
 =================
