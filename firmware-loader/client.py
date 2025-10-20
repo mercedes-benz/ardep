@@ -113,7 +113,7 @@ def firmware_download(client: Client, firmware_path: str):
         # dfi=udsoncan.DataFormatIdentifier.from_byte(0x00),
     )
 
-    block_size = 512
+    block_size = int(1.5*1024)
     blocks = [
         firmware_data[i : i + block_size]
         for i in range(0, len(firmware_data), block_size)
