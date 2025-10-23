@@ -11,6 +11,7 @@ LOG_MODULE_DECLARE(uds, CONFIG_UDS_LOG_LEVEL);
 #include "uds.h"
 
 #include <zephyr/kernel.h>
+#include <zephyr/logging/log_ctrl.h>
 #include <zephyr/sys/reboot.h>
 #include <zephyr/sys/util.h>
 
@@ -90,8 +91,8 @@ UDSErr_t uds_check_execute_scheduled_reset(
 UDSErr_t uds_action_execute_scheduled_reset(struct uds_context* const context,
                                             bool* consume_event) {
   LOG_INF("Executing scheduled hard reset now");
-  // give logging a chance to be processed
-  k_msleep(1);
+  log_flush();
+  k_msleep(100);
   sys_reboot(SYS_REBOOT_COLD);
   LOG_ERR("Error rebooting from ECU hard reset!");
   return UDS_NRC_ConditionsNotCorrect;
