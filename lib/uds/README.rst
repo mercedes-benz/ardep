@@ -123,6 +123,106 @@ When a diagnostic request arrives:
 
 4. If no handler processes the event, a negative response is sent to the client
 
+Example
+-------
+
+The following example demonstrates a minimal setup of an UDS server that registers a single Data Identifier handler.
+
+.. code-block:: c
+
+    #include <zephyr/logging/log.h>
+    LOG_MODULE_REGISTER(uds_sample, LOG_LEVEL_DBG);
+
+    #include <zephyr/drivers/can.h>
+
+    #include <ardep/iso14229.h>
+    #include <ardep/uds.h>
+    
+    static const struct device *can_dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_canbus));
+
+    struct uds_instance_t instance;
+
+    // Define a data identifier and its associated data
+    const uint16_t primitive_type_id = 0x50;
+    uint16_t primitive_type = 5;
+
+    UDSErr_t read_data_by_id_check(const struct uds_context *const context,
+                                   bool *apply_action) {
+        *apply_action = true;
+        return UDS_OK;
+    }
+
+    UDSErr_t read_data_by_id_action(struct uds_context *const context,
+                                    bool *consume_event) {
+        UDSRDBIArgs_t *args = context->arg;
+
+        *consume_event = true;
+
+        // Convert to big-endian for network transmission
+        uint16_t t = sys_cpu_to_be16(*(uint16_t *)context->registration->data_identifier.data);
+        return args->copy(context->server, t, sizeof(t));
+    }
+
+    UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(
+        &instance,
+        primitive_type_id,
+        &primitive_type,
+        read_data_by_id_check,
+        read_data_by_id_action,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL);
+
+
+    int main(void) {
+        int err = 0;
+
+        // Configure ISO-TP addressing
+        UDSISOTpCConfig_t cfg = {
+            .source_addr = 0x7E8,
+            .target_addr = 0x7E0,
+
+            .source_addr_func = 0x7DF,
+            .target_addr_func = UDS_TP_NOOP_ADDR,
+        };
+
+        uds_init(&instance, &cfg, can_dev, NULL);
+
+        if (!device_is_ready(can_dev)) {
+            LOG_INF("CAN device not ready");
+            return -ENODEV;
+        }
+
+        err = can_set_mode(can_dev, CAN_MODE_NORMAL);
+        if (err) {
+            LOG_ERR("Failed to set CAN mode: %d", err);
+            return err;
+        }
+
+        err = can_start(can_dev);
+        if (err) {
+            LOG_ERR("Failed to start CAN device: %d", err);
+            return err;
+        }
+
+        instance.iso14229.thread_start(&instance.iso14229);
+    }
+
+For more examples on how to setup the different UDS services with macros, see the code of the :ref:`uds-sample` and the documentation on the Macros in ``uds_macro.h``.
+
+The ``UDSISOTpCConfig_t`` allows to describe the addressing scheme used on the CAN bus:
+    
+- ``source_addr``: The physical address the ECU listens to for "physical" requests (the address of the ECU). ``0x7E8`` in the example above.
+
+- ``target_addr``: The physical address the ECU uses in "physical" responses (the address of the Tester). Used for ECU → tester responses under physical addressing. ``0x7E0`` in the example above.
+      
+- ``source_addr_func``: The functional/group request ID the ECU listens to for "functional" requests. ``0x7DF`` in the example above.
+      
+- ``target_addr_func``: The ECU uses this address in "functional" responses. Usually set to ``UDS_TP_NOOP_ADDR`` as functional requests do not expect a response.
+
+
 API Reference
 *************
 
