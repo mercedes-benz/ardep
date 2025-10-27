@@ -27,3 +27,7 @@ manifest:
     - name: iso14229
       remote: frickly-systems
       revision: zephyr
+    - name: cannectivity
+      url: https://github.com/CANnectivity/cannectivity.git
+      revision: v1.2.1
+      path: modules/lib/cannectivity
