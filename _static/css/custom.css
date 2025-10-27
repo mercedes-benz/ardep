@@ -1,0 +1,15 @@
+.red {
+    color: red;
+    font-weight: bold;
+}
+
+.smallfont {
+    font-size: small;
+}
+
+/* Make the HTML body stretch to 1600px max width */
+div.document {
+    max-width: 1600px;
+    width: auto;
+    margin: 30px auto 0 30px;
+}
