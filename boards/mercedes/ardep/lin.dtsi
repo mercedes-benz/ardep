@@ -28,10 +28,10 @@ lin_uart: &usart1 {
 	};
 };
 
-/ {
-	lin-enable-gpio {
-		compatible = "can-termination-gpio";
-		enable-gpios = <&gpiod 7 GPIO_ACTIVE_HIGH>;
-		enable-on-boot;
+&gpiod {
+	lin_enable_hog: lin-enable-hog {
+		gpio-hog;
+		gpios = <7 GPIO_ACTIVE_HIGH>;
+		output-high;
 	};
 };

@@ -12,3 +12,11 @@ For ``west`` commands other than ``ardep`` refer to `Zephyrs documentation on we
 See ``west ardep --help`` for a list of all existing commands.
 
 See ``west ardep {subcommand} --help`` for more information on the individual command.
+
+
+.. note::
+
+    If you have an **Ardep board v2** or later, you won't need the commands:
+
+    - ``west ardep create-udev-rule``
+    - ``dfu``

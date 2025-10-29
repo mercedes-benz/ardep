@@ -5,11 +5,11 @@
 	status = "okay";
 };
 
-/ {
-	lin-commander-gpio {
-		compatible = "can-termination-gpio";
-		enable-gpios = <&gpiob 9 GPIO_ACTIVE_LOW>;
-		enable-on-boot;
+&gpiob {
+	lin_commander_enable_pb9: lin_commander_enable_pb9 {
+		gpio-hog;
+		gpios = <9 GPIO_ACTIVE_LOW>;
+		output-low;
 	};
 };
 
@@ -36,11 +36,10 @@ lin_uart: &usart2 {
 	};
 };
 
-
-/ {
-	lin-commander-gpio {
-		compatible = "can-termination-gpio";
-		enable-gpios = <&gpioa 10 GPIO_ACTIVE_HIGH>;
-		enable-on-boot;
+&gpioa {
+	lin_commander_enable_pa10: lin_commander_enable_pa10 {
+		gpio-hog;
+		gpios = <10 GPIO_ACTIVE_HIGH>;
+		output-high;
 	};
 };

@@ -14,14 +14,8 @@ config SPI_STM32_INTERRUPT
 	default y
 	depends on SPI
 
-config CAN_TERMINATION_GPIO
-	default y if CAN
-
 config CAN_MAX_FILTER
 	default 8
-
-rsource "Kconfig.usb"
-rsource "Kconfig.usb_dfu"
 
 if !MCUBOOT
 	# enable building for image slots

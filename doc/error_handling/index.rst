@@ -3,9 +3,15 @@
 Error Handling
 ##############
 
+
 .. contents::
    :local:
    :depth: 2
+
+.. note::
+
+    The following intructions only apply to Ardep v1 since later versions have an :ref:`on_board_debugger` and the bootloader logs are accessible via the forwarded UART-A device.
+    Additionally, you can flash the bootloader and the firmware via ``west flash`` using the on board debugger.
 
 When encountering an error, you have several options, depending on the severity of the error.
 Generally, it is helpful to see if your application gets started from the bootloader.

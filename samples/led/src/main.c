@@ -61,6 +61,7 @@ int configure_leds() {
 
 // Sets the logic level for each LED port according to the state
 void toggle_leds(bool red_is_on) {
+  LOG_INF("Toggle LED's");
   gpio_pin_set_dt(&red_led, red_is_on);
   gpio_pin_set_dt(&green_led, !red_is_on);
 }

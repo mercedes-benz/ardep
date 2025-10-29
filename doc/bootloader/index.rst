@@ -13,26 +13,50 @@ Building the bootloader
 The bootloader can be build with:
 
 .. code-block:: bash
-   
+
     west ardep build-bootloader
 
 The first line of the output gives you the expanded `west build` command.
+
+If you want to build for a specific board version, you can pass the `--board-version` argument:
+
+.. code-block:: bash
+
+    west ardep build-bootloader --board-version 1.0.0
 
 
 Flashing the bootloader
 +++++++++++++++++++++++
 
-The bootloader is flashed with an external debug probe (e.g. J-Link) using the `west flash` command.
 
-For this connect the SWD Pins of the ARDEP board to the debug probe an run:
+.. tabs::
 
-.. code-block:: bash
-   
-    west flash
+    .. tab:: Ardep v2.0.0 and later
 
-The Pinout of the SWD connector is printed on the boards backside.
+        The bootloader is flashed via the on-board debugger using the `west flash` command.
 
-See the `board.cmake` file under `boards/arm/ardep` for more info about supported debuggers.
+        Just run:
+
+        .. code-block:: bash
+
+            west flash
+
+        This will flash the bootloader to the board.
+        
+
+    .. tab:: Ardep v1.0.0
+
+        The bootloader is flashed with an external debug probe (e.g. J-Link) using the `west flash` command.
+
+        For this connect the SWD Pins of the ARDEP board to the debug probe an run:
+
+        .. code-block:: bash
+           
+            west flash -r {runner}
+
+        The Pinout of the SWD connector is printed on the boards backside.
+
+        See the `board.cmake` file under `boards/arm/ardep` for more info about supported debuggers/runners.
 
 
 .. _bootloader_mode:
@@ -40,6 +64,12 @@ See the `board.cmake` file under `boards/arm/ardep` for more info about supporte
 Bootloader mode
 +++++++++++++++
 
+
+.. note::
+
+    This section only applies to Ardep v1 since later versions have an :ref:`on_board_debugger`.
+
+    This means you can just build and flash the bootloader like any other firmware.
 
 In this mode, the ardep board does not load any firmware and waits for a firmware upgrade via the ``dfu-util`` tool.
 This is handy if your firmware is broken and you can't update it from there.
@@ -61,6 +91,11 @@ On ``UART-A`` you will see the following output:
     *** Booting Zephyr OS build zephyr-vx.y.z ***
     I: Starting bootloader
     I: Waiting for USB DFU
+    
+
+.. note::
+
+    ``UART-A`` is the output that is forwarded by the on-board debugger.
 
 Upgrading the firmware
 ======================
