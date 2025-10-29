@@ -15,4 +15,10 @@ if MODULE_ISO14229_EXTERNAL
   module-str = External ISO14229 Library
   source "subsys/logging/Kconfig.template.log_config"
 
+  config ISO_TP_DEFAULT_BLOCK_SIZE
+    int "Default block size for consecutive frames"
+    default 8
+    help
+      Number of consecutive frames the driver/application can buffer before a flow control message is sent
+
 endif

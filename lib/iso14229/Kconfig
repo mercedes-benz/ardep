@@ -40,4 +40,7 @@ if ISO14229
           messages and events are handled. A lower value means lower latency,
           but higher CPU usage.
 
+    config ISO_TP_DEFAULT_BLOCK_SIZE
+        default 22 # See msgq size in include/ardep/iso14229.h
+
 endif # ISO14229

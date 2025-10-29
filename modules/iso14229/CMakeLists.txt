@@ -12,5 +12,5 @@ if(CONFIG_MODULE_ISO14229_EXTERNAL)
 
   zephyr_include_directories(include)
   zephyr_include_directories(${ZEPHYR_ISO14229_MODULE_DIR})
-  zephyr_compile_definitions(ISO_TP_USER_SEND_CAN_ARG UDS_CUSTOM_MILLIS=1 UDS_TP_ISOTP_C)
+  zephyr_compile_definitions(ISO_TP_USER_SEND_CAN_ARG UDS_CUSTOM_MILLIS=1 UDS_TP_ISOTP_C ISO_TP_DEFAULT_BLOCK_SIZE=${CONFIG_ISO_TP_DEFAULT_BLOCK_SIZE})
 endif()
