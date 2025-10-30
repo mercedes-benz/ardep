@@ -19,7 +19,6 @@ from argparse import ArgumentParser, Namespace
 
 import isotp
 import udsoncan
-from udsoncan import Baudrate
 from udsoncan.client import Client, MemoryLocation
 from udsoncan.connections import IsoTPSocketConnection
 from udsoncan.exceptions import (
@@ -27,7 +26,7 @@ from udsoncan.exceptions import (
 )
 from udsoncan.services import DiagnosticSessionControl, ECUReset
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
-import pathlib, binascii
+import pathlib
 
 
 def print_headline(text: str, suppress_trailing_newline: bool = False):
@@ -571,6 +570,7 @@ def security_access(client: Client):
             indent=2,
         )
         return
+    # pylint: disable=broad-except
     except Exception as e:
         print_indented(f"Unexpected error during security access: {e}", indent=2)
         return
@@ -587,13 +587,14 @@ def security_access(client: Client):
         print_indented(
             f"Still denied: {e.response.code_name} (0x{e.response.code:02X})", indent=2
         )
+    # pylint: disable=broad-except
     except Exception as e:
         print_indented(f"Unexpected error: {e}", indent=2)
 
     print_indented("Security access demonstration completed.", indent=2)
 
 
-def security_algorithm(level: int, seed: bytes, params: Any) -> bytes:
+def security_algorithm(_level: int, seed: bytes, _params: Any) -> bytes:
     return bytes(~b & 0xFF for b in seed)
 
 

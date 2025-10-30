@@ -8,9 +8,6 @@
 #include "zephyr/devicetree.h"
 #include "zephyr/drivers/gpio.h"
 #include "zephyr/logging/log.h"
-#include "zephyr/sys/printk.h"
-
-#include <stdio.h>
 
 #include <zephyr/kernel.h>
 
@@ -40,17 +37,17 @@ static void execute_test() {
 
     // wait for pin to get active
     while (gpio_pin_get(gpios[i].port, gpios[i].pin) == 0) {
-      k_msleep(1);
+      k_msleep(CONFIG_GPIO_PIN_CHECK_DELAY_MS);
 
-      // timeout after 600ms
-      if (k_uptime_get_32() - start > 600) {
+      // timeout after configured timeout
+      if (k_uptime_get_32() - start > CONFIG_GPIO_PIN_TIMEOUT_MS) {
         LOG_ERR("pin %d of device %s did not get active", gpios[i].pin,
                 gpios[i].port->name);
         break;
       }
     }
 
-    k_msleep(3);
+    k_msleep(CONFIG_GPIO_PIN_ACTIVE_DELAY_MS);
 
     // validate that all other pins are inactive
     for (int j = 0; j < ARRAY_SIZE(gpios); j++) {
@@ -67,7 +64,9 @@ static void execute_test() {
 }
 
 void gpio_test(void) {
-  k_msleep(100);
+  k_msleep(CONFIG_GPIO_PRE_TEST_DELAY_MS);
   configure_gpios();
   execute_test();
+
+  k_msleep(CONFIG_POST_TEST_DELAY_MS);
 }

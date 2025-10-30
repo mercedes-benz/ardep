@@ -9,6 +9,7 @@ from serial import Serial
 import logging
 
 from datetime import datetime
+from idle import IdleCheckError, IdleChecker
 from uart import UartTester
 from can import CanTester
 from hardware_info import HardwareInformationFetcher
@@ -27,6 +28,7 @@ class Tester:
     uart: UartTester = None
     can: CanTester = None
     lin: LinTester = None
+    idle: IdleChecker = None
 
     def __init__(self, port1: Serial, port2: Serial):
         self.port1 = port1
@@ -36,6 +38,7 @@ class Tester:
         self.uart = UartTester(port1, port2)
         self.can = CanTester(port1, port2)
         self.lin = LinTester(port1, port2)
+        self.idle = IdleChecker(port1, port2)
 
     def has_errors(self) -> bool:
         return (
@@ -46,6 +49,7 @@ class Tester:
         )
 
     def run_tests(self):
+        self.idle.ensure_idle()
         self.hardware_info.fetch()
         self.lin.test()
         self.uart.test()
@@ -111,7 +115,11 @@ def clear_serial_buffer(serial_port: Serial):
 
 
 def main():
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format="%(asctime)s.%(msecs)03d %(levelname)s %(name)s: %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+    )
 
     port1, port2 = parse_args()
 
@@ -121,7 +129,12 @@ def main():
             clear_serial_buffer(serial_port2)
 
             tester = Tester(serial_port1, serial_port2)
-            tester.run_tests()
+            try:
+                tester.run_tests()
+            except IdleCheckError as idle_error:
+                logger.error("Idle check failed: %s", idle_error)
+                print(f"Idle check failed: {idle_error}")
+                sys.exit(1)
 
             results = tester.serialize_evaluation_results()
             logs = tester.serialize_logs()

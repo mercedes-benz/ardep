@@ -10,3 +10,58 @@ endmenu
 module = APP
 module-str = APP
 source "subsys/logging/Kconfig.template.log_config"
+
+config POST_TEST_DELAY_MS
+    int "Post-test delay in milliseconds"
+    default 300
+    help
+      Delay after tests are finished and before the device is stopped (if applicable).
+
+config LIN_TEST_DURATION_MS
+    int "LIN test duration in milliseconds"
+    default 5000
+    help
+      Duration for which the LIN tests will run.
+
+config CAN_TEST_DURATION_MS
+    int "CAN test duration in milliseconds"
+    default 5000
+    help
+      Duration for which the CAN tests will run.
+
+config UART_PRE_TEST_DELAY_MS
+    int "UART pre-test delay in milliseconds"
+    default 500
+    help
+      Delay before sending UART characters.
+
+config UART_CHAR_DELAY_MS
+    int "UART character delay in milliseconds"
+    default 5
+    help
+      Delay between sending individual characters.
+
+config GPIO_PRE_TEST_DELAY_MS
+    int "GPIO pre-test delay in milliseconds"
+    default 100
+    help
+      Delay before starting GPIO tests.
+
+config GPIO_PIN_CHECK_DELAY_MS
+    int "GPIO pin check delay in milliseconds"
+    default 1
+    help
+      Delay between GPIO pin state checks.
+
+config GPIO_PIN_ACTIVE_DELAY_MS
+    int "GPIO pin active delay in milliseconds"
+    default 3
+    help
+      Delay after pin becomes active before validation.
+
+config GPIO_PIN_TIMEOUT_MS
+    int "GPIO pin timeout in milliseconds"
+    default 600
+    help
+      Timeout for waiting for GPIO pin to become active.
+

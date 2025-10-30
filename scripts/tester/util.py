@@ -3,7 +3,7 @@
 import logging
 from multiprocessing import Manager, Process
 from serial import Serial
-from serial_message import SerialMessage
+from serial_message import BootBannerFound, SerialMessage
 
 log = logging.getLogger(__name__ + ".util")
 
@@ -88,16 +88,27 @@ def execute_test(
             if line == start_message:
                 continue
             message = SerialMessage(line)
+        except BootBannerFound as bbf:
+            log.info(
+                'Boot banner found on serial %s: "%s"',
+                serial.port,
+                bbf.banner,
+            )
+            continue
         except Exception as e:
             log.error(
-                'Error on test with start message: "%s" and serial %s', start_message, serial
+                'Error on test with start message: "%s" and serial %s',
+                start_message,
+                serial,
             )
             log.error("Error parsing message %s Error: %s", line, e)
             raise
         messages.append(message)
         if message.payload == stop_message:
             log.debug(
-                'finished reading from %s. Received stop message "%s"', serial.port, stop_message
+                'finished reading from %s. Received stop message "%s"',
+                serial.port,
+                stop_message,
             )
             break
 
