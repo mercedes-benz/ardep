@@ -424,7 +424,7 @@
  * 
  * @param _instance Pointer to associated the UDS server instance
  * @param _data_id The data identifier to register the handler for
- * @param _data_ptr Custom context oder data the handle the event
+ * @param _data_ptr Custom context or data to handle the event
  * @param _read_check Check if the `_read` action should be executed
  * @param _read Execute a read for the event
  * @param _write_check Check if the `_write` action should be executed
