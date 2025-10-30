@@ -132,6 +132,13 @@ UDSErr_t erase_memory_routine_action(struct uds_context *const context,
 
   *consume_event = true;
 
+  // only support flash erase for now
+  if (args->id != 0xFF00) {
+    LOG_WRN("Unsupported routine ID: 0x%04x", args->id);
+    *consume_event = false;
+    return UDS_NRC_RequestOutOfRange;
+  }
+
   switch (args->ctrlType) {
     case UDS_ROUTINE_CONTROL__START_ROUTINE: {
       k_mutex_lock(status->mutex, K_FOREVER);
