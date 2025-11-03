@@ -1,9 +1,10 @@
 /*
- * Copyright (C) Frickly Systems GmbH
- * Copyright (C) MBition GmbH
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
  */
+
 #include "zephyr/logging/log.h"
 #include "zephyr/sys/slist.h"
 LOG_MODULE_REGISTER(uds_test, CONFIG_UDS_LOG_LEVEL);

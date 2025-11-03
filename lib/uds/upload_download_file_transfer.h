@@ -1,3 +1,10 @@
+/*
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 #ifndef UDS_UPLOAD_DOWNLOAD_FILE_TRANSFER_H
 #define UDS_UPLOAD_DOWNLOAD_FILE_TRANSFER_H
 

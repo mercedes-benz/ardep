@@ -1,4 +1,5 @@
-# Copyright (C) MBition GmbH
+# SPDX-FileCopyrightText: Copyright (C) MBition GmbH
+# SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
 #
 # SPDX-License-Identifier: Apache-2.0
 

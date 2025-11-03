@@ -1,4 +1,10 @@
 #!/bin/env python3
+#
+# SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+# SPDX-FileCopyrightText: Copyright (C) MBition GmbH
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 # pylint: disable=import-error
 # pylint: disable=no-name-in-module
 

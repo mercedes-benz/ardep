@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2020 Libre Solar Technologies GmbH
- * Copyright (C) Frickly Systems GmbH
- * Copyright (C) MBition GmbH
+ * SPDX-FileCopyrightText: Copyright (c) 2020 Libre Solar Technologies GmbH
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -25,7 +25,7 @@
 #define DAC_RESOLUTION 0
 #endif
 
-static const struct device *const dac_dev = DEVICE_DT_GET(DAC_NODE);
+static const struct device* const dac_dev = DEVICE_DT_GET(DAC_NODE);
 
 static const struct dac_channel_cfg dac_ch_cfg = {
   .channel_id = DAC_CHANNEL_ID,

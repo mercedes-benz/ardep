@@ -1,5 +1,10 @@
-
+// SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+// SPDX-FileCopyrightText: Copyright (C) MBition GmbH
+//
+// SPDX-License-Identifier: Apache-2.0
+//
 // set the bus speed to 500kbit/s and the data speed to 2Mbit/s
+
 can_a: &fdcan1 {
     bitrate = <500000>;
     bitrate-data = <2000000>;

@@ -1,3 +1,10 @@
+/*
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 #define DT_DRV_COMPAT hv_shield_dac
 #include <zephyr/device.h>
 #include <zephyr/devicetree.h>
