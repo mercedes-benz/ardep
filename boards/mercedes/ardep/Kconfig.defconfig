@@ -26,8 +26,8 @@ if !MCUBOOT # These options are only relevant if we build MCUBOOT
 	config FLASH_MAP
 		default y
 
-	# config MCUBOOT_SIGNATURE_KEY_FILE
-	# 	default "bootloader/mcuboot/root-rsa-2048.pem"
+	config MCUBOOT_SIGNATURE_KEY_FILE
+		default "bootloader/mcuboot/root-rsa-2048.pem"
 	rsource "Kconfig.uds"
 endif # !MCUBOOT
 
