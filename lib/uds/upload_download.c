@@ -246,9 +246,11 @@ static UDSErr_t uds_action_upload_download(struct uds_context* context,
       return start_upload(context);
       break;
 
-#ifdef CONFIG_UDS_FILE_TRANSFER
     case UDS_EVT_RequestFileTransfer:
+#ifdef CONFIG_UDS_FILE_TRANSFER
       return uds_file_transfer_request(context);
+#else
+      return UDS_NRC_ServiceNotSupported;
 #endif
 
     case UDS_EVT_TransferData:
