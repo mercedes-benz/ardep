@@ -25,5 +25,3 @@ if BOOT_LOGIC_UDS_FIRMWARE_LOADER
     default MCUBOOT_MODE_FIRMWARE_UPDATER
   endchoice
 endif
-
-
