@@ -10,12 +10,11 @@
 #include "iso14229.h"
 #include "zephyr/ztest_assert.h"
 
+#include <errno.h>
+#include <string.h>
+
 #include <zephyr/drivers/flash.h>
 #include <zephyr/fs/fs.h>
-
-#include <string.h>
-#include <errno.h>
-
 #include <zephyr/ztest.h>
 
 #define FLASH_BASE_ADDRESS DT_REG_ADDR(DT_CHOSEN(zephyr_flash_controller))
@@ -26,15 +25,16 @@
 #define STORAGE_BASE_ADDRESS (FLASH_BASE_ADDRESS + STORAGE_PARTITION_OFFSET)
 
 const struct device *const flash_controller =
-  DEVICE_DT_GET_OR_NULL(DT_CHOSEN(zephyr_flash_controller));
+    DEVICE_DT_GET_OR_NULL(DT_CHOSEN(zephyr_flash_controller));
 
 #define UDS_TEST_FS_MOUNT_POINT "/lfs"
 
-ZTEST_F(lib_uds, test_0x34_0x38_upload_download_request_download_fail_on_size_0) {
+ZTEST_F(lib_uds,
+        test_0x34_0x38_upload_download_request_download_fail_on_size_0) {
   struct uds_instance_t *instance = fixture->instance;
 
   UDSRequestDownloadArgs_t args = {
-  .addr = (void*)STORAGE_BASE_ADDRESS,
+    .addr = (void *)STORAGE_BASE_ADDRESS,
     .size = 0,
     .dataFormatIdentifier = 0x00,
   };
@@ -43,11 +43,13 @@ ZTEST_F(lib_uds, test_0x34_0x38_upload_download_request_download_fail_on_size_0)
   zassert_equal(ret, UDS_NRC_RequestOutOfRange);
 }
 
-ZTEST_F(lib_uds, test_0x34_0x38_upload_download_request_download_fail_on_format_identifier_not_0) {
+ZTEST_F(
+    lib_uds,
+    test_0x34_0x38_upload_download_request_download_fail_on_format_identifier_not_0) {
   struct uds_instance_t *instance = fixture->instance;
 
   UDSRequestDownloadArgs_t args = {
-  .addr = (void*)STORAGE_BASE_ADDRESS,
+    .addr = (void *)STORAGE_BASE_ADDRESS,
     .size = 128,
     .dataFormatIdentifier = 0x01,
   };
@@ -57,7 +59,8 @@ ZTEST_F(lib_uds, test_0x34_0x38_upload_download_request_download_fail_on_format_
 }
 
 static void clear_storage_partition(void) {
-  int ret = flash_erase(flash_controller, STORAGE_PARTITION_OFFSET, STORAGE_PARTITION_SIZE);
+  int ret = flash_erase(flash_controller, STORAGE_PARTITION_OFFSET,
+                        STORAGE_PARTITION_SIZE);
   zassert_equal(ret, 0);
 }
 
@@ -67,17 +70,19 @@ static void fill_storage_with_test_pattern(void) {
   uint8_t buf[STORAGE_PARTITION_SIZE];
 
   for (size_t i = 0; i < sizeof(buf); i++) {
-    buf[i] = (uint8_t)i; // some test pattern
+    buf[i] = (uint8_t)i;  // some test pattern
   }
 
-  int ret = flash_write(flash_controller, STORAGE_PARTITION_OFFSET, buf, sizeof(buf));
+  int ret =
+      flash_write(flash_controller, STORAGE_PARTITION_OFFSET, buf, sizeof(buf));
   zassert_equal(ret, 0);
 }
 
 static void assert_storage_is_erased(void) {
   uint8_t buf[STORAGE_PARTITION_SIZE];
 
-  int ret = flash_read(flash_controller, STORAGE_PARTITION_OFFSET, buf, sizeof(buf));
+  int ret =
+      flash_read(flash_controller, STORAGE_PARTITION_OFFSET, buf, sizeof(buf));
   zassert_equal(ret, 0);
 
   uint8_t erased_pattern = 0xFF;
@@ -92,8 +97,8 @@ ZTEST_F(lib_uds, test_0x34_0x38_upload_download_request_download_success) {
   struct uds_instance_t *instance = fixture->instance;
 
   UDSRequestDownloadArgs_t args = {
-  .addr = (void*)STORAGE_BASE_ADDRESS,
-  .size = STORAGE_PARTITION_SIZE,
+    .addr = (void *)STORAGE_BASE_ADDRESS,
+    .size = STORAGE_PARTITION_SIZE,
     .dataFormatIdentifier = 0x00,
   };
 
@@ -107,8 +112,8 @@ ZTEST_F(lib_uds, test_0x34_0x38_upload_download_transfer_data) {
   struct uds_instance_t *instance = fixture->instance;
 
   UDSRequestDownloadArgs_t download_args = {
-  .addr = (void*)STORAGE_BASE_ADDRESS,
-  .size = STORAGE_PARTITION_SIZE,
+    .addr = (void *)STORAGE_BASE_ADDRESS,
+    .size = STORAGE_PARTITION_SIZE,
     .dataFormatIdentifier = 0x00,
   };
 
@@ -126,7 +131,8 @@ ZTEST_F(lib_uds, test_0x34_0x38_upload_download_transfer_data) {
   zassert_equal(ret, UDS_OK);
 
   uint8_t buf[4];
-  ret = flash_read(flash_controller, STORAGE_PARTITION_OFFSET, buf, sizeof(buf));
+  ret =
+      flash_read(flash_controller, STORAGE_PARTITION_OFFSET, buf, sizeof(buf));
   zassert_equal(ret, 0);
   zassert_mem_equal(buf, transfer_args_1.data, sizeof(buf));
 
@@ -138,19 +144,21 @@ ZTEST_F(lib_uds, test_0x34_0x38_upload_download_transfer_data) {
   ret = receive_event(instance, UDS_EVT_TransferData, &transfer_args_2);
   zassert_equal(ret, UDS_OK);
 
-  ret = flash_read(flash_controller, STORAGE_PARTITION_OFFSET + 4, buf, sizeof(buf));
+  ret = flash_read(flash_controller, STORAGE_PARTITION_OFFSET + 4, buf,
+                   sizeof(buf));
   zassert_equal(ret, 0);
   zassert_mem_equal(buf, transfer_args_2.data, sizeof(buf));
 }
 
-ZTEST_F(lib_uds, test_0x34_0x38_upload_download_transfer_data_prevent_overflow) {
+ZTEST_F(lib_uds,
+        test_0x34_0x38_upload_download_transfer_data_prevent_overflow) {
   struct uds_instance_t *instance = fixture->instance;
 
   const size_t download_size = STORAGE_PARTITION_SIZE;
   zassert_true(download_size > 0);
 
   UDSRequestDownloadArgs_t download_args = {
-  .addr = (void*)STORAGE_BASE_ADDRESS,
+    .addr = (void *)STORAGE_BASE_ADDRESS,
     .size = download_size,
     .dataFormatIdentifier = 0x00,
   };
@@ -161,10 +169,8 @@ ZTEST_F(lib_uds, test_0x34_0x38_upload_download_transfer_data_prevent_overflow) 
   assert_storage_is_erased();
 
   uint8_t guard_before;
-  ret = flash_read(flash_controller,
-                   STORAGE_PARTITION_OFFSET + download_size,
-                   &guard_before,
-                   sizeof(guard_before));
+  ret = flash_read(flash_controller, STORAGE_PARTITION_OFFSET + download_size,
+                   &guard_before, sizeof(guard_before));
   zassert_equal(ret, 0);
 
   uint8_t chunk[256];
@@ -190,10 +196,9 @@ ZTEST_F(lib_uds, test_0x34_0x38_upload_download_transfer_data_prevent_overflow) 
   }
 
   uint8_t last_written_byte;
-  ret = flash_read(flash_controller,
-                   STORAGE_PARTITION_OFFSET + download_size - 1,
-                   &last_written_byte,
-                   sizeof(last_written_byte));
+  ret =
+      flash_read(flash_controller, STORAGE_PARTITION_OFFSET + download_size - 1,
+                 &last_written_byte, sizeof(last_written_byte));
   zassert_equal(ret, 0);
   zassert_equal(last_written_byte, (uint8_t)((download_size - 1) & 0xFF));
 
@@ -207,10 +212,8 @@ ZTEST_F(lib_uds, test_0x34_0x38_upload_download_transfer_data_prevent_overflow) 
   zassert_equal(ret, UDS_NRC_RequestOutOfRange);
 
   uint8_t guard_after;
-  ret = flash_read(flash_controller,
-                   STORAGE_PARTITION_OFFSET + download_size,
-                   &guard_after,
-                   sizeof(guard_after));
+  ret = flash_read(flash_controller, STORAGE_PARTITION_OFFSET + download_size,
+                   &guard_after, sizeof(guard_after));
   zassert_equal(ret, 0);
   zassert_equal(guard_after, guard_before);
 }
@@ -222,7 +225,7 @@ ZTEST_F(lib_uds, test_0x34_0x38_upload_download_request_upload_fail_on_size_0) {
   zassert_true(cleanup == UDS_OK || cleanup == UDS_NRC_RequestSequenceError);
 
   UDSRequestUploadArgs_t args = {
-  .addr = (void*)STORAGE_PARTITION_OFFSET,
+    .addr = (void *)STORAGE_PARTITION_OFFSET,
     .size = 0,
     .dataFormatIdentifier = 0x00,
   };
@@ -231,7 +234,8 @@ ZTEST_F(lib_uds, test_0x34_0x38_upload_download_request_upload_fail_on_size_0) {
   zassert_equal(ret, UDS_NRC_RequestOutOfRange);
 }
 
-ZTEST_F(lib_uds, test_0x34_0x38_upload_download_request_upload_and_transfer_data) {
+ZTEST_F(lib_uds,
+        test_0x34_0x38_upload_download_request_upload_and_transfer_data) {
   struct uds_instance_t *instance = fixture->instance;
 
   int cleanup = receive_event(instance, UDS_EVT_RequestTransferExit, NULL);
@@ -243,7 +247,7 @@ ZTEST_F(lib_uds, test_0x34_0x38_upload_download_request_upload_and_transfer_data
   zassert_true(STORAGE_PARTITION_SIZE >= upload_size);
 
   UDSRequestUploadArgs_t upload_args = {
-  .addr = (void*)STORAGE_PARTITION_OFFSET,
+    .addr = (void *)STORAGE_PARTITION_OFFSET,
     .size = upload_size,
     .dataFormatIdentifier = 0x00,
   };
@@ -288,7 +292,8 @@ ZTEST_F(lib_uds, test_0x34_0x38_upload_download_request_upload_and_transfer_data
   zassert_equal(ret, UDS_OK);
 }
 
-ZTEST_F(lib_uds, test_0x34_0x38_upload_download_request_upload_prevent_overflow) {
+ZTEST_F(lib_uds,
+        test_0x34_0x38_upload_download_request_upload_prevent_overflow) {
   struct uds_instance_t *instance = fixture->instance;
 
   int cleanup = receive_event(instance, UDS_EVT_RequestTransferExit, NULL);
@@ -300,7 +305,7 @@ ZTEST_F(lib_uds, test_0x34_0x38_upload_download_request_upload_prevent_overflow)
   zassert_true(STORAGE_PARTITION_SIZE >= upload_size);
 
   UDSRequestUploadArgs_t upload_args = {
-  .addr = (void*)STORAGE_PARTITION_OFFSET,
+    .addr = (void *)STORAGE_PARTITION_OFFSET,
     .size = upload_size,
     .dataFormatIdentifier = 0x00,
   };
@@ -331,8 +336,8 @@ ZTEST_F(lib_uds, test_0x34_0x38_upload_download_transfer_exit_success) {
   struct uds_instance_t *instance = fixture->instance;
 
   UDSRequestDownloadArgs_t download_args = {
-  .addr = (void*)STORAGE_BASE_ADDRESS,
-  .size = STORAGE_PARTITION_SIZE,
+    .addr = (void *)STORAGE_BASE_ADDRESS,
+    .size = STORAGE_PARTITION_SIZE,
     .dataFormatIdentifier = 0x00,
   };
 
@@ -498,5 +503,3 @@ ZTEST_F(lib_uds, test_0x34_0x38_file_transfer_deletefile) {
   ret = receive_event(instance, UDS_EVT_RequestTransferExit, NULL);
   zassert_equal(ret, UDS_NRC_RequestSequenceError);
 }
-
-
