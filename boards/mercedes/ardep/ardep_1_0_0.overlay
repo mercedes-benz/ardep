@@ -11,6 +11,7 @@
 
     chosen {
         zephyr,console = &usb_cdc_acm;
+        zephyr,shell-uart = &usb_cdc_acm;
     };
 };
 
