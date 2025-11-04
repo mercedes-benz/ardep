@@ -206,6 +206,8 @@ static UDSErr_t uds_upload_download_reset() {
 static UDSErr_t transfer_exit(const struct uds_context* const context) {
   ARG_UNUSED(context);
 
+  LOG_INF("Transfer Exit");
+
 #ifdef CONFIG_UDS_FILE_TRANSFER
   UDSErr_t ret1 = uds_upload_download_reset();
   UDSErr_t ret2 = uds_file_transfer_exit();
@@ -224,17 +226,19 @@ static UDSErr_t uds_action_upload_download(struct uds_context* context,
   // there currently should only be one handler for upload/download
   *consume_event = true;
 
-  // reset state before start request, as timeout has no event
-  if (context->event == UDS_EVT_RequestTransferExit) {  // todo:?
-    LOG_WRN("Transfer Exit");
-    int err = transfer_exit(context);
-    if (err != UDS_OK && err != UDS_NRC_RequestSequenceError) {
-      return err;
+  // reset state before start requests (as timeouts are not reported to us)
+  switch (context->event) {
+    case UDS_EVT_RequestDownload:
+    case UDS_EVT_RequestUpload:
+    case UDS_EVT_RequestFileTransfer: {
+      int err = transfer_exit(context);
+      // only return status on non-expected errors
+      if (err != UDS_OK && err != UDS_NRC_RequestSequenceError) {
+        return err;
+      }
     }
-
-    if (context->event == UDS_EVT_RequestTransferExit) {
-      return err;
-    }
+    default:
+      break;
   }
 
   switch (context->event) {
@@ -269,9 +273,12 @@ static UDSErr_t uds_action_upload_download(struct uds_context* context,
       }
 
       return UDS_NRC_RequestSequenceError;
+
+    case UDS_EVT_RequestTransferExit:
+      return transfer_exit(context);
+
     default:
       return UDS_ERR_MISUSE;
-      break;
   }
 
   return UDS_OK;
