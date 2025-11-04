@@ -91,24 +91,6 @@ static void assert_storage_is_erased(void) {
   }
 }
 
-// todo
-// ZTEST_F(lib_uds, test_0x34_0x38_upload_download_request_download_success) {
-//   fill_storage_with_test_pattern();
-
-//   struct uds_instance_t *instance = fixture->instance;
-
-//   UDSRequestDownloadArgs_t args = {
-//     .addr = (void *)STORAGE_BASE_ADDRESS,
-//     .size = STORAGE_PARTITION_SIZE,
-//     .dataFormatIdentifier = 0x00,
-//   };
-
-//   int ret = receive_event(instance, UDS_EVT_RequestDownload, &args);
-//   zassert_equal(ret, UDS_OK);
-
-//   assert_storage_is_erased();
-// }
-
 ZTEST_F(lib_uds, test_0x34_0x38_upload_download_transfer_data) {
   struct uds_instance_t *instance = fixture->instance;
 

@@ -15,6 +15,7 @@
 
 LOG_MODULE_DECLARE(uds, CONFIG_UDS_LOG_LEVEL);
 
+#if DT_HAS_CHOSEN(zephyr_firmware_loader_args) && CONFIG_RETENTION_BOOT_MODE
 static const struct device* retention_data =
     DEVICE_DT_GET(DT_CHOSEN(zephyr_firmware_loader_args));
 
@@ -42,6 +43,7 @@ UDSErr_t uds_switch_to_firmware_loader_with_programming_session() {
 
   return UDS_NRC_GeneralReject;
 }
+#endif
 
 uds_check_fn uds_get_check_for_diag_session_ctrl(
     const struct uds_registration_t* const reg) {

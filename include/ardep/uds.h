@@ -758,6 +758,7 @@ UDSErr_t uds_check_default_link_control_change_diag_session(
 UDSErr_t uds_action_default_link_control_change_diag_session(
     struct uds_context *const context, bool *consume_event);
 
+#if DT_HAS_CHOSEN(zephyr_firmware_loader_args) && CONFIG_RETENTION_BOOT_MODE
 /**
  * @brief Switch into the firmware loader with an active programming session.
  * You should call this function in the diagnostic session control action, if
@@ -767,6 +768,7 @@ UDSErr_t uds_action_default_link_control_change_diag_session(
  * exit the main application and jump into the firmware loader
  */
 UDSErr_t uds_switch_to_firmware_loader_with_programming_session();
+#endif
 
 // Include macro declarations after all types are defined
 #include "ardep/uds_macro.h"  // IWYU pragma: keep
