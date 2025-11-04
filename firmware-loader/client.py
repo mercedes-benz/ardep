@@ -65,11 +65,15 @@ def erase_slot0_memory_routine(client: Client):
     with client.suppress_positive_response():
         client.routine_control(routine_id=0xFF00, control_type=1)
 
-        print_indented("Waiting for erasure to be done...")
+    print_indented("Waiting for erasure to be done...")
 
-        for _ in range(5):
-            time.sleep(1)
+    for _ in range(5):
+        time.sleep(1)
+        try:
             client.tester_present()
+            break
+        except udsoncan.exceptions.TimeoutException:
+            pass
 
     print_indented("Requesting erasure results...")
     # Assuming the ECU supports the RoutineControl service for memory erase
@@ -113,7 +117,7 @@ def firmware_download(client: Client, firmware_path: str):
         # dfi=udsoncan.DataFormatIdentifier.from_byte(0x00),
     )
 
-    block_size = int(1.5*1024)
+    block_size = 1024
     blocks = [
         firmware_data[i : i + block_size]
         for i in range(0, len(firmware_data), block_size)
