@@ -9,20 +9,20 @@ Bootloader
    
 Building the bootloader
 +++++++++++++++++++++++
-   
-The bootloader can be build with:
+
+The bootloader can be built using sysbuild together with a sample for flashing. To reset the board to a delivery state, use 
 
 .. code-block:: bash
 
-    west ardep build-bootloader
+    west build -b ardep samples/led -p --sysbuild
 
-The first line of the output gives you the expanded `west build` command.
+to build the :ref:`led_sample` and bootloader
 
-If you want to build for a specific board version, you can pass the `--board-version` argument:
+If you want to build for a specific board version, change the `-b` argument accordingly:
 
 .. code-block:: bash
 
-    west ardep build-bootloader --board-version 1.0.0
+    west build -b ardep@1.0.0 samples/led -p --sysbuild
 
 
 Flashing the bootloader
