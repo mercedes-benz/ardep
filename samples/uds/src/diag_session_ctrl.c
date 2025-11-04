@@ -44,27 +44,8 @@ UDSErr_t diag_session_ctrl_action(struct uds_context* const context,
   UDSDiagSessCtrlArgs_t* args = context->arg;
 
   if (args->type == UDS_DIAG_SESSION__PROGRAMMING) {
-    LOG_INF("Switching to programming session in firmware loader");
-    int ret =
-        retention_write(retention_data, 0, &args->type, sizeof(args->type));
-    if (ret != 0) {
-      LOG_ERR("Failed to write retention: %d", ret);
-      return UDS_NRC_ConditionsNotCorrect;
-    }
-
-    ret = bootmode_set(BOOT_MODE_TYPE_BOOTLOADER);
-    if (ret != 0) {
-      LOG_ERR("Failed to set bootmode to bootloader: %d", ret);
-      return UDS_NRC_ConditionsNotCorrect;
-    }
-
-    sys_reboot(SYS_REBOOT_WARM);
-
-    LOG_ERR("Reboot to bootloader failed!");
-
-    k_msleep(100);
-
-    CODE_UNREACHABLE;
+    LOG_INF("Switching into firmware loader");
+    return uds_switch_to_firmware_loader_with_programming_session();
   }
 
   LOG_INF("Changing diagnostic session to 0x%02X", args->type);

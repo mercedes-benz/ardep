@@ -758,6 +758,16 @@ UDSErr_t uds_check_default_link_control_change_diag_session(
 UDSErr_t uds_action_default_link_control_change_diag_session(
     struct uds_context *const context, bool *consume_event);
 
+/**
+ * @brief Switch into the firmware loader with an active programming session.
+ * You should call this function in the diagnostic session control action, if
+ * the type is a programming session
+ * @note This should only be used if firmware loading is enabled in the
+ * bootloader and the uds firmware loader is flashed. Also note that this will
+ * exit the main application and jump into the firmware loader
+ */
+UDSErr_t uds_switch_to_firmware_loader_with_programming_session();
+
 // Include macro declarations after all types are defined
 #include "ardep/uds_macro.h"  // IWYU pragma: keep
 

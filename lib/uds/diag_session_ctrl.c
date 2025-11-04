@@ -9,7 +9,39 @@
 #include "uds.h"
 
 #include <zephyr/logging/log.h>
+#include <zephyr/retention/bootmode.h>
+#include <zephyr/retention/retention.h>
+#include <zephyr/sys/reboot.h>
+
 LOG_MODULE_DECLARE(uds, CONFIG_UDS_LOG_LEVEL);
+
+static const struct device* retention_data =
+    DEVICE_DT_GET(DT_CHOSEN(zephyr_firmware_loader_args));
+
+UDSErr_t uds_switch_to_firmware_loader_with_programming_session() {
+  LOG_INF("Switching to programming session in firmware loader");
+
+  const uint8_t session_type = UDS_DIAG_SESSION__PROGRAMMING;
+
+  int ret =
+      retention_write(retention_data, 0, &session_type, sizeof(session_type));
+  if (ret != 0) {
+    LOG_ERR("Failed to write retention: %d", ret);
+    return UDS_NRC_ConditionsNotCorrect;
+  }
+
+  ret = bootmode_set(BOOT_MODE_TYPE_BOOTLOADER);
+  if (ret != 0) {
+    LOG_ERR("Failed to set bootmode to bootloader: %d", ret);
+    return UDS_NRC_ConditionsNotCorrect;
+  }
+
+  sys_reboot(SYS_REBOOT_WARM);
+
+  LOG_ERR("Reboot to bootloader failed!");
+
+  return UDS_NRC_GeneralReject;
+}
 
 uds_check_fn uds_get_check_for_diag_session_ctrl(
     const struct uds_registration_t* const reg) {

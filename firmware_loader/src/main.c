@@ -39,6 +39,13 @@ int main() {
   }
   LOG_INF("Read stored session type from retention data: %02x", session_type);
 
+  const uint8_t reset_session_type = UDS_DIAG_SESSION__DEFAULT;
+  ret = retention_write(retention_data, 0, &reset_session_type, 1);
+  if (ret != 0) {
+    LOG_ERR("Failed to write to retention 1: %d", ret);
+    return ret;
+  }
+
   LOG_INF("Configuring UDS...");
 
   UDSISOTpCConfig_t cfg = {
