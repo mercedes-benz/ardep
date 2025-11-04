@@ -28,6 +28,8 @@ static const struct device* const flash_controller =
 /* Flash memory base address for STM32 - the actual memory, not the controller
  */
 #define FLASH_BASE_ADDRESS DT_REG_ADDR(DT_CHOSEN(zephyr_flash))
+// on stm32 this is 8 bytes, for head room we set the limit to 32
+#define MAXIMUM_FLASH_WRITE_BLOCK_SIZE 32
 
 enum UploadDownloadState {
   UDS_UPDOWN__IDLE,
@@ -40,6 +42,7 @@ struct upload_download_state {
   uintptr_t start_address;
   uintptr_t current_address;
   size_t total_size;
+  size_t write_block_size;
 };
 
 struct upload_download_state upload_download_state = {
@@ -48,6 +51,7 @@ struct upload_download_state upload_download_state = {
   .start_address = 0,
   .current_address = 0,
   .total_size = 0,
+  .write_block_size = 0,
 };
 
 static UDSErr_t start_download(const struct uds_context* const context) {
@@ -82,6 +86,16 @@ static UDSErr_t start_download(const struct uds_context* const context) {
   upload_download_state.current_address =
       (uintptr_t)(args->addr) - FLASH_BASE_ADDRESS;
   upload_download_state.total_size = args->size;
+
+  upload_download_state.write_block_size =
+      flash_get_write_block_size(flash_controller);
+
+  if (upload_download_state.write_block_size > MAXIMUM_FLASH_WRITE_BLOCK_SIZE) {
+    LOG_ERR("Flash write block size %zu exceeds maximum of %d",
+            upload_download_state.write_block_size,
+            MAXIMUM_FLASH_WRITE_BLOCK_SIZE);
+    return UDS_NRC_UploadDownloadNotAccepted;
+  }
 
 #if defined(CONFIG_FLASH_HAS_EXPLICIT_ERASE)
   // prepare flash by erasing necessary sectors
@@ -139,15 +153,47 @@ static UDSErr_t continue_download(const struct uds_context* const context) {
   LOG_INF("Writing to flash at addr 0x%08lx, size %u",
           upload_download_state.current_address, args->len);
 
-  int rc = flash_write(flash_controller, upload_download_state.current_address,
-                       args->data, args->len);
-  LOG_INF("Write finished");
+  // Flash can only be written to in blocks of write_block_size, first we
+  // calculate the number of bytes that would overflow this block size.
+  // Then we write all full blocks first, and if there are remaining bytes, we
+  // create a temporary buffer to write the last block with padding (0xFF).
+  const size_t overflow_size =
+      args->len % upload_download_state.write_block_size;
+  const size_t first_write = args->len - overflow_size;
 
-  if (rc != 0) {
-    LOG_ERR("Flash write failed at addr 0x%08lx, size %u, err %d",
-            upload_download_state.current_address, args->len, rc);
-    return UDS_NRC_GeneralProgrammingFailure;
+  int rc;
+  if (first_write > 0) {
+    rc = flash_write(flash_controller, upload_download_state.current_address,
+                     args->data, first_write);
+
+    if (rc != 0) {
+      LOG_ERR("Flash write failed at addr 0x%08lx, size %u, err %d",
+              upload_download_state.current_address, first_write, rc);
+      return UDS_NRC_GeneralProgrammingFailure;
+    }
   }
+
+  if (overflow_size != 0) {
+    // need to write remaining bytes
+    uint8_t last_bytes
+        [MAXIMUM_FLASH_WRITE_BLOCK_SIZE];  // todo: maybe use
+                                           // upload_download_state.write_block_size
+                                           // as size
+    memset(last_bytes, 0xFF, upload_download_state.write_block_size);
+    memcpy(last_bytes, &args->data[first_write], args->len - first_write);
+
+    rc = flash_write(flash_controller,
+                     upload_download_state.current_address + first_write,
+                     last_bytes, upload_download_state.write_block_size);
+    if (rc != 0) {
+      LOG_ERR("Flash write failed at addr 0x%08lx, size %u, err %d",
+              upload_download_state.current_address + first_write,
+              upload_download_state.write_block_size, rc);
+      return UDS_NRC_GeneralProgrammingFailure;
+    }
+  }
+
+  LOG_INF("Write finished");
 
   upload_download_state.current_address += args->len;
 

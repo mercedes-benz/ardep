@@ -155,6 +155,52 @@ ZTEST_F(lib_uds, test_0x34_0x38_upload_download_transfer_data) {
   zassert_mem_equal(buf, transfer_args_2.data, sizeof(buf));
 }
 
+ZTEST_F(lib_uds, test_0x34_0x38_upload_download_transfer_data_7_bytes) {
+  struct uds_instance_t *instance = fixture->instance;
+
+  int ret = flash_erase(flash_controller, STORAGE_PARTITION_OFFSET,
+                        STORAGE_PARTITION_SIZE);
+  zassert_equal(ret, 0);
+
+  assert_storage_is_erased();
+
+  UDSRequestDownloadArgs_t download_args = {
+    .addr = (void *)STORAGE_BASE_ADDRESS,
+    .size = STORAGE_PARTITION_SIZE,
+    .dataFormatIdentifier = 0x00,
+  };
+
+  ret = receive_event(instance, UDS_EVT_RequestDownload, &download_args);
+  zassert_equal(ret, UDS_OK);
+
+  UDSTransferDataArgs_t transfer_args_1 = {
+    .data = (const uint8_t[]){0xDE, 0xAD, 0xBE, 0xEF},
+    .len = 4,
+  };
+
+  ret = receive_event(instance, UDS_EVT_TransferData, &transfer_args_1);
+  zassert_equal(ret, UDS_OK);
+
+  uint8_t buf[4];
+  ret =
+      flash_read(flash_controller, STORAGE_PARTITION_OFFSET, buf, sizeof(buf));
+  zassert_equal(ret, 0);
+  zassert_mem_equal(buf, transfer_args_1.data, sizeof(buf));
+
+  UDSTransferDataArgs_t transfer_args_2 = {
+    .data = (const uint8_t[]){0xCA, 0xFE, 0xBA},
+    .len = 3,
+  };
+
+  ret = receive_event(instance, UDS_EVT_TransferData, &transfer_args_2);
+  zassert_equal(ret, UDS_OK);
+
+  ret = flash_read(flash_controller, STORAGE_PARTITION_OFFSET + 4, buf,
+                   sizeof(buf));
+  zassert_equal(ret, 0);
+  zassert_mem_equal(buf, transfer_args_2.data, transfer_args_2.len);
+}
+
 ZTEST_F(lib_uds,
         test_0x34_0x38_upload_download_transfer_data_prevent_overflow) {
   struct uds_instance_t *instance = fixture->instance;
