@@ -32,7 +32,10 @@ static void can_rx_cb(const struct device *dev,
                       void *user_data) {
   // LOG_WRN("CAN RX: %03x [%u] %x ...", frame->id, frame->dlc, frame->data[0]);
   LOG_DBG("CAN RX: %03x [%u] %x ...", frame->id, frame->dlc, frame->data[0]);
-  k_msgq_put((struct k_msgq *)user_data, frame, K_NO_WAIT);
+  int ret = k_msgq_put((struct k_msgq *)user_data, frame, K_NO_WAIT);
+  if (ret != 0) {
+    LOG_ERR("Dropped CAN frame, error: %d", ret);
+  }
 }
 
 void iso14229_inject_can_frame_rx(struct iso14229_zephyr_instance *inst,
@@ -180,11 +183,14 @@ int iso14229_zephyr_init(struct iso14229_zephyr_instance *inst,
     printk("Failed to add RX filter for physical address: %d\n", err);
     return err;
   }
-  err =
-      can_add_rx_filter(can_dev, can_rx_cb, &inst->can_func_msgq, &func_filter);
-  if (err < 0) {
-    printk("Failed to add RX filter for functional address: %d\n", err);
-    return err;
+
+  if (inst->tp.func_sa != UDS_TP_NOOP_ADDR) {
+    err = can_add_rx_filter(can_dev, can_rx_cb, &inst->can_func_msgq,
+                            &func_filter);
+    if (err < 0) {
+      printk("Failed to add RX filter for functional address: %d\n", err);
+      return err;
+    }
   }
 
   inst->event_loop_tick = iso14229_zephyr_event_loop_tick;
