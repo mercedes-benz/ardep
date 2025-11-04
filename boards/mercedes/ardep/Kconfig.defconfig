@@ -19,7 +19,9 @@ config CAN_MAX_FILTER
 		
 rsource "Kconfig.usb"
 
-if !MCUBOOT # These options are only relevant if we build MCUBOOT
+# These options are only relevant if we don't build MCUBOOT.
+# We need this as we don't always build with sysbuild which sets these automatically
+if !MCUBOOT
 	# enable building for image slots
 	config BOOTLOADER_MCUBOOT
 		default y

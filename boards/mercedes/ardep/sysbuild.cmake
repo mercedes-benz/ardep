@@ -1,3 +1,8 @@
+# Copyright (C) Frickly Systems GmbH
+# Copyright (C) MBition GmbH
+#
+# SPDX-License-Identifier: Apache-2.0
+
 if(SB_CONFIG_BOOT_LOGIC_UDS_FIRMWARE_LOADER)
   ExternalZephyrProject_Add(
     APPLICATION firmware-loader
