@@ -3,6 +3,9 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
+# Note that this is config inside sysbuild and is thus prefixed with SB_CONFIG_
+# Configuration for other sysbuild targets (i.e. mcuboot) is located in ./sysbuild.cmake
+
 choice ARDEP_BOOT_LOGIC
   prompt "Boot logic choices"
   default BOOT_LOGIC_LEGACY

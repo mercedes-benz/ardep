@@ -5,8 +5,39 @@
 
 mainmenu "Firmware Loader"
 
+comment "UDS Firmware Loader Configuration"
+
+menu "Firmware Loader Settings"
+
 module = APP
 module-str = app
 source "subsys/logging/Kconfig.template.log_config"
+
+comment "UDS Addresses"
+
+config FIRMWARE_LOADER_PHYS_SA
+    hex "Physical Source Address"
+    default 0x7E8
+    help
+      The physical source address used for UDS communication.
+      Should be the same as the main application's address
+
+config FIRMWARE_LOADER_PHYS_TA
+    hex "Physical Target Address"
+    default 0x7E0
+    help
+      The physical target address used for UDS communication.
+      Should be the same as the main application's address
+
+config FIRMWARE_LOADER_FUNC_SA
+    hex "Functional Source Address"
+    default 0x7DF
+    help
+      The functional source address used for UDS communication.
+      Should be the same as the main application's address
+
+endmenu
+
+comment "Zephyr Configuration"
 
 source "Kconfig.zephyr"

@@ -43,11 +43,11 @@ int main() {
 
   UDSISOTpCConfig_t cfg = {
     // Hardware Addresses
-    .source_addr = 0x7E8,
-    .target_addr = 0x7E0,
+    .source_addr = CONFIG_FIRMWARE_LOADER_PHYS_SA,
+    .target_addr = CONFIG_FIRMWARE_LOADER_PHYS_TA,
 
     // Functional Addresses
-    .source_addr_func = 0x7DF,
+    .source_addr_func = CONFIG_FIRMWARE_LOADER_FUNC_SA,
     .target_addr_func = UDS_TP_NOOP_ADDR,
   };
 

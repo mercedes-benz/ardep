@@ -1,4 +1,4 @@
-.. Firmware Loader:
+.. _firmware_loader:
 
 Firmware Loader
 ###############

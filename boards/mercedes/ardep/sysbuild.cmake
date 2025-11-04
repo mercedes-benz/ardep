@@ -3,6 +3,8 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
+# Note that the Boot logic sysbuild configs are located in ./Kconfig.sysbuild
+
 if(SB_CONFIG_BOOT_LOGIC_UDS_FIRMWARE_LOADER)
   ExternalZephyrProject_Add(
     APPLICATION firmware-loader
