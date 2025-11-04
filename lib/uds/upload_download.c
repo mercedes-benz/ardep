@@ -28,6 +28,7 @@ static const struct device* const flash_controller =
 /* Flash memory base address for STM32 - the actual memory, not the controller
  */
 #define FLASH_BASE_ADDRESS DT_REG_ADDR(DT_CHOSEN(zephyr_flash))
+#define FLASH_MAX_SIZE DT_REG_SIZE(DT_CHOSEN(zephyr_flash))
 // on stm32 this is 8 bytes, for head room we set the limit to 32
 #define MAXIMUM_FLASH_WRITE_BLOCK_SIZE 32
 
@@ -67,8 +68,16 @@ static UDSErr_t start_download(const struct uds_context* const context) {
 
   UDSRequestDownloadArgs_t* args = (UDSRequestDownloadArgs_t*)context->arg;
 
-  // do not check addr == 0, as this might be correct address for the flash
   if (args->size == 0) {
+    return UDS_NRC_RequestOutOfRange;
+  }
+
+  // normalize address to start at 0, not at the flash base address
+  if ((uintptr_t)(args->addr) > FLASH_BASE_ADDRESS) {
+    args->addr = (void*)((uintptr_t)args->addr - FLASH_BASE_ADDRESS);
+  }
+
+  if ((uintptr_t)(args->addr) + args->size > FLASH_MAX_SIZE) {
     return UDS_NRC_RequestOutOfRange;
   }
 
@@ -77,14 +86,11 @@ static UDSErr_t start_download(const struct uds_context* const context) {
     return UDS_NRC_RequestOutOfRange;
   }
 
-  LOG_INF("FLASH_BASE_ADDRESS = 0x%08x", FLASH_BASE_ADDRESS);
-  LOG_INF("Starting download to addr 0x%08lx, size %zu",
+  LOG_INF("Starting download to flash addr 0x%08lx, size %zu",
           (uintptr_t)(args->addr), args->size);
 
-  upload_download_state.start_address =
-      (uintptr_t)(args->addr) - FLASH_BASE_ADDRESS;
-  upload_download_state.current_address =
-      (uintptr_t)(args->addr) - FLASH_BASE_ADDRESS;
+  upload_download_state.start_address = (uintptr_t)(args->addr);
+  upload_download_state.current_address = (uintptr_t)(args->addr);
   upload_download_state.total_size = args->size;
 
   upload_download_state.write_block_size =
@@ -125,16 +131,22 @@ static UDSErr_t start_upload(const struct uds_context* const context) {
 
   UDSRequestUploadArgs_t* args = (UDSRequestUploadArgs_t*)context->arg;
 
-  // do not check addr == 0, as this might be correct address for the flash
   if (args->size == 0) {
+    return UDS_NRC_RequestOutOfRange;
+  }
+
+  // normalize address to start at 0, not at the flash base address
+  if ((uintptr_t)(args->addr) > FLASH_BASE_ADDRESS) {
+    args->addr = (void*)((uintptr_t)args->addr - FLASH_BASE_ADDRESS);
+  }
+
+  if ((uintptr_t)(args->addr) + args->size > FLASH_MAX_SIZE) {
     return UDS_NRC_RequestOutOfRange;
   }
 
   upload_download_state.start_address = (uintptr_t)args->addr;
   upload_download_state.current_address = (uintptr_t)args->addr;
   upload_download_state.total_size = args->size;
-
-  // TODO: verify that the address range is valid for reading
 
   upload_download_state.state = UDS_UPDOWN__UPLOAD_IN_PROGRESS;
 
