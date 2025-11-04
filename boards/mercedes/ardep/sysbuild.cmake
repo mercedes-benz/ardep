@@ -7,8 +7,8 @@
 
 if(SB_CONFIG_BOOT_LOGIC_UDS_FIRMWARE_LOADER)
   ExternalZephyrProject_Add(
-    APPLICATION firmware-loader
-    SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/../../../firmware-loader
+    APPLICATION firmware_loader
+    SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/../../../firmware_loader
     APP_TYPE FIRMWARE_LOADER
   )
 
