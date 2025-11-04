@@ -594,7 +594,7 @@ def security_access(client: Client):
     print_indented("Security access demonstration completed.", indent=2)
 
 
-def security_algorithm(_level: int, seed: bytes, _params: Any) -> bytes:
+def security_algorithm(level: int, seed: bytes, params: Any) -> bytes:
     return bytes(~b & 0xFF for b in seed)
 
 
