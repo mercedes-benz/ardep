@@ -18,7 +18,8 @@ LOG_MODULE_REGISTER(firmware_loader, CONFIG_APP_LOG_LEVEL);
 #include <ardep/iso14229.h>
 #include <ardep/uds.h>
 
-const struct device *retention_data = DEVICE_DT_GET(DT_NODELABEL(retention1));
+const struct device *retention_data =
+    DEVICE_DT_GET(DT_CHOSEN(zephyr_firmware_loader_args));
 
 const struct device *can_dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_canbus));
 

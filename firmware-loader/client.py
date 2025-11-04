@@ -42,14 +42,6 @@ def change_session(client: Client):
     client.change_session(DiagnosticSessionControl.Session.programmingSession)
     print_indented("Session change successful")
 
-    # print_indented("Changing to extended diagnostic session")
-    # client.change_session(DiagnosticSessionControl.Session.extendedDiagnosticSession)
-    # print_indented("Session change successful")
-
-    # print_indented("Changing to programming session")
-    # client.change_session(DiagnosticSessionControl.Session.programmingSession)
-    # print_indented("Session change successful")
-
 
 def ecu_reset(client: Client):
     # Send ECU reset request (hard reset)
@@ -114,7 +106,6 @@ def firmware_download(client: Client, firmware_path: str):
     print_indented("Requesting download...")
     client.request_download(
         memory_location=slot0_memory,
-        # dfi=udsoncan.DataFormatIdentifier.from_byte(0x00),
     )
 
     block_size = 1024
@@ -148,8 +139,8 @@ def firmware_download(client: Client, firmware_path: str):
             )
             raise
 
-        # Small delay to allow device to process, but much shorter than before
-        time.sleep(0.1)
+        # Small delay to allow device to process (not necessary)
+        time.sleep(0.05)
 
     # Requesting transfer exit
     print_indented("Requesting transfer exit...")

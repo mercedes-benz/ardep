@@ -16,7 +16,8 @@ LOG_MODULE_DECLARE(uds_sample, LOG_LEVEL_DBG);
 
 #include <ardep/uds.h>
 
-const struct device *retention_data = DEVICE_DT_GET(DT_NODELABEL(retention1));
+const struct device* retention_data =
+    DEVICE_DT_GET(DT_CHOSEN(zephyr_firmware_loader_args));
 
 // Check function for the Diagnostic Session Control event
 UDSErr_t diag_session_ctrl_check(const struct uds_context* const context,
