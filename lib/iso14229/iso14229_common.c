@@ -30,7 +30,6 @@ UDSErr_t uds_cb(struct UDSServer *srv, UDSEvent_t event, void *arg) {
 static void can_rx_cb(const struct device *dev,
                       struct can_frame *frame,
                       void *user_data) {
-  // LOG_WRN("CAN RX: %03x [%u] %x ...", frame->id, frame->dlc, frame->data[0]);
   LOG_DBG("CAN RX: %03x [%u] %x ...", frame->id, frame->dlc, frame->data[0]);
   int ret = k_msgq_put((struct k_msgq *)user_data, frame, K_NO_WAIT);
   if (ret != 0) {
