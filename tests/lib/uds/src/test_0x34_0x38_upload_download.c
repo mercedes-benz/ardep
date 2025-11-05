@@ -294,7 +294,6 @@ ZTEST_F(lib_uds,
 
   uint8_t buffer[4];
   const uint8_t expected_first_chunk[4] = {0x00, 0x01, 0x02, 0x03};
-  const uint8_t expected_second_chunk[4] = {0x04, 0x05, 0x06, 0x07};
 
   UDSTransferDataArgs_t transfer_args = {
     .data = buffer,
@@ -305,17 +304,15 @@ ZTEST_F(lib_uds,
 
   ret = receive_event(instance, UDS_EVT_TransferData, &transfer_args);
   zassert_equal(ret, UDS_OK);
-  zassert_mem_equal(buffer, expected_first_chunk, sizeof(buffer));
   zassert_equal(copy_fake.call_count, 1);
   zassert_equal(copy_fake.arg0_val, &instance->iso14229.server);
-  zassert_equal(copy_fake.arg1_val, buffer);
   zassert_equal(copy_fake.arg2_val, sizeof(buffer));
   assert_copy_data(expected_first_chunk, sizeof(expected_first_chunk));
 
   ret = receive_event(instance, UDS_EVT_TransferData, &transfer_args);
   zassert_equal(ret, UDS_OK);
-  zassert_mem_equal(buffer, expected_second_chunk, sizeof(buffer));
   zassert_equal(copy_fake.call_count, 2);
+  zassert_equal(copy_fake.arg0_val, &instance->iso14229.server);
   zassert_equal(copy_fake.arg2_val, sizeof(buffer));
   const uint8_t expected_combined[8] = {
     0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
@@ -496,8 +493,8 @@ ZTEST_F(lib_uds, test_0x34_0x38_file_transfer_readfile) {
 
   ret = receive_event(instance, UDS_EVT_TransferData, &transfer);
   zassert_equal(ret, UDS_OK);
-  zassert_mem_equal(buffer, payload, sizeof(payload));
   zassert_equal(copy_fake.call_count, 1);
+  zassert_equal(copy_fake.arg0_val, &instance->iso14229.server);
   assert_copy_data(payload, sizeof(payload));
 
   ret = receive_event(instance, UDS_EVT_TransferData, &transfer);

@@ -222,6 +222,8 @@ static UDSErr_t continue_download(const struct uds_context* const context) {
   return UDS_OK;
 }
 
+static uint8_t upload_buffer[CONFIG_UDS_UPLOAD_MAX_PAYLOAD_SIZE];
+
 static UDSErr_t continue_upload(const struct uds_context* const context) {
   if (upload_download_state.state != UDS_UPDOWN__UPLOAD_IN_PROGRESS) {
     return UDS_NRC_RequestSequenceError;
@@ -235,12 +237,13 @@ static UDSErr_t continue_upload(const struct uds_context* const context) {
   UDSTransferDataArgs_t* args = (UDSTransferDataArgs_t*)context->arg;
 
   size_t len_to_copy =
-      MIN(args->maxRespLen, upload_download_state.start_address +
-                                upload_download_state.total_size -
-                                upload_download_state.current_address);
+      MIN(CONFIG_UDS_UPLOAD_MAX_PAYLOAD_SIZE,
+          MIN(args->maxRespLen, upload_download_state.start_address +
+                                    upload_download_state.total_size -
+                                    upload_download_state.current_address));
 
   int ret = flash_read(flash_controller, upload_download_state.current_address,
-                       (void*)args->data, len_to_copy);
+                       upload_buffer, len_to_copy);
 
   if (ret != 0) {
     return UDS_NRC_GeneralProgrammingFailure;
@@ -250,8 +253,7 @@ static UDSErr_t continue_upload(const struct uds_context* const context) {
     return UDS_ERR_MISUSE;
   }
 
-  args->copyResponse(&context->instance->iso14229.server, args->data,
-                     len_to_copy);
+  args->copyResponse(context->server, upload_buffer, len_to_copy);
 
   upload_download_state.current_address += len_to_copy;
 
