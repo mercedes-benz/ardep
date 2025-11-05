@@ -117,8 +117,8 @@ def firmware_download(client: Client, firmware_path: str):
     for idx, block in enumerate(blocks):
         print_indented(f"Transferring block {idx + 1}/{len(blocks)}...")
 
-        # Verify device is still responsive before transfer
-        if idx > 0 and idx % 5 == 0:  # Check every 5 blocks
+        # Reset the S3 timer by sending a TesterPresent every 5 blocks
+        if idx > 0 and idx % 5 == 0:
             try:
                 print_indented("Resetting timeout...", indent=2)
                 client.tester_present()
@@ -139,7 +139,7 @@ def firmware_download(client: Client, firmware_path: str):
             )
             raise
 
-        # Small delay to allow device to process (not necessary)
+        # Small delay to allow the device to process
         time.sleep(0.05)
 
     # Requesting transfer exit
