@@ -163,8 +163,10 @@ static UDSErr_t start_upload(const struct uds_context* const context) {
 
   upload_download_state.state = UDS_UPDOWN__UPLOAD_IN_PROGRESS;
 
+  // maxNumberOfBlockLength includes 2 response bytes
   args->maxNumberOfBlockLength =
-      MIN(CONFIG_UDS_UPLOAD_MAX_BLOCK_SIZE, args->maxNumberOfBlockLength);
+      MIN(CONFIG_UDS_UPLOAD_MAX_PAYLOAD_SIZE + UDS_0X36_RESP_BASE_LEN,
+          args->maxNumberOfBlockLength);
 
   LOG_INF("Requested upload: from %p, size: %d", args->addr, args->size);
 

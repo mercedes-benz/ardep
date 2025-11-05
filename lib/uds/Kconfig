@@ -31,11 +31,12 @@ if UDS
             depends on FILE_SYSTEM
             default y
 
-        config UDS_UPLOAD_MAX_BLOCK_SIZE
-            int "Maximum TransferData block size for upload"
-            default 256
+        config UDS_UPLOAD_MAX_PAYLOAD_SIZE
+            int "Maximum TransferData payload size for upload"
+            default 128
             help
-                Maximum size of each TransferData block during upload
+                Maximum size of each TransferData payload during upload.
+                This value can also be limited by other factors, this is just a user-specified maximum
 
     endif # UDS_UPLOAD_DOWNLOAD_MODULE
 
