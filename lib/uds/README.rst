@@ -578,6 +578,9 @@ Data Transfer Services (``0x34``, ``0x35``, ``0x36``, ``0x37``, ``0x38``)
 
 These services are handled internally by the library and **do not support custom handlers**.
 
+These services read from and write to flash memory or the file system.
+Note that they do not perform flash erase operations; any required erasure must be done beforehand (for example, via a routine).
+
 **Configuration**:
 
 .. code-block:: cfg

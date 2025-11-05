@@ -30,8 +30,8 @@ UDS_REGISTER_ECU_DEFAULT_HARD_RESET_HANDLER(&instance);
 int main() {
   LOG_INF("Hello firmware-loader");
 
+  // load stored session type
   uint8_t session_type;
-
   int ret = retention_read(retention_data, 0, &session_type, 1);
   if (ret != 0) {
     LOG_ERR("Failed to read from retention 1: %d", ret);
@@ -39,6 +39,7 @@ int main() {
   }
   LOG_INF("Read stored session type from retention data: %02x", session_type);
 
+  // reset session type in storage to prevent reboot-loops
   const uint8_t reset_session_type = UDS_DIAG_SESSION__DEFAULT;
   ret = retention_write(retention_data, 0, &reset_session_type, 1);
   if (ret != 0) {

@@ -55,6 +55,8 @@ struct upload_download_state upload_download_state = {
   .write_block_size = 0,
 };
 
+// Note that when downloading, the flash has to be erased in another way before
+// (e.g. using a routine)
 static UDSErr_t start_download(const struct uds_context* const context) {
   /*
    * Here we assume that the upper layer has already checked whether an
@@ -109,18 +111,6 @@ static UDSErr_t start_download(const struct uds_context* const context) {
             MAXIMUM_FLASH_WRITE_BLOCK_SIZE);
     return UDS_NRC_UploadDownloadNotAccepted;
   }
-
-#if defined(CONFIG_FLASH_HAS_EXPLICIT_ERASE)
-  // prepare flash by erasing necessary sectors
-  // int rc = flash_erase(flash_controller, upload_download_state.start_address,
-  //                      upload_download_state.total_size);
-  // if (rc != 0) {
-  //   LOG_ERR("Flash erase failed at addr 0x%08lx, size %zu, err %d",
-  //           upload_download_state.start_address,
-  //           upload_download_state.total_size, rc);
-  //   return UDS_NRC_GeneralProgrammingFailure;
-  // }
-#endif
 
   upload_download_state.state = UDS_UPDOWN__DOWNLOAD_IN_PROGRESS;
 

@@ -44,7 +44,7 @@ def print_indented(text: str, indent: int = 1):
 def change_session(client: Client):
     print("Changing to extended diagnostic session...")
     client.change_session(DiagnosticSessionControl.Session.extendedDiagnosticSession)
-    print("\tSession change successful")
+    print_indented("Session change successful")
 
 
 def data_by_identifier_string(client: Client):
