@@ -78,6 +78,13 @@ static UDSErr_t start_download(const struct uds_context* const context) {
   }
 
   if ((uintptr_t)(args->addr) + args->size > FLASH_MAX_SIZE) {
+    LOG_WRN(
+        "Address out of range: requested download from: 0x%lx, to: 0x%lx, "
+        "flash "
+        "is "
+        "only 0x%x large",
+        (uintptr_t)(args->addr), (uintptr_t)(args->addr) + args->size,
+        FLASH_MAX_SIZE);
     return UDS_NRC_RequestOutOfRange;
   }
 
@@ -141,6 +148,12 @@ static UDSErr_t start_upload(const struct uds_context* const context) {
   }
 
   if ((uintptr_t)(args->addr) + args->size > FLASH_MAX_SIZE) {
+    LOG_WRN(
+        "Address out of range: requested upload from: 0x%lx, to: 0x%lx, flash "
+        "is "
+        "only 0x%x large",
+        (uintptr_t)(args->addr), (uintptr_t)(args->addr) + args->size,
+        FLASH_MAX_SIZE);
     return UDS_NRC_RequestOutOfRange;
   }
 
@@ -149,6 +162,11 @@ static UDSErr_t start_upload(const struct uds_context* const context) {
   upload_download_state.total_size = args->size;
 
   upload_download_state.state = UDS_UPDOWN__UPLOAD_IN_PROGRESS;
+
+  args->maxNumberOfBlockLength =
+      MIN(CONFIG_UDS_UPLOAD_MAX_BLOCK_SIZE, args->maxNumberOfBlockLength);
+
+  LOG_INF("Requested upload: from %p, size: %d", args->addr, args->size);
 
   return UDS_OK;
 }

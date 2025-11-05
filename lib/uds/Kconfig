@@ -27,9 +27,15 @@ if UDS
     if UDS_UPLOAD_DOWNLOAD_MODULE
 
         config UDS_FILE_TRANSFER
-            bool "feature of upload download moduel that allows file transfer"
+            bool "feature of upload download module that allows file transfer"
             depends on FILE_SYSTEM
             default y
+
+        config UDS_UPLOAD_MAX_BLOCK_SIZE
+            int "Maximum TransferData block size for upload"
+            default 256
+            help
+                Maximum size of each TransferData block during upload
 
     endif # UDS_UPLOAD_DOWNLOAD_MODULE
 

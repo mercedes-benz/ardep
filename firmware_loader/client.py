@@ -120,7 +120,7 @@ def firmware_download(client: Client, firmware_path: str):
         # Verify device is still responsive before transfer
         if idx > 0 and idx % 5 == 0:  # Check every 5 blocks
             try:
-                print_indented("Verifying device connectivity...", indent=2)
+                print_indented("Resetting timeout...", indent=2)
                 client.tester_present()
             except Exception as e:
                 print_indented(f"Device connectivity check failed: {e}", indent=2)
