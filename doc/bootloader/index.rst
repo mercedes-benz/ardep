@@ -147,7 +147,12 @@ Sysbuild
 
 With sysbuild, multiple applications (i.e. bootloader, main application and sometimes firmware loader) are built together using just one build command.
 
-There are multiple things that differ from a normal west build
+More information is available in the official `Zephyr Sysbuild documentation <https://docs.zephyrproject.org/4.2.0/build/sysbuild/index.html>`_.
+
+Sysbuild basics
+===============
+
+There are multiple things that differ from a normal west build:
 
 First, there are multiple targets for using menuconfig, one for each "domain":
 
