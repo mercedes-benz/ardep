@@ -117,7 +117,7 @@ a :ref:`firmware_loader` is provided which can be built using sysbuild.
 
 It is not recommended to build the firmware loader independently as the bootloader needs configuration options to handle the firmware loader correctly.
 
-For demonstration purposes, build the :ref:`uds-sample` using sysbuild, which automatically builds the firmware loader:
+For demonstration purposes, build the :ref:`uds-sample` using sysbuild (which contains a ``sysbuild.conf``), which automatically builds the firmware loader:
 
 .. code-block:: bash
 
