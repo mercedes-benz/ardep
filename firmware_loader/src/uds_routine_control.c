@@ -146,9 +146,13 @@ UDSErr_t erase_memory_routine_action(struct uds_context *const context,
       status->result = UDS_OK;
       k_mutex_unlock(status->mutex);
 
+#ifdef CONFIG_DISABLE_WAIT_BEFORE_ERASE
+      k_work_schedule(&status->work, K_NO_WAIT);
+#else
       // Submit the work item to erase slot0 with a 150ms delay
       // So the response (if requested) can be sent first
       k_work_schedule(&status->work, K_MSEC(150));
+#endif
 
       LOG_INF("Memory erasure routine started");
       return UDS_PositiveResponse;
