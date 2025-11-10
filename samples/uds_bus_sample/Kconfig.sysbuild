@@ -1,0 +1,13 @@
+# Copyright (C) Frickly Systems GmbH
+# Copyright (C) MBition GmbH
+#
+# SPDX-License-Identifier: Apache-2.0
+
+source "share/sysbuild/Kconfig"
+
+config UDS_BASE_ADDR
+    hex "UDS Base address"
+    default 0x00
+    range 0x00 0x07
+    help
+      Base address, is added on top of the physical addresses
