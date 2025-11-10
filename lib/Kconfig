@@ -9,5 +9,5 @@ menu "ARDEP"
     rsource "iso14229/Kconfig"
     rsource "uds/Kconfig"
     rsource "uds_legacy/Kconfig"
-
+    rsource "can_log/Kconfig"
 endmenu

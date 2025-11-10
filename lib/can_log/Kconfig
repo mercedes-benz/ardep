@@ -1,0 +1,24 @@
+# Copyright (C) Frickly Systems GmbH
+# Copyright (C) MBition GmbH
+#
+# SPDX-License-Identifier: Apache-2.0
+
+menuconfig CAN_LOG
+    bool "Logging via CAN"
+    depends on CAN
+    default y
+
+
+if CAN_LOG
+
+    module = CAN_LOG
+    module-str = CAN Logger
+    source "subsys/logging/Kconfig.template.log_config"
+
+    # config CAN_ROUTER_INIT_PRIORITY
+    #   int
+    #   prompt "CAN Router Init priority"
+    #   default APPLICATION_INIT_PRIORITY
+    #   depends on CAN_ROUTER
+
+endif
