@@ -4,14 +4,10 @@
 # SPDX-License-Identifier: Apache-2.0
 
 sample:
-  name: uds example
+  name: firmware-loader
 common:
   build_only: true
   integration_platforms:
     - ardep
-    # this does not work
-    # - native_sim/native/64
-    # - native_sim
 tests:
-  example.uds.default:
-    sysbuild: true
+  firmware-loader.default: {}

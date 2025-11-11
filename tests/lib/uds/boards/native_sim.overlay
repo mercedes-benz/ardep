@@ -10,13 +10,14 @@
 		compatible = "zephyr,fake-can";
 		status = "okay";
 	};
-	
+
 	chosen {
 		zephyr,canbus = &can_fake;
 	};
-	
-	
-	
+};
+
+&flash0{
+	write-block-size = <4>;
 };
 
 /delete-node/ &can0;

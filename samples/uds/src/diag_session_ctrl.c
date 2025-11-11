@@ -10,13 +10,22 @@ LOG_MODULE_DECLARE(uds_sample, LOG_LEVEL_DBG);
 
 #include "uds.h"
 
+#include <zephyr/retention/bootmode.h>
+#include <zephyr/retention/retention.h>
+#include <zephyr/sys/reboot.h>
+
+#include <ardep/uds.h>
+
+const struct device* retention_data =
+    DEVICE_DT_GET(DT_CHOSEN(zephyr_firmware_loader_args));
+
 // Check function for the Diagnostic Session Control event
-UDSErr_t diag_session_ctrl_check(const struct uds_context *const context,
-                                 bool *apply_action) {
+UDSErr_t diag_session_ctrl_check(const struct uds_context* const context,
+                                 bool* apply_action) {
   // Type the argument object
   // We don't need to check, that the event matches. This is done internally by
   // the UDS lib
-  UDSDiagSessCtrlArgs_t *args = context->arg;
+  UDSDiagSessCtrlArgs_t* args = context->arg;
 
   // Set to true, if the action should be applied.
   // Here you can check other conditions if needed
@@ -30,9 +39,15 @@ UDSErr_t diag_session_ctrl_check(const struct uds_context *const context,
 }
 
 // Action function for the Diagnostic Session Control event
-UDSErr_t diag_session_ctrl_action(struct uds_context *const context,
-                                  bool *consume_event) {
-  UDSDiagSessCtrlArgs_t *args = context->arg;
+UDSErr_t diag_session_ctrl_action(struct uds_context* const context,
+                                  bool* consume_event) {
+  UDSDiagSessCtrlArgs_t* args = context->arg;
+
+  if (args->type == UDS_DIAG_SESSION__PROGRAMMING) {
+    LOG_INF("Switching into firmware loader");
+    return uds_switch_to_firmware_loader_with_programming_session();
+  }
+
   LOG_INF("Changing diagnostic session to 0x%02X", args->type);
 
   // We don't want to consume the event here, because the LinkControl handler
@@ -49,16 +64,16 @@ UDSErr_t diag_session_ctrl_action(struct uds_context *const context,
 // Check function for the Diagnostic Session Timeout event
 // This event is generated independent of the client and emitted when the
 // Session timeout is reached
-UDSErr_t diag_session_timeout_check(const struct uds_context *const context,
-                                    bool *apply_action) {
+UDSErr_t diag_session_timeout_check(const struct uds_context* const context,
+                                    bool* apply_action) {
   *apply_action = true;
   LOG_INF("Check to act on Diagnostic Session Timeout successful");
   return UDS_OK;
 }
 
 // Action function for the Diagnostic Session Timeout event
-UDSErr_t diag_session_timeout_action(struct uds_context *const context,
-                                     bool *consume_event) {
+UDSErr_t diag_session_timeout_action(struct uds_context* const context,
+                                     bool* consume_event) {
   LOG_INF("Diagnostic Session Timeout handled");
 
   // We don't want to consume the event here, because the LinkControl handler

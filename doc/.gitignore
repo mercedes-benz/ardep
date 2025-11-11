@@ -1,0 +1,9 @@
+# build output
+_build/
+
+# synchronized folders
+boards/
+samples/
+scripts/
+lib/
+firmware_loader/

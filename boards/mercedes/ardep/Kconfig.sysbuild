@@ -1,0 +1,35 @@
+# Copyright (C) Frickly Systems GmbH
+# Copyright (C) MBition GmbH
+#
+# SPDX-License-Identifier: Apache-2.0
+
+# Note that this is config inside sysbuild and is thus prefixed with SB_CONFIG_
+# Configuration for other sysbuild targets (i.e. mcuboot) is located in ./sysbuild.cmake
+
+choice ARDEP_BOOT_LOGIC
+  prompt "Boot logic choices"
+  default BOOT_LOGIC_LEGACY
+
+  config BOOT_LOGIC_UDS_FIRMWARE_LOADER
+    bool "UDS Firmware Loader"
+
+  config BOOT_LOGIC_LEGACY
+    bool "Legacy Boot Logic"
+endchoice
+
+
+# Setup mcuboot as bootloader
+if BOOT_LOGIC_LEGACY || BOOT_LOGIC_UDS_FIRMWARE_LOADER
+  choice BOOTLOADER
+	  default BOOTLOADER_MCUBOOT
+  endchoice
+  choice BOOT_SIGNATURE_TYPE
+    default BOOT_SIGNATURE_TYPE_NONE
+  endchoice
+endif
+
+if BOOT_LOGIC_UDS_FIRMWARE_LOADER
+  choice MCUBOOT_MODE
+    default MCUBOOT_MODE_FIRMWARE_UPDATER
+  endchoice
+endif

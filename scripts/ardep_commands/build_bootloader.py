@@ -21,7 +21,7 @@ class BuildBootloader:
     def add_args(self, parser: ArgumentParser):
         subcommand_parser: ArgumentParser = parser.add_parser(
             self.command,
-            help=f"builds the bootloader for the {self._board_name}",
+            help=f"DEPRECATED, use sysbuild! Builds the bootloader for the {self._board_name}",
         )
 
         subcommand_parser.add_argument(

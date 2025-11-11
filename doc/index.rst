@@ -13,6 +13,7 @@ Welcome to the ARDEP documentation!
    introduction/index.rst
    getting_started/index.rst
    bootloader/index.rst
+   firmware_loader/index.rst
    console/index.rst
    error_handling/index.rst
    README.rst

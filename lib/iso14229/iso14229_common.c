@@ -31,7 +31,18 @@ static void can_rx_cb(const struct device *dev,
                       struct can_frame *frame,
                       void *user_data) {
   LOG_DBG("CAN RX: %03x [%u] %x ...", frame->id, frame->dlc, frame->data[0]);
-  k_msgq_put((struct k_msgq *)user_data, frame, K_NO_WAIT);
+  int ret = k_msgq_put((struct k_msgq *)user_data, frame, K_NO_WAIT);
+  if (ret != 0) {
+    LOG_ERR("Dropped CAN frame, error: %d", ret);
+  }
+}
+
+void iso14229_inject_can_frame_rx(struct iso14229_zephyr_instance *inst,
+                                  struct can_frame *frame) {
+  LOG_INF("Injecting Received CAN Frame: %03x [%u] %x ...", frame->id,
+          frame->dlc, frame->data[0]);
+  can_rx_cb((const struct device *)inst->tp.phys_link.user_send_can_arg, frame,
+            &inst->can_phys_msgq);
 }
 
 int iso14229_zephyr_set_callback(struct iso14229_zephyr_instance *inst,
@@ -47,14 +58,12 @@ static void iso14229_zephyr_event_loop_tick(
     struct iso14229_zephyr_instance *inst) {
   struct can_frame frame_phys;
   struct can_frame frame_func;
-  int ret_phys = k_msgq_get(&inst->can_phys_msgq, &frame_phys, K_NO_WAIT);
-  int ret_func = k_msgq_get(&inst->can_func_msgq, &frame_func, K_NO_WAIT);
 
-  if (ret_phys == 0) {
+  while (k_msgq_get(&inst->can_phys_msgq, &frame_phys, K_NO_WAIT) == 0) {
     isotp_on_can_message(&inst->tp.phys_link, frame_phys.data, frame_phys.dlc);
   }
 
-  if (ret_func == 0) {
+  while (k_msgq_get(&inst->can_func_msgq, &frame_func, K_NO_WAIT) == 0) {
     isotp_on_can_message(&inst->tp.func_link, frame_func.data, frame_func.dlc);
   }
 
@@ -68,7 +77,7 @@ static void iso14229_thread_entry(void *p1, void *p2, void *p3) {
 
   while (atomic_get(&inst->thread_stop_requested) == 0) {
     iso14229_zephyr_event_loop_tick(inst);
-    k_sleep(K_MSEC(1));
+    k_usleep(CONFIG_ISO14229_THREAD_SLEEP_US);
   }
 
   k_mutex_lock(&inst->thread_mutex, K_FOREVER);
@@ -173,11 +182,14 @@ int iso14229_zephyr_init(struct iso14229_zephyr_instance *inst,
     printk("Failed to add RX filter for physical address: %d\n", err);
     return err;
   }
-  err =
-      can_add_rx_filter(can_dev, can_rx_cb, &inst->can_func_msgq, &func_filter);
-  if (err < 0) {
-    printk("Failed to add RX filter for functional address: %d\n", err);
-    return err;
+
+  if (inst->tp.func_sa != UDS_TP_NOOP_ADDR) {
+    err = can_add_rx_filter(can_dev, can_rx_cb, &inst->can_func_msgq,
+                            &func_filter);
+    if (err < 0) {
+      printk("Failed to add RX filter for functional address: %d\n", err);
+      return err;
+    }
   }
 
   inst->event_loop_tick = iso14229_zephyr_event_loop_tick;

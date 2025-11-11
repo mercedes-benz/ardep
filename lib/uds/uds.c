@@ -11,20 +11,11 @@
 #include <zephyr/sys/util.h>
 LOG_MODULE_REGISTER(uds, CONFIG_UDS_LOG_LEVEL);
 
+#include "uds.h"
+
 #include <ardep/iso14229.h>
 #include <ardep/uds.h>
 #include <iso14229.h>
-
-/**
- * @brief Associated events with other data required to handle them
- */
-struct uds_event_handler_data {
-  UDSEvent_t event;
-  uds_get_check_fn get_check;
-  uds_get_action_fn get_action;
-  UDSErr_t default_nrc;
-  enum uds_registration_type_t registration_type;
-};
 
 // Wraps the logic to check and execute action on the event
 static UDSErr_t uds_check_and_act_on_event(
@@ -186,11 +177,10 @@ static uint32_t find_next_dynamic_id(struct uds_instance_t* inst) {
 
 // Registration function to dynamically register new handlers at runtime
 // (Heap allocated)
-static int uds_register_event_handler(
-    struct uds_instance_t* inst,
-    struct uds_registration_t registration,
-    uint32_t* dynamic_id,
-    struct uds_registration_t** registration_out) {
+int uds_register_event_handler(struct uds_instance_t* inst,
+                               struct uds_registration_t registration,
+                               uint32_t* dynamic_id,
+                               struct uds_registration_t** registration_out) {
   registration.instance = inst;
 
   uint32_t next_id = find_next_dynamic_id(inst);

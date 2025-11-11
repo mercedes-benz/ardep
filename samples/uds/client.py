@@ -42,8 +42,8 @@ def print_indented(text: str, indent: int = 1):
 
 
 def change_session(client: Client):
-    print_headline("Changing to programming session")
-    client.change_session(DiagnosticSessionControl.Session.programmingSession)
+    print("Changing to extended diagnostic session...")
+    client.change_session(DiagnosticSessionControl.Session.extendedDiagnosticSession)
     print_indented("Session change successful")
 
 
@@ -594,7 +594,7 @@ def security_access(client: Client):
     print_indented("Security access demonstration completed.", indent=2)
 
 
-def security_algorithm(_level: int, seed: bytes, _params: Any) -> bytes:
+def security_algorithm(level: int, seed: bytes, params: Any) -> bytes:
     return bytes(~b & 0xFF for b in seed)
 
 
