@@ -36,7 +36,7 @@ static int can_log_line_out(uint8_t *data, size_t length, void *output_ctx) {
   if (length > CAN_MAX_DLEN) {
     length = CAN_MAX_DLEN;
   }
-  frame.id = 0x7DF;
+  frame.id = CONFIG_CAN_LOG_ID;
   frame.dlc = length;
   frame.flags = 0;
   memcpy(frame.data, data, length);

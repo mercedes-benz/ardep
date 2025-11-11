@@ -21,4 +21,11 @@ if CAN_LOG
     #   default APPLICATION_INIT_PRIORITY
     #   depends on CAN_ROUTER
 
+    config CAN_LOG_ID
+        hex
+        prompt "CAN Log ID"
+        default 0x100
+        help
+          CAN identifier used for logging messages.
+
 endif
