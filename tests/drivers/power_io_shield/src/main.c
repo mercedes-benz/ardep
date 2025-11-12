@@ -56,22 +56,24 @@ ZTEST(mcp_driver, test_set_output_5) {
 ZTEST(mcp_driver, test_read_inputs_and_faults) {
   gpio_port_value_t value;
 
-  power_io_shield_emul_set_u16_reg(power_io_shield_emul, REG_GPIOA,
-                                   0xD242);  // set input 1 and 4, fault 0 and 2
+  // note the xor for 0x3f00, this is for the hard-inverted input pins
+  power_io_shield_emul_set_u16_reg(
+      power_io_shield_emul, REG_GPIOA,
+      0xD242 ^ 0x3f00);  // set input 1 and 4, fault 0 and 2
 
   zassert_equal(gpio_port_get(power_io_shield, &value), 0);
   zassert_equal((value >> POWER_IO_SHIELD_INPUT_BASE) & 0x3F, 0b10010);
   zassert_equal((value >> POWER_IO_SHIELD_FAULT_BASE) & 0x7, 0b101);
 
   power_io_shield_emul_set_u16_reg(power_io_shield_emul, REG_GPIOA,
-                                   0x0003);  // set fault 1 and 2
+                                   0x0003 ^ 0x3f00);  // set fault 1 and 2
   zassert_equal(gpio_port_get(power_io_shield, &value), 0);
   zassert_equal((value >> POWER_IO_SHIELD_FAULT_BASE), 0b110);
 
-  // reset
+  // reset register to 0 (inputs are all high then)
   power_io_shield_emul_set_u16_reg(power_io_shield_emul, REG_GPIOA, 0x0000);
   zassert_equal(gpio_port_get(power_io_shield, &value), 0);
-  zassert_equal(value, 0);
+  zassert_equal(value, 0x3f << POWER_IO_SHIELD_INPUT_BASE);
 }
 
 ZTEST(mcp_driver, test_configure_outputs) {

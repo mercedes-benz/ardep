@@ -16,12 +16,12 @@
                    <&power_io_shield0 POWER_IO_SHIELD_OUTPUT(4) 0>,
                    <&power_io_shield0 POWER_IO_SHIELD_OUTPUT(5) 0>;
 
-    input-gpios = <&power_io_shield0 POWER_IO_SHIELD_INPUT(0) GPIO_ACTIVE_LOW>,
-                  <&power_io_shield0 POWER_IO_SHIELD_INPUT(1) GPIO_ACTIVE_LOW>,
-                  <&power_io_shield0 POWER_IO_SHIELD_INPUT(2) GPIO_ACTIVE_LOW>,
-                  <&power_io_shield0 POWER_IO_SHIELD_INPUT(3) GPIO_ACTIVE_LOW>,
-                  <&power_io_shield0 POWER_IO_SHIELD_INPUT(4) GPIO_ACTIVE_LOW>,
-                  <&power_io_shield0 POWER_IO_SHIELD_INPUT(5) GPIO_ACTIVE_LOW>;
+    input-gpios = <&power_io_shield0 POWER_IO_SHIELD_INPUT(0) 0>,
+                  <&power_io_shield0 POWER_IO_SHIELD_INPUT(1) 0>,
+                  <&power_io_shield0 POWER_IO_SHIELD_INPUT(2) 0>,
+                  <&power_io_shield0 POWER_IO_SHIELD_INPUT(3) 0>,
+                  <&power_io_shield0 POWER_IO_SHIELD_INPUT(4) 0>,
+                  <&power_io_shield0 POWER_IO_SHIELD_INPUT(5) 0>;
 
     fault-gpios = <&power_io_shield0 POWER_IO_SHIELD_FAULT(0) 0>,
                   <&power_io_shield0 POWER_IO_SHIELD_FAULT(1) 0>,
