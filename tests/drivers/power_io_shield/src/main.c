@@ -23,7 +23,7 @@ ZTEST_SUITE(mcp_driver, NULL, NULL, NULL, NULL, NULL);
 ZTEST(mcp_driver, test_iodir_and_iocon_init) {
   zassert_equal(
       power_io_shield_emul_get_u16_reg(power_io_shield_emul, REG_IODIRA),
-      0x7f40);
+      0x7F03);
   zassert_equal(
       power_io_shield_emul_get_u16_reg(power_io_shield_emul, REG_IOCONA),
       0x4444);
@@ -33,7 +33,7 @@ ZTEST(mcp_driver, test_set_output_0) {
   zassert_equal(gpio_pin_set(power_io_shield, POWER_IO_SHIELD_OUTPUT(0), 1), 0);
   zassert_equal(
       power_io_shield_emul_get_u16_reg(power_io_shield_emul, REG_GPIOA),
-      0x0001);  // Bank A: 0x01, Bank B: 0x00
+      0x0004);  // Bank A: 0x01, Bank B: 0x00
 
   zassert_equal(gpio_pin_set(power_io_shield, POWER_IO_SHIELD_OUTPUT(0), 0), 0);
   zassert_equal(
@@ -45,7 +45,7 @@ ZTEST(mcp_driver, test_set_output_5) {
   zassert_equal(gpio_pin_set(power_io_shield, POWER_IO_SHIELD_OUTPUT(5), 1), 0);
   zassert_equal(
       power_io_shield_emul_get_u16_reg(power_io_shield_emul, REG_GPIOA),
-      0x0020);  // Bank A: 0x20, Bank B: 0x00
+      0x0020 << 2);  // Bank A: 0x20, Bank B: 0x00
 
   zassert_equal(gpio_pin_set(power_io_shield, POWER_IO_SHIELD_OUTPUT(5), 0), 0);
   zassert_equal(
@@ -57,13 +57,14 @@ ZTEST(mcp_driver, test_read_inputs_and_faults) {
   gpio_port_value_t value;
 
   power_io_shield_emul_set_u16_reg(power_io_shield_emul, REG_GPIOA,
-                                   0x9240);  // set input 1 and 4, fault 0 and 2
+                                   0xD242);  // set input 1 and 4, fault 0 and 2
 
   zassert_equal(gpio_port_get(power_io_shield, &value), 0);
   zassert_equal((value >> POWER_IO_SHIELD_INPUT_BASE) & 0x3F, 0b10010);
   zassert_equal((value >> POWER_IO_SHIELD_FAULT_BASE) & 0x7, 0b101);
 
-  power_io_shield_emul_set_u16_reg(power_io_shield_emul, REG_GPIOA, 0xc000);
+  power_io_shield_emul_set_u16_reg(power_io_shield_emul, REG_GPIOA,
+                                   0x0003);  // set fault 1 and 2
   zassert_equal(gpio_port_get(power_io_shield, &value), 0);
   zassert_equal((value >> POWER_IO_SHIELD_FAULT_BASE), 0b110);
 
@@ -80,7 +81,7 @@ ZTEST(mcp_driver, test_configure_outputs) {
                 0);
   zassert_equal(
       power_io_shield_emul_get_u16_reg(power_io_shield_emul, REG_GPIOA),
-      0x0001);
+      0x0001 << 2);
 
   // reconfigure without ACTIVE flag
   zassert_equal(gpio_pin_configure(power_io_shield, POWER_IO_SHIELD_OUTPUT(0),

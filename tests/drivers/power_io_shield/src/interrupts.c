@@ -113,7 +113,7 @@ ZTEST(mcp_driver_interrupts, test_fault_interrupt) {
   // Interrupt should be configured for the chip
   zassert_equal(
       power_io_shield_emul_get_u16_reg(power_io_shield_emul, REG_GPINTENA),
-      0x4040);  // gpinten
+      0x4001);  // gpinten
   zassert_equal(
       power_io_shield_emul_get_u16_reg(power_io_shield_emul, REG_INTCONA),
       0x0000);  // intcon
@@ -129,9 +129,9 @@ ZTEST(mcp_driver_interrupts, test_fault_interrupt) {
 
   // set INTF and INTCAP to simulate rising edge interrupt
   power_io_shield_emul_set_u16_reg(power_io_shield_emul, REG_INTFA,
-                                   0x4040);  // fault 0 and 1
+                                   0x4001);  // fault 0 and 1
   power_io_shield_emul_set_u16_reg(power_io_shield_emul, REG_INTCAPA,
-                                   0x4040);  // fault 0 and 1
+                                   0x4001);  // fault 0 and 1
 
   // trigger interrupt pin rising
   zassert_equal(gpio_emul_input_set(gpio0, 0, 1), 0);
