@@ -5,6 +5,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/* Needed by vref sensor */
+&adc1 {
+	pinctrl-0 = <>;
+	pinctrl-names = "default";
+	st,adc-clock-source = "SYNC";
+	st,adc-prescaler = <4>;
+	status = "okay";
+};
+
 &adc2 {
     pinctrl-0 = <&adc2_in2_A0 &adc2_in4_A1>;
     pinctrl-names = "default";

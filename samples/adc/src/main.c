@@ -20,6 +20,7 @@
 #include <zephyr/device.h>
 #include <zephyr/devicetree.h>
 #include <zephyr/drivers/adc.h>
+#include <zephyr/drivers/sensor.h>
 #include <zephyr/kernel.h>
 #include <zephyr/sys/printk.h>
 #include <zephyr/sys/util.h>
@@ -35,6 +36,8 @@
 /* Data of ADC io-channels specified in devicetree. */
 static const struct adc_dt_spec adc_channels[] = {
   DT_FOREACH_PROP_ELEM(DT_PATH(zephyr_user), io_channels, DT_SPEC_AND_COMMA)};
+
+static const struct device* vref = DEVICE_DT_GET(DT_ALIAS(volt_sensor0));
 
 int main(void) {
   int err;
@@ -58,6 +61,11 @@ int main(void) {
       printk("Could not setup channel #%d (%d)\n", i, err);
       return 0;
     }
+  }
+
+  if (!device_is_ready(vref)) {
+    printk("VREF device not ready\n");
+    return 0;
   }
 
   while (1) {
@@ -95,6 +103,20 @@ int main(void) {
         printk(" = %" PRId32 " mV\n", val_mv);
       }
     }
+
+    struct sensor_value vref_val;
+    err = sensor_sample_fetch_chan(vref, SENSOR_CHAN_VOLTAGE);
+    if (err < 0) {
+      printk("Could not fetch vref (%d)\n", err);
+      continue;
+    }
+    err = sensor_channel_get(vref, SENSOR_CHAN_VOLTAGE, &vref_val);
+    if (err < 0) {
+      printk("Could not get vref (%d)\n", err);
+      continue;
+    }
+    printk("VREF reading: %d.%06d V\n", vref_val.val1, vref_val.val2);
+    printk("\n");
 
     k_sleep(K_MSEC(1000));
   }
