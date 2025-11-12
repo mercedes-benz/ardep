@@ -65,10 +65,11 @@ ZTEST(mcp_driver_interrupts, test_rising_edge_interrupt) {
 
   // set INTF and INTCAP to simulate rising edge interrupt
 
+  // note the inversion for the input pins (0x3f00)
   power_io_shield_emul_set_u16_reg(power_io_shield_emul, REG_INTFA,
                                    0x0100);  // input pin 0
   power_io_shield_emul_set_u16_reg(power_io_shield_emul, REG_INTCAPA,
-                                   0x0100);  // input pin 0
+                                   0x0100 ^ 0x3f00);  // input pin 0
 
   // set interrupt gpio to 1
   zassert_equal(gpio_emul_input_set(gpio0, 0, 1), 0);
@@ -113,7 +114,7 @@ ZTEST(mcp_driver_interrupts, test_fault_interrupt) {
   // Interrupt should be configured for the chip
   zassert_equal(
       power_io_shield_emul_get_u16_reg(power_io_shield_emul, REG_GPINTENA),
-      0x4040);  // gpinten
+      0x4001);  // gpinten
   zassert_equal(
       power_io_shield_emul_get_u16_reg(power_io_shield_emul, REG_INTCONA),
       0x0000);  // intcon
@@ -129,9 +130,9 @@ ZTEST(mcp_driver_interrupts, test_fault_interrupt) {
 
   // set INTF and INTCAP to simulate rising edge interrupt
   power_io_shield_emul_set_u16_reg(power_io_shield_emul, REG_INTFA,
-                                   0x4040);  // fault 0 and 1
+                                   0x4001);  // fault 0 and 1
   power_io_shield_emul_set_u16_reg(power_io_shield_emul, REG_INTCAPA,
-                                   0x4040);  // fault 0 and 1
+                                   0x4001 ^ 0x3f00);  // fault 0 and 1
 
   // trigger interrupt pin rising
   zassert_equal(gpio_emul_input_set(gpio0, 0, 1), 0);
@@ -197,7 +198,7 @@ ZTEST(mcp_driver_interrupts, test_level_interrupt) {
       0x0200);  // intcon
   zassert_equal(
       power_io_shield_emul_get_u16_reg(power_io_shield_emul, REG_DEFVALA),
-      0x0000);  // defval
+      0x0200);  // defval
 
   // nothing should happen when not INTF is set
   zassert_equal(gpio_emul_input_set(gpio0, 0, 1), 0);
@@ -209,7 +210,7 @@ ZTEST(mcp_driver_interrupts, test_level_interrupt) {
   power_io_shield_emul_set_u16_reg(power_io_shield_emul, REG_INTFA,
                                    0x0200);  // input pin 1
   power_io_shield_emul_set_u16_reg(power_io_shield_emul, REG_INTCAPA,
-                                   0x0200);  // input pin 1
+                                   0x0200 ^ 0x3f00);  // input pin 1
 
   // set interrupt gpio to 1
   zassert_equal(gpio_emul_input_set(gpio0, 0, 1), 0);
