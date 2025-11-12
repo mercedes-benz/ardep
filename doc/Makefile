@@ -30,6 +30,6 @@ help:
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
 ifeq ($(SYNC),on)
-	$(RSYNC_CMD) -avm --include="*/" --include="*.rst" --include="*.png"  --include="*.jpg" --include="*.zip" --include="*.pdf" --exclude="*" $(SOURCEDIR)/../samples $(SOURCEDIR)/../scripts $(SOURCEDIR)/../boards $(SOURCEDIR)
+	$(RSYNC_CMD) -avm --include="*/" --include="*.rst" --include="*.png"  --include="*.jpg" --include="*.zip" --include="*.pdf" --exclude="*" $(SOURCEDIR)/../samples $(SOURCEDIR)/../scripts $(SOURCEDIR)/../boards $(SOURCEDIR)/../lib $(SOURCEDIR)/../firmware_loader $(SOURCEDIR)
 endif
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)

@@ -1,0 +1,13 @@
+/*
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/ {
+    chosen {
+        // use the uart, instead of the usb serial
+        zephyr,console = &uart_a;
+    };
+};

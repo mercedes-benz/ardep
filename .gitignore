@@ -13,11 +13,5 @@
 __pycache__/
 .mypy_cache/
 
-# documentation build output
-doc/_build/
-doc/boards/
-doc/samples/
-doc/scripts/
-
 # clangd cache
 .cache

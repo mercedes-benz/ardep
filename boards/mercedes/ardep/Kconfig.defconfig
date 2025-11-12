@@ -14,15 +14,13 @@ config SPI_STM32_INTERRUPT
 	default y
 	depends on SPI
 
-config CAN_TERMINATION_GPIO
-	default y if CAN
-
 config CAN_MAX_FILTER
 	default 8
-
+		
 rsource "Kconfig.usb"
-rsource "Kconfig.usb_dfu"
 
+# These options are only relevant if we don't build MCUBOOT.
+# We need this as we don't always build with sysbuild which sets these automatically
 if !MCUBOOT
 	# enable building for image slots
 	config BOOTLOADER_MCUBOOT
@@ -32,8 +30,17 @@ if !MCUBOOT
 
 	rsource "Kconfig.uds"
 
-	config MCUBOOT_SIGNATURE_KEY_FILE
-		default "bootloader/mcuboot/root-rsa-2048.pem"
+	config MCUBOOT_GENERATE_UNSIGNED_IMAGE
+		default y
 endif # !MCUBOOT
+
+config RETAINED_MEM
+	default y
+
+config RETENTION
+	default y
+
+config RETENTION_BOOT_MODE
+	default y
 
 endif # BOARD_ARDEP

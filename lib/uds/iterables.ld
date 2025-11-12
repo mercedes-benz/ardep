@@ -6,3 +6,4 @@
  */
 
 ITERABLE_SECTION_ROM(uds_registration_t, 4)
+ITERABLE_SECTION_ROM(uds_event_handler_data, 4)

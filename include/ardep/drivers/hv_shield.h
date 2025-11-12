@@ -1,3 +1,10 @@
+/*
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 #ifndef ARDEP_INCLUDE_DRIVERS_HV_SHIELD_H_
 #define ARDEP_INCLUDE_DRIVERS_HV_SHIELD_H_
 

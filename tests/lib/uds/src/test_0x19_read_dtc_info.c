@@ -1,6 +1,6 @@
 /*
- * Copyright (C) Frickly Systems GmbH
- * Copyright (C) MBition GmbH
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -26,7 +26,7 @@ UDSErr_t read_dtc_info_0x01_action_fn(struct uds_context *const context,
   zassert_equal(args->type,
                 UDS_READ_DTC_INFO_SUBFUNC__NUM_OF_DTC_BY_STATUS_MASK);
 
-  copy(&context->instance->iso14229.server, (uint8_t[]){0x01, 0x02, 0x03}, 3);
+  copy(context->server, (uint8_t[]){0x01, 0x02, 0x03}, 3);
 
   return UDS_OK;
 }

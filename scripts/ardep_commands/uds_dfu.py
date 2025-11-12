@@ -1,3 +1,8 @@
+# SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+# SPDX-FileCopyrightText: Copyright (C) MBition GmbH
+#
+# SPDX-License-Identifier: Apache-2.0
+
 from udsoncan.client import Client
 from udsoncan.connections import IsoTPSocketConnection
 from udsoncan.exceptions import (

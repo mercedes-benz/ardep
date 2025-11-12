@@ -1,11 +1,18 @@
+/*
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 &abstract_lin0 {
 	type = "LIN_MODE_COMMANDER";
 };
 
-/ {
-	lin-commander-gpio {
-		compatible = "can-termination-gpio";
-		enable-gpios = <&gpiob 9 GPIO_ACTIVE_HIGH>;
-		enable-on-boot;
+&gpiob {
+	lin_commander_enable: lin_commander_enable {
+		gpio-hog;
+		gpios = <9 GPIO_ACTIVE_HIGH>;
+		output-high;
 	};
 };

@@ -1,6 +1,6 @@
 /*
- * Copyright (C) Frickly Systems GmbH
- * Copyright (C) MBition GmbH
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -41,7 +41,6 @@
         _UDS_CAT_EXPAND(__uds_registration_id_read_dtc_info, __COUNTER__)) = {      \
     .instance = _instance,                                                          \
     .type = UDS_REGISTRATION_TYPE__READ_DTC_INFO,                                   \
-    .applies_to_event = uds_filter_for_read_dtc_info_event,                         \
     .read_dtc = {                                                                   \
       .user_context = _user_context,                                                \
       .sub_function = _subfunc_id,                                                  \
@@ -313,7 +312,6 @@
         _UDS_CAT_EXPAND(__uds_registration_id_memory_, __COUNTER__)) = {      \
     .instance = _instance,                                                    \
     .type = UDS_REGISTRATION_TYPE__MEMORY,                                    \
-    .applies_to_event = uds_filter_for_memory_by_addr,                        \
     .memory = {                                                               \
       .user_context = _user_context,                                          \
       .read = {                                                               \
@@ -381,7 +379,6 @@
         _UDS_CAT_EXPAND(__uds_registration_id, _reset_type)) = {              \
     .instance = _instance,                                                    \
     .type = UDS_REGISTRATION_TYPE__ECU_RESET,                                 \
-    .applies_to_event = uds_filter_for_ecu_reset_event,                       \
     .ecu_reset = {                                                            \
       .user_context = _user_context,                                          \
       .type = _reset_type,                                                    \
@@ -427,15 +424,20 @@
  * 
  * @param _instance Pointer to associated the UDS server instance
  * @param _data_id The data identifier to register the handler for
- * @param _data_ptr Custom context oder data the handle the event
+ * @param _data_ptr Custom context or data to handle the event
  * @param _read_check Check if the `_read` action should be executed
  * @param _read Execute a read for the event
  * @param _write_check Check if the `_write` action should be executed
  * @param _write Execute a write for the event
+ * @param _io_control_check Check if the `_io_control` action should be executed
+ * @param _io_control Act an io control event
  * @param _user_context Optional context provided by the user
  * 
  * @note: @p _write_check and @p _write are optional. Set to NULL for read-only
  *        data identifier
+ *
+ * @note: @p _io_control_check and @p _io_control are optional.
+ *        Set to NULL for to make this data identifier not I/O controllable
  */
 #define UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(                      \
   _instance,                                                          \
@@ -445,13 +447,14 @@
   _read,                                                              \
   _write_check,                                                       \
   _write,                                                             \
+  _io_control_check,                                                  \
+  _io_control,                                                        \
   _user_context                                                       \
 )                                                                     \
   STRUCT_SECTION_ITERABLE(uds_registration_t,                         \
         _UDS_CAT_EXPAND(__uds_registration_id, _data_id)) = {         \
     .instance = _instance,                                            \
     .type = UDS_REGISTRATION_TYPE__DATA_IDENTIFIER,                   \
-    .applies_to_event = uds_filter_for_data_by_id_event,              \
     .data_identifier = {                                              \
       .user_context = _user_context,                                  \
       .data = _data_ptr,                                              \
@@ -463,6 +466,10 @@
       .write = {                                                      \
         .check = _write_check,                                        \
         .action = _write,                                             \
+      },                                                              \
+      .io_control = {                                                 \
+        .check = _io_control_check,                                   \
+        .action = _io_control,                                        \
       },                                                              \
     },                                                                \
   };
@@ -498,7 +505,6 @@
         _UDS_CAT_EXPAND(__uds_registration_diag_session_id_, __COUNTER__)) = { \
     .instance = _instance,                                                     \
     .type = UDS_REGISTRATION_TYPE__DIAG_SESSION_CTRL,                          \
-    .applies_to_event = uds_filter_for_diag_session_ctrl_event,                \
     .diag_session_ctrl = {                                                     \
       .user_context = _user_context,                                           \
       .diag_sess_ctrl = {                                                      \
@@ -515,5 +521,369 @@
 // clang-format on
 
 // #endregion DIAG_SESSION_CTRL
+
+// #region CLEAR_DIAGNOSTIC_INFORMATION
+
+// clang-format off
+
+/**
+ * @brief Register a new clear diagnostic event handler
+ * 
+ * @param _instance Pointer to associated the UDS server instance
+ * @param _check Check if the action should be executed
+ * @param _act Execute the handler for the event
+ * @param _user_context Optional context provided by the user
+ * 
+ */
+#define UDS_REGISTER_CLEAR_DIAG_INFO_HANDLER(                                  \
+  _instance,                                                                   \
+  _check,                                                                      \
+  _act,                                                                        \
+  _user_context                                                                \
+)                                                                              \
+  STRUCT_SECTION_ITERABLE(uds_registration_t,                                  \
+        _UDS_CAT_EXPAND(__uds_registration_clear_diag_info_, __COUNTER__)) = { \
+    .instance = _instance,                                                     \
+    .type = UDS_REGISTRATION_TYPE__CLEAR_DIAG_INFO,                            \
+    .clear_diagnostic_information = {                                          \
+      .user_context = _user_context,                                           \
+      .actor = {                                                               \
+        .check = _check,                                                       \
+        .action = _act,                                                        \
+      },                                                                       \
+    },                                                                         \
+  };
+
+// clang-format on
+
+// #endregion CLEAR_DIAGNOSTIC_INFORMATION
+
+// #region ROUTINE_CONTROL
+
+// clang-format off
+
+/**
+ * @brief Register a new routine control event handler
+ * 
+ * @param _instance Pointer to associated the UDS server instance
+ * @param _check Check if the action should be executed
+ * @param _act Execute the handler for the event
+ * @param _user_context Optional context provided by the user
+ * 
+ */
+#define UDS_REGISTER_ROUTINE_CONTROL_HANDLER(                                  \
+  _instance,                                                                   \
+  _routine_id,                                                                 \
+  _check,                                                                      \
+  _act,                                                                        \
+  _user_context                                                                \
+)                                                                              \
+  STRUCT_SECTION_ITERABLE(uds_registration_t,                                  \
+        _UDS_CAT_EXPAND(__uds_registration_routine_control_, _routine_id)) = { \
+    .instance = _instance,                                                     \
+    .type = UDS_REGISTRATION_TYPE__ROUTINE_CONTROL,                            \
+    .routine_control = {                                                       \
+      .user_context = _user_context,                                           \
+      .routine_id = _routine_id,                                               \
+      .actor = {                                                               \
+        .check = _check,                                                       \
+        .action = _act,                                                        \
+      },                                                                       \
+    },                                                                         \
+  };
+
+// clang-format on
+
+// #endregion ROUTINE_CONTROL
+
+// #region SECURITY_ACCESS
+
+// clang-format off
+
+/**
+ * @brief Register a new security access event handler
+ * 
+ * @param _instance Pointer to associated the UDS server instance
+ * @param _request_seed_check Check if the associated action should be executed
+ * @param _request_seed_act Execute the handler for the request seed event
+ * @param _validate_key_check Check if the associated action should be executed
+ * @param _validate_key_act Execute the handler for the validate key event
+ * @param _user_context Optional context provided by the user
+ * 
+ */
+#define UDS_REGISTER_SECURITY_ACCESS_HANDLER(                                  \
+  _instance,                                                                   \
+  _request_seed_check,                                                         \
+  _request_seed_act,                                                           \
+  _validate_key_check,                                                         \
+  _validate_key_act,                                                           \
+  _user_context                                                                \
+)                                                                              \
+  STRUCT_SECTION_ITERABLE(uds_registration_t,                                  \
+        _UDS_CAT_EXPAND(__uds_registration_security_access_, __COUNTER__)) = { \
+    .instance = _instance,                                                     \
+    .type = UDS_REGISTRATION_TYPE__SECURITY_ACCESS,                            \
+    .security_access = {                                                       \
+      .user_context = _user_context,                                           \
+      .request_seed = {                                                        \
+        .check = _request_seed_check,                                          \
+        .action = _request_seed_act,                                           \
+      },                                                                       \
+      .validate_key = {                                                        \
+        .check = _validate_key_check,                                          \
+        .action = _validate_key_act,                                           \
+      },                                                                       \
+    },                                                                         \
+  };
+
+// clang-format on
+
+// #endregion SECURITY_ACCESS
+
+// #region COMMUNICATION_CONTROL
+
+// clang-format off
+
+/**
+ * @brief Register a new communication control event handler
+ * 
+ * @param _instance Pointer to associated the UDS server instance
+ * @param _check Check if the associated action should be executed
+ * @param _act Execute the handler for the communication control event
+ * @param _user_context Optional context provided by the user
+ * 
+ */
+#define UDS_REGISTER_COMMUNICATION_CONTROL_HANDLER(                            \
+  _instance,                                                                   \
+  _check,                                                                      \
+  _act,                                                                        \
+  _user_context                                                                \
+)                                                                              \
+  STRUCT_SECTION_ITERABLE(uds_registration_t,                                  \
+        _UDS_CAT_EXPAND(__uds_registration_comm_ctrl_, __COUNTER__)) = {       \
+    .instance = _instance,                                                     \
+    .type = UDS_REGISTRATION_TYPE__COMMUNICATION_CONTROL,                      \
+    .communication_control = {                                                 \
+      .user_context = _user_context,                                           \
+      .actor = {                                                               \
+        .check = _check,                                                       \
+        .action = _act,                                                        \
+      },                                                                       \
+    },                                                                         \
+  };
+
+// clang-format on
+
+// #endregion COMMUNICATION_CONTROL
+
+// #region CONTROL_DTC_SETTING
+
+// clang-format off
+
+/**
+ * @brief Register a new control DTC setting event handler
+ * 
+ * @param _instance Pointer to associated the UDS server instance
+ * @param _check Check if the associated action should be executed
+ * @param _act Execute the handler for the control DTC setting event
+ * @param _user_context Optional context provided by the user
+ * 
+ */
+#define UDS_REGISTER_CONTROL_DTC_SETTING_HANDLER(                                  \
+  _instance,                                                                       \
+  _check,                                                                          \
+  _act,                                                                            \
+  _user_context                                                                    \
+)                                                                                  \
+  STRUCT_SECTION_ITERABLE(uds_registration_t,                                      \
+        _UDS_CAT_EXPAND(__uds_registration_control_dtc_setting_, __COUNTER__)) = { \
+    .instance = _instance,                                                         \
+    .type = UDS_REGISTRATION_TYPE__CONTROL_DTC_SETTING,                            \
+    .control_dtc_setting = {                                                       \
+      .user_context = _user_context,                                               \
+      .actor = {                                                                   \
+        .check = _check,                                                           \
+        .action = _act,                                                            \
+      },                                                                           \
+    },                                                                             \
+  };
+
+// clang-format on
+
+// #endregion CONTROL_DTC_SETTING
+
+// #region DYNAMICALLY_DEFINE_DATA_IDS
+
+// clang-format off
+
+/**
+ * @brief Register a new dynamically define data IDs event handler
+ * 
+ * @param _instance Pointer to associated the UDS server instance
+ * @param _check Check if the associated action should be executed
+ * @param _act Execute the handler for the dynamically define data IDs event
+ * @param _user_context Optional context provided by the user
+ * 
+ */
+#define UDS_REGISTER_DYNAMICALLY_DEFINE_DATA_IDS_HANDLER(                      \
+  _instance,                                                                   \
+  _check,                                                                      \
+  _act,                                                                        \
+  _user_context                                                                \
+)                                                                              \
+  STRUCT_SECTION_ITERABLE(uds_registration_t,                                  \
+        _UDS_CAT_EXPAND(__uds_registration_dyn_data_ids_, __COUNTER__)) = {    \
+    .instance = _instance,                                                     \
+    .type = UDS_REGISTRATION_TYPE__DYNAMIC_DEFINE_DATA_IDS,                    \
+    .dynamically_define_data_ids = {                                           \
+      .user_context = _user_context,                                           \
+      .dynamic_registration_id_list = SYS_SLIST_STATIC_INIT(                   \
+        &_UDS_CAT_EXPAND(__uds_registration_dyn_data_ids_, __COUNTER__ - 1)    \
+          .dynamically_define_data_ids.dynamic_registration_id_list            \
+      ),                                                                       \
+      .actor = {                                                               \
+        .check = _check,                                                       \
+        .action = _act,                                                        \
+      },                                                                       \
+    },                                                                         \
+  };
+
+/**
+ * @brief Register the default dynamically define data IDs event handler
+ * 
+ * @param _instance Pointer to associated the UDS server instance
+ */
+#define UDS_REGISTER_DYNAMICALLY_DEFINE_DATA_IDS_DEFAULT_HANDLER(            \
+  _instance                                                                  \
+)                                                                            \
+  UDS_REGISTER_DYNAMICALLY_DEFINE_DATA_IDS_HANDLER(                          \
+    _instance,                                                               \
+    uds_check_default_dynamically_define_data_ids,                           \
+    uds_action_default_dynamically_define_data_ids,                          \
+    NULL                                                                     \
+  )
+
+// clang-format on
+
+// #endregion DYNAMICALLY_DEFINE_DATA_IDS
+
+// #region Authentication
+
+// clang-format off
+
+/**
+ * @brief Register a new authentication event handler
+ * 
+ * @param _instance Pointer to associated the UDS server instance
+ * @param _auth_check Check if the associated action should be executed
+ * @param _auth_act Execute the handler for the authentication event
+ * @param _timeout_check Check if the associated action should be executed
+ * @param _timeout_act Execute the handler for the authentication timeout event
+ * @param _user_context Optional context provided by the user
+ * 
+ */
+#define UDS_REGISTER_AUTHENTICATION_HANDLER(                                   \
+  _instance,                                                                   \
+  _auth_check,                                                                 \
+  _auth_act,                                                                   \
+  _timeout_check,                                                              \
+  _timeout_act,                                                                \
+  _user_context                                                                \
+)                                                                              \
+  STRUCT_SECTION_ITERABLE(uds_registration_t,                                  \
+        _UDS_CAT_EXPAND(__uds_registration_authentication_, __COUNTER__)) = {  \
+    .instance = _instance,                                                     \
+    .type = UDS_REGISTRATION_TYPE__AUTHENTICATION,                             \
+    .auth = {                                                                  \
+      .user_context = _user_context,                                           \
+      .auth = {                                                                \
+        .check = _auth_check,                                                  \
+        .action = _auth_act,                                                   \
+      },                                                                       \
+      .timeout = {                                                             \
+        .check = _timeout_check,                                               \
+        .action = _timeout_act,                                                \
+      },                                                                       \
+    },                                                                         \
+  };
+
+// clang-format on
+
+// #endregion Authentication
+
+#ifdef CONFIG_UDS_USE_LINK_CONTROL
+
+// #region LINK_CONTROL
+
+// clang-format off
+
+/**
+ * @brief Register a new link control event handler
+ * 
+ * @param _instance Pointer to associated the UDS server instance
+ * @param _check Check if the associated action should be executed
+ * @param _act Execute the handler for the dynamically define data IDs event
+ * @param _user_context Optional context provided by the user
+ * 
+ * @note Note that the link settings should be reset after an ecu_reset or session timeout event.
+ *       This must be handled separately in the event handlers for these events and is not part of
+ *       this registration.
+ * 
+ * @note When using link settings, you should set the suppress response bit on the request that
+ *       triggers a change in the link settings (e.g. ecu reset or link control subfunction 0x03).
+ *       The response is send after the event is emitted and thus can lead to communication
+ *       problems when participants use different settings during transition.
+ *
+ */
+#define UDS_REGISTER_LINK_CONTROL_HANDLER(                                     \
+  _instance,                                                                   \
+  _check,                                                                      \
+  _act,                                                                        \
+  _user_context                                                                \
+)                                                                              \
+  STRUCT_SECTION_ITERABLE(uds_registration_t,                                  \
+        _UDS_CAT_EXPAND(__uds_registration_link_control_, __COUNTER__)) = {    \
+    .instance = _instance,                                                     \
+    .type = UDS_REGISTRATION_TYPE__LINK_CONTROL,                               \
+    .link_control = {                                                          \
+      .user_context = _user_context,                                           \
+      .actor = {                                                               \
+        .check =  _check,                                                      \
+        .action = _act,                                                        \
+      },                                                                       \
+    },                                                                         \
+  };
+
+/**
+ * @brief Register the default Link Control event handler
+ * 
+ * @param _instance Pointer to associated the UDS server instance
+ * 
+ * @note The default handler required handling of change diagnostic session
+ *       events so don't consume these events if you use this feature
+ */
+#define UDS_REGISTER_LINK_CONTROL_DEFAULT_HANDLER(     \
+  _instance                                            \
+)                                                      \
+  UDS_REGISTER_LINK_CONTROL_HANDLER(                   \
+    _instance,                                         \
+    uds_check_default_link_control,                    \
+    uds_action_default_link_control,                   \
+    NULL                                               \
+  )                                                    \
+  UDS_REGISTER_DIAG_SESSION_CTRL_HANDLER(              \
+  _instance,                                           \
+  uds_check_default_link_control_change_diag_session,  \
+  uds_action_default_link_control_change_diag_session, \
+  uds_check_default_link_control_change_diag_session,  \
+  uds_action_default_link_control_change_diag_session, \
+  NULL                                                 \
+)
+
+// clang-format on
+
+// #endregion LINK_CONTROL
+
+#endif  // CONFIG_UDS_USE_LINK_CONTROL
 
 #endif  // ARDEP_UDS_MACRO_H

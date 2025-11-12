@@ -1,46 +1,44 @@
 /*
- * Copyright (C) Frickly Systems GmbH
- * Copyright (C) MBition GmbH
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// Use scripts/uds_iso14229_demo_script.py to test
+#include "iso14229.h"
 
-#include "ardep/uds.h"
-
-#include <errno.h>
+#include <zephyr/logging/log.h>
+LOG_MODULE_REGISTER(iso14229_testing, LOG_LEVEL_DBG);
 
 #include <zephyr/drivers/can.h>
 #include <zephyr/kernel.h>
-#include <zephyr/logging/log.h>
 #include <zephyr/sys/byteorder.h>
 
 #include <ardep/iso14229.h>
-#include <iso14229.h>
 
-LOG_MODULE_REGISTER(iso14229_testing, LOG_LEVEL_DBG);
-
-static const struct device *can_dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_canbus));
-
-uint8_t dummy_memory[512] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x66, 0x7, 0x8};
+static const struct device* can_dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_canbus));
 
 struct iso14229_zephyr_instance inst;
 
-UDSErr_t read_mem_by_addr_impl(struct UDSServer *srv,
-                               const UDSReadMemByAddrArgs_t *read_args,
-                               void *user_context) {
-  uint32_t addr = (uintptr_t)read_args->memAddr;
+UDSErr_t event_callback(struct iso14229_zephyr_instance* inst,
+                        UDSEvent_t event,
+                        void* arg,
+                        void* user_context) {
+  if (event == UDS_EVT_DiagSessCtrl) {
+    UDSDiagSessCtrlArgs_t args = *(UDSDiagSessCtrlArgs_t*)arg;
+    LOG_INF("Session changed to session ID: 0x%02X", args.type);
+    return UDS_PositiveResponse;
+  } else if (event == UDS_EVT_SessionTimeout) {
+    LOG_INF("Session timeout occurred");
+    return UDS_PositiveResponse;
+  }
 
-  LOG_INF("Read Memory By Address: addr=0x%08X size=%u", addr,
-          read_args->memSize);
-
-  return read_args->copy(srv,
-                         &dummy_memory[(uint32_t)(uintptr_t)read_args->memAddr],
-                         read_args->memSize);
+  return UDS_NRC_SubFunctionNotSupported;
 }
 
 int main(void) {
+  LOG_INF("ISO14229 sample");
+
   UDSISOTpCConfig_t cfg = {
     // Hardware Addresses
     .source_addr = 0x7E8,  // Can ID Server (us)
@@ -53,27 +51,39 @@ int main(void) {
 
   int err = iso14229_zephyr_init(&inst, &cfg, can_dev, NULL);
   if (err) {
-    printk("Failed to initialize ISO 14229 Zephyr instance: %d\n", err);
+    LOG_ERR("Failed to initialize ISO 14229 Zephyr instance: %d", err);
     return err;
   }
 
   if (!device_is_ready(can_dev)) {
-    printk("CAN device not ready\n");
+    LOG_ERR("CAN device not ready");
     return -ENODEV;
   }
 
   err = can_set_mode(can_dev, CAN_MODE_NORMAL);
   if (err) {
-    printk("Failed to set CAN mode: %d\n", err);
+    LOG_ERR("Failed to set CAN mode: %d", err);
     return err;
   }
 
   err = can_start(can_dev);
   if (err) {
-    printk("Failed to start CAN device: %d\n", err);
+    LOG_ERR("Failed to start CAN device: %d", err);
     return err;
   }
-  printk("CAN device started\n");
+  LOG_INF("CAN device started\n");
 
-  inst.thread_run(&inst);
+  err = inst.set_callback(&inst, event_callback);
+  if (err) {
+    LOG_ERR("Failed to set event callback: %d", err);
+    return err;
+  }
+
+  err = inst.thread_start(&inst);
+  if (err) {
+    LOG_ERR("Failed to start UDS thread: %d", err);
+    return err;
+  }
+
+  LOG_INF("ISO14229 Thread started");
 }

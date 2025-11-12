@@ -1,9 +1,10 @@
 /*
- * Copyright (C) Frickly Systems GmbH
- * Copyright (C) MBition GmbH
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
  */
+
 #ifndef APP_TESTS_LIB_ISO14229_SRC_FIXTURE_H_
 #define APP_TESTS_LIB_ISO14229_SRC_FIXTURE_H_
 
@@ -17,6 +18,8 @@
 #include <iso14229.h>
 
 DECLARE_FAKE_VALUE_FUNC(uint8_t, copy, UDSServer_t *, const void *, uint16_t);
+
+DECLARE_FAKE_VALUE_FUNC(uint8_t, set_auth_state, UDSServer_t *, uint8_t);
 
 DECLARE_FAKE_VALUE_FUNC(UDSErr_t,
                         data_id_check_fn,
@@ -37,6 +40,8 @@ extern uint8_t data_id_rw_data[4];
 extern const uint16_t data_id_rw_duplicated1;
 extern const uint16_t data_id_rw_duplicated2;
 extern uint8_t data_id_rw_duplicated_data[4];
+
+extern const uint16_t routine_id;
 
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
 extern bool test_dynamic_registration_check_invoked;
@@ -62,5 +67,17 @@ UDSErr_t receive_event(struct uds_instance_t *inst,
  * Beware that the data is in big endian!
  */
 void assert_copy_data(const uint8_t *data, uint32_t len);
+
+/**
+ * @brief same as `assert_copy_data` but allows to specify an offset
+ */
+void assert_copy_data_offset(const uint8_t *data,
+                             uint32_t len,
+                             uint32_t offset);
+
+/**
+ * @brief Assert that when using authentication, the correct returnValue is set
+ */
+void assert_auth_state(uint8_t expected_state);
 
 #endif  // APP_TESTS_LIB_ISO14229_SRC_FIXTURE_H_

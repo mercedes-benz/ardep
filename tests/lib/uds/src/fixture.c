@@ -1,21 +1,30 @@
 /*
- * Copyright (C) Frickly Systems GmbH
- * Copyright (C) MBition GmbH
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
  */
 
+#include "ardep/uds_macro.h"
 #include "fixture.h"
+#include "iso14229.h"
 
 #include <string.h>
 
 #include <zephyr/drivers/can.h>
 #include <zephyr/drivers/can/can_fake.h>
+#include <zephyr/fs/fs.h>
+#include <zephyr/fs/littlefs.h>
+#include <zephyr/storage/flash_map.h>
 #include <zephyr/ztest.h>
+
+#include <errno.h>
 
 DEFINE_FFF_GLOBALS;
 
 DEFINE_FAKE_VALUE_FUNC(uint8_t, copy, UDSServer_t *, const void *, uint16_t);
+
+DEFINE_FAKE_VALUE_FUNC(uint8_t, set_auth_state, UDSServer_t *, uint8_t);
 
 DEFINE_FAKE_VALUE_FUNC(UDSErr_t,
                        data_id_check_fn,
@@ -29,6 +38,7 @@ DEFINE_FAKE_VALUE_FUNC(UDSErr_t,
 
 #define FFF_FAKES_LIST(FAKE) \
   FAKE(copy)                 \
+  FAKE(set_auth_state)       \
   FAKE(data_id_check_fn)     \
   FAKE(data_id_action_fn)
 
@@ -49,6 +59,8 @@ const uint16_t data_id_rw_duplicated1 = 3;
 const uint16_t data_id_rw_duplicated2 = 3;
 uint8_t data_id_rw_duplicated_data[4];
 
+const uint16_t routine_id = 0xDEAD;
+
 UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(&fixture_uds_instance,
                                         data_id_r,
                                         data_id_r_data,
@@ -56,6 +68,9 @@ UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(&fixture_uds_instance,
                                         data_id_check_fn,
                                         data_id_action_fn,
                                         // write
+                                        NULL,
+                                        NULL,
+                                        // io control
                                         NULL,
                                         NULL,
                                         NULL)
@@ -67,6 +82,9 @@ UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(&fixture_uds_instance,
                                         data_id_check_fn,
                                         data_id_action_fn,
                                         // write
+                                        data_id_check_fn,
+                                        data_id_action_fn,
+                                        // io control
                                         data_id_check_fn,
                                         data_id_action_fn,
                                         NULL)
@@ -81,6 +99,9 @@ UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(&fixture_uds_instance,
                                         // write
                                         data_id_check_fn,
                                         data_id_action_fn,
+                                        // io control
+                                        data_id_check_fn,
+                                        data_id_action_fn,
                                         NULL)
 
 UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(&fixture_uds_instance,
@@ -90,6 +111,9 @@ UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(&fixture_uds_instance,
                                         data_id_check_fn,
                                         data_id_action_fn,
                                         // write
+                                        data_id_check_fn,
+                                        data_id_action_fn,
+                                        // io control
                                         data_id_check_fn,
                                         data_id_action_fn,
                                         NULL)
@@ -120,6 +144,48 @@ UDS_REGISTER_READ_DTC_INFO_HANDLER_ALL(&fixture_uds_instance,
                                        data_id_action_fn,
                                        NULL)
 
+UDS_REGISTER_CLEAR_DIAG_INFO_HANDLER(&fixture_uds_instance,
+                                     data_id_check_fn,
+                                     data_id_action_fn,
+                                     NULL)
+
+UDS_REGISTER_ROUTINE_CONTROL_HANDLER(&fixture_uds_instance,
+                                     routine_id,
+                                     data_id_check_fn,
+                                     data_id_action_fn,
+                                     NULL)
+
+UDS_REGISTER_SECURITY_ACCESS_HANDLER(&fixture_uds_instance,
+                                     data_id_check_fn,
+                                     data_id_action_fn,
+                                     data_id_check_fn,
+                                     data_id_action_fn,
+                                     NULL)
+
+UDS_REGISTER_COMMUNICATION_CONTROL_HANDLER(&fixture_uds_instance,
+                                           data_id_check_fn,
+                                           data_id_action_fn,
+                                           NULL)
+
+UDS_REGISTER_CONTROL_DTC_SETTING_HANDLER(&fixture_uds_instance,
+                                         data_id_check_fn,
+                                         data_id_action_fn,
+                                         NULL)
+
+UDS_REGISTER_LINK_CONTROL_HANDLER(&fixture_uds_instance,
+                                  data_id_check_fn,
+                                  data_id_action_fn,
+                                  NULL)
+
+UDS_REGISTER_AUTHENTICATION_HANDLER(&fixture_uds_instance,
+                                    data_id_check_fn,
+                                    data_id_action_fn,
+                                    data_id_check_fn,
+                                    data_id_action_fn,
+                                    NULL)
+
+UDS_REGISTER_DYNAMICALLY_DEFINE_DATA_IDS_DEFAULT_HANDLER(&fixture_uds_instance)
+
 static const UDSISOTpCConfig_t default_cfg = {
   // Hardware Addresses
   .source_addr = 0x7E8,  // Can ID Server (us)
@@ -133,10 +199,16 @@ static const UDSISOTpCConfig_t default_cfg = {
 static uint8_t copied_data[4096];
 static uint32_t copied_len;
 
-void assert_copy_data(const uint8_t *data, uint32_t len) {
-  zassert_equal(copied_len, len, "Expected length %u, but got %u", len,
+void assert_copy_data_offset(const uint8_t *data,
+                             uint32_t len,
+                             uint32_t offset) {
+  zassert_equal(copied_len, len + offset, "Expected length %u, but got %u", len,
                 copied_len);
-  zassert_mem_equal(copied_data, data, len);
+  zassert_mem_equal(copied_data + offset, data, len);
+}
+
+void assert_copy_data(const uint8_t *data, uint32_t len) {
+  assert_copy_data_offset(data, len, 0);
 }
 
 UDSErr_t receive_event(struct uds_instance_t *inst,
@@ -148,10 +220,21 @@ UDSErr_t receive_event(struct uds_instance_t *inst,
 static uint8_t custom_copy(UDSServer_t *server,
                            const void *data,
                            uint16_t len) {
-  copied_len = len;
-  memcpy(copied_data, data, len);
+  memcpy(copied_data + copied_len, data, len);
+  copied_len += len;
 
   return 0;
+}
+
+static uint8_t auth_state_data;
+
+void assert_auth_state(uint8_t expected_state) {
+  zassert_equal(expected_state, auth_state_data);
+}
+
+static uint8_t custom_set_auth_state(UDSServer_t *server, uint8_t state) {
+  auth_state_data = state;
+  return UDS_OK;
 }
 
 static void *uds_setup(void) {
@@ -168,15 +251,51 @@ static void *uds_setup(void) {
   return &fixture;
 }
 
+  FS_LITTLEFS_DECLARE_DEFAULT_CONFIG(lfs_storage);
+
+  static struct fs_mount_t fixture_fs_mount = {
+    .type = FS_LITTLEFS,
+    .fs_data = &lfs_storage,
+    .storage_dev = (void *)FIXED_PARTITION_ID(storage_partition),
+    .mnt_point = "/lfs",
+  };
+
+  extern int fixture_fs_wipe(void) {
+    const struct flash_area *fa;
+    int rc = flash_area_open(FIXED_PARTITION_ID(storage_partition), &fa);
+
+    if (rc < 0) {
+      return rc;
+    }
+
+    rc = flash_area_erase(fa, 0, fa->fa_size);
+    flash_area_close(fa);
+
+    return rc;
+  }
+
+  static void fixture_fs_mount_or_fail(void) {
+    fs_unmount(&fixture_fs_mount);
+
+    int rc = fixture_fs_wipe();
+    zassert_true(rc >= 0, "flash erase failed (%d)", rc);
+
+    rc = fs_mount(&fixture_fs_mount);
+    zassert_equal(rc, 0, "fs_mount failed (%d)", rc);
+  }
+
 static void uds_before(void *f) {
   struct lib_uds_fixture *fixture = f;
   const struct device *dev = fixture->can_dev;
   struct uds_instance_t *uds_instance = fixture->instance;
 
+  fixture_fs_mount_or_fail();
+
   FFF_FAKES_LIST(RESET_FAKE);
   FFF_RESET_HISTORY();
 
   copy_fake.custom_fake = custom_copy;
+  set_auth_state_fake.custom_fake = custom_set_auth_state;
 
   int ret = uds_init(uds_instance, &default_cfg, dev, fixture);
   assert(ret == 0);
@@ -187,24 +306,42 @@ static void uds_before(void *f) {
   test_dynamic_registration_check_invoked = false;
   test_dynamic_registration_action_invoked = false;
 
+  data_id_r_data[0] = 0x12;
+  data_id_r_data[1] = 0x34;
+  data_id_r_data[2] = 0x56;
+  data_id_r_data[3] = 0x78;
+
+  data_id_rw_data[0] = 0x87;
+  data_id_rw_data[1] = 0x65;
+  data_id_rw_data[2] = 0x43;
+  data_id_rw_data[3] = 0x21;
+
+  data_id_rw_duplicated_data[0] = 0x11;
+  data_id_rw_duplicated_data[1] = 0x22;
+  data_id_rw_duplicated_data[2] = 0x33;
+  data_id_rw_duplicated_data[3] = 0x44;
+
   memset(copied_data, 0, sizeof(copied_data));
   copied_len = 0;
+
+  auth_state_data = 0;
 }
 
 static void uds_after(void *f) {
   struct lib_uds_fixture *fixture = f;
 
-#ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
-  struct uds_registration_t *next = fixture->instance->dynamic_registrations;
+  fs_unmount(&fixture_fs_mount);
 
-  // Free all dynamically registered event handler
-  while (next != NULL) {
-    struct uds_registration_t *current = next;
-    next = current->next;
-    k_free(current);
+#ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
+  struct uds_registration_t *reg;
+  struct uds_registration_t *temp;
+
+  SYS_SLIST_FOR_EACH_CONTAINER_SAFE (&fixture->instance->dynamic_registrations,
+                                     reg, temp, node) {
+    k_free(reg);
   }
 
-  fixture->instance->dynamic_registrations = NULL;
+  sys_slist_init(&fixture->instance->dynamic_registrations);
 #endif
 }
 

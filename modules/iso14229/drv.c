@@ -1,6 +1,6 @@
 /*
- * Copyright (C) Frickly Systems GmbH
- * Copyright (C) MBition GmbH
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -45,5 +45,4 @@ int isotp_user_send_can(const uint32_t arbitration_id,
 
 uint32_t isotp_user_get_us(void) { return k_uptime_get_32() * 1000; }
 
-// todo: comment schreiben
 uint32_t UDSMillis() { return k_uptime_get_32(); }

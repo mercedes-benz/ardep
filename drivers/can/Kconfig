@@ -4,22 +4,6 @@
 # SPDX-License-Identifier: Apache-2.0
 
 menu "CAN Drivers"
-  menuconfig CAN_TERMINATION_GPIO
-      bool "CAN termination gpio control"
-      help
-        This option enables the termination resistor module.
-
-  if CAN_TERMINATION_GPIO
-
-  config CAN_TERMINATION_INIT_PRIORITY
-      int "CAN termination gpio init priority"
-      default 10
-      help
-        This option sets the init priority of the termination resistor module.
-
-  endif # CAN_TERMINATION_GPIO
-
-
   menuconfig LIN2CAN
     depends on CAN
     depends on ABSTRACT_LIN

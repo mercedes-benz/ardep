@@ -1,6 +1,6 @@
 /*
- * Copyright (C) Frickly Systems GmbH
- * Copyright (C) MBition GmbH
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -14,6 +14,8 @@
 
 #include <ardep/iso14229.h>
 #include <iso14229.h>
+
+extern bool session_timeout_event_fired;
 
 // Test callback function for UDS events
 DECLARE_FAKE_VALUE_FUNC(UDSErr_t,
@@ -46,6 +48,17 @@ void tick_thread(struct iso14229_zephyr_instance *instance);
  * @param fixture The fixture containing the configuration and device
  */
 void advance_time_and_tick_thread(struct iso14229_zephyr_instance *instance);
+
+/**
+ * Advance Time andTick the iso14229 thread once
+ *
+ * Necessary to elapse the timeout to send the next response to the client
+ *
+ * @param fixture The fixture containing the configuration and device
+ * @param num_of_ticks Number of times to tick the thread
+ */
+void advance_time_and_tick_thread_num(struct iso14229_zephyr_instance *instance,
+                                      size_t num_of_ticks);
 
 /**
  *  Fake the reception of a physical CAN Frame

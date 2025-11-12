@@ -1,7 +1,27 @@
+/*
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 / {
     chosen {
         zephyr,canbus = &can0;
     };
+
+    aliases {
+		led0 = &red_led;
+    };
+
+	leds {
+		compatible = "gpio-leds";
+
+		red_led: red_led {
+            gpios = <&gpio0 0 GPIO_ACTIVE_LOW>;
+			label = "Red";
+		};
+	};
 };
 
 &can0 {

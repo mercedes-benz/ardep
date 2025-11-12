@@ -10,8 +10,37 @@ menuconfig ISO14229
     
 if ISO14229
 
-module = ISO14229
-module-str = iso14229
-source "subsys/logging/Kconfig.template.log_config"
+    module = ISO14229
+    module-str = iso14229
+    source "subsys/logging/Kconfig.template.log_config"
+    
+    menuconfig ISO14229_THREAD
+        bool "Enable ISO14229 thread"
+        default y
+        help
+          Enable this option to run the ISO14229 protocol in its own thread.
+          This is recommended for most applications.
+          
+        if ISO14229_THREAD
+    
+            config ISO14229_THREAD_STACK_SIZE
+                int "ISO14229 thread stack size"
+                default 1024
+                help
+                  Stack size for the ISO14229 thread. In this thread, all incoming CAN
+                  messages and events are handled.    
+                  
+        endif # ISO14229_THREAD
+
+    config ISO14229_THREAD_SLEEP_US
+        int "ISO14229 thread sleep time"
+        default 1000
+        help
+          Sleep time for the ISO14229 thread in microseconds. In this thread, all incoming CAN
+          messages and events are handled. A lower value means lower latency,
+          but higher CPU usage.
+
+    config ISO_TP_DEFAULT_BLOCK_SIZE
+        default 22 # See msgq size in include/ardep/iso14229.h
 
 endif # ISO14229

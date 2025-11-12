@@ -1,3 +1,10 @@
+/*
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 &hvdac {
   // set the gains of the channels
   // channel 0 has gain of 8 and channel 1 has gain of 1

@@ -1,3 +1,8 @@
+# SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+# SPDX-FileCopyrightText: Copyright (C) MBition GmbH
+#
+# SPDX-License-Identifier: Apache-2.0
+
 from argparse import ArgumentParser, Namespace
 from os import path
 import subprocess
@@ -16,7 +21,7 @@ class BuildBootloader:
     def add_args(self, parser: ArgumentParser):
         subcommand_parser: ArgumentParser = parser.add_parser(
             self.command,
-            help=f"builds the bootloader for the {self._board_name}",
+            help=f"DEPRECATED, use sysbuild! Builds the bootloader for the {self._board_name}",
         )
 
         subcommand_parser.add_argument(
@@ -27,6 +32,12 @@ class BuildBootloader:
             metavar="DIR",
         )
 
+        subcommand_parser.add_argument(
+            "-b",
+            "--board-version",
+            help="version of the board to build for",
+        )
+
     def run(self, args: Namespace):
         build_dir: str = args.build_dir
         mcuboot_dir = f"{path.dirname(path.dirname(path.dirname(path.dirname(path.realpath(__file__)))))}/bootloader/mcuboot/boot/zephyr"
@@ -34,21 +45,38 @@ class BuildBootloader:
         extra_conf_file = f"{board_dir}/mcuboot.conf"
         extra_overlay_file = f"{board_dir}/mcuboot.overlay"
 
+        board = "ardep" if args.board_version is None else f"ardep@{args.board_version}"
+
+        extra_conf_file_1_0_0 = f"{board_dir}/mcuboot_1_0_0.conf"
+
+        extra_conf_arg = f"-DEXTRA_CONF_FILE={extra_conf_file}"
+        flash_runner_arg = None
+
+        if args.board_version is not None:
+            board_major_version = int(args.board_version.split(".")[0])
+            if board_major_version < 2:
+                extra_conf_arg = (
+                    f"-DEXTRA_CONF_FILE={extra_conf_file};{extra_conf_file_1_0_0}"
+                )
+                flash_runner_arg = "-DBOARD_FLASH_RUNNER=jlink"
+
         cmd = [
             "west",
             "build",
             "--pristine",
             "auto",
             "--board",
-            "ardep",
+            board,
             "--build-dir",
             f"{build_dir}",
             mcuboot_dir,
             "--",
-            f"-DEXTRA_CONF_FILE={extra_conf_file}",
+            extra_conf_arg,
             f"-DEXTRA_DTC_OVERLAY_FILE={extra_overlay_file}",
-            "-DBOARD_FLASH_RUNNER=jlink"
         ]
+
+        if flash_runner_arg:
+            cmd.append(flash_runner_arg)
 
         log.inf(f"Building bootloader with: {' '.join(cmd)}\n\n")
 

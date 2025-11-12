@@ -40,15 +40,19 @@ Install the additional dependencies for the ardep board:
     .. code-block:: bash
 
         sudo apt update
-        sudo apt install --no-install-recommends iproute2 dfu-util git-lfs
+        sudo apt install --no-install-recommends iproute2 dfu-util git-lfs gdb-multiarch
 
    .. tab:: Windows
    
-        Install the latest `dfu-util <https://dfu-util.sourceforge.net/>`_ from the `release page <https://dfu-util.sourceforge.net/releases/>`_ (e.g. *dfu-util-X.YY-binaries.tar.xz*), extract the archive and ensure the executables are in your *$PATH*. [2]_
+        - Install the latest `dfu-util <https://dfu-util.sourceforge.net/>`_ from the `release page <https://dfu-util.sourceforge.net/releases/>`_ (e.g. *dfu-util-X.YY-binaries.tar.xz*), extract the archive and ensure the executables are in your *$PATH*. [2]_
 
-        Open a new *command prompt* or *powershell* and run ``dfu-util --version`` to check that the command is available.
-        
-    
+          Open a new *command prompt* or *powershell* and run ``dfu-util --version`` to check that the command is available.
+          
+        - Install the latest `ARM toolchain <https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads>`_ for a current version of GDB. On the download page, select the latest *AArch32 bare-metal target (arm-none-eabi)* toolchain (e.g. *arm-gnu-toolchain-14.3.rel1-mingw-w64-x86_64-arm-none-eabi.exe*) and install it.
+
+          It is recommended, that you add the *bin* directory of the installation to your *$PATH* for easier access to the executables (e.g. the path ``C:\Program Files (x86)\Arm GNU Toolchain arm-none-eabi\14.3 rel1\bin``). [2]_
+
+
 Set up your workspace
 *********************
 
@@ -235,43 +239,59 @@ We will install the `Zephyr SDK <https://docs.zephyrproject.org/4.2.0/develop/to
             
 Enable the DFU-Util to perform firmware upgrades
 ************************************************
+
+.. note::
+
+    This step is only required if you have a board revision < 2.0.0
+
+.. tabs::
+
+    .. tab:: Linux
+
+        .. code-block:: bash
+
+            west ardep create-udev-rule
+            sudo udevadm control --reload-rules
+            sudo udevadm trigger
             
-
-   .. tabs::
-
-        .. tab:: Linux
-
-            .. code-block:: bash
-
-                west ardep create-udev-rule
-                sudo udevadm control --reload-rules
-                sudo udevadm trigger
-                
-            This rule allows ``dfu-util`` to access your ardep board without sudo privileges (required for firmware upgrades via ``dfu-util``).
-            
-            If your ardep board is already connected, unplug and replug it.
-                           
-                    
-        .. tab:: Windows
+        This rule allows ``dfu-util`` to access your ardep board without sudo privileges (required for firmware upgrades via ``dfu-util``).
         
-            We need to install WinUSB drivers for the device in order to be able to use dfu-util.
+        If your ardep board is already connected, unplug and replug it.
+                       
+                
+    .. tab:: Windows
+    
+        We need to install WinUSB drivers for the device in order to be able to use dfu-util.
 
-            You can use the `Zadig <https://zadig.akeo.ie/>`_ tool to install the drivers.
-            
-            If you haven't connected your *ARDEP* board to host, connect it now.
+        You can use the `Zadig <https://zadig.akeo.ie/>`_ tool to install the drivers.
+        
+        If you haven't connected your *ARDEP* board to host, connect it now.
 
-            After starting *Zadig*, ensure the *List all devices* option is turned on in the Options menu.
-            Then, in the dropdown menu, select *Ardep (Interface 0)* install the *WinUSB* driver. Then repeat the step for *Ardep (Interface 2)*.
-            This allows us to set the device into DFU mode.
-            
-            .. image:: windows_install_usb_driver.png
-               :alt: Installing WinUSB driver using Zadig
-            
-            We also need to install a driver for the DFU mode. For this, we need to build a sample application and unsuccessfully try to flash the firmware (see `Build your first app`_).
-            
-            After the initial flash command failed, select the *Ardep board* in the dropdown menu and install the *WinUSB* driver again.
-            
-            Now, flashing the app should succeed.
+        After starting *Zadig*, ensure the *List all devices* option is turned on in the Options menu.
+        Then, in the dropdown menu, select *Ardep (Interface 0)* install the *WinUSB* driver. Then repeat the step for *Ardep (Interface 2)*.
+        This allows us to set the device into DFU mode.
+        
+        .. image:: windows_install_usb_driver.png
+           :alt: Installing WinUSB driver using Zadig
+        
+        We also need to install a driver for the DFU mode. For this, we need to build a sample application and unsuccessfully try to flash the firmware (see `Build your first app`_).
+        
+        After the initial flash command failed, select the *Ardep board* in the dropdown menu and install the *WinUSB* driver again.
+        
+        Now, flashing the app should succeed.
+
+Enable the Black-Magic Debugger on your host
+********************************************
+
+.. note::
+
+    This step is recommended, if you have a board revision >= 2.0.0
+    
+
+Perform the `Connecting to your Computer <https://black-magic.org/getting-started.html#connecting-to-your-computer>`_ Step in the *Getting Started Guide* of the Black-Magic Debugger.
+
+This enables you to use the on-board debugger without root/admin privileges.
+
 
 
 Build your first app 
@@ -306,6 +326,10 @@ Build the :ref:`led_sample` with:
 
                         cd $Env:HOMEPATH\ardep-workspace\ardep
                         west build --board ardep samples\led
+                        
+.. note::
+
+    If you're using an older version of the board, append the board version to the boards name (e.g. ``--board ardep@a1.0.0`` or ``--board ardep@1`` for version 1 of the board).
 
 Flash the app using dfu-util:
 

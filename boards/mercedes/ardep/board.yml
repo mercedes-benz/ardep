@@ -1,5 +1,11 @@
 board:
   name: ardep
   vendor: mercedes
+  revision:
+    format: major.minor.patch
+    default: "2.0.0"
+    revisions:
+      - name: "1.0.0"
+      - name: "2.0.0"
   socs:
     - name: stm32g474xx

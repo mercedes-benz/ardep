@@ -10,9 +10,20 @@ Console Output
 Fimrware Output
 ===============
 
-Per default, every application build for the *ardep* board will include a cdc-acm driver.
-This means, when connecting the board via usb to your pc, a new serial device should be visible in your system.
-You can use this device to communicate with the board. The default baudrate is 115200.
+.. tabs::
+
+
+    .. tab:: Ardep v2.0.0 and later
+
+        The output of the application is send on ``UART-A`` and additionally forwarded via the on-board debugger to a cdc-acm device on the host system.
+
+    .. tab:: Ardep v1.0.0
+
+       Per default, every application build for the *ardep* board will include a cdc-acm driver.
+       This means, when connecting the board via usb to your pc, a new serial device should be visible in your system.
+
+
+You can use the cdc-acm device to communicate with the board. The default baudrate is 115200.
 
 .. tabs::
 
@@ -37,5 +48,15 @@ You can use this device to communicate with the board. The default baudrate is 1
 Bootloader Output
 =================
 
-Since the bootloader does not contain this driver, its output will not be redirected and instead be transmitted via UART on the UART-A pins.
-You will need an external UART to USB adapter if you want to see the bootloader output on you pc.
+The bootloader output is by default available on the ``UART-A`` interface.
+
+.. tabs::
+
+    .. tab:: Ardep v2.0.0 and later
+
+       Just as the firmwares output, the bootloaders output is also forwarded via the on-board debugger to a cdc-acm device on the host system.
+
+    .. tab:: Ardep v1.0.0
+
+       The bootloader does not contain the cdc-acm driver and is only emitted via ``UART-A``.
+       If you want to see the bootloader output on your pc, you will need an external UART to USB adapter connected to the ``UART-A`` pins.

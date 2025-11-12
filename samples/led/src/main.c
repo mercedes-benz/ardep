@@ -1,6 +1,6 @@
 /*
- * Copyright (C) Frickly Systems GmbH
- * Copyright (C) MBition GmbH
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -61,6 +61,7 @@ int configure_leds() {
 
 // Sets the logic level for each LED port according to the state
 void toggle_leds(bool red_is_on) {
+  LOG_INF("Toggle LEDs");
   gpio_pin_set_dt(&red_led, red_is_on);
   gpio_pin_set_dt(&green_led, !red_is_on);
 }

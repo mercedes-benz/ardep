@@ -1,0 +1,44 @@
+/*
+ * SPDX-FileCopyrightText: Copyright (C) 2025 Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) 2025 MBition GmbH
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/ {
+        sram@2001FFFE {
+                compatible = "zephyr,memory-region", "mmio-sram";
+                reg = <0x2001FFFE 0x2>;
+                zephyr,memory-region = "RetainedMem";
+                status = "okay";
+
+                retainedmem {
+                        compatible = "zephyr,retained-ram";
+                        status = "okay";
+                        #address-cells = <1>;
+                        #size-cells = <1>;
+
+                        retention0: retention@0 {
+                                compatible = "zephyr,retention";
+                                status = "okay";
+                                reg = <0x0 0x1>;
+                        };
+
+                        retention1: retention@1 {
+                                compatible = "zephyr,retention";
+                                status = "okay";
+                                reg = <0x1 0x1>;
+                        };
+                };
+        };
+
+        chosen {
+                zephyr,boot-mode = &retention0;
+                zephyr,firmware-loader-args = &retention1;
+        };
+};
+
+/* Reduce SRAM0 usage by 2 bytes to account for non-init area */
+&sram0 {
+        reg = <0x20000000 0x1FFFC>;
+};

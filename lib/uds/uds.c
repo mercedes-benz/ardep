@@ -1,64 +1,56 @@
 /*
- * Copyright (C) Frickly Systems GmbH
- * Copyright (C) MBition GmbH
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "diag_session_ctrl.h"
-#include "memory_by_address.h"
+#include <stdint.h>
 
 #include <zephyr/logging/log.h>
+#include <zephyr/sys/util.h>
 LOG_MODULE_REGISTER(uds, CONFIG_UDS_LOG_LEVEL);
 
-#include "data_by_identifier.h"
-#include "ecu_reset.h"
-#include "read_dtc_info.h"
+#include "uds.h"
 
 #include <ardep/iso14229.h>
 #include <ardep/uds.h>
 #include <iso14229.h>
 
 // Wraps the logic to check and execute action on the event
-UDSErr_t _uds_check_and_act_on_event(struct uds_instance_t* instance,
-                                     struct uds_registration_t* reg,
-                                     uds_check_fn check,
-                                     uds_action_fn action,
-                                     UDSEvent_t event,
-                                     void* arg,
-                                     bool* found_at_least_one_match,
-                                     bool* consume_event) {
-  struct uds_context context = {
-    .instance = instance,
-    .registration = reg,
-    .event = event,
-    .arg = arg,
-  };
+static UDSErr_t uds_check_and_act_on_event(
+    struct uds_context* context,
+    const struct uds_event_handler_data* handler,
+    bool* found_at_least_one_match,
+    bool* consume_event) {
+  struct uds_registration_t* reg = context->registration;
   UDSErr_t ret = UDS_OK;
 
-  if (!reg->applies_to_event(event)) {
+  if (reg->type != handler->registration_type) {
     *consume_event = false;
     return UDS_OK;
   }
 
   bool apply_action = false;
+  uds_check_fn check = handler->get_check(reg);
   if (!check) {
     *consume_event = false;
     return ret;
   }
-  ret = check(&context, &apply_action);
+  ret = check(context, &apply_action);
   if (ret != UDS_OK) {
     LOG_WRN("Check failed for Registration at addr: %p. Err: %d", reg, ret);
     *consume_event = false;
     return ret;
   }
 
+  uds_action_fn action = handler->get_action(reg);
   if (!apply_action || !action) {
     *consume_event = false;
     return ret;
   }
 
-  ret = action(&context, consume_event);
+  ret = action(context, consume_event);
   if (ret != UDS_OK) {
     LOG_WRN("Action failed for Registration at addr: %p. Err: %d", reg, ret);
     return ret;
@@ -68,58 +60,27 @@ UDSErr_t _uds_check_and_act_on_event(struct uds_instance_t* instance,
   return UDS_OK;
 }
 
-static UDSErr_t default_nrc_when_no_handler_found(UDSEvent_t event) {
-  switch (event) {
-    case UDS_EVT_DiagSessCtrl:
-    case UDS_EVT_SessionTimeout:
-      // We don't require a handler for this event
-      return UDS_PositiveResponse;
-    case UDS_EVT_WriteDataByIdent:
-    case UDS_EVT_ReadDataByIdent:
-      return UDS_NRC_RequestOutOfRange;
-    case UDS_EVT_EcuReset:
-    case UDS_EVT_DoScheduledReset:
-    case UDS_EVT_ReadDTCInformation:
-      return UDS_NRC_SubFunctionNotSupported;
-    case UDS_EVT_Err:
-    case UDS_EVT_ReadMemByAddr:
-    case UDS_EVT_CommCtrl:
-    case UDS_EVT_SecAccessRequestSeed:
-    case UDS_EVT_SecAccessValidateKey:
-    case UDS_EVT_WriteMemByAddr:
-    case UDS_EVT_RoutineCtrl:
-    case UDS_EVT_RequestDownload:
-    case UDS_EVT_RequestUpload:
-    case UDS_EVT_TransferData:
-    case UDS_EVT_RequestTransferExit:
-    case UDS_EVT_RequestFileTransfer:
-    case UDS_EVT_Custom:
-    case UDS_EVT_Poll:
-    case UDS_EVT_SendComplete:
-    case UDS_EVT_ResponseReceived:
-    case UDS_EVT_Idle:
-    case UDS_EVT_MAX:
-    default:
-      // TODO: Every event should be handled. This should be unreachable.
-      return UDS_NRC_ConditionsNotCorrect;
-      break;
-  }
-}
-
 // Iterates over event handlers to apply the actions for the event
 UDSErr_t uds_handle_event(struct uds_instance_t* instance,
                           UDSEvent_t event,
                           void* arg,
-                          uds_get_check_fn get_check,
-                          uds_get_action_fn get_action) {
+                          const struct uds_event_handler_data* handler) {
   bool found_at_least_one_match = false;
 
   // We start with static registrations
   STRUCT_SECTION_FOREACH (uds_registration_t, reg) {
     bool consume_event = true;
-    int ret = _uds_check_and_act_on_event(
-        instance, reg, get_check(reg), get_action(reg), event, arg,
-        &found_at_least_one_match, &consume_event);
+
+    struct uds_context context = {
+      .instance = instance,
+      .registration = reg,
+      .server = &instance->iso14229.server,
+      .event = event,
+      .arg = arg,
+    };
+
+    int ret = uds_check_and_act_on_event(
+        &context, handler, &found_at_least_one_match, &consume_event);
     if (consume_event || ret != UDS_OK) {
       return ret;
     }
@@ -127,22 +88,28 @@ UDSErr_t uds_handle_event(struct uds_instance_t* instance,
 
   // Optional dynamic registrations
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
-  struct uds_registration_t* reg = instance->dynamic_registrations;
-  while (reg != NULL) {
+  struct uds_registration_t* reg;
+  SYS_SLIST_FOR_EACH_CONTAINER (&instance->dynamic_registrations, reg, node) {
     bool consume_event = false;
-    int ret = _uds_check_and_act_on_event(
-        instance, reg, get_check(reg), get_action(reg), event, arg,
-        &found_at_least_one_match, &consume_event);
+
+    struct uds_context context = {
+      .instance = instance,
+      .registration = reg,
+      .server = &instance->iso14229.server,
+      .event = event,
+      .arg = arg,
+    };
+
+    int ret = uds_check_and_act_on_event(
+        &context, handler, &found_at_least_one_match, &consume_event);
     if (consume_event || ret != UDS_OK) {
       return ret;
     }
-
-    reg = reg->next;
   }
 #endif  // CONFIG_UDS_USE_DYNAMIC_REGISTRATION
 
   if (!found_at_least_one_match) {
-    return default_nrc_when_no_handler_found(event);
+    return handler->default_nrc;
   }
 
   return UDS_PositiveResponse;
@@ -155,95 +122,127 @@ UDSErr_t uds_event_callback(struct iso14229_zephyr_instance* inst,
                             void* user_context) {
   struct uds_instance_t* instance = user_context;
 
-  switch (event) {
-    case UDS_EVT_DiagSessCtrl:
-      return uds_handle_event(instance, event, arg,
-                              uds_get_check_for_diag_session_ctrl,
-                              uds_get_action_for_diag_session_ctrl);
-    case UDS_EVT_SessionTimeout:
-      return uds_handle_event(instance, event, arg,
-                              uds_get_check_for_session_timeout,
-                              uds_get_action_for_session_timeout);
-    case UDS_EVT_EcuReset:
-      return uds_handle_event(instance, event, arg, uds_get_check_for_ecu_reset,
-                              uds_get_action_for_ecu_reset);
-
-    case UDS_EVT_DoScheduledReset:
-      return uds_handle_event(instance, event, arg,
-                              uds_get_check_for_execute_scheduled_reset,
-                              uds_get_action_for_execute_scheduled_reset);
-
-    case UDS_EVT_ReadDataByIdent:
-      return uds_handle_event(instance, event, arg,
-                              uds_get_check_for_read_data_by_identifier,
-                              uds_get_action_for_read_data_by_identifier);
-
-    case UDS_EVT_ReadMemByAddr:
-      return uds_handle_event(instance, event, arg,
-                              uds_get_check_for_read_memory_by_addr,
-                              uds_get_action_for_read_memory_by_addr);
-    case UDS_EVT_WriteDataByIdent:
-      return uds_handle_event(instance, event, arg,
-                              uds_get_check_for_write_data_by_identifier,
-                              uds_get_action_for_write_data_by_identifier);
-    case UDS_EVT_WriteMemByAddr:
-      return uds_handle_event(instance, event, arg,
-                              uds_get_check_for_write_memory_by_addr,
-                              uds_get_action_for_write_memory_by_addr);
-    case UDS_EVT_ReadDTCInformation:
-      return uds_handle_event(instance, event, arg,
-                              uds_get_check_for_read_dtc_info,
-                              uds_get_action_for_read_dtc_info);
-    case UDS_EVT_Err:
-    case UDS_EVT_ClearDiagnosticInfo:
-    case UDS_EVT_CommCtrl:
-    case UDS_EVT_SecAccessRequestSeed:
-    case UDS_EVT_SecAccessValidateKey:
-    case UDS_EVT_RoutineCtrl:
-    case UDS_EVT_RequestDownload:
-    case UDS_EVT_RequestUpload:
-    case UDS_EVT_TransferData:
-    case UDS_EVT_RequestTransferExit:
-    case UDS_EVT_RequestFileTransfer:
-    case UDS_EVT_Custom:
-    case UDS_EVT_Poll:
-    case UDS_EVT_SendComplete:
-    case UDS_EVT_ResponseReceived:
-    case UDS_EVT_Idle:
-    case UDS_EVT_MAX:
-    default:
-      return UDS_NRC_ServiceNotSupported;
+  // Look up the event in the handler mapping section
+  STRUCT_SECTION_FOREACH (uds_event_handler_data, handler) {
+    if (handler->event == event) {
+      return uds_handle_event(instance, event, arg, handler);
+    }
   }
+
+  // Event not supported
+  return UDS_NRC_ServiceNotSupported;
 }
 
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
+
+// Find next available dynamic ID, starting from 1
+// Returns 0 if no ID is available
+// TODO: This is inefficient for large numbers of registrations
+static uint32_t find_next_dynamic_id(struct uds_instance_t* inst) {
+  // Find the next available ID starting from 1
+  uint32_t candidate_id = 1;
+  bool id_found = false;
+
+  while (candidate_id != 0) {  // Check for overflow (UINT32_MAX + 1 = 0)
+    bool id_in_use = false;
+
+    // Check if this ID is already in use
+    struct uds_registration_t* reg;
+    SYS_SLIST_FOR_EACH_CONTAINER (&inst->dynamic_registrations, reg, node) {
+      if (reg->dynamic_registration_id == candidate_id) {
+        id_in_use = true;
+        break;
+      }
+    }
+
+    if (!id_in_use) {
+      id_found = true;
+      break;
+    }
+
+    if (candidate_id == UINT32_MAX) {
+      id_found = false;
+      candidate_id = 0;
+    } else {
+      candidate_id++;
+    }
+  }
+
+  if (!id_found) {
+    return 0;  // No free ID available
+  }
+
+  return candidate_id;
+}
+
 // Registration function to dynamically register new handlers at runtime
 // (Heap allocated)
-static int uds_register_event_handler(struct uds_instance_t* inst,
-                                      struct uds_registration_t registration) {
+int uds_register_event_handler(struct uds_instance_t* inst,
+                               struct uds_registration_t registration,
+                               uint32_t* dynamic_id,
+                               struct uds_registration_t** registration_out) {
   registration.instance = inst;
+
+  uint32_t next_id = find_next_dynamic_id(inst);
+  if (next_id == 0) {
+    return -ENOSPC;  // No free ID available
+  }
 
   struct uds_registration_t* heap_registration =
       k_malloc(sizeof(struct uds_registration_t));
   if (heap_registration == NULL) {
     return -ENOMEM;
   }
+
   *heap_registration = registration;
 
-  if (inst->dynamic_registrations == NULL) {
-    inst->dynamic_registrations = heap_registration;
-    heap_registration->next = NULL;
-  } else {
-    struct uds_registration_t* current = inst->dynamic_registrations;
-    while (current->next != NULL) {
-      current = current->next;
-    }
-    current->next = heap_registration;
-    heap_registration->next = NULL;
+  // Never append a node that might contain garbage pointers
+  heap_registration->node = (sys_snode_t){0};
+  heap_registration->dynamic_registration_id = next_id;
+
+  sys_slist_append(&inst->dynamic_registrations, &heap_registration->node);
+
+  // Return the assigned ID to the caller
+  *dynamic_id = next_id;
+
+  if (registration_out) {
+    *registration_out = heap_registration;
   }
 
   return 0;
 }
+
+int uds_unregister_event_handler(struct uds_instance_t* inst,
+                                 uint32_t dynamic_id) {
+  struct uds_registration_t* reg;
+  struct uds_registration_t* tmp;
+
+  SYS_SLIST_FOR_EACH_CONTAINER_SAFE (&inst->dynamic_registrations, reg, tmp,
+                                     node) {
+    if (reg->dynamic_registration_id == dynamic_id) {
+      /* Call custom unregister function if provided */
+      if (reg->unregister_registration_fn) {
+        int ret = reg->unregister_registration_fn(reg);
+        if (ret < 0) {
+          LOG_ERR(
+              "Custom unregister function failed for registration ID %u: %d",
+              dynamic_id, ret);
+          return ret;
+        }
+      }
+
+      /* Remove from list and free */
+      bool removed =
+          sys_slist_find_and_remove(&inst->dynamic_registrations, &reg->node);
+      __ASSERT(removed, "node not found during remove (should not happen)");
+      k_free(reg);
+      return 0;
+    }
+  }
+
+  return -ENOENT;  // Registration not found
+}
+
 #endif  //  CONFIG_UDS_USE_DYNAMIC_REGISTRATION
 
 int uds_init(struct uds_instance_t* inst,
@@ -251,10 +250,12 @@ int uds_init(struct uds_instance_t* inst,
              const struct device* can_dev,
              void* user_context) {
   inst->user_context = user_context;
+  inst->can_dev = can_dev;
 
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
-  inst->dynamic_registrations = NULL;
+  sys_slist_init(&inst->dynamic_registrations);
   inst->register_event_handler = uds_register_event_handler;
+  inst->unregister_event_handler = uds_unregister_event_handler;
 #endif  //  CONFIG_UDS_USE_DYNAMIC_REGISTRATION
 
   int ret = iso14229_zephyr_init(&inst->iso14229, iso_tp_config, can_dev, inst);

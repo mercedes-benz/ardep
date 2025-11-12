@@ -1,17 +1,19 @@
 /*
- * Copyright (C) Frickly Systems GmbH
- * Copyright (C) MBition GmbH
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
  */
 
 #include "iso14229.h"
-#include "memory_by_address.h"
+#include "uds.h"
 
 #include <zephyr/kernel.h>
 #include <zephyr/linker/linker-defs.h>
 #include <zephyr/logging/log.h>
 #include <zephyr/sys/util.h>
+
+#include <ardep/uds.h>
 
 LOG_MODULE_DECLARE(uds, CONFIG_UDS_LOG_LEVEL);
 
@@ -65,10 +67,6 @@ static bool is_memory_address_valid(uintptr_t addr,
 #endif
 }
 
-bool uds_filter_for_memory_by_addr(UDSEvent_t event) {
-  return event == UDS_EVT_ReadMemByAddr || event == UDS_EVT_WriteMemByAddr;
-}
-
 uds_check_fn uds_get_check_for_read_memory_by_addr(
     const struct uds_registration_t* const reg) {
   return reg->memory.read.check;
@@ -78,6 +76,15 @@ uds_action_fn uds_get_action_for_read_memory_by_addr(
   return reg->memory.read.action;
 }
 
+STRUCT_SECTION_ITERABLE(uds_event_handler_data,
+                        __uds_event_handler_data_read_mem_by_addr_) = {
+  .event = UDS_EVT_ReadMemByAddr,
+  .get_check = uds_get_check_for_read_memory_by_addr,
+  .get_action = uds_get_action_for_read_memory_by_addr,
+  .default_nrc = UDS_NRC_ConditionsNotCorrect,
+  .registration_type = UDS_REGISTRATION_TYPE__MEMORY,
+};
+
 uds_check_fn uds_get_check_for_write_memory_by_addr(
     const struct uds_registration_t* const reg) {
   return reg->memory.write.check;
@@ -86,6 +93,15 @@ uds_action_fn uds_get_action_for_write_memory_by_addr(
     const struct uds_registration_t* const reg) {
   return reg->memory.write.action;
 }
+
+STRUCT_SECTION_ITERABLE(uds_event_handler_data,
+                        __uds_event_handler_data_write_mem_by_addr_) = {
+  .event = UDS_EVT_WriteMemByAddr,
+  .get_check = uds_get_check_for_write_memory_by_addr,
+  .get_action = uds_get_action_for_write_memory_by_addr,
+  .default_nrc = UDS_NRC_ConditionsNotCorrect,
+  .registration_type = UDS_REGISTRATION_TYPE__MEMORY,
+};
 
 UDSErr_t uds_check_default_memory_by_addr_read(
     const struct uds_context* const context, bool* apply_action) {
@@ -121,8 +137,8 @@ UDSErr_t uds_action_default_memory_by_addr_read(
   UDSReadMemByAddrArgs_t* args = context->arg;
   uintptr_t mem_addr = (uintptr_t)args->memAddr;
 
-  uint8_t copy_result = args->copy(&context->instance->iso14229.server,
-                                   args->memAddr, args->memSize);
+  uint8_t copy_result =
+      args->copy(context->server, args->memAddr, args->memSize);
   if (copy_result != UDS_PositiveResponse) {
     LOG_ERR("Read Memory By Address: Copy failed with result %d", copy_result);
     return UDS_NRC_RequestOutOfRange;

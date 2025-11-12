@@ -1,6 +1,6 @@
 /*
- * Copyright (C) Frickly Systems GmbH
- * Copyright (C) MBition GmbH
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -83,8 +83,7 @@ ZTEST_F(lib_uds, test_0x2E_write_by_id_applies_action_when_check_succeeds) {
 UDSErr_t custom_check_for_0x2E_consume_event_by_default_on_action(
     const struct uds_context *const context, bool *apply_action) {
   if (context->registration->type == UDS_REGISTRATION_TYPE__DATA_IDENTIFIER &&
-      context->registration->data_identifier.data_id ==
-          data_id_rw_duplicated1 &&
+      context->registration->data_identifier.data_id == data_id_rw &&
       context->event == UDS_EVT_WriteDataByIdent) {
     *apply_action = true;
   }
@@ -195,7 +194,7 @@ ZTEST_F(lib_uds, test_0x2E_write_by_id_returns_action_returncode) {
   uint32_t data = 0x11223344;
 
   UDSWDBIArgs_t arg = {
-    .dataId = data_id_rw,
+    .dataId = data_id_rw_duplicated1,
     .data = (uint8_t *)&data,
     .len = sizeof(data),
   };
@@ -239,20 +238,20 @@ ZTEST_F(lib_uds, test_0x2E_write_by_id_dynamic_registration) {
 
   struct uds_registration_t reg;
   reg.type = UDS_REGISTRATION_TYPE__DATA_IDENTIFIER;
-  reg.applies_to_event = uds_filter_for_data_by_id_event;
   reg.data_identifier.data_id = UDS_UNIQUE_DATA_ID;
   reg.data_identifier.read.check = NULL;
   reg.data_identifier.read.action = NULL;
   reg.data_identifier.write.check = custom_check_for_dynamic_registration;
   reg.data_identifier.write.action = custom_action_for_dynamic_registration;
 
-  int ret = instance->register_event_handler(instance, reg);
+  uint32_t reg_id;
+  int ret = instance->register_event_handler(instance, reg, &reg_id, NULL);
   zassert_ok(ret);
 
   uint32_t data = 0x11223344;
 
   UDSWDBIArgs_t arg = {
-    .dataId = data_id_rw,
+    .dataId = UDS_UNIQUE_DATA_ID,
     .data = (uint8_t *)&data,
     .len = sizeof(data),
   };
@@ -273,14 +272,14 @@ ZTEST_F(
 
   struct uds_registration_t reg;
   reg.type = UDS_REGISTRATION_TYPE__DATA_IDENTIFIER;
-  reg.applies_to_event = uds_filter_for_data_by_id_event;
   reg.data_identifier.data_id = UDS_UNIQUE_DATA_ID;
   reg.data_identifier.read.check = NULL;
   reg.data_identifier.read.action = NULL;
   reg.data_identifier.write.check = NULL;
   reg.data_identifier.write.action = NULL;
 
-  int ret = instance->register_event_handler(instance, reg);
+  uint32_t reg_id;
+  int ret = instance->register_event_handler(instance, reg, &reg_id, NULL);
   zassert_ok(ret);
 
   uint32_t data = 0x11223344;

@@ -1,6 +1,6 @@
 /*
- * Copyright (C) Frickly Systems GmbH
- * Copyright (C) MBition GmbH
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -31,7 +31,18 @@ static void can_rx_cb(const struct device *dev,
                       struct can_frame *frame,
                       void *user_data) {
   LOG_DBG("CAN RX: %03x [%u] %x ...", frame->id, frame->dlc, frame->data[0]);
-  k_msgq_put((struct k_msgq *)user_data, frame, K_NO_WAIT);
+  int ret = k_msgq_put((struct k_msgq *)user_data, frame, K_NO_WAIT);
+  if (ret != 0) {
+    LOG_ERR("Dropped CAN frame, error: %d", ret);
+  }
+}
+
+void iso14229_inject_can_frame_rx(struct iso14229_zephyr_instance *inst,
+                                  struct can_frame *frame) {
+  LOG_INF("Injecting Received CAN Frame: %03x [%u] %x ...", frame->id,
+          frame->dlc, frame->data[0]);
+  can_rx_cb((const struct device *)inst->tp.phys_link.user_send_can_arg, frame,
+            &inst->can_phys_msgq);
 }
 
 int iso14229_zephyr_set_callback(struct iso14229_zephyr_instance *inst,
@@ -43,29 +54,30 @@ int iso14229_zephyr_set_callback(struct iso14229_zephyr_instance *inst,
   return 0;
 }
 
-void iso14229_zephyr_thread_tick(struct iso14229_zephyr_instance *inst) {
+static void iso14229_zephyr_event_loop_tick(
+    struct iso14229_zephyr_instance *inst) {
   struct can_frame frame_phys;
   struct can_frame frame_func;
-  int ret_phys = k_msgq_get(&inst->can_phys_msgq, &frame_phys, K_NO_WAIT);
-  int ret_func = k_msgq_get(&inst->can_func_msgq, &frame_func, K_NO_WAIT);
 
-  if (ret_phys == 0) {
+  while (k_msgq_get(&inst->can_phys_msgq, &frame_phys, K_NO_WAIT) == 0) {
     isotp_on_can_message(&inst->tp.phys_link, frame_phys.data, frame_phys.dlc);
   }
 
-  if (ret_func == 0) {
+  while (k_msgq_get(&inst->can_func_msgq, &frame_func, K_NO_WAIT) == 0) {
     isotp_on_can_message(&inst->tp.func_link, frame_func.data, frame_func.dlc);
   }
 
   UDSServerPoll(&inst->server);
 }
 
+#ifdef CONFIG_ISO14229_THREAD
+
 static void iso14229_thread_entry(void *p1, void *p2, void *p3) {
   struct iso14229_zephyr_instance *inst = (struct iso14229_zephyr_instance *)p1;
 
   while (atomic_get(&inst->thread_stop_requested) == 0) {
-    iso14229_zephyr_thread_tick(inst);
-    k_sleep(K_MSEC(1));
+    iso14229_zephyr_event_loop_tick(inst);
+    k_usleep(CONFIG_ISO14229_THREAD_SLEEP_US);
   }
 
   k_mutex_lock(&inst->thread_mutex, K_FOREVER);
@@ -122,30 +134,20 @@ int iso14229_zephyr_thread_stop(struct iso14229_zephyr_instance *inst) {
   return 0;
 }
 
+#endif  // CONFIG_ISO14229_THREAD
+
 int iso14229_zephyr_init(struct iso14229_zephyr_instance *inst,
                          const UDSISOTpCConfig_t *iso_tp_config,
                          const struct device *can_dev,
                          void *user_context) {
   inst->user_context = user_context;
   inst->set_callback = iso14229_zephyr_set_callback;
-  inst->thread_tick = iso14229_zephyr_thread_tick;
-  inst->thread_start = iso14229_zephyr_thread_start;
-  inst->thread_stop = iso14229_zephyr_thread_stop;
 
   int ret = k_mutex_init(&inst->event_callback_mutex);
   if (ret != 0) {
     LOG_ERR("Failed to initialize event callback mutex");
     return ret;
   }
-
-  ret = k_mutex_init(&inst->thread_mutex);
-  if (ret != 0) {
-    LOG_ERR("Failed to initialize thread mutex");
-    return ret;
-  }
-
-  inst->thread_running = false;
-  atomic_set(&inst->thread_stop_requested, 0);
 
   k_msgq_init(&inst->can_phys_msgq, inst->can_phys_buffer,
               sizeof(struct can_frame),
@@ -180,12 +182,31 @@ int iso14229_zephyr_init(struct iso14229_zephyr_instance *inst,
     printk("Failed to add RX filter for physical address: %d\n", err);
     return err;
   }
-  err =
-      can_add_rx_filter(can_dev, can_rx_cb, &inst->can_func_msgq, &func_filter);
-  if (err < 0) {
-    printk("Failed to add RX filter for functional address: %d\n", err);
-    return err;
+
+  if (inst->tp.func_sa != UDS_TP_NOOP_ADDR) {
+    err = can_add_rx_filter(can_dev, can_rx_cb, &inst->can_func_msgq,
+                            &func_filter);
+    if (err < 0) {
+      printk("Failed to add RX filter for functional address: %d\n", err);
+      return err;
+    }
   }
+
+  inst->event_loop_tick = iso14229_zephyr_event_loop_tick;
+
+#ifdef CONFIG_ISO14229_THREAD
+  inst->thread_start = iso14229_zephyr_thread_start;
+  inst->thread_stop = iso14229_zephyr_thread_stop;
+
+  ret = k_mutex_init(&inst->thread_mutex);
+  if (ret != 0) {
+    LOG_ERR("Failed to initialize thread mutex");
+    return ret;
+  }
+
+  inst->thread_running = false;
+  atomic_set(&inst->thread_stop_requested, 0);
+#endif  // CONFIG_ISO14229_THREAD
 
   return 0;
 }

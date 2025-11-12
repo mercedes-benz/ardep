@@ -1,6 +1,6 @@
 /*
- * Copyright (C) Frickly Systems GmbH
- * Copyright (C) MBition GmbH
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -54,12 +54,14 @@ struct iso14229_zephyr_instance {
 
   void* user_context;
 
+#ifdef CONFIG_ISO14229_THREAD
   k_tid_t thread_id;
   struct k_thread thread_data;
-  K_KERNEL_STACK_MEMBER(thread_stack, 1024);
+  K_KERNEL_STACK_MEMBER(thread_stack, CONFIG_ISO14229_THREAD_STACK_SIZE);
   bool thread_running;
   atomic_t thread_stop_requested;
   struct k_mutex thread_mutex;
+#endif  // CONFIG_ISO14229_THREAD
 
   /**
    * @brief Set the UDS event callback that gets called when a
@@ -67,13 +69,16 @@ struct iso14229_zephyr_instance {
    */
   int (*set_callback)(struct iso14229_zephyr_instance* inst,
                       uds_callback callback);
+
   /**
-   * @brief Handle a single iteration of the UDS server thread
+   * @brief Runs one iteration of the iso14229 event loop.
    *
-   * @note This function must be called periodically when the UDS
-   *       thread is not started by @ref thread_start.
+   * @note This function must be called periodically. Either inside the
+   *       provided thread using @ref thread_start or by the user
    */
-  void (*thread_tick)(struct iso14229_zephyr_instance* inst);
+  void (*event_loop_tick)(struct iso14229_zephyr_instance* inst);
+
+#ifdef CONFIG_ISO14229_THREAD
   /**
    * @brief Start the UDS server thread
    */
@@ -82,6 +87,7 @@ struct iso14229_zephyr_instance {
    * @brief Stop the UDS server thread
    */
   int (*thread_stop)(struct iso14229_zephyr_instance* inst);
+#endif  // CONFIG_ISO14229_THREAD
 };
 
 /**
@@ -101,4 +107,22 @@ int iso14229_zephyr_init(struct iso14229_zephyr_instance* inst,
                          const struct device* can_dev,
                          void* user_context);
 
+/**
+ * @brief Inject a received CAN frame into the UDS server instance
+ *
+ * Use this function to inject a CAN frame into the UDS server instance
+ * The result of this may be a response to the received frame, which gets send
+ * out via the real CAN device.
+ *
+ * This can be used e.g. when jumping between applications during an ongoing UDS
+ * request to simulate the request in the new application.
+ *
+ * @note Timing information for the call are (naturally) not preserved so act
+ * fast to not run into a timeout on the client side!
+ *
+ * @param inst Pointer to the UDS server instance
+ * @param frame Pointer to the received CAN frame
+ */
+void iso14229_inject_can_frame_rx(struct iso14229_zephyr_instance* inst,
+                                  struct can_frame* frame);
 #endif  // ARDEP_ISO14229_H

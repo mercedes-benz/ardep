@@ -1,6 +1,6 @@
 /*
- * Copyright (C) Frickly Systems GmbH
- * Copyright (C) MBition GmbH
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -9,13 +9,28 @@
 #define ARDEP_UDS_H
 
 #include "ardep/iso14229.h"
+#include "iso14229.h"
 
-#include <iso14229.h>
+#include <wchar.h>
+
+#include <zephyr/sys/slist.h>
 
 struct uds_instance_t;
 struct uds_registration_t;
 
-enum ecu_reset_type {
+enum uds_diagnostic_session {
+  UDS_DIAG_SESSION__DEFAULT = 0x01,
+  UDS_DIAG_SESSION__PROGRAMMING = 0x02,
+  UDS_DIAG_SESSION__EXTENDED = 0x03,
+  UDS_DIAG_SESSION__SAFETY_SYSTEM = 0x04,
+  UDS_DIAG_SESSION__VEHICLE_MANUFACTURER_SPECIFIC_START = 0x40,
+  UDS_DIAG_SESSION__VEHICLE_MANUFACTURER_SPECIFIC_END = 0x5F,
+  UDS_DIAG_SESSION__SYSTEM_SUPPLIER_SPECIFIC_START = 0x60,
+  UDS_DIAG_SESSION__SYSTEM_SUPPLIER_SPECIFIC_END = 0x7E,
+
+};
+
+enum uds_ecu_reset_type {
   ECU_RESET__HARD = 1,
   ECU_RESET__KEY_OFF_ON = 2,
   ECU_RESET__ENABLE_RAPID_POWER_SHUT_DOWN = 4,
@@ -53,27 +68,72 @@ enum uds_read_dtc_info_subfunc {
   UDS_READ_DTC_INFO_SUBFUNC__DTC_INFO_BY_DTC_READINESS_GROUP_IDENTIFIER = 0x56
 };
 
-/**
- * @brief Callback type for ECU reset events
- *
- * @param inst Pointer to the UDS server instance
- * @param reset_type Type of reset to perform
- * @param user_context User-defined context pointer as passed to \ref
- * uds_init()
- */
-typedef UDSErr_t (*ecu_reset_callback_t)(struct uds_instance_t *inst,
-                                         enum ecu_reset_type reset_type,
-                                         void *user_context);
+enum uds_input_output_control_param {
+  UDS_IO_CONTROL__RETURN_CONTROL_TO_ECU = 0x00,
+  UDS_IO_CONTROL__RESET_TO_DEFAULT = 0x01,
+  UDS_IO_CONTROL__FREEZE_CURRENT_STATE = 0x02,
+  UDS_IO_CONTROL__SHORT_TERM_ADJUSTMENT = 0x03,
+  UDS_IO_CONTROL__TACHOGRAPH_TEST_IDS_START = 0x100,
+  UDS_IO_CONTROL__TACHOGRAPH_TEST_IDS_END = 0x1FF,
+  UDS_IO_CONTROL__VEHICLE_MANUFACTURER_SPECIFIC_START = 0x200,
+  UDS_IO_CONTROL__VEHICLE_MANUFACTURER_SPECIFIC_END = 0xDFFF,
+  UDS_IO_CONTROL__OBD_TEST_IDS_START = 0xE000,
+  UDS_IO_CONTROL__OBD_TEST_IDS_END = 0xE1FF,
+  UDS_IO_CONTROL__EXECUTE_SPL = 0xE200,
+  UDS_IO_CONTROL__DEPLOY_LOOP_ROUTINE_ID = 0xE201,
+  UDS_IO_CONTROL__SAFETY_SYSTEM_ROUTINE_IDS_START = 0xE202,
+  UDS_IO_CONTROL__SAFETY_SYSTEM_ROUTINE_IDS_END = 0xE2FF,
+  UDS_IO_CONTROL__SYSTEM_SUPPLIER_SPECIFIC = 0xF000,
+  UDS_IO_CONTROL__SYSTEM_SUPPLIER_SPECIFIC_END = 0xFEFF,
+  UDS_IO_CONTROL__ERASE_MEMORY = 0xFF00,
+  UDS_IO_CONTROL__CHECK_PROGRAMMING_DEPENDENCIES = 0xFF01,
+};
+
+enum uds_routine_control_subfunc {
+  UDS_ROUTINE_CONTROL__START_ROUTINE = 0x01,
+  UDS_ROUTINE_CONTROL__STOP_ROUTINE = 0x02,
+  UDS_ROUTINE_CONTROL__REQUEST_ROUTINE_RESULTS = 0x03,
+};
+
+enum uds_dynamically_define_data_ids_subfunc {
+  UDS_DYNAMICALLY_DEFINED_DATA_IDS__DEFINE_BY_DATA_ID = 0x01,
+  UDS_DYNAMICALLY_DEFINED_DATA_IDS__DEFINE_BY_MEMORY_ADDRESS = 0x02,
+  UDS_DYNAMICALLY_DEFINED_DATA_IDS__CLEAR = 0x03,
+};
+
+enum uds_link_control_subfunc {
+  UDS_LINK_CONTROL__VERIFY_MODE_TRANSITION_WITH_FIXED_PARAMETER = 0x01,
+  UDS_LINK_CONTROL__VERIFY_MODE_TRANSITION_WITH_SPECIFIC_PARAMETER = 0x02,
+  UDS_LINK_CONTROL__TRANSITION_MODE = 0x03,
+  UDS_LINK_CONTROL__VEHICLE_MANUFACTURER_SPECIFIC_START = 0x40,
+  UDS_LINK_CONTROL__VEHICLE_MANUFACTURER_SPECIFIC_END = 0x5F,
+  UDS_LINK_CONTROL__SYSTEM_SUPPLIER_SPECIFIC_START = 0x60,
+  UDS_LINK_CONTROL__SYSTEM_SUPPLIER_SPECIFIC_END = 0x7E,
+};
+
+enum uds_link_control_modifier {
+  UDS_LINK_CONTROL_MODIFIER__PC_9600_BAUD = 0x01,
+  UDS_LINK_CONTROL_MODIFIER__PC_1920_BAUD = 0x02,
+  UDS_LINK_CONTROL_MODIFIER__PC_38400_BAUD = 0x03,
+  UDS_LINK_CONTROL_MODIFIER__PC_57600_BAUD = 0x04,
+  UDS_LINK_CONTROL_MODIFIER__PC_115200_BAUD = 0x05,
+  UDS_LINK_CONTROL_MODIFIER__CAN_125000_BAUD = 0x10,
+  UDS_LINK_CONTROL_MODIFIER__CAN_250000_BAUD = 0x11,
+  UDS_LINK_CONTROL_MODIFIER__CAN_500000_BAUD = 0x12,
+  UDS_LINK_CONTROL_MODIFIER__CAN_1000000_BAUD = 0x13,
+  UDS_LINK_CONTROL_MODIFIER__PROGRAMMING_SETUP = 0x20,
+};
 
 /**
- * Set the ECU reset callback function for custom callbacks
+ * @brief Get the baudrate associated with the `enum uds_link_control_modifier`
+ * entry
  *
- * @param inst Pointer to the UDS server instance
- * @param callback Pointer to the callback function to set
- * @return 0 on success, negative error code on failure
+ * @returns The baudrate in bit/s
+ * @returns 0 if the modifier is unknown or
+ *          `UDS_LINK_CONTROL_MODIFIER__PROGRAMMING_SETUP`
  */
-typedef int (*set_ecu_reset_callback_fn)(struct uds_instance_t *inst,
-                                         ecu_reset_callback_t callback);
+uint32_t uds_link_control_modifier_to_baudrate(
+    enum uds_link_control_modifier modifier);
 
 /**
  * @brief Context provided to Event handlers on an event
@@ -87,6 +147,10 @@ struct uds_context {
    * @brief The registration instance to handle the event
    */
   struct uds_registration_t *const registration;
+  /**
+   * @brief Pointer to the server parameter used in copy functions
+   */
+  UDSServer_t *server;
   /**
    * @brief The event type
    */
@@ -164,17 +228,40 @@ struct uds_actor {
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
 
 /**
- * @brief Function to register a new data identifier at runtime
+ * @brief Function to dynamically register a new event handler at runtime
  *
  * @param inst Pointer to the UDS server instance.
- * @param registration The registration information for the new data identifier.
+ * @param registration The registration information for the new event handler.
+ * @param dynamic_id_out Pointer to store the assigned unique ID for this
+ * registration.
+ * @param registration_out Optional pointer to return a pointer to the allocated
+ * registration object. Can be NULL if not needed.
  *
  * @returns 0 on success
- * @returns <0 on failure
+ * @returns -ENOSPC if no free ID is available (all IDs from 1 to UINT32_MAX are
+ * taken)
+ * @returns <0 on other failures
  *
  */
 typedef int (*register_event_handler_fn)(
-    struct uds_instance_t *inst, struct uds_registration_t registration);
+    struct uds_instance_t *inst,
+    struct uds_registration_t registration,
+    uint32_t *dynamic_id_out,
+    struct uds_registration_t **registration_out);
+
+/**
+ * @brief Function to unregister a dynamically registered event handler at
+ * runtime
+ *
+ * @param inst Pointer to the UDS server instance.
+ * @param dynamic_id The unique ID of the registration to delete.
+ *
+ * @returns 0 on success
+ * @returns -ENOENT if no registration with the given ID was found
+ * @returns Error value of custom unregister function if provided
+ */
+typedef int (*unregister_event_handler_fn)(struct uds_instance_t *inst,
+                                           uint32_t dynamic_id);
 
 #endif  // CONFIG_UDS_USE_DYNAMIC_REGISTRATION
 
@@ -189,13 +276,15 @@ struct uds_instance_t {
 
   void *user_context;
 
+  const struct device *can_dev;
+
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
   /**
-   * @brief Pointer to the head of the singly linked list of dynamic
-   * registrations
+   * @brief Singly linked list of dynamic registrations
    */
-  struct uds_registration_t *dynamic_registrations;
+  sys_slist_t dynamic_registrations;
   register_event_handler_fn register_event_handler;
+  unregister_event_handler_fn unregister_event_handler;
 #endif  // CONFIG_UDS_USE_DYNAMIC_REGISTRATION
 };
 
@@ -213,6 +302,41 @@ enum uds_registration_type_t {
   UDS_REGISTRATION_TYPE__READ_DTC_INFO,
   UDS_REGISTRATION_TYPE__DATA_IDENTIFIER,
   UDS_REGISTRATION_TYPE__DIAG_SESSION_CTRL,
+  UDS_REGISTRATION_TYPE__CLEAR_DIAG_INFO,
+  UDS_REGISTRATION_TYPE__ROUTINE_CONTROL,
+  UDS_REGISTRATION_TYPE__SECURITY_ACCESS,
+  UDS_REGISTRATION_TYPE__COMMUNICATION_CONTROL,
+  UDS_REGISTRATION_TYPE__DYNAMIC_DEFINE_DATA_IDS,
+  UDS_REGISTRATION_TYPE__CONTROL_DTC_SETTING,
+  UDS_REGISTRATION_TYPE__UPLOAD_DOWNLOAD,
+  UDS_REGISTRATION_TYPE__LINK_CONTROL,
+  UDS_REGISTRATION_TYPE__AUTHENTICATION,
+};
+
+enum uds_dynamically_defined_data_type {
+  UDS_DYNAMICALLY_DEFINED_DATA_TYPE__ID = 1,
+  UDS_DYNAMICALLY_DEFINED_DATA_TYPE__MEMORY = 2,
+};
+
+struct uds_dynamically_defined_data {
+  sys_snode_t node;
+  enum uds_dynamically_defined_data_type type;
+  union {
+    struct {
+      uint16_t id;
+      uint8_t position;
+      uint8_t size;
+    } id;
+    struct {
+      void *memAddr;
+      size_t memSize;
+    } memory;
+  };
+};
+
+struct dynamic_registration_id_sll_item {
+  sys_snode_t node;
+  uint32_t dynamic_registration_id;
 };
 
 /**
@@ -228,18 +352,6 @@ struct uds_registration_t {
    * @brief Type of event handler
    */
   enum uds_registration_type_t type;
-
-  /**
-   * @brief Filter function to determine if the event can be handled by this
-   * registration type
-   *
-   * We need to filter before any "check" functions because those reside
-   * inside the unnamed union member. Thus accessing the wrong view on the data
-   * can lead to incorrect data and behavior.
-   *
-   * @note See e.g. @ref uds_filter_for_diag_session_ctrl_event
-   */
-  bool (*applies_to_event)(UDSEvent_t event);
 
   union {
     /**
@@ -282,12 +394,13 @@ struct uds_registration_t {
       /**
        * @brief Type of reset to perform
        */
-      enum ecu_reset_type type;
+      enum uds_ecu_reset_type type;
     } ecu_reset;
     /**
      * @brief Data for the Read/Write Data by ID event handler
      *
-     * Handles *UDS_EVT_ReadDataByIdent* and *UDS_EVT_WriteDataByIdent* events
+     * Handles *UDS_EVT_ReadDataByIdent*, *UDS_EVT_WriteDataByIdent* and
+     * *UDS_EVT_IOControl* events
      */
     struct {
       /**
@@ -310,6 +423,10 @@ struct uds_registration_t {
        * @brief Actor for *UDS_EVT_WriteDataByIdent* events
        */
       struct uds_actor write;
+      /**
+       * @brief Actor for *UDS_EVT_IOControl* events
+       */
+      struct uds_actor io_control;
     } data_identifier;
     /**
      * @brief Data for the Read/Write Memory by Address event handler
@@ -349,18 +466,201 @@ struct uds_registration_t {
        */
       struct uds_actor actor;
     } read_dtc;
+    /**
+     * @brief Data for the Control DTC Settings event handler
+     *
+     * Handles *UDS_EVT_ControlDTCSetting* events with all its sub-Functions
+     */
+    struct {
+      /**
+       * @brief User-defined context pointer
+       */
+      void *user_context;
+      /**
+       * @brief Actor for *UDS_EVT_ControlDTCSetting* events
+       */
+      struct uds_actor actor;
+    } control_dtc_setting;
+    /**
+     * @brief Data for the Clear Diagnostic Information event handler
+     *
+     * Handles *UDS_EVT_ClearDiagnosticInfo* events
+     */
+    struct {
+      /**
+       * @brief User-defined context pointer
+       */
+      void *user_context;
+      /**
+       * @brief Actor for *UDS_EVT_ClearDiagnosticInfo* events
+       */
+      struct uds_actor actor;
+    } clear_diagnostic_information;
+    /**
+     * @brief Data for the Routine Control event handler
+     *
+     * Handles *UDS_EVT_RoutineCtrl* events with all its sub-Functions
+     */
+    struct {
+      /**
+       * @brief User-defined context pointer
+       */
+      void *user_context;
+      /**
+       * @brief ID of the routine controlled by the actor
+       */
+      uint16_t routine_id;
+      /**
+       * @brief Actor for *UDS_EVT_RoutineCtrl* events
+       */
+      struct uds_actor actor;
+    } routine_control;
+    /**
+     * @brief Data for the Security Access event handler
+     *
+     * Handles *UDS_EVT_SecAccessRequestSeed* and *UDS_EVT_SecAccessValidateKey*
+     * events
+     */
+    struct {
+      /**
+       * @brief User-defined context pointer
+       */
+      void *user_context;
+      /**
+       * @brief Actor for *UDS_EVT_SecAccessRequestSeed* events
+       */
+      struct uds_actor request_seed;
+      /**
+       * @brief Actor for *UDS_EVT_SecAccessValidateKey* events
+       */
+      struct uds_actor validate_key;
+    } security_access;
+    /**
+     * @brief Data for the Communication Control event handler
+     *
+     * Handles *UDS_EVT_CommCtrl* events
+     */
+    struct {
+      /**
+       * @brief User-defined context pointer
+       */
+      void *user_context;
+      /**
+       * @brief Actor for *UDS_EVT_CommCtrl* events
+       */
+      struct uds_actor actor;
+    } communication_control;
+
+    /**
+     * @brief Data for the Dynamically Define Data ID event handler
+     *
+     * Handles *UDS_EVT_DynamicDefineDataId* events
+     */
+    struct {
+      /**
+       * @brief User-defined context pointer
+       */
+      void *user_context;
+
+      /**
+       * @brief list of `struct dynamic_registration_id_sll_item` to hold all
+       * dynamic registration IDs created.
+       */
+      sys_slist_t dynamic_registration_id_list;
+
+      /**
+       * @brief Actor for *UDS_EVT_CommCtrl* events
+       */
+      struct uds_actor actor;
+    } dynamically_define_data_ids;
+    /**
+     * @brief Data for the Link Control event handler
+     *
+     * Handles *UDS_EVT_LinkControl* events
+     */
+    struct {
+      /**
+       * @brief User-defined context pointer
+       */
+      void *user_context;
+      /**
+       * @brief Actor for *UDS_EVT_LinkControl* events
+       */
+      struct uds_actor actor;
+    } link_control;
+    /**
+     * @brief Data for the Authentication event handler
+     *
+     * Handles *UDS_EVT_Auth* and *UDS_EVT_AuthTimeout* events
+     */
+    struct {
+      /**
+       * @brief User-defined context pointer
+       */
+      void *user_context;
+      /**
+       * @brief Actor for *UDS_EVT_Auth* events
+       */
+      struct uds_actor auth;
+      /**
+       * @brief Actor for *UDS_EVT_AuthTimeout* events
+       */
+      struct uds_actor timeout;
+    } auth;
   };
 
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
 
   /**
-   * @brief Pointer to the next dynamic registration
+   * @brief Singly linked list of `struct uds_registration_t` using zephyr's
+   * sys_slist_t
    *
    * @note: Only used for dynamic registration
    */
-  struct uds_registration_t *next;
+  sys_snode_t node;
+
+  /**
+   * @brief Unique ID of this dynamic registration
+   */
+  uint32_t dynamic_registration_id;
+
+  /**
+   * @brief Function to unregister this registration
+   *
+   * A custom function can be provided to e.g. free additional resources when
+   * this registration gets unregistered.
+   *
+   * @param this Pointer to this registration instance
+   *
+   * @returns 0 on success
+   * @returns <0 on failure
+   */
+  int (*unregister_registration_fn)(struct uds_registration_t *this);
 #endif  // CONFIG_UDS_USE_DYNAMIC_REGISTRATION
 };
+
+#if CONFIG_UDS_USE_LINK_CONTROL
+
+/**
+ * @brief Transitions the CAN controller to the specified baudrate
+ *
+ * @param can_dev the CAN device
+ * @param baud_rate the target baudrate in bit/s
+ * @return UDS_OK on success, otherwise an appropriate negative error code
+ */
+UDSErr_t uds_set_can_bitrate(const struct device *can_dev, uint32_t baud_rate);
+
+/**
+ * @brief Transitions the CAN controller to the default bitrate
+ *
+ * The default bitrate is configured via `CONFIG_UDS_DEFAULT_CAN_BITRATE`
+ *
+ * @param can_dev the CAN device
+ * @return same as `uds_set_can_bitrate`
+ */
+UDSErr_t uds_set_can_default_bitrate(const struct device *can_dev);
+
+#endif  // CONFIG_UDS_USE_LINK_CONTROL
 
 /**
  * @brief Default check function for the default ECU Hard Reset handler
@@ -419,41 +719,56 @@ UDSErr_t uds_action_default_memory_by_addr_write(
     struct uds_context *const context, bool *consume_event);
 
 /**
- * @brief Filter for ECU Reset event handler registrations
- *
- * @param event the event to check against
- * @returns true if the `event` can be handled
- * @returns false otherwise
+ * @brief Default check function for the default dynamically define data IDs
+ * handler
  */
-bool uds_filter_for_ecu_reset_event(UDSEvent_t event);
+UDSErr_t uds_check_default_dynamically_define_data_ids(
+    const struct uds_context *const context, bool *apply_action);
 
 /**
- * @brief Filter for Read/Write data by ID event handler registrations
- *
- * see @ref uds_filter_for_ecu_reset_event for details
+ * @brief Default action function for the default dynamically define data IDs
+ * handler
  */
-bool uds_filter_for_data_by_id_event(UDSEvent_t event);
+UDSErr_t uds_action_default_dynamically_define_data_ids(
+    struct uds_context *const context, bool *consume_event);
 
 /**
- * @brief Filter for Read/Write memory by address event handler registrations
- *
- * see @ref uds_filter_for_ecu_reset_event for details
+ * @brief Default check function for the default link control handler
  */
-bool uds_filter_for_memory_by_addr(UDSEvent_t event);
+UDSErr_t uds_check_default_link_control(const struct uds_context *const context,
+                                        bool *apply_action);
 
 /**
- * @brief Filter for Diagnostic Session Control event handler registrations
- *
- * see @ref uds_filter_for_ecu_reset_event for details
+ * @brief Default action function for the default link control handler
  */
-bool uds_filter_for_diag_session_ctrl_event(UDSEvent_t event);
+UDSErr_t uds_action_default_link_control(struct uds_context *const context,
+                                         bool *consume_event);
 
 /**
- * @brief Filter for Read DTC Information event handler registrations
- *
- * see @ref uds_filter_for_ecu_reset_event for details
+ * @brief Default check function for  diagnostic session events for the
+ * default link control handler
  */
-bool uds_filter_for_read_dtc_info_event(UDSEvent_t event);
+UDSErr_t uds_check_default_link_control_change_diag_session(
+    const struct uds_context *const context, bool *apply_action);
+
+/**
+ * @brief Default action function for diagnostic session events for the default
+ * link control handler
+ */
+UDSErr_t uds_action_default_link_control_change_diag_session(
+    struct uds_context *const context, bool *consume_event);
+
+#if DT_HAS_CHOSEN(zephyr_firmware_loader_args) && CONFIG_RETENTION_BOOT_MODE
+/**
+ * @brief Switch into the firmware loader with an active programming session.
+ * You should call this function in the diagnostic session control action, if
+ * the type is a programming session
+ * @note This should only be used if firmware loading is enabled in the
+ * bootloader and the uds firmware loader is flashed. Also note that this will
+ * exit the main application and jump into the firmware loader
+ */
+UDSErr_t uds_switch_to_firmware_loader_with_programming_session();
+#endif
 
 // Include macro declarations after all types are defined
 #include "ardep/uds_macro.h"  // IWYU pragma: keep

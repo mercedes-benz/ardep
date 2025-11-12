@@ -1,16 +1,15 @@
 /*
- * Copyright (C) Frickly Systems GmbH
- * Copyright (C) MBition GmbH
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "ardep/uds_macro.h"
-#include "iso14229.h"
-
 #include <zephyr/logging/log.h>
 LOG_MODULE_DECLARE(uds_sample, LOG_LEVEL_DBG);
 
+#include "ardep/uds.h"
+#include "iso14229.h"
 #include "uds.h"
 
 const uint32_t fake_memory_start_addr = 0x00001000;
@@ -52,7 +51,7 @@ UDSErr_t read_mem_by_address_action(struct uds_context *const context,
 
   LOG_INF("Reading memory at address 0x%08X with size %d", addr, size);
 
-  return args->copy(&context->instance->iso14229.server,
+  return args->copy(context->server,
                     &fake_memory[addr - fake_memory_start_addr], size);
 }
 

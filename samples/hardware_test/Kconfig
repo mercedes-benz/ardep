@@ -10,3 +10,57 @@ endmenu
 module = APP
 module-str = APP
 source "subsys/logging/Kconfig.template.log_config"
+
+config UART_TEST_DURATION_MS
+    int "UART test duration in milliseconds"
+    default 5000
+    help
+      Duration for which the UART tests will run.
+
+config LIN_PRE_TEST_DELAY_MS
+    int "LIN pre-test delay in milliseconds"
+    default 1000
+    help
+      Delay before starting LIN frame transmission.
+
+config LIN_MESSAGE_DELAY_MS
+    int "LIN message delay in milliseconds"
+    default 100
+    help
+      Delay between LIN messages.
+
+config CAN_PRE_TEST_DELAY_MS
+    int "CAN pre-test delay in milliseconds"
+    default 1000
+    help
+      Delay before starting CAN frame transmission.
+
+config CAN_FRAME_DELAY_MS
+    int "CAN frame delay in milliseconds"
+    default 50
+    help
+      Delay between CAN frames.
+
+config CAN_POST_TEST_DELAY_MS
+    int "CAN post-test delay in milliseconds"
+    default 300
+    help
+      Delay after CAN tests before stopping.
+
+config GPIO_PRE_TEST_DELAY_MS
+    int "GPIO pre-test delay in milliseconds"
+    default 300
+    help
+      Delay before starting GPIO toggle tests.
+
+config GPIO_TOGGLE_DELAY_MS
+    int "GPIO toggle delay in milliseconds"
+    default 10
+    help
+      Delay for GPIO toggle operations.
+
+config GPIO_POST_TEST_DELAY_MS
+    int "GPIO post-test delay in milliseconds"
+    default 100
+    help
+      Delay after GPIO tests are finished.

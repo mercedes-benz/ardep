@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2019 STMicroelectronics.
- * Copyright (C) Frickly Systems GmbH
- * Copyright (C) MBition GmbH
+ * SPDX-FileCopyrightText: Copyright (c) 2019 STMicroelectronics.
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -11,196 +11,183 @@
 #include <st/g4/stm32g474v(b-c-e)tx-pinctrl.dtsi>
 #include "arduino_r3_connector.dtsi"
 #include "adc.dtsi"
+#include "bootmode.dtsi"
 #include "can.dtsi"
 #include "clock.dtsi"
 #include "uart.dtsi"
 #include "lin.dtsi"
 
 / {
-	model = "Automotive Rapid Development board";
-	compatible = "misc,ardep";
-
-	chosen {
-		zephyr,console = &usb_cdc_acm;
-		zephyr,shell-uart = &usb_cdc_acm;
-		zephyr,sram = &sram0;
-		zephyr,flash = &flash0;
-		zephyr,canbus = &can_a;
-		zephyr,code-partition = &slot0_partition;
-	};
-
-	aliases {
-		watchdog0 = &iwdg;
-		die-temp0 = &die_temp;
-		volt-sensor0 = &vref;
-		volt-sensor1 = &vbat;
-
-		// Sets an alias for the red, green, and blue LEDs
-		// required in the RGB-Blinky Sample
-		red-led = &red_led;
-		green-led = &green_led;
-
-		led0 = &red_led;
-
-		mcuboot-led0 = &red_led;
-		mcuboot-button0 = &mcuboot_button0;
-	};
-
-	leds {
-		compatible = "gpio-leds";
-
-		red_led: red_led {
-			gpios = <&gpioc 3 GPIO_ACTIVE_LOW>;
-			label = "Red";
-		};
-		green_led: green_led {
-			gpios = <&gpioa 3 GPIO_ACTIVE_LOW>;
-			label = "Green";
-		};
-	};
-
-	buttons {
-		compatible = "gpio-keys";
-		mcuboot_button0: mcuboot_button {
-			label = "MCUBoot";
-			gpios = <&gpioe 4  (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; // Gearshift 1 Jumper
-		};
-	};
-
-	config_jumpers: jumpers {
-		compatible = "gpio-keys";
-		jumper0 {
-			gpios = <&gpioc 13 (GPIO_ACTIVE_LOW|GPIO_PULL_UP)>;
-		};
-
-		jumper1 {
-			gpios = <&gpioc 1 (GPIO_ACTIVE_LOW|GPIO_PULL_UP)>;
-		};
-
-		jumper2 {
-			gpios = <&gpiof 1 (GPIO_ACTIVE_LOW|GPIO_PULL_UP)>;
-		};
-	};
+    model = "Automotive Rapid Development board";
+    compatible = "misc,ardep";
+    
+    chosen {
+        zephyr,console = &uart_a;
+        zephyr,shell-uart = &uart_a;
+        zephyr,sram = &sram0;
+        zephyr,flash = &flash0;
+        zephyr,canbus = &can_a;
+        zephyr,code-partition = &slot0_partition;
+    };
+    
+    aliases {
+        watchdog0 = &iwdg;
+        die-temp0 = &die_temp;
+        volt-sensor0 = &vref;
+        volt-sensor1 = &vbat;
+    
+        // Sets an alias for the red, green, and blue LEDs
+        // required in the RGB-Blinky Sample
+        red-led = &red_led;
+        green-led = &green_led;
+    
+        led0 = &red_led;
+    
+        mcuboot-led0 = &red_led;
+        mcuboot-button0 = &mcuboot_button0;
+    };
+    
+    leds {
+        compatible = "gpio-leds";
+    
+        red_led: red_led {
+            gpios = <&gpioc 3 GPIO_ACTIVE_LOW>;
+            label = "Red";
+        };
+        green_led: green_led {
+            gpios = <&gpioa 3 GPIO_ACTIVE_LOW>;
+            label = "Green";
+        };
+    };
+    
+    buttons {
+        compatible = "gpio-keys";
+        mcuboot_button0: mcuboot_button {
+            label = "MCUBoot";
+            gpios = <&gpioe 4  (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; // Gearshift 1 Jumper
+        };
+    };
+    
+    config_jumpers: jumpers {
+        compatible = "gpio-keys";
+        jumper0 {
+            gpios = <&gpioc 13 (GPIO_ACTIVE_LOW|GPIO_PULL_UP)>;
+        };
+    
+        jumper1 {
+            gpios = <&gpioc 1 (GPIO_ACTIVE_LOW|GPIO_PULL_UP)>;
+        };
+    
+        jumper2 {
+            gpios = <&gpiof 1 (GPIO_ACTIVE_LOW|GPIO_PULL_UP)>;
+        };
+    };
 };
 
 
 
 &i2c2 {
-	pinctrl-0 = <&i2c2_scl_pa9 &i2c2_sda_pa8>;
-	pinctrl-names = "default";
-	status = "okay";
+    pinctrl-0 = <&i2c2_scl_pa9 &i2c2_sda_pa8>;
+    pinctrl-names = "default";
+    status = "okay";
 };
 
 &spi4 {
-	pinctrl-0 = <&spi4_sck_pe2 &spi4_miso_pe5 &spi4_mosi_pe6>;
-	pinctrl-names = "default";
-	cs-gpios = <&gpioe 3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-	status = "okay";
+    pinctrl-0 = <&spi4_sck_pe2 &spi4_miso_pe5 &spi4_mosi_pe6>;
+    pinctrl-names = "default";
+    cs-gpios = <&gpioe 3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+    status = "okay";
 };
 
 &timers2 {
-	status = "okay";
+    status = "okay";
 
-	pwm2: pwm {
-		status = "okay";
-		pinctrl-0 = <&tim2_ch1_pa5>;
-		pinctrl-names = "default";
-	};
+    pwm2: pwm {
+        status = "okay";
+        pinctrl-0 = <&tim2_ch1_pa5>;
+        pinctrl-names = "default";
+    };
 };
 
 &timers3 {
-	st,prescaler = <10000>;
-	status = "okay";
-	pwm3: pwm {
-		status = "okay";
-		pinctrl-0 = <&tim3_ch1_pb4>;
-		pinctrl-names = "default";
-	};
+    st,prescaler = <10000>;
+    status = "okay";
+    pwm3: pwm {
+        status = "okay";
+        pinctrl-0 = <&tim3_ch1_pb4>;
+        pinctrl-names = "default";
+    };
 };
 
 &lptim1 {
-	clocks = <&rcc STM32_CLOCK_BUS_APB1 0x80000000>,
-	         <&rcc STM32_SRC_LSI LPTIM1_SEL(1)>;
-	status = "okay";
-};
-
-&rtc {
-	clocks = <&rcc STM32_CLOCK_BUS_APB1 0x00000400>,
-	         <&rcc STM32_SRC_LSI RTC_SEL(2)>;
-	status = "okay";
+    clocks = <&rcc STM32_CLOCK_BUS_APB1 0x80000000>,
+             <&rcc STM32_SRC_LSI LPTIM1_SEL(1)>;
+    status = "okay";
 };
 
 &flash0 {
-	partitions {
-		compatible = "fixed-partitions";
-		#address-cells = <1>;
-		#size-cells = <1>;
+    partitions {
+        compatible = "fixed-partitions";
+        #address-cells = <1>;
+        #size-cells = <1>;
 
-		boot_partition: partition@0 {
-			label = "mcuboot";
-			reg = <0x00000000 DT_SIZE_K(96)>;
-		};
-		slot0_partition: partition@18000 {
-			label = "image-0";
-			reg = <0x00018000 DT_SIZE_K(192)>;
-		};
-		slot1_partition: partition@48000 {
-			label = "image-1";
-			reg = <0x00048000 DT_SIZE_K(192)>;
-		};
-		/*
-		 * Storage partition will be used by FCB/LittleFS/NVS
-		 * if enabled.
-		 */
-		storage_partition: partition@78000 {
-			label = "storage";
-			reg = <0x00078000 DT_SIZE_K(32)>;
-		};
-	};
+        boot_partition: partition@0 {
+            label = "mcuboot";
+            reg = <0x00000000 DT_SIZE_K(96)>;
+        };
+        slot0_partition: partition@18000 {
+            label = "image-0";
+            reg = <0x00018000 DT_SIZE_K(192)>;
+        };
+        slot1_partition: partition@48000 {
+            label = "image-1";
+            reg = <0x00048000 DT_SIZE_K(192)>;
+        };
+        /*
+         * Storage partition will be used by FCB/LittleFS/NVS
+         * if enabled.
+         */
+        storage_partition: partition@78000 {
+            label = "storage";
+            reg = <0x00078000 DT_SIZE_K(32)>;
+        };
+    };
 };
 
 &iwdg {
-	status = "okay";
+    status = "okay";
 };
 
 &rng {
-	status = "okay";
+    status = "okay";
 };
 
 
 &die_temp {
-	status = "okay";
+    status = "okay";
 };
 
 &dac1 {
-	pinctrl-0 = <&dac1_out1_pa4 &dac1_out2_pa5>;
-	pinctrl-names = "default";
-	status = "okay";
+    pinctrl-0 = <&dac1_out1_pa4 &dac1_out2_pa5>;
+    pinctrl-names = "default";
+    status = "okay";
 };
 
 &dac2 {
-	pinctrl-0 = <&dac2_out1_pa6>;
-	pinctrl-names = "default";
-	status = "okay";
+    pinctrl-0 = <&dac2_out1_pa6>;
+    pinctrl-names = "default";
+    status = "okay";
 };
 
 &vref {
-	status = "okay";
+    status = "okay";
 };
 
 &vbat {
-	status = "okay";
+    status = "okay";
 };
 
 zephyr_udc0: &usb {
 	pinctrl-0 = <&usb_dm_pa11 &usb_dp_pa12>;
 	pinctrl-names = "default";
-	status = "okay";
-
-	usb_cdc_acm: usb-cdc-acm {
-		status = "okay";
-		compatible = "zephyr,cdc-acm-uart";
-	};
 };
-
-

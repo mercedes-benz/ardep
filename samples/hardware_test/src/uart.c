@@ -1,6 +1,6 @@
 /*
- * Copyright (C) Frickly Systems GmbH
- * Copyright (C) MBition GmbH
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -21,80 +21,65 @@ LOG_MODULE_DECLARE(LOG_MODULE_NAME, CONFIG_APP_LOG_LEVEL);
 
 #define ZEPHYR_USER_NODE DT_PATH(zephyr_user)
 
-static const struct device *const uart_devices[] = {DT_FOREACH_PROP_ELEM_SEP(
+static const struct device* const uart_devices[] = {DT_FOREACH_PROP_ELEM_SEP(
     ZEPHYR_USER_NODE, uarts, DEVICE_DT_BY_PROP_IDX, (, ))};
 
-#define UART_CREATE_FUNCTIONS_BY_IDX(node_id, prop, idx)                 \
-  static void uart_interrupt_callback_##idx(const struct device *dev,    \
-                                            void *user_data) {           \
-    uint8_t byte;                                                        \
-                                                                         \
-    if (!uart_irq_update(dev)) {                                         \
-      return;                                                            \
-    }                                                                    \
-                                                                         \
-    if (!uart_irq_rx_ready(dev)) {                                       \
-      return;                                                            \
-    }                                                                    \
-                                                                         \
-    while (uart_fifo_read(dev, &byte, 1) == 1) {                         \
-      LOG_INF("%s: received %c", dev->name, byte);                       \
-      uart_poll_out(dev, byte);                                          \
-    }                                                                    \
-  }                                                                      \
-                                                                         \
-  static void setup_uart_##idx() {                                       \
-    const struct device *dev = uart_devices[idx];                        \
-    if (!device_is_ready(dev)) {                                         \
-      LOG_ERR("%s: UART device not ready", dev->name);                   \
-      return;                                                            \
-    }                                                                    \
-                                                                         \
-    char byte;                                                           \
-    while (uart_fifo_read(dev, &byte, 1) == 1) {                         \
-    }                                                                    \
-                                                                         \
-    int ret = uart_irq_callback_user_data_set(                           \
-        dev, uart_interrupt_callback_##idx, NULL);                       \
-                                                                         \
-    if (ret < 0) {                                                       \
-      if (ret == -ENOTSUP) {                                             \
-        LOG_ERR("%s: Interrupt-driven UART API support not enabled",     \
-                dev->name);                                              \
-      } else if (ret == -ENOSYS) {                                       \
-        LOG_ERR("%s: UART device does not support interrupt-driven API", \
-                dev->name);                                              \
-      } else {                                                           \
-        LOG_ERR("%s: Error setting UART callback: %d", dev->name, ret);  \
-      }                                                                  \
-      return;                                                            \
-    }                                                                    \
-    uart_irq_rx_enable(dev);                                             \
-  }                                                                      \
-                                                                         \
-  static void disable_uart_irq_##idx() {                                 \
-    const struct device *dev = uart_devices[idx];                        \
-    uart_irq_rx_disable(dev);                                            \
+static void uart_interrupt_callback(const struct device* dev, void* user_data) {
+  uint8_t byte;
+
+  if (!uart_irq_update(dev)) {
+    return;
   }
 
-DT_FOREACH_PROP_ELEM(ZEPHYR_USER_NODE, uarts, UART_CREATE_FUNCTIONS_BY_IDX);
+  if (!uart_irq_rx_ready(dev)) {
+    return;
+  }
 
-#define UART_SETUP_BY_IDX(node_id, prop, idx) setup_uart_##idx();
-
-#define UART_STOP_INTERRUPTS_BY_IDX(node_id, prop, idx) \
-  disable_uart_irq_##idx();
+  while (uart_fifo_read(dev, &byte, 1) == 1) {
+    LOG_INF("%s: received %c", dev->name, byte);
+    uart_poll_out(dev, byte);
+  }
+}
 
 static void setup_uarts() {
-  DT_FOREACH_PROP_ELEM(ZEPHYR_USER_NODE, uarts, UART_SETUP_BY_IDX);
+  for (int i = 0; i < ARRAY_SIZE(uart_devices); i++) {
+    const struct device* dev = uart_devices[i];
+    if (!device_is_ready(dev)) {
+      LOG_ERR("%s: UART device not ready", dev->name);
+      continue;
+    }
+
+    char byte;
+    while (uart_fifo_read(dev, &byte, 1) == 1) {
+    }
+
+    int ret =
+        uart_irq_callback_user_data_set(dev, uart_interrupt_callback, NULL);
+
+    if (ret < 0) {
+      if (ret == -ENOTSUP) {
+        LOG_ERR("%s: Interrupt-driven UART API support not enabled", dev->name);
+      } else if (ret == -ENOSYS) {
+        LOG_ERR("%s: UART device does not support interrupt-driven API",
+                dev->name);
+      } else {
+        LOG_ERR("%s: Error setting UART callback: %d", dev->name, ret);
+      }
+      continue;
+    }
+    uart_irq_rx_enable(dev);
+  }
 }
 
 static void execute_test() {
   // give enough time to work
-  k_msleep(5000);
+  k_msleep(CONFIG_UART_TEST_DURATION_MS);
 }
 
 static void disable_uart_interrupts() {
-  DT_FOREACH_PROP_ELEM(ZEPHYR_USER_NODE, uarts, UART_STOP_INTERRUPTS_BY_IDX);
+  for (int i = 0; i < ARRAY_SIZE(uart_devices); i++) {
+    uart_irq_rx_disable(uart_devices[i]);
+  }
 }
 
 void uart_test(void) {

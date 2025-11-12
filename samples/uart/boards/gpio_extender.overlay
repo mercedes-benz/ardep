@@ -1,6 +1,0 @@
-/ {
-    chosen {
-        // use the uart, instead of the usb serial
-        zephyr,console = &uart_a;
-    };
-};

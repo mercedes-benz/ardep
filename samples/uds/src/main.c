@@ -1,6 +1,6 @@
 /*
- * Copyright (C) Frickly Systems GmbH
- * Copyright (C) MBition GmbH
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -22,8 +22,17 @@ struct uds_instance_t instance;
 
 UDS_REGISTER_ECU_DEFAULT_HARD_RESET_HANDLER(&instance);
 
+int mount_fs(void) { return 0; }
+
 int main(void) {
+  int err;
   LOG_INF("ARDEP UDS Sample");
+
+  err = mount_fs();
+  if (err) {
+    LOG_ERR("Failed to mount filesystem: %d", err);
+    return err;
+  }
 
   UDSISOTpCConfig_t cfg = {
     // Hardware Addresses
@@ -35,9 +44,8 @@ int main(void) {
     .target_addr_func = UDS_TP_NOOP_ADDR,
   };
 
-  uds_init(&instance, &cfg, can_dev, &instance);
+  uds_init(&instance, &cfg, can_dev, &auth_data);
 
-  int err;
   if (!device_is_ready(can_dev)) {
     LOG_INF("CAN device not ready");
     return -ENODEV;
@@ -62,3 +70,9 @@ int main(void) {
   instance.iso14229.thread_start(&instance.iso14229);
   LOG_INF("UDS thread started");
 }
+
+#ifdef CONFIG_UDS_USE_LINK_CONTROL
+
+UDS_REGISTER_LINK_CONTROL_DEFAULT_HANDLER(&instance);
+
+#endif  // CONFIG_UDS_USE_LINK_CONTROL
