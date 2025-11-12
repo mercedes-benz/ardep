@@ -1,0 +1,15 @@
+# Copyright (C) Frickly Systems GmbH
+# Copyright (C) MBition GmbH
+#
+# SPDX-License-Identifier: Apache-2.0
+
+config SHIELD_POWER_IO_SHIELD
+  def_bool $(shields_list_contains,power_io_shield) || \
+           $(shields_list_contains,power_io_shield_0) || \
+           $(shields_list_contains,power_io_shield_1) || \
+           $(shields_list_contains,power_io_shield_2) || \
+           $(shields_list_contains,power_io_shield_3) || \
+           $(shields_list_contains,power_io_shield_4) || \
+           $(shields_list_contains,power_io_shield_5) || \
+           $(shields_list_contains,power_io_shield_6) || \
+           $(shields_list_contains,power_io_shield_7)

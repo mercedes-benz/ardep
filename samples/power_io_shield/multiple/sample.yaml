@@ -1,0 +1,8 @@
+sample:
+  name: Multiple Power IO shields sample
+common:
+  build_only: true
+  integration_platforms:
+    - ardep
+tests:
+  example.power_io_shield.multiple.default: {}

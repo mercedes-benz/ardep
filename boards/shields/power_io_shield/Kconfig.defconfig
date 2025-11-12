@@ -1,0 +1,15 @@
+# Copyright (C) Frickly Systems GmbH
+# Copyright (C) MBition GmbH
+#
+# SPDX-License-Identifier: Apache-2.0
+
+if SHIELD_POWER_IO_SHIELD
+  config GPIO
+    default y
+
+  config I2C
+    default y
+
+  config POWER_IO_SHIELD
+    default y
+endif

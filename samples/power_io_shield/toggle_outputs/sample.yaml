@@ -1,0 +1,8 @@
+sample:
+  name: Power IO shield toggle outputs sample
+common:
+  build_only: true
+  integration_platforms:
+    - ardep
+tests:
+  example.power_io_shield.toggle_outputs.default: {}

@@ -21,6 +21,7 @@ Welcome to the ARDEP documentation!
    scripts/ardep.rst
    boards/mercedes/ardep/doc/index.rst
    boards/shields/hv_shield/doc/index.rst
+   boards/shields/power_io_shield/doc/index.rst
    samples/index.rst
    debugging/index.rst
  

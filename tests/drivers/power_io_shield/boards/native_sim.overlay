@@ -1,0 +1,16 @@
+/*
+ * Copyright (C) Frickly Systems GmbH
+ * Copyright (C) MBition GmbH
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+&i2c0 {
+	power_io_shield0: power_io_shield0@20 {
+		compatible = "power-io-shield";
+		int-gpios = <&gpio0 0 GPIO_ACTIVE_HIGH>, <&gpio0 1 GPIO_ACTIVE_HIGH>;
+		reg = <0x20>;
+		gpio-controller;
+		#gpio-cells = <2>;
+	};
+};
