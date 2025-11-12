@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Console Output &#8212; ARDEP  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/tabs.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Error Handling" href="../error_handling/index.html" />
+    <link rel="prev" title="UDS Firmware Loader" href="../firmware_loader/index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="console-output">
+<span id="console"></span><h1>Console Output<a class="headerlink" href="#console-output" title="Permalink to this heading">¶</a></h1>
+<nav class="contents local" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#fimrware-output" id="id1">Fimrware Output</a></p></li>
+<li><p><a class="reference internal" href="#bootloader-output" id="id2">Bootloader Output</a></p></li>
+</ul>
+</nav>
+<section id="fimrware-output">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Fimrware Output</a><a class="headerlink" href="#fimrware-output" title="Permalink to this heading">¶</a></h2>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Ardep v2.0.0 and later</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Ardep v1.0.0</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><p>The output of the application is send on <code class="docutils literal notranslate"><span class="pre">UART-A</span></code> and additionally forwarded via the on-board debugger to a cdc-acm device on the host system.</p>
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><p>Per default, every application build for the <em>ardep</em> board will include a cdc-acm driver.
+This means, when connecting the board via usb to your pc, a new serial device should be visible in your system.</p>
+</div></div>
+<p>You can use the cdc-acm device to communicate with the board. The default baudrate is 115200.</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">Linux</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">Windows</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><p>The serial device is usually displayed as <em>/dev/ttyACMx</em>, <em>/dev/ttyUSBx</em> or similar.</p>
+<p>Use a serial terminal emulator (e.g. <em>screen</em>, <em>minicom</em>, <em>picocom</em>) to connect to the device.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>screen<span class="w"> </span>/dev/ttyACM0<span class="w"> </span><span class="m">115200</span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0"><p>The serial device is usually displayed in your <em>Windows Device Manager</em> under <em>Ports (COM &amp; LPT)</em> e.g. as <em>COM5</em>.</p>
+<p>Use <em>putty</em> or a similar terminal emulator to connect to the device.</p>
+<p>Connect to the COM port by selecting <em>Serial</em> in the <em>Connection type</em> section and entering the COM port number (e.g. <em>COM5</em>) in the <em>Serial line</em> field, setting the speed to 115200.</p>
+</div></div>
+</section>
+<section id="bootloader-output">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Bootloader Output</a><a class="headerlink" href="#bootloader-output" title="Permalink to this heading">¶</a></h2>
+<p>The bootloader output is by default available on the <code class="docutils literal notranslate"><span class="pre">UART-A</span></code> interface.</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-2-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-2-2-0" name="2-0" role="tab" tabindex="0">Ardep v2.0.0 and later</button><button aria-controls="panel-2-2-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-2-2-1" name="2-1" role="tab" tabindex="-1">Ardep v1.0.0</button></div><div aria-labelledby="tab-2-2-0" class="sphinx-tabs-panel" id="panel-2-2-0" name="2-0" role="tabpanel" tabindex="0"><p>Just as the firmwares output, the bootloaders output is also forwarded via the on-board debugger to a cdc-acm device on the host system.</p>
+</div><div aria-labelledby="tab-2-2-1" class="sphinx-tabs-panel" hidden="true" id="panel-2-2-1" name="2-1" role="tabpanel" tabindex="0"><p>The bootloader does not contain the cdc-acm driver and is only emitted via <code class="docutils literal notranslate"><span class="pre">UART-A</span></code>.
+If you want to see the bootloader output on your pc, you will need an external UART to USB adapter connected to the <code class="docutils literal notranslate"><span class="pre">UART-A</span></code> pins.</p>
+</div></div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">ARDEP</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bootloader/index.html">Bootloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../firmware_loader/index.html">UDS Firmware Loader</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Console Output</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#fimrware-output">Fimrware Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bootloader-output">Bootloader Output</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../error_handling/index.html">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/index.html">Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scripts/ardep.html">ARDEP Command</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boards/mercedes/ardep/doc/index.html">ARDEP Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boards/shields/hv_shield/doc/index.html">ARDEP HV Shield</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boards/shields/power_io_shield/doc/index.html">ARDEP Power IO Shield</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../samples/index.html">Samples and Demos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../debugging/index.html">Debugging</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../firmware_loader/index.html" title="previous chapter">UDS Firmware Loader</a></li>
+      <li>Next: <a href="../error_handling/index.html" title="next chapter">Error Handling</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Frickly Systems GmbH.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 6.2.1</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/console/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
