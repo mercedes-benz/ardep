@@ -12,7 +12,7 @@
 
 	power_io_shield6: power_io_shield6@26 {
 		compatible = "power-io-shield";
-		int-gpios = <&gpioe 2 GPIO_ACTIVE_LOW>, <&gpioe 5 GPIO_ACTIVE_LOW>;
+		int-gpios = <&gpioe 2 (GPIO_ACTIVE_LOW|GPIO_PULL_UP)>, <&gpioe 5 (GPIO_ACTIVE_LOW|GPIO_PULL_UP)>;
 		reg = <0x26>;
 		gpio-controller;
 		#gpio-cells = <2>;
