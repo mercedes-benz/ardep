@@ -6,6 +6,7 @@
 
 from argparse import ArgumentParser, Namespace
 
+from random import shuffle
 import struct
 import time
 from typing import Optional, List
@@ -152,7 +153,7 @@ def create_and_test_addresses(intf: str) -> List[isotp.Address]:
 
 
         try:
-            with Client(conn, config=config, request_timeout=2) as client:
+            with Client(conn, config=config, request_timeout=0.5) as client:
                 client.tester_present()
                 print(f"Connection {i} successful (RXID: 0x{addr._rxid:X}, TXID: 0x{addr._txid:X})")
         except Exception:
@@ -194,11 +195,14 @@ def main(args: Namespace):
     addresses = create_and_test_addresses(can)
     print(f"Discovered {len(addresses)} clients")
 
+    if upgrade and len(addresses) > int(args.count):
+        print(f"Error: Cannot upgrade all clients, discovered {len(addresses)} but only built for {args.count}")
+        return
+
     config = dict(udsoncan.configs.default_client_config)
     config["data_identifiers"] = {
-        "default":"<I",
-        0x1100: "<I",
-        0x1101: "<I",
+        0x1100: "<H",
+        0x1101: "<H",
     }
 
     if upgrade:
@@ -215,29 +219,71 @@ def main(args: Namespace):
 
                 try_run(lambda: ecu_reset(client))
         print("\nAll clients upgraded")
+        time.sleep(1)
+
+    shuffle(addresses)
 
     print("Configuring client chain")
+
+    first_reponder_receive_address = 0x001
+    last_responder_send_address = 0x000
+
     client_cnt  = len(addresses)
-    for i in range(client_cnt):
+    for i in range(1, client_cnt): # skip first client, this will be our master
         addr = addresses[i]
         conn = IsoTPSocketConnection(can, addr)
         with Client(conn, config=config, request_timeout=2) as client:
-            client.write_data_by_identifier(0x1100, i+1)
-            if i == client_cnt - 1:
-                client.write_data_by_identifier(0x1101, 0)
+            # setup receive addresses
+            if i == 1:
+                client.write_data_by_identifier(0x1100, first_reponder_receive_address)
             else:
-                client.write_data_by_identifier(0x1101, i+2)
+                client.write_data_by_identifier(0x1100, i + 1)
+
+            # setup send addresses
+            if i == client_cnt - 1:
+                client.write_data_by_identifier(0x1101, last_responder_send_address)
+            else:
+                client.write_data_by_identifier(0x1101, i + 2)
+
     print("Client chain configured successfully")
 
+    received_final_frame = None
     addr = addresses[0]
     conn = IsoTPSocketConnection(can, addr)
     with Client(conn, config=config, request_timeout=2) as client:
-        client.routine_control(routine_id=0x0000, control_type=1)
-        for i in range(5):
-            a = client.routine_control(routine_id=0x0000, control_type=3)
-            print(a.service_data.routine_status_record.hex())
-            time.sleep(0.1)
+        # start master routine
+        client.start_routine(routine_id=0x0000)
 
+        # poll for completion and get final frame
+        for i in range(5):
+            a = client.get_routine_result(routine_id=0x0000)
+            completed = False
+            match a.service_data.routine_status_record[0]:
+                case 0xff:
+                    print("Routine still running...")
+                case 0x00:
+                    print("Routine completed successfully")
+                    received_final_frame = a.service_data.routine_status_record[1:]
+                    completed = True
+                case other:
+                    print(f"Routine failed with code: 0x{other:02X}")
+                    completed = True
+
+            if completed:
+                break
+
+            time.sleep(0.25)
+
+    if received_final_frame is None:
+        print("Did not receive final frame from master routine")
+        return
+
+    to_sign = received_final_frame[0]
+    for i in range(1, len(addresses)): # master does not sign
+        if received_final_frame[i] != (to_sign ^ (addresses[i]._txid & 0xff)):
+            print(f"Signature mismatch on client {i}: expected 0x{to_sign ^ (i | 0xe0):02X}, got 0x{received_final_frame[i]:02X}")
+            return
+    print("All signatures verified successfully")
 
 
 if __name__ == "__main__":
@@ -246,14 +292,11 @@ if __name__ == "__main__":
         "-c", "--can", default="vcan0", help="CAN interface (default: vcan0)"
     )
     parser.add_argument("-r", "--reset", action="store_true", help="Perform ECU reset")
-    parser.add_argument("-p", "--pristine", action="store_true", help="Build pristine")
-    parser.add_argument("-n", "--count", help="Number of clients to build. This is the maximum number of clients that will be upgraded.")
-    parser.add_argument("-b", "--board", help="Board name, e.g. ardep@1 or ardep")
     parser.add_argument("-u", "--upgrade",action="store_true", help="Upgrade clients")
+    parser.add_argument("-p", "--pristine", action="store_true", help="Build pristine. Only used when --upgrade is set")
+    parser.add_argument("-b", "--board", help="Board name, e.g. ardep@1 or ardep. Only used when --upgrade is set", default="ardep")
+    parser.add_argument("-n", "--count", help="Number of clients to build. This is only used for building, not for discovery of UDS clients")
 
-    # parser.add_argument(
-    #     "-f", "--firmware", default=None, type=str, help="Path to the firmware.bin file"
-    # )
     parsed_args = parser.parse_args()
 
     main(parsed_args)
