@@ -4,8 +4,12 @@
 # SPDX-License-Identifier: Apache-2.0
 
 menuconfig CAN_LOG
-    bool "Logging via CAN"
+    bool "CAN Log Backend"
     depends on CAN
+    depends on LOG
+    # this currently only supports deferred mode
+    depends on LOG_MODE_DEFERRED
+    depends on LOG_PROCESS_THREAD
     default y
 
 
@@ -14,12 +18,6 @@ if CAN_LOG
     module = CAN_LOG
     module-str = CAN Logger
     source "subsys/logging/Kconfig.template.log_config"
-
-    # config CAN_ROUTER_INIT_PRIORITY
-    #   int
-    #   prompt "CAN Router Init priority"
-    #   default APPLICATION_INIT_PRIORITY
-    #   depends on CAN_ROUTER
 
     config CAN_LOG_ID
         hex
