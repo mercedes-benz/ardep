@@ -8,14 +8,19 @@ LOG_MODULE_REGISTER(worker, LOG_LEVEL_INF);
 
 static const struct device *can_dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_canbus));
 
+// addresses set via UDS data identifer (note that the write handler registers a
+// can rx filter callback)
 static uint16_t can_receive_addr = 0;
 static uint16_t can_send_addr = 0;
 
+// id of the can rx filter for can_receive_addr. -1 if none was created (yet)
 static int receive_can_filter_id = -1;
 
-static struct can_frame received_frame;
-static void rx_cb_work_handler(struct k_work *work) {
-  struct can_frame to_send = received_frame;
+// the received can frame before the work was queued
+static struct can_frame received_can_frame;
+
+static void can_rx_cb_work_handler(struct k_work *work) {
+  struct can_frame to_send = received_can_frame;
 
   if (to_send.dlc + 1 > CAN_MAX_DLC) {
     LOG_WRN(
@@ -27,27 +32,32 @@ static void rx_cb_work_handler(struct k_work *work) {
   }
 
   to_send.id = can_send_addr;
-  to_send.dlc = received_frame.dlc + 1;
+  to_send.dlc = received_can_frame.dlc + 1;
 
   // append a simple signature: XOR of the first byte and LSB of physical source
   // address
-  to_send.data[received_frame.dlc] =
+  to_send.data[received_can_frame.dlc] =
       to_send.data[0] ^ (CONFIG_UDS_ADDR_PHYS_SA & 0xff);
 
-  can_send(can_dev, &to_send, K_FOREVER, NULL, NULL);
+  int err = can_send(can_dev, &to_send, K_FOREVER, NULL, NULL);
+  if (err) {
+    LOG_ERR("Failed to send CAN frame: %d", err);
+    return;
+  }
+
   LOG_INF("Sent CAN frame ID 0x%03X DLC %d", to_send.id, to_send.dlc);
   LOG_HEXDUMP_INF(to_send.data, to_send.dlc, "Sent data: ");
 }
 
-K_WORK_DEFINE(rx_cb_work, rx_cb_work_handler);
+K_WORK_DEFINE(can_rx_cb_work, can_rx_cb_work_handler);
 
-static void rx_cb(const struct device *dev,
-                  struct can_frame *frame,
-                  void *user_data) {
-  received_frame = *frame;
+static void can_rx_cb(const struct device *dev,
+                      struct can_frame *frame,
+                      void *user_data) {
   LOG_INF("Received CAN frame ID 0x%03X DLC %d", frame->id, frame->dlc);
 
-  k_work_submit(&rx_cb_work);
+  received_can_frame = *frame;
+  k_work_submit(&can_rx_cb_work);
 }
 
 static UDSErr_t rw_data_by_id_check(const struct uds_context *const context,
@@ -101,7 +111,8 @@ static UDSErr_t w_data_by_id_action(struct uds_context *const context,
         .id = can_receive_addr,
         .mask = CAN_STD_ID_MASK,
       };
-      receive_can_filter_id = can_add_rx_filter(can_dev, rx_cb, NULL, &filter);
+      receive_can_filter_id =
+          can_add_rx_filter(can_dev, can_rx_cb, NULL, &filter);
       LOG_INF("Registered CAN RX filter for ID 0x%03X", can_receive_addr);
 
       if (receive_can_filter_id < 0) {
