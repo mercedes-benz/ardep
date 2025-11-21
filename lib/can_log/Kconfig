@@ -7,9 +7,8 @@ menuconfig CAN_LOG
     bool "CAN Log Backend"
     depends on CAN
     depends on LOG
-    # this currently only supports deferred mode
-    depends on LOG_MODE_DEFERRED
-    depends on LOG_PROCESS_THREAD
+    # this currently only works with deferred or immediate log mode
+    depends on LOG_MODE_DEFERRED || LOG_MODE_IMMEDIATE
     default y
 
 
@@ -25,5 +24,22 @@ if CAN_LOG
         default 0x100
         help
           CAN identifier used for logging messages.
+
+    config CAN_LOG_AUTOSTART_BUS
+        bool "Auto-start CAN bus for logging"
+        default n
+        help
+          If enabled, the CAN bus used for logging will be automatically
+          started during CAN log backend initialization.
+
+    if CAN_LOG_AUTOSTART_BUS
+    
+        config CAN_LOG_AUTOSTART_BUS_PRIORITY
+            int
+            prompt "CAN Log Auto-start Bus Priority"
+            default CAN_INIT_PRIORITY
+            help
+              Priority used when starting the CAN bus for logging.
+    endif # CAN_LOG_AUTOSTART_BUS
 
 endif
