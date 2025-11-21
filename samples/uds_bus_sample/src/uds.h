@@ -12,4 +12,4 @@
 
 extern struct uds_instance_t instance;
 
-#endif  // ARDEP_SAMPLES_UDS_SRC_UDS_H
+#endif  // ARDEP_SAMPLES_UDS_BUS_SAMPLE_SRC_UDS_H

@@ -4,16 +4,16 @@
 #include <zephyr/logging/log.h>
 #include <zephyr/sys/byteorder.h>
 
-LOG_MODULE_DECLARE(uds_sample);
+LOG_MODULE_REGISTER(worker, LOG_LEVEL_INF);
 
 static const struct device *can_dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_canbus));
 
 static uint16_t can_receive_addr = 0;
 static uint16_t can_send_addr = 0;
 
-int receive_can_filter_id = -1;
+static int receive_can_filter_id = -1;
 
-struct can_frame received_frame;
+static struct can_frame received_frame;
 static void rx_cb_work_handler(struct k_work *work) {
   struct can_frame to_send = received_frame;
 
@@ -50,15 +50,15 @@ static void rx_cb(const struct device *dev,
   k_work_submit(&rx_cb_work);
 }
 
-UDSErr_t rw_data_by_id_check(const struct uds_context *const context,
-                             bool *apply_action) {
+static UDSErr_t rw_data_by_id_check(const struct uds_context *const context,
+                                    bool *apply_action) {
   *apply_action = true;
 
   return UDS_OK;
 }
 
-UDSErr_t r_data_by_id_action(struct uds_context *const context,
-                             bool *consume_event) {
+static UDSErr_t r_data_by_id_action(struct uds_context *const context,
+                                    bool *consume_event) {
   UDSRDBIArgs_t *args = context->arg;
 
   switch (args->dataId) {
@@ -78,8 +78,8 @@ UDSErr_t r_data_by_id_action(struct uds_context *const context,
   return UDS_PositiveResponse;
 }
 
-UDSErr_t w_data_by_id_action(struct uds_context *const context,
-                             bool *consume_event) {
+static UDSErr_t w_data_by_id_action(struct uds_context *const context,
+                                    bool *consume_event) {
   UDSWDBIArgs_t *args = context->arg;
 
   switch (args->dataId) {

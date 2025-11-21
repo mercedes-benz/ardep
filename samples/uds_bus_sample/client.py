@@ -229,7 +229,7 @@ def main(args: Namespace):
     last_responder_send_address = 0x000
 
     client_cnt  = len(addresses)
-    for i in range(1, client_cnt): # skip first client, this will be our master
+    for i in range(1, client_cnt): # skip first client, this will be our controller
         addr = addresses[i]
         conn = IsoTPSocketConnection(can, addr)
         with Client(conn, config=config, request_timeout=2) as client:
@@ -251,7 +251,7 @@ def main(args: Namespace):
     addr = addresses[0]
     conn = IsoTPSocketConnection(can, addr)
     with Client(conn, config=config, request_timeout=2) as client:
-        # start master routine
+        # start controller routine
         client.start_routine(routine_id=0x0000)
 
         # poll for completion and get final frame
@@ -275,13 +275,15 @@ def main(args: Namespace):
             time.sleep(0.25)
 
     if received_final_frame is None:
-        print("Did not receive final frame from master routine")
+        print("Did not receive final frame from controller routine")
         return
 
     to_sign = received_final_frame[0]
-    for i in range(1, len(addresses)): # master does not sign
-        if received_final_frame[i] != (to_sign ^ (addresses[i]._txid & 0xff)):
-            print(f"Signature mismatch on client {i}: expected 0x{to_sign ^ (i | 0xe0):02X}, got 0x{received_final_frame[i]:02X}")
+    for i in range(1, len(addresses)): # controller does not sign
+        received = received_final_frame[i]
+        expected = to_sign ^ (addresses[i]._txid & 0xff)
+        if received != expected:
+            print(f"Signature mismatch on client {i}: expected 0x{expected:02X}, got 0x{received:02X}")
             return
     print("All signatures verified successfully")
 

@@ -12,18 +12,14 @@ def main(args):
     interface = args.interface
     id = args.id
 
-    # with can.Bus(channel=interface, bustype="socketcan") as bus:
-    #     while True:
-    #         message = bus.recv()
-    #         if message is not None:
-    #         # print(f"ID: {hex(message.arbitration_id)} Data: {message.data.hex()}")
-    #         print(str(message.data.decode()), end="")
     with can.Bus(channel=interface, interface="socketcan") as bus:
         bus.set_filters([{"can_id": id, "can_mask": 0x7FF}])
         while True:
             message = bus.recv()
-            if message is not None:
-                print(str(message.data.decode()), end="")
+            if message is None:
+                continue
+
+            print(str(message.data.decode()), end="")
 
 
 if __name__ == "__main__":

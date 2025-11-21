@@ -9,9 +9,6 @@ common:
   build_only: true
   integration_platforms:
     - ardep
-    # this does not work
-    # - native_sim/native/64
-    # - native_sim
 tests:
   example.uds_bus_sample.default:
     sysbuild: true

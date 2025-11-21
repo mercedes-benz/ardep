@@ -6,7 +6,7 @@
  */
 
 #include <zephyr/logging/log.h>
-LOG_MODULE_REGISTER(uds_sample, LOG_LEVEL_DBG);
+LOG_MODULE_REGISTER(uds_bus_sample, LOG_LEVEL_INF);
 
 #include "uds.h"
 
