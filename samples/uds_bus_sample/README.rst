@@ -19,7 +19,7 @@ Building the Sample
 The sample should be built using sysbuild as the UDS addresses should be configured the same for the bootloader and application via the sysbuild configuration ``SB_CONFIG_UDS_BASE_ADDR``:
 
 .. code-block:: bash
-    west build -b ardep samples/uds_bus_sample -- -DSB_CONFIG_UDS_BASE_ADDR=0
+    west build -b ardep samples/uds_bus_sample --sysbuild -- -DSB_CONFIG_UDS_BASE_ADDR=0
 
 Each ARDEP UDS client should be built with a different base address, all in a continuous range.
 For example, for 3 clients, the first client should be built with ``SB_CONFIG_UDS_BASE_ADDR=0``, the second with ``SB_CONFIG_UDS_BASE_ADDR=1``, and the third with ``SB_CONFIG_UDS_BASE_ADDR=2``.
