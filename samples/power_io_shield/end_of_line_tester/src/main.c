@@ -98,7 +98,7 @@ int main() {
 
   bool expected_input_states[ARRAY_SIZE(input_gpios)] = {0};
 
-  LOG_INF("Waiting for host to say \"START\\n\"");
+  LOG_INF("Waiting for host to say \"START\"");
 
   wait_for_uart_msg("START");
 
