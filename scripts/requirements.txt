@@ -1,2 +1,3 @@
 can-isotp==2.0.3 # uds sample
 udsoncan==1.21.2 # uds sample
+python-can==4.6.1 # can log receiver

@@ -8,12 +8,12 @@ from argparse import ArgumentParser
 
 def main(args):
     interface = args.interface
-    id = args.id
-    print("Starting CAN Log Receiver on interface:", interface, "listening to ID:", hex(id))
+    can_id = args.id
+    print("Starting CAN Log Receiver on interface:", interface, "listening to ID:", hex(can_id))
 
     try:
         with can.Bus(channel=interface, interface="socketcan") as bus:
-            bus.set_filters([{"can_id": id, "can_mask": 0x7FF}])
+            bus.set_filters([{"can_id": can_id, "can_mask": 0x7FF}])
             while True:
                 message = bus.recv()
                 if message is None:
