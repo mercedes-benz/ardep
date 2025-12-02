@@ -49,6 +49,23 @@ int assert_input_pins(const bool* expected_states) {
   return 0;
 }
 
+int assert_fault_pins_low() {
+  for (size_t i = 0; i < ARRAY_SIZE(fault_gpios); i++) {
+    int val = gpio_pin_get(fault_gpios[i].port, fault_gpios[i].pin);
+    if (val < 0) {
+      LOG_ERR("Failed to read fault GPIO %d: %d", i, val);
+      return val;
+    }
+
+    if (val != 0) {
+      LOG_ERR("Fault GPIO %d is high, expected low", i);
+      return -1;
+    }
+  }
+
+  return 0;
+}
+
 int main() {
   if (!device_is_ready(power_io_shield)) {
     LOG_ERR("HV Shield device not ready");
@@ -59,6 +76,7 @@ int main() {
 
   LOG_INF("Starting End of line tester in 1s");
   k_sleep(K_SECONDS(1));
+
   // setup all pins as low
   for (size_t i = 0; i < ARRAY_SIZE(output_gpios); i++) {
     int err = gpio_pin_configure_dt(&output_gpios[i], GPIO_OUTPUT_INACTIVE);
@@ -67,9 +85,52 @@ int main() {
       return err;
     }
   }
+  k_msleep(1);
   int err = assert_input_pins(expected_input_states);
   if (err) {
     LOG_ERR("Initial input pin state check failed");
     return err;
   }
+  err = assert_fault_pins_low();
+  if (err) {
+    LOG_ERR("Initial fault pin state check failed");
+    return err;
+  }
+
+  // Go through all output patterns and validate inputs and fault pins
+  for (uint8_t pattern = 0; i < ((1 << 6) - 1); i++) {
+    for (int i = 0; i < ARRAY_SIZE(output_gpios); i++) {
+      bool state = (pattern & (1 << i)) != 0;
+      expected_input_states[i] = state;
+
+      int err = gpio_pin_set(output_gpios[i].port, output_gpios[i].pin, state);
+      if (err) {
+        LOG_ERR("Failed to set output GPIO %d to %d: %d", i, state, err);
+        return err;
+      }
+    }
+    k_msleep(1);
+    err = assert_input_pins(expected_input_states);
+    if (err) {
+      LOG_ERR("Input pin state check failed for pattern 0x%02X", pattern);
+      return err;
+    }
+    err = assert_fault_pins_low();
+    if (err) {
+      LOG_ERR("Fault pin state check failed for pattern 0x%02X", pattern);
+      return err;
+    }
+
+    k_msleep(5);
+  }
+
+  // reset all outputs to low
+  for (size_t i = 0; i < ARRAY_SIZE(output_gpios); i++) {
+    int err = gpio_pin_set(output_gpios[i].port, output_gpios[i].pin, 0);
+    if (err) {
+      LOG_ERR("Failed to reset output GPIO %d: %d", i, err);
+      return err;
+    }
+  }
+  LOG_INF("End of line tester completed successfully");
 }
