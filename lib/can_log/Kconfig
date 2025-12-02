@@ -9,8 +9,7 @@ menuconfig CAN_LOG
     depends on LOG
     # this currently only works with deferred or immediate log mode
     depends on LOG_MODE_DEFERRED || LOG_MODE_IMMEDIATE
-    # todo: default n
-    default y
+    default n
     help
         Enable CAN logging backend. This backend sends log messages as raw CAN Frames on a specified CAN Identifier.
         It works best in Deferred mode with LOG_PROCESS_THREAD configuration enabled.
