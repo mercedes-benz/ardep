@@ -10,8 +10,8 @@
     model = "Automotive Rapid Development board v1.0.0";
 
     chosen {
-        /*zephyr,console = &usb_cdc_acm;
-        zephyr,shell-uart = &usb_cdc_acm;*/
+        zephyr,console = &usb_cdc_acm;
+        zephyr,shell-uart = &usb_cdc_acm;
     };
 };
 

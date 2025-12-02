@@ -16,14 +16,14 @@ config UDS_ADDR_PHYS_SA
     default 0x7E8
     help
       The physical source address used for UDS communication.
-      Should be the same as the main application's address
+      Should be the same as the firmware loader's address
 
 config UDS_ADDR_PHYS_TA
     hex "Physical Target Address"
     default 0x7E0
     help
       The physical target address used for UDS communication.
-      Should be the same as the main application's address
+      Should be the same as the firmware loader's address
 
 endmenu
 
