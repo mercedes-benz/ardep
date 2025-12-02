@@ -1,0 +1,14 @@
+# Copyright (C) Frickly Systems GmbH
+# Copyright (C) MBition GmbH
+#
+# SPDX-License-Identifier: Apache-2.0
+
+sample:
+  name: uds bus sample
+common:
+  build_only: true
+  integration_platforms:
+    - ardep
+tests:
+  example.uds_bus_sample.default:
+    sysbuild: true
