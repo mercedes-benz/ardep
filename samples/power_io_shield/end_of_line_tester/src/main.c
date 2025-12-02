@@ -98,7 +98,7 @@ int main() {
   }
 
   // Go through all output patterns and validate inputs and fault pins
-  for (uint8_t pattern = 0; i < ((1 << 6) - 1); i++) {
+  for (uint8_t pattern = 0; pattern < ((1 << 6) - 1); pattern++) {
     for (int i = 0; i < ARRAY_SIZE(output_gpios); i++) {
       bool state = (pattern & (1 << i)) != 0;
       expected_input_states[i] = state;
