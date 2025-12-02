@@ -236,7 +236,8 @@ static int power_io_shield_port_get_raw(const struct device* port,
   }
 
   data->reg_cache.gpio = reg_value;
-  *value = power_io_shield_gpio_bits_to_zephyr_bits(reg_value);
+  *value = power_io_shield_gpio_bits_to_zephyr_bits(
+      reg_value ^ POWER_IO_SHIELD_HARD_INVERT_PINS);  // XOR hard-inverted pins
 
   k_sem_give(&data->lock);
   return 0;
@@ -418,6 +419,15 @@ static int power_io_shield_pin_interrupt_configure(const struct device* port,
       data->reg_cache.intcon;  // 0 = on change, 1 = compare to defval
   uint16_t gpinten = data->reg_cache.gpinten;  // 0 = disabled, 1 = enabled
 
+  // invert trigger polarity for hard inverted pins
+  if ((BIT(bit) & POWER_IO_SHIELD_HARD_INVERT_PINS) != 0) {
+    if (trig == GPIO_INT_TRIG_HIGH) {
+      trig = GPIO_INT_TRIG_LOW;
+    } else if (trig == GPIO_INT_TRIG_LOW) {
+      trig = GPIO_INT_TRIG_HIGH;
+    }
+  }
+
   switch (mode) {
     case GPIO_INT_MODE_DISABLED:
       gpinten &= ~BIT(bit);
@@ -566,8 +576,8 @@ static int power_io_shield_init(const struct device* dev) {
   }
 
   // Write IODIR registers (1 is input, 0 is output)
-  // note the 0x7f7f mask as the pin 7 of each port is not allowed to be set as
-  // input
+  // note the 0x7f7f mask as the pin 7 of each port is not allowed to be set
+  // as input
   static const uint16_t iodir_value =
       (POWER_IO_SHIELD_INPUT_PINS_MASK | BIT(POWER_IO_SHIELD_FAULT0_PIN) |
        BIT(POWER_IO_SHIELD_FAULT1_PIN) | BIT(POWER_IO_SHIELD_FAULT2_PIN)) &
