@@ -8,12 +8,16 @@
 #include <zephyr/device.h>
 #include <zephyr/devicetree.h>
 #include <zephyr/drivers/gpio.h>
+#include <zephyr/drivers/uart.h>
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
+#include <zephyr/sys/reboot.h>
 
 #include <ardep/dt-bindings/power-io-shield.h>
 
 LOG_MODULE_REGISTER(main, LOG_LEVEL_INF);
+
+const struct device* console_uart = DEVICE_DT_GET(DT_CHOSEN(zephyr_console));
 
 static const struct device* power_io_shield =
     DEVICE_DT_GET(DT_NODELABEL(power_io_shield0));
@@ -66,6 +70,26 @@ int assert_fault_pins_low() {
   return 0;
 }
 
+int wait_for_uart_msg(const char* msg) {
+  size_t msg_len = strlen(msg);
+  size_t received = 0;
+
+  while (received < msg_len) {
+    uint8_t byte;
+    int ret = uart_poll_in(console_uart, &byte);
+    if (ret == 0) {
+      if (byte == (uint8_t)msg[received]) {
+        received++;
+      } else {
+        received = 0;  // reset on mismatch
+      }
+    }
+    k_msleep(10);
+  }
+
+  return 0;
+}
+
 int main() {
   if (!device_is_ready(power_io_shield)) {
     LOG_ERR("HV Shield device not ready");
@@ -74,8 +98,11 @@ int main() {
 
   bool expected_input_states[ARRAY_SIZE(input_gpios)] = {0};
 
-  LOG_INF("Starting End of line tester in 1s");
-  k_sleep(K_SECONDS(1));
+  LOG_INF("Waiting for host to say \"START\\n\"");
+
+  wait_for_uart_msg("START");
+
+  LOG_INF("Starting end of line test");
 
   // setup all pins as low
   for (size_t i = 0; i < ARRAY_SIZE(output_gpios); i++) {
@@ -132,5 +159,10 @@ int main() {
       return err;
     }
   }
+
   LOG_INF("End of line tester completed successfully");
+
+  LOG_INF("Rebooting system in 5 seconds...");
+  k_msleep(5000);
+  sys_reboot(SYS_REBOOT_COLD);
 }
