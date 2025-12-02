@@ -14,6 +14,7 @@ from ardep_commands import (
     DfuUtil,
     SetupCanBus,
     UdsDfu,
+    CanLogReceiver
 )
 from west.commands import WestCommand  # your extension must subclass this
 from west import log  # use this for user output
@@ -49,6 +50,7 @@ TODO: Add more details here.
             self._pid,
         )
         self._setup_can_bus = SetupCanBus(self._board_name)
+        self._can_log_receiver = CanLogReceiver()
 
     def do_add_parser(self, parser_adder: ArgumentParser):
         parser: ArgumentParser = parser_adder.add_parser(
@@ -64,6 +66,7 @@ TODO: Add more details here.
         self._dfu_util.add_args(subcommands)
         self._uds_dfu.add_args(subcommands)
         self._build_bootloader.add_args(subcommands)
+        self._can_log_receiver.add_args(subcommands)
 
         return parser
 
@@ -81,6 +84,8 @@ TODO: Add more details here.
                 return self._dfu_util.run(args)
             case self._uds_dfu.command:
                 return self._uds_dfu.run(args)
+            case self._can_log_receiver.command:
+                return self._can_log_receiver.run(args)
             case _:
                 log.inf("No subcommand specified")
                 log.inf(f"See `west {self.name} -h` for help")

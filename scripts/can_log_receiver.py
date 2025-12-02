@@ -3,22 +3,25 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-
 import can
 from argparse import ArgumentParser
 
 def main(args):
     interface = args.interface
     id = args.id
+    print("Starting CAN Log Receiver on interface:", interface, "listening to ID:", hex(id))
 
-    with can.Bus(channel=interface, interface="socketcan") as bus:
-        bus.set_filters([{"can_id": id, "can_mask": 0x7FF}])
-        while True:
-            message = bus.recv()
-            if message is None:
-                continue
+    try:
+        with can.Bus(channel=interface, interface="socketcan") as bus:
+            bus.set_filters([{"can_id": id, "can_mask": 0x7FF}])
+            while True:
+                message = bus.recv()
+                if message is None:
+                    continue
 
-            print(str(message.data.decode()), end="")
+                print(str(message.data.decode()), end="")
+    except KeyboardInterrupt:
+        pass
 
 
 if __name__ == "__main__":

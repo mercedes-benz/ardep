@@ -19,6 +19,7 @@ Building the Sample
 The sample should be built using sysbuild as the UDS addresses should be configured the same for the bootloader and application via the sysbuild configuration ``SB_CONFIG_UDS_BASE_ADDR``:
 
 .. code-block:: bash
+
     west build -b ardep samples/uds_bus_sample --sysbuild -- -DSB_CONFIG_UDS_BASE_ADDR=0
 
 Each ARDEP UDS client should be built with a different base address, all in a continuous range.
@@ -32,9 +33,10 @@ CAN IDs
 
 By using sysbuild, the CAN IDs are automatically configured based on the UDS base address. (see ``sysbuild.cmake`` in the sample directory for details).
 The resulting CAN IDs are:
-* UDS request ID: 0x7E0 + base address
-* UDS response ID: 0x7E8 + base address
-* CAN Logging ID: 0x100 + base address
+
+* UDS request ID: ``0x7E0`` + base address
+* UDS response ID: ``0x7E8`` + base address
+* CAN Logging ID: ``0x100`` + base address
 
 
 Running the Sample
@@ -44,11 +46,13 @@ To run the sample, first flash all ARDEPs with the build firmwares (each a diffe
 Then, run the client script:
 
 .. code-block:: bash
+
     python3 client.py --can can0
 
 If you wish to upgrade the firmwares before running the sample, use the ``--upgrade`` option, together with a set maximum count ``--count`` of clients to upgrade, a board name ``--board``, and optionally ``--pristine`` to build pristine firmwares:
 
 .. code-block:: bash
+
     python3 client.py --can can0 --upgrade --count 3 --board ardep@1 --pristine
 
 The client script will first optionally build the firmwares, then discover all connected UDS clients and optionally upgrade them. Then it will setup the signature CAN ID chain and run the controller routine on one of the clients. Finally, it checks that the signature bytes are correct.
