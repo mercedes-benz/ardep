@@ -3,13 +3,13 @@
 CAN USB Bridge sample
 #####################
 
-This sample uses the application from the Cannectivity repository and just provides overlays for compatability with the ARDEP board.
+This sample uses the application from the CANnectivity repository and just provides overlays for compatability with the ARDEP board.
 
 It creates a CAN to USB bridge connecting *CAN A* of the ARDEP board to the USB Host.
 
-The `Cannectivity repository <https://github.com/CANnectivity/cannectivity>`_ is automatically downloaded as a Zephyr module with ``west update`` on workspace setup. You can find it under ``{WORKSPACE_ROOT}/modules/lib/cannectivity``.
+The `CANnectivity repository <https://github.com/CANnectivity/cannectivity>`_ is automatically downloaded as a Zephyr module with ``west update`` on workspace setup. You can find it under ``{WORKSPACE_ROOT}/modules/lib/cannectivity``.
 
-As a *one-time setup*, you need to install the Cannectivity UDEV rule (analogous to the one we installed in :ref:`getting_started` guide):
+As a *one-time setup*, you need to install the CANnectivity UDEV rule (analogous to the one we installed in :ref:`getting_started` guide):
 
 .. code-block::
 
@@ -46,7 +46,7 @@ Build the example with:
                 -DEXTRA_CONF_FILE=../../../../ardep/samples/can_usb_bridge/cannectivity_1_0_0.conf \
                 -DEXTRA_DTC_OVERLAY_FILE=../../../../ardep/samples/can_usb_bridge/cannectivity_1_0_0.overlay
                 
-The ``FILE_SUFFIX`` selects the `prj_usbd_next.conf` file from the Cannectivity app folder, which enables the new USB stack.
+The ``FILE_SUFFIX`` selects the `prj_usbd_next.conf` file from the CANnectivity app folder, which enables the new USB stack.
 
 The ``EXTRA_CONF_FILE`` and ``EXTRA_DTC_OVERLAY_FILE`` options specify the additional configuration and overlay files found in the samples directory.
 The path is relative to the application directory.
