@@ -10,10 +10,12 @@ menuconfig CAN_LOG
     # this currently only works with deferred or immediate log mode
     depends on LOG_MODE_DEFERRED || LOG_MODE_IMMEDIATE
     default y
+    help
+        Enable CAN logging backend. This backend sends log messages as raw CAN Frames on a specified CAN Identifier.
+        It works best in Deferred mode with LOG_PROCESS_THREAD configuration enabled.
 
 
 if CAN_LOG
-
     module = CAN_LOG
     module-str = CAN Logger
     source "subsys/logging/Kconfig.template.log_config"
@@ -33,7 +35,6 @@ if CAN_LOG
           started during CAN log backend initialization.
 
     if CAN_LOG_AUTOSTART_BUS
-    
         config CAN_LOG_AUTOSTART_BUS_PRIORITY
             int
             prompt "CAN Log Auto-start Bus Priority"
@@ -41,5 +42,4 @@ if CAN_LOG
             help
               Priority used when starting the CAN bus for logging.
     endif # CAN_LOG_AUTOSTART_BUS
-
 endif

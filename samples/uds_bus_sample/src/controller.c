@@ -9,6 +9,7 @@ static const struct device *can_dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_canbus));
 
 #define CONTROLLER_CAN_SEND_ADDR 0x001
 #define CONTROLLER_CAN_RECEIVE_ADDR 0x000
+// Timeout for waiting for CAN response in milliseconds
 #define CONTROLLER_CAN_TIMEOUT_MS 1000
 
 enum controller_routine_status {
@@ -103,8 +104,6 @@ static UDSErr_t async_routine_control_check(
 static UDSErr_t async_routine_control_action(struct uds_context *const context,
                                              bool *consume_event) {
   UDSRoutineCtrlArgs_t *args = context->arg;
-  // struct uds_async_routine_data *data =
-  //     context->registration->routine_control.user_context;
 
   *consume_event = true;
 
@@ -144,8 +143,9 @@ static UDSErr_t async_routine_control_action(struct uds_context *const context,
     }
 
     case UDS_ROUTINE_CONTROL__REQUEST_ROUTINE_RESULTS: {
+      uint8_t routine_result[9];  // stack-local copy of the result
+
       k_mutex_lock(&controller_routine_data_mutex, K_FOREVER);
-      uint8_t routine_result[9];
       memcpy(routine_result, controller_routine_data.routine_result,
              sizeof(routine_result));
       k_mutex_unlock(&controller_routine_data_mutex);

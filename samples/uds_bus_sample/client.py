@@ -233,17 +233,18 @@ def main(args: Namespace):
         addr = addresses[i]
         conn = IsoTPSocketConnection(can, addr)
         with Client(conn, config=config, request_timeout=2) as client:
+            receive_address = i + 1
+            send_address = i + 2
+
             # setup receive addresses
             if i == 1:
-                client.write_data_by_identifier(0x1100, first_reponder_receive_address)
-            else:
-                client.write_data_by_identifier(0x1100, i + 1)
+                receive_address = first_reponder_receive_address
+            client.write_data_by_identifier(0x1100, receive_address)
 
             # setup send addresses
             if i == client_cnt - 1:
-                client.write_data_by_identifier(0x1101, last_responder_send_address)
-            else:
-                client.write_data_by_identifier(0x1101, i + 2)
+                send_address = last_responder_send_address
+            client.write_data_by_identifier(0x1101, send_address)
 
     print("Client chain configured successfully")
 
@@ -252,6 +253,7 @@ def main(args: Namespace):
     conn = IsoTPSocketConnection(can, addr)
     with Client(conn, config=config, request_timeout=2) as client:
         # start controller routine
+        print("Starting controller routine...")
         client.start_routine(routine_id=0x0000)
 
         # poll for completion and get final frame
@@ -279,12 +281,13 @@ def main(args: Namespace):
         return
 
     to_sign = received_final_frame[0]
-    for i in range(1, len(addresses)): # controller does not sign
+    for i in range(1, len(addresses)): # 1 because the controller does not sign
         received = received_final_frame[i]
         expected = to_sign ^ (addresses[i]._txid & 0xff)
         if received != expected:
             print(f"Signature mismatch on client {i}: expected 0x{expected:02X}, got 0x{received:02X}")
             return
+
     print("All signatures verified successfully")
 
 

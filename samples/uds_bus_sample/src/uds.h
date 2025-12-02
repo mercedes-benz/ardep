@@ -5,8 +5,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef ARDEP_SAMPLES_UDS_SRC_UDS_H
-#define ARDEP_SAMPLES_UDS_SRC_UDS_H
+#ifndef ARDEP_SAMPLES_UDS_BUS_SAMPLE_SRC_UDS_H
+#define ARDEP_SAMPLES_UDS_BUS_SAMPLE_SRC_UDS_H
 
 #include <ardep/uds.h>
 
