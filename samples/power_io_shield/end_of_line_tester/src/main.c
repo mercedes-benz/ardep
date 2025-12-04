@@ -84,7 +84,7 @@ int wait_for_uart_msg(const char* msg) {
         received = 0;  // reset on mismatch
       }
     }
-    k_msleep(10);
+    k_yield();
   }
 
   return 0;
