@@ -1,0 +1,836 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>UDS Library &#8212; ARDEP  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="ARDEP Command" href="../../scripts/ardep.html" />
+    <link rel="prev" title="ISO14229 Library" href="../iso14229/README.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="uds-library">
+<span id="uds-lib"></span><h1>UDS Library<a class="headerlink" href="#uds-library" title="Permalink to this heading">¶</a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
+<p>The UDS (Unified Diagnostic Services) library provides a high-level, event-driven API for implementing ISO 14229-1 compliant diagnostic services. Built on top of the <a class="reference internal" href="../iso14229/README.html#iso14229-lib"><span class="std std-ref">ISO14229 Library</span></a>, it simplifies UDS server development by allowing you to register event handlers that respond to diagnostic requests.</p>
+<section id="key-features">
+<h3>Key Features<a class="headerlink" href="#key-features" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Event-Driven Architecture</strong>: Register handlers for specific UDS services using callbacks</p></li>
+<li><p><strong>Static and Dynamic Registration</strong>: Define handlers at compile-time via macros or register them at runtime</p></li>
+<li><p><strong>Flexible Handler System</strong>: Each handler includes <code class="docutils literal notranslate"><span class="pre">check</span></code> and <code class="docutils literal notranslate"><span class="pre">action</span></code> functions for fine-grained control</p></li>
+<li><p><strong>Pre-built Default Handlers</strong>: Common operations like memory access and ECU reset are provided out-of-the-box</p></li>
+<li><p><strong>Comprehensive Service Support</strong>: Implements most UDS services defined in ISO 14229-1</p></li>
+</ul>
+</section>
+<section id="supported-uds-services">
+<h3>Supported UDS Services<a class="headerlink" href="#supported-uds-services" title="Permalink to this heading">¶</a></h3>
+<p>The following diagnostic services are currently implemented:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Service</p></th>
+<th class="head"><p>SID</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Diagnostic Session Control</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0x10</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>ECU Reset</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0x11</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Clear Diagnostic Information</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0x14</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Read DTC Information</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0x19</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Read Data By Identifier</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0x22</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Read Memory By Address</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0x23</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Security Access</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0x27</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Communication Control</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0x28</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Authentication</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0x29</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Dynamically Define Data Identifier</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0x2C</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Write Data By Identifier</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0x2E</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Input Output Control By Identifier</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0x2F</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Routine Control</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0x31</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Request Download</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0x34</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Request Upload</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0x35</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Transfer Data</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0x36</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Request Transfer Exit</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0x37</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Request File Transfer</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0x38</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Write Memory By Address</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0x3D</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Tester Present</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0x3E</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Control DTC Settings</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0x85</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Link Control</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0x86</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">¶</a></h2>
+<section id="core-concepts">
+<h3>Core Concepts<a class="headerlink" href="#core-concepts" title="Permalink to this heading">¶</a></h3>
+<p>The UDS library operates on an event-driven model where diagnostic requests trigger events that are handled by registered event handlers.</p>
+<section id="event-handlers">
+<h4>Event Handlers<a class="headerlink" href="#event-handlers" title="Permalink to this heading">¶</a></h4>
+<p>An <strong>event handler</strong> consists of:</p>
+<ol class="arabic simple">
+<li><p><strong>Check Function</strong> (<code class="docutils literal notranslate"><span class="pre">uds_check_fn</span></code>): Validates whether the current ECU state allows handling the event with its provided arguments</p>
+<ul class="simple">
+<li><p>Returns <code class="docutils literal notranslate"><span class="pre">UDS_OK</span></code> if the event can be processed</p></li>
+<li><p>Returns a negative response code (<code class="docutils literal notranslate"><span class="pre">UDS_NRC_*</span></code>) if conditions aren’t met</p></li>
+<li><p>Sets <code class="docutils literal notranslate"><span class="pre">apply_action</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code> to proceed with the action function</p></li>
+</ul>
+</li>
+<li><p><strong>Action Function</strong> (<code class="docutils literal notranslate"><span class="pre">uds_action_fn</span></code>): Performs the actual diagnostic operation</p>
+<ul class="simple">
+<li><p>Executes only if the check function approved</p></li>
+<li><p>Returns <code class="docutils literal notranslate"><span class="pre">UDS_PositiveResponse</span></code> on success or <code class="docutils literal notranslate"><span class="pre">UDS_NRC_*</span></code> on error</p></li>
+<li><p>Sets <code class="docutils literal notranslate"><span class="pre">consume_event</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code> to stop event propagation or <code class="docutils literal notranslate"><span class="pre">false</span></code> to allow other handlers to process it</p></li>
+</ul>
+</li>
+<li><p><strong>Associated Data</strong>: Context-specific information (e.g., data identifiers, memory addresses, user context)</p></li>
+</ol>
+</section>
+<section id="registration">
+<h4>Registration<a class="headerlink" href="#registration" title="Permalink to this heading">¶</a></h4>
+<p>Event handlers are registered using:</p>
+<ul class="simple">
+<li><p><strong>Static Registration</strong>: Use macros (e.g., <code class="docutils literal notranslate"><span class="pre">UDS_REGISTER_*</span></code>) to define handlers at compile-time</p></li>
+<li><p><strong>Dynamic Registration</strong>: Call <code class="docutils literal notranslate"><span class="pre">instance.register_event_handler()</span></code> at runtime (requires <code class="docutils literal notranslate"><span class="pre">CONFIG_UDS_USE_DYNAMIC_REGISTRATION</span></code>)</p></li>
+</ul>
+</section>
+<section id="event-processing-flow">
+<h4>Event Processing Flow<a class="headerlink" href="#event-processing-flow" title="Permalink to this heading">¶</a></h4>
+<p>When a diagnostic request arrives:</p>
+<ol class="arabic simple">
+<li><p>The underlying <a class="reference internal" href="../iso14229/README.html#iso14229-lib"><span class="std std-ref">ISO14229 Library</span></a> generates a UDS event</p></li>
+<li><p>The UDS library iterates through registered event handlers (static first, then dynamic)</p></li>
+<li><p>For each handler:</p>
+<ol class="loweralpha simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">check</span></code> function is called</p></li>
+<li><p>If approved, the <code class="docutils literal notranslate"><span class="pre">action</span></code> function executes</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">consume_event</span></code> is <code class="docutils literal notranslate"><span class="pre">true</span></code>, iteration stops</p></li>
+</ol>
+</li>
+<li><p>If no handler processes the event, a negative response is sent to the client</p></li>
+</ol>
+</section>
+<section id="example">
+<h4>Example<a class="headerlink" href="#example" title="Permalink to this heading">¶</a></h4>
+<p>The following example demonstrates a minimal setup of an UDS server that registers a single Data Identifier handler.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;zephyr/logging/log.h&gt;</span>
+<span class="n">LOG_MODULE_REGISTER</span><span class="p">(</span><span class="n">uds_sample</span><span class="p">,</span><span class="w"> </span><span class="n">LOG_LEVEL_DBG</span><span class="p">);</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;zephyr/drivers/can.h&gt;</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;ardep/iso14229.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;ardep/uds.h&gt;</span>
+
+<span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">device</span><span class="w"> </span><span class="o">*</span><span class="n">can_dev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DEVICE_DT_GET</span><span class="p">(</span><span class="n">DT_CHOSEN</span><span class="p">(</span><span class="n">zephyr_canbus</span><span class="p">));</span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">uds_instance_t</span><span class="w"> </span><span class="n">instance</span><span class="p">;</span>
+
+<span class="c1">// Define a data identifier and its associated data</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">primitive_type_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x50</span><span class="p">;</span>
+<span class="kt">uint16_t</span><span class="w"> </span><span class="n">primitive_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+
+<span class="n">UDSErr_t</span><span class="w"> </span><span class="nf">read_data_by_id_check</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">uds_context</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">context</span><span class="p">,</span>
+<span class="w">                               </span><span class="kt">bool</span><span class="w"> </span><span class="o">*</span><span class="n">apply_action</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="o">*</span><span class="n">apply_action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">UDS_OK</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">UDSErr_t</span><span class="w"> </span><span class="nf">read_data_by_id_action</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">uds_context</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">context</span><span class="p">,</span>
+<span class="w">                                </span><span class="kt">bool</span><span class="w"> </span><span class="o">*</span><span class="n">consume_event</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">UDSRDBIArgs_t</span><span class="w"> </span><span class="o">*</span><span class="n">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">context</span><span class="o">-&gt;</span><span class="n">arg</span><span class="p">;</span>
+
+<span class="w">    </span><span class="o">*</span><span class="n">consume_event</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Convert to big-endian for network transmission</span>
+<span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sys_cpu_to_be16</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="kt">uint16_t</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">context</span><span class="o">-&gt;</span><span class="n">registration</span><span class="o">-&gt;</span><span class="n">data_identifier</span><span class="p">.</span><span class="n">data</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">args</span><span class="o">-&gt;</span><span class="n">copy</span><span class="p">(</span><span class="n">context</span><span class="o">-&gt;</span><span class="n">server</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">t</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="n">UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER</span><span class="p">(</span>
+<span class="w">    </span><span class="o">&amp;</span><span class="n">instance</span><span class="p">,</span>
+<span class="w">    </span><span class="n">primitive_type_id</span><span class="p">,</span>
+<span class="w">    </span><span class="o">&amp;</span><span class="n">primitive_type</span><span class="p">,</span>
+<span class="w">    </span><span class="n">read_data_by_id_check</span><span class="p">,</span>
+<span class="w">    </span><span class="n">read_data_by_id_action</span><span class="p">,</span>
+<span class="w">    </span><span class="nb">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="nb">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="nb">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="nb">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="nb">NULL</span><span class="p">);</span>
+
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Configure ISO-TP addressing</span>
+<span class="w">    </span><span class="n">UDSISOTpCConfig_t</span><span class="w"> </span><span class="n">cfg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="p">.</span><span class="n">source_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x7E8</span><span class="p">,</span>
+<span class="w">        </span><span class="p">.</span><span class="n">target_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x7E0</span><span class="p">,</span>
+
+<span class="w">        </span><span class="p">.</span><span class="n">source_addr_func</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x7DF</span><span class="p">,</span>
+<span class="w">        </span><span class="p">.</span><span class="n">target_addr_func</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UDS_TP_NOOP_ADDR</span><span class="p">,</span>
+<span class="w">    </span><span class="p">};</span>
+
+<span class="w">    </span><span class="n">uds_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">instance</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">cfg</span><span class="p">,</span><span class="w"> </span><span class="n">can_dev</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">device_is_ready</span><span class="p">(</span><span class="n">can_dev</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">LOG_INF</span><span class="p">(</span><span class="s">&quot;CAN device not ready&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="o">-</span><span class="n">ENODEV</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">can_set_mode</span><span class="p">(</span><span class="n">can_dev</span><span class="p">,</span><span class="w"> </span><span class="n">CAN_MODE_NORMAL</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">LOG_ERR</span><span class="p">(</span><span class="s">&quot;Failed to set CAN mode: %d&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">err</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">err</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">can_start</span><span class="p">(</span><span class="n">can_dev</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">LOG_ERR</span><span class="p">(</span><span class="s">&quot;Failed to start CAN device: %d&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">err</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">err</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">instance</span><span class="p">.</span><span class="n">iso14229</span><span class="p">.</span><span class="n">thread_start</span><span class="p">(</span><span class="o">&amp;</span><span class="n">instance</span><span class="p">.</span><span class="n">iso14229</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>For more examples on how to setup the different UDS services with macros, see the code of the <a class="reference internal" href="../../samples/uds/README.html#uds-sample"><span class="std std-ref">UDS Sample</span></a> and the documentation on the Macros in <code class="docutils literal notranslate"><span class="pre">uds_macro.h</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">UDSISOTpCConfig_t</span></code> allows to describe the addressing scheme used on the CAN bus:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">source_addr</span></code>: The physical address the ECU listens to for “physical” requests (the address of the ECU). <code class="docutils literal notranslate"><span class="pre">0x7E8</span></code> in the example above.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">target_addr</span></code>: The physical address the ECU uses in “physical” responses (the address of the Tester). Used for ECU → tester responses under physical addressing. <code class="docutils literal notranslate"><span class="pre">0x7E0</span></code> in the example above.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">source_addr_func</span></code>: The functional/group request ID the ECU listens to for “functional” requests. <code class="docutils literal notranslate"><span class="pre">0x7DF</span></code> in the example above.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">target_addr_func</span></code>: The ECU uses this address in “functional” responses. Usually set to <code class="docutils literal notranslate"><span class="pre">UDS_TP_NOOP_ADDR</span></code> as functional requests do not expect a response.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="api-reference">
+<h2>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this heading">¶</a></h2>
+<section id="event-handler-registration">
+<h3>Event Handler Registration<a class="headerlink" href="#event-handler-registration" title="Permalink to this heading">¶</a></h3>
+<p>This section describes the macros and functions available for registering handlers for each UDS service.</p>
+<section id="read-dtc-information-0x19">
+<h4>Read DTC Information (<code class="docutils literal notranslate"><span class="pre">0x19</span></code>)<a class="headerlink" href="#read-dtc-information-0x19" title="Permalink to this heading">¶</a></h4>
+<p><strong>Events</strong>: <code class="docutils literal notranslate"><span class="pre">UDS_EVT_ReadDTCInformation</span></code></p>
+<p>The Read DTC Information service supports multiple subfunctions. You can register handlers with different levels of granularity:</p>
+<p><strong>Macros</strong>:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">UDS_REGISTER_READ_DTC_INFO_HANDLER(_instance,</span> <span class="pre">_check,</span> <span class="pre">_act,</span> <span class="pre">_subfunc_id,</span> <span class="pre">_user_context)</span></code></p>
+<p>Register a handler for a <strong>specific subfunction</strong> (e.g., <code class="docutils literal notranslate"><span class="pre">UDS_READ_DTC_INFO_SUBFUNC__DTC_BY_STATUS_MASK</span></code>)</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UDS_REGISTER_READ_DTC_INFO_HANDLER_MANY(_instance,</span> <span class="pre">_check,</span> <span class="pre">_act,</span> <span class="pre">_user_context,</span> <span class="pre">...)</span></code></p>
+<p>Register a handler for <strong>multiple subfunctions</strong> by providing subfunction IDs as variadic arguments</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UDS_REGISTER_READ_DTC_INFO_HANDLER_ALL(_instance,</span> <span class="pre">_check,</span> <span class="pre">_act,</span> <span class="pre">_user_context)</span></code></p>
+<p>Register a handler for <strong>all subfunctions</strong></p>
+</li>
+</ul>
+<p><strong>Example</strong>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">UDSErr_t</span><span class="w"> </span><span class="nf">my_check_dtc</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">uds_context</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="o">*</span><span class="n">apply_action</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="o">*</span><span class="n">apply_action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">UDS_OK</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">UDSErr_t</span><span class="w"> </span><span class="nf">my_read_dtc</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">uds_context</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="o">*</span><span class="n">consume_event</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Read and return DTC data</span>
+<span class="w">    </span><span class="o">*</span><span class="n">consume_event</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">UDS_PositiveResponse</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">UDS_REGISTER_READ_DTC_INFO_HANDLER</span><span class="p">(</span>
+<span class="w">    </span><span class="o">&amp;</span><span class="n">instance</span><span class="p">,</span>
+<span class="w">    </span><span class="n">my_check_dtc</span><span class="p">,</span>
+<span class="w">    </span><span class="n">my_read_dtc</span><span class="p">,</span>
+<span class="w">    </span><span class="n">UDS_READ_DTC_INFO_SUBFUNC__DTC_BY_STATUS_MASK</span><span class="p">,</span>
+<span class="w">    </span><span class="nb">NULL</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="memory-operations-0x23-0x3d">
+<h4>Memory Operations (<code class="docutils literal notranslate"><span class="pre">0x23</span></code>, <code class="docutils literal notranslate"><span class="pre">0x3D</span></code>)<a class="headerlink" href="#memory-operations-0x23-0x3d" title="Permalink to this heading">¶</a></h4>
+<p><strong>Events</strong>: <code class="docutils literal notranslate"><span class="pre">UDS_EVT_ReadMemByAddr</span></code>, <code class="docutils literal notranslate"><span class="pre">UDS_EVT_WriteMemByAddr</span></code></p>
+<p><strong>Macros</strong>:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">UDS_REGISTER_MEMORY_HANDLER(_instance,</span> <span class="pre">_read_check,</span> <span class="pre">_read,</span> <span class="pre">_write_check,</span> <span class="pre">_write,</span> <span class="pre">_user_context)</span></code></p>
+<p>Register <strong>custom handlers</strong> for memory read and write operations</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UDS_REGISTER_MEMORY_DEFAULT_HANDLER(_instance)</span></code></p>
+<p>Register <strong>default handlers</strong> that support reading/writing RAM and Flash memory</p>
+</li>
+</ul>
+<p><strong>Default Handler Behavior</strong>:</p>
+<ul class="simple">
+<li><p>Validates memory addresses are within RAM or Flash regions</p></li>
+<li><p>Performs bounds checking</p></li>
+<li><p>Uses safe memory access functions</p></li>
+</ul>
+<p><strong>Example</strong>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Use default handler for standard memory access</span>
+<span class="n">UDS_REGISTER_MEMORY_DEFAULT_HANDLER</span><span class="p">(</span><span class="o">&amp;</span><span class="n">instance</span><span class="p">);</span>
+
+<span class="c1">// Or register custom handler for specialized behavior</span>
+<span class="n">UDS_REGISTER_MEMORY_HANDLER</span><span class="p">(</span>
+<span class="w">    </span><span class="o">&amp;</span><span class="n">instance</span><span class="p">,</span>
+<span class="w">    </span><span class="n">my_mem_check_read</span><span class="p">,</span>
+<span class="w">    </span><span class="n">my_mem_action_read</span><span class="p">,</span>
+<span class="w">    </span><span class="n">my_mem_check_write</span><span class="p">,</span>
+<span class="w">    </span><span class="n">my_mem_action_write</span><span class="p">,</span>
+<span class="w">    </span><span class="o">&amp;</span><span class="n">my_context</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="ecu-reset-0x11">
+<h4>ECU Reset (<code class="docutils literal notranslate"><span class="pre">0x11</span></code>)<a class="headerlink" href="#ecu-reset-0x11" title="Permalink to this heading">¶</a></h4>
+<p><strong>Events</strong>: <code class="docutils literal notranslate"><span class="pre">UDS_EVT_EcuReset</span></code>, <code class="docutils literal notranslate"><span class="pre">UDS_EVT_DoScheduledReset</span></code></p>
+<p><strong>Macros</strong>:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">UDS_REGISTER_ECU_RESET_HANDLER(_instance,</span> <span class="pre">_reset_type,</span> <span class="pre">_ecu_reset_check,</span> <span class="pre">_ecu_reset,</span> <span class="pre">_do_scheduled_reset_check,</span> <span class="pre">_do_scheduled_reset,</span> <span class="pre">_user_context)</span></code></p>
+<p>Register a <strong>custom handler</strong> for a specific reset type (e.g., <code class="docutils literal notranslate"><span class="pre">ECU_RESET__HARD</span></code>)</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UDS_REGISTER_ECU_DEFAULT_HARD_RESET_HANDLER(_instance)</span></code></p>
+<p>Register the <strong>default handler</strong> for hard reset operations</p>
+</li>
+</ul>
+<p><strong>Example</strong>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">UDS_REGISTER_ECU_DEFAULT_HARD_RESET_HANDLER</span><span class="p">(</span><span class="o">&amp;</span><span class="n">instance</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="data-identifier-operations-0x22-0x2e-0x2f">
+<h4>Data Identifier Operations (<code class="docutils literal notranslate"><span class="pre">0x22</span></code>, <code class="docutils literal notranslate"><span class="pre">0x2E</span></code>, <code class="docutils literal notranslate"><span class="pre">0x2F</span></code>)<a class="headerlink" href="#data-identifier-operations-0x22-0x2e-0x2f" title="Permalink to this heading">¶</a></h4>
+<p><strong>Events</strong>: <code class="docutils literal notranslate"><span class="pre">UDS_EVT_ReadDataByIdent</span></code>, <code class="docutils literal notranslate"><span class="pre">UDS_EVT_WriteDataByIdent</span></code>, <code class="docutils literal notranslate"><span class="pre">UDS_EVT_IOControl</span></code></p>
+<p>These three services share the same data identifier space, so they use a common registration mechanism.</p>
+<p><strong>Macros</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(_instance,</span> <span class="pre">_data_id,</span> <span class="pre">_data_ptr,</span> <span class="pre">_read_check,</span> <span class="pre">_read,</span> <span class="pre">_write_check,</span> <span class="pre">_write,</span> <span class="pre">_io_control_check,</span> <span class="pre">_io_control,</span> <span class="pre">_user_context)</span></code></p></li>
+</ul>
+<p><strong>Parameters</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">_instance</span></code>: Pointer to the UDS server instance</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_data_id</span></code>: The 16-bit data identifier (DID)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_data_ptr</span></code>: Pointer to the data buffer</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_read_check</span></code>, <code class="docutils literal notranslate"><span class="pre">_read</span></code>: Check and action functions for read operations</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_write_check</span></code>, <code class="docutils literal notranslate"><span class="pre">_write</span></code>: Check and action functions for write operations (set to <code class="docutils literal notranslate"><span class="pre">NULL</span></code> if not supported)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_io_control_check</span></code>, <code class="docutils literal notranslate"><span class="pre">_io_control</span></code>: Check and action functions for IO control operations (set to <code class="docutils literal notranslate"><span class="pre">NULL</span></code> if not supported)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_user_context</span></code>: Optional user-defined context</p></li>
+</ul>
+<p><strong>Example</strong>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">vehicle_speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="n">UDSErr_t</span><span class="w"> </span><span class="nf">read_speed_check</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">uds_context</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="o">*</span><span class="n">apply</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="o">*</span><span class="n">apply</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">UDS_OK</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">UDSErr_t</span><span class="w"> </span><span class="nf">read_speed_action</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">uds_context</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="o">*</span><span class="n">consume</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Data is automatically copied from vehicle_speed</span>
+<span class="w">    </span><span class="o">*</span><span class="n">consume</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">UDS_PositiveResponse</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER</span><span class="p">(</span>
+<span class="w">    </span><span class="o">&amp;</span><span class="n">instance</span><span class="p">,</span><span class="w">           </span><span class="c1">// Instance</span>
+<span class="w">    </span><span class="mh">0xF123</span><span class="p">,</span><span class="w">              </span><span class="c1">// Custom DID</span>
+<span class="w">    </span><span class="o">&amp;</span><span class="n">vehicle_speed</span><span class="p">,</span><span class="w">      </span><span class="c1">// Data pointer</span>
+<span class="w">    </span><span class="n">read_speed_check</span><span class="p">,</span><span class="w">    </span><span class="c1">// Read check</span>
+<span class="w">    </span><span class="n">read_speed_action</span><span class="p">,</span><span class="w">   </span><span class="c1">// Read action</span>
+<span class="w">    </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w">          </span><span class="c1">// No write support</span>
+<span class="w">    </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w">          </span><span class="c1">// No IO control support</span>
+<span class="w">    </span><span class="nb">NULL</span><span class="w">                 </span><span class="c1">// User context</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="diagnostic-session-control-0x10">
+<h4>Diagnostic Session Control (<code class="docutils literal notranslate"><span class="pre">0x10</span></code>)<a class="headerlink" href="#diagnostic-session-control-0x10" title="Permalink to this heading">¶</a></h4>
+<p><strong>Events</strong>: <code class="docutils literal notranslate"><span class="pre">UDS_EVT_DiagSessCtrl</span></code>, <code class="docutils literal notranslate"><span class="pre">UDS_EVT_SessionTimeout</span></code></p>
+<p><strong>Macros</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">UDS_REGISTER_DIAG_SESSION_CTRL_HANDLER(_instance,</span> <span class="pre">_diag_session_ctrl_check,</span> <span class="pre">_diag_session_ctrl,</span> <span class="pre">_session_timeout_check,</span> <span class="pre">_session_timeout,</span> <span class="pre">_user_context)</span></code></p></li>
+</ul>
+<p><strong>Note</strong>: This handler is <strong>optional</strong>. Session change requests succeed even without a custom handler. The library automatically manages session state.</p>
+<p><strong>Accessing Current Session</strong>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">uds_instance_t</span><span class="w"> </span><span class="n">instance</span><span class="p">;</span>
+<span class="kt">uint8_t</span><span class="w"> </span><span class="n">current_session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">instance</span><span class="p">.</span><span class="n">iso14229</span><span class="p">.</span><span class="n">server</span><span class="p">.</span><span class="n">sessionType</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you use <code class="docutils literal notranslate"><span class="pre">UDS_REGISTER_LINK_CONTROL_DEFAULT_HANDLER()</span></code>, it registers its own session handler. Ensure your custom handler doesn’t consume session events if both are used.</p>
+</div>
+</section>
+<section id="clear-diagnostic-information-0x14">
+<h4>Clear Diagnostic Information (<code class="docutils literal notranslate"><span class="pre">0x14</span></code>)<a class="headerlink" href="#clear-diagnostic-information-0x14" title="Permalink to this heading">¶</a></h4>
+<p><strong>Events</strong>: <code class="docutils literal notranslate"><span class="pre">UDS_EVT_ClearDiagnosticInfo</span></code></p>
+<p><strong>Macros</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">UDS_REGISTER_CLEAR_DIAG_INFO_HANDLER(_instance,</span> <span class="pre">_check,</span> <span class="pre">_act,</span> <span class="pre">_user_context)</span></code></p></li>
+</ul>
+</section>
+<section id="routine-control-0x31">
+<h4>Routine Control (<code class="docutils literal notranslate"><span class="pre">0x31</span></code>)<a class="headerlink" href="#routine-control-0x31" title="Permalink to this heading">¶</a></h4>
+<p><strong>Events</strong>: <code class="docutils literal notranslate"><span class="pre">UDS_EVT_RoutineCtrl</span></code></p>
+<p><strong>Macros</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">UDS_REGISTER_ROUTINE_CONTROL_HANDLER(_instance,</span> <span class="pre">_routine_id,</span> <span class="pre">_check,</span> <span class="pre">_act,</span> <span class="pre">_user_context)</span></code></p></li>
+</ul>
+<p>The action function must handle all subfunctions:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">UDS_ROUTINE_CONTROL__START_ROUTINE</span></code> (<code class="docutils literal notranslate"><span class="pre">0x01</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UDS_ROUTINE_CONTROL__STOP_ROUTINE</span></code> (<code class="docutils literal notranslate"><span class="pre">0x02</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UDS_ROUTINE_CONTROL__REQUEST_ROUTINE_RESULTS</span></code> (<code class="docutils literal notranslate"><span class="pre">0x03</span></code>)</p></li>
+</ul>
+</section>
+<section id="security-access-0x27">
+<h4>Security Access (<code class="docutils literal notranslate"><span class="pre">0x27</span></code>)<a class="headerlink" href="#security-access-0x27" title="Permalink to this heading">¶</a></h4>
+<p><strong>Events</strong>: <code class="docutils literal notranslate"><span class="pre">UDS_EVT_SecAccessRequestSeed</span></code>, <code class="docutils literal notranslate"><span class="pre">UDS_EVT_SecAccessValidateKey</span></code></p>
+<p><strong>Macros</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">UDS_REGISTER_SECURITY_ACCESS_HANDLER(_instance,</span> <span class="pre">_request_seed_check,</span> <span class="pre">_request_seed_act,</span> <span class="pre">_validate_key_check,</span> <span class="pre">_validate_key_act,</span> <span class="pre">_user_context)</span></code></p></li>
+</ul>
+<p><strong>Accessing Current Security Level</strong>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">uds_instance_t</span><span class="w"> </span><span class="n">instance</span><span class="p">;</span>
+<span class="kt">uint8_t</span><span class="w"> </span><span class="n">security_level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">instance</span><span class="p">.</span><span class="n">iso14229</span><span class="p">.</span><span class="n">server</span><span class="p">.</span><span class="n">securityLevel</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="communication-control-0x28">
+<h4>Communication Control (<code class="docutils literal notranslate"><span class="pre">0x28</span></code>)<a class="headerlink" href="#communication-control-0x28" title="Permalink to this heading">¶</a></h4>
+<p><strong>Events</strong>: <code class="docutils literal notranslate"><span class="pre">UDS_EVT_CommCtrl</span></code></p>
+<p><strong>Macros</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">UDS_REGISTER_COMMUNICATION_CONTROL_HANDLER(_instance,</span> <span class="pre">_check,</span> <span class="pre">_act,</span> <span class="pre">_user_context)</span></code></p></li>
+</ul>
+</section>
+<section id="control-dtc-setting-0x85">
+<h4>Control DTC Setting (<code class="docutils literal notranslate"><span class="pre">0x85</span></code>)<a class="headerlink" href="#control-dtc-setting-0x85" title="Permalink to this heading">¶</a></h4>
+<p><strong>Events</strong>: <code class="docutils literal notranslate"><span class="pre">UDS_EVT_ControlDTCSetting</span></code></p>
+<p><strong>Macros</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">UDS_REGISTER_CONTROL_DTC_SETTING_HANDLER(_instance,</span> <span class="pre">_check,</span> <span class="pre">_act,</span> <span class="pre">_user_context)</span></code></p></li>
+</ul>
+</section>
+<section id="dynamically-define-data-identifier-0x2c">
+<h4>Dynamically Define Data Identifier (<code class="docutils literal notranslate"><span class="pre">0x2C</span></code>)<a class="headerlink" href="#dynamically-define-data-identifier-0x2c" title="Permalink to this heading">¶</a></h4>
+<p><strong>Events</strong>: <code class="docutils literal notranslate"><span class="pre">UDS_EVT_DynamicDefineDataId</span></code></p>
+<p><strong>Macros</strong>:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">UDS_REGISTER_DYNAMICALLY_DEFINE_DATA_IDS_HANDLER(_instance,</span> <span class="pre">_check,</span> <span class="pre">_act,</span> <span class="pre">_user_context)</span></code></p>
+<p>Register a <strong>custom handler</strong></p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UDS_REGISTER_DYNAMICALLY_DEFINE_DATA_IDS_DEFAULT_HANDLER(_instance)</span></code></p>
+<p>Register the <strong>default handler</strong> (recommended)</p>
+</li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Requires <code class="docutils literal notranslate"><span class="pre">CONFIG_UDS_USE_DYNAMIC_REGISTRATION=y</span></code> in your prj.conf</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Implementing this service requires managing internal UDS library structures. <strong>Use the default handler unless you have specific requirements.</strong></p>
+</div>
+</section>
+<section id="authentication-0x29">
+<h4>Authentication (<code class="docutils literal notranslate"><span class="pre">0x29</span></code>)<a class="headerlink" href="#authentication-0x29" title="Permalink to this heading">¶</a></h4>
+<p><strong>Events</strong>: <code class="docutils literal notranslate"><span class="pre">UDS_EVT_Auth</span></code>, <code class="docutils literal notranslate"><span class="pre">UDS_EVT_AuthTimeout</span></code></p>
+<p><strong>Macros</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">UDS_REGISTER_AUTHENTICATION_HANDLER(_instance,</span> <span class="pre">_auth_check,</span> <span class="pre">_auth_act,</span> <span class="pre">_timeout_check,</span> <span class="pre">_timeout_act,</span> <span class="pre">_user_context)</span></code></p></li>
+</ul>
+<p><strong>Managing Authentication State</strong>:</p>
+<p>Unlike session and security level, authentication state is <strong>not stored internally</strong>. You must manage it in your application.</p>
+<p><strong>Recommended Approach</strong>: Store authentication data in a user context:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">my_auth_context</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">authenticated</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">auth_level</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// Additional authentication data</span>
+<span class="p">};</span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">my_auth_context</span><span class="w"> </span><span class="n">auth_ctx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">.</span><span class="n">authenticated</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="w"> </span><span class="p">};</span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">uds_instance_t</span><span class="w"> </span><span class="n">instance</span><span class="p">;</span>
+<span class="n">uds_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">instance</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">iso_tp_config</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">can_dev</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">auth_ctx</span><span class="p">);</span>
+
+<span class="n">UDSErr_t</span><span class="w"> </span><span class="nf">my_auth_check</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">uds_context</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="o">*</span><span class="n">apply_action</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">my_auth_context</span><span class="w"> </span><span class="o">*</span><span class="n">auth</span><span class="w"> </span><span class="o">=</span>
+<span class="w">        </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">my_auth_context</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">instance</span><span class="o">-&gt;</span><span class="n">user_context</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Check authentication state</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">auth</span><span class="o">-&gt;</span><span class="n">authenticated</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="o">*</span><span class="n">apply_action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">UDS_OK</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">UDS_NRC_SECURITY_ACCESS_DENIED</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="tester-present-0x3e">
+<h4>Tester Present (<code class="docutils literal notranslate"><span class="pre">0x3E</span></code>)<a class="headerlink" href="#tester-present-0x3e" title="Permalink to this heading">¶</a></h4>
+<p><strong>Events</strong>: <code class="docutils literal notranslate"><span class="pre">UDS_EVT_TesterPresent</span></code></p>
+<p>This service is handled automatically by the library. No custom event handlers are needed.</p>
+</section>
+<section id="link-control-0x87">
+<h4>Link Control (<code class="docutils literal notranslate"><span class="pre">0x87</span></code>)<a class="headerlink" href="#link-control-0x87" title="Permalink to this heading">¶</a></h4>
+<p><strong>Events</strong>: <code class="docutils literal notranslate"><span class="pre">UDS_EVT_LinkControl</span></code></p>
+<p><strong>Macros</strong>:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">UDS_REGISTER_LINK_CONTROL_HANDLER(_instance,</span> <span class="pre">_check,</span> <span class="pre">_act,</span> <span class="pre">_user_context)</span></code></p>
+<p>Register a <strong>custom handler</strong></p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UDS_REGISTER_LINK_CONTROL_DEFAULT_HANDLER(_instance)</span></code></p>
+<p>Register the <strong>default handler</strong> (recommended)</p>
+</li>
+</ul>
+<p><strong>Configuration</strong>:</p>
+<div class="highlight-cfg notranslate"><div class="highlight"><pre><span></span><span class="c1"># In prj.conf</span>
+<span class="na">CONFIG_UDS_USE_LINK_CONTROL</span><span class="o">=</span><span class="s">y</span>
+<span class="na">CONFIG_UDS_DEFAULT_CAN_BITRATE</span><span class="o">=</span><span class="s">500000</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<ul class="simple">
+<li><p>Requires <code class="docutils literal notranslate"><span class="pre">CONFIG_UDS_USE_LINK_CONTROL=y</span></code></p></li>
+<li><p>Must set <code class="docutils literal notranslate"><span class="pre">CONFIG_UDS_DEFAULT_CAN_BITRATE</span></code> to your CAN interface’s default baudrate because the default bitrate cannot be queried in code.</p></li>
+</ul>
+</div>
+<p><strong>Default Handler Behavior</strong>:</p>
+<ul class="simple">
+<li><p>Handles baudrate transitions</p></li>
+<li><p>Automatically restores default baudrate on session timeout</p></li>
+<li><p>Registers its own session control handler</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The default link control handler registers a session event handler. If you use both this and a custom session handler, ensure your handler <strong>does not consume</strong> session events.</p>
+</div>
+</section>
+<section id="data-transfer-services-0x34-0x35-0x36-0x37-0x38">
+<h4>Data Transfer Services (<code class="docutils literal notranslate"><span class="pre">0x34</span></code>, <code class="docutils literal notranslate"><span class="pre">0x35</span></code>, <code class="docutils literal notranslate"><span class="pre">0x36</span></code>, <code class="docutils literal notranslate"><span class="pre">0x37</span></code>, <code class="docutils literal notranslate"><span class="pre">0x38</span></code>)<a class="headerlink" href="#data-transfer-services-0x34-0x35-0x36-0x37-0x38" title="Permalink to this heading">¶</a></h4>
+<p><strong>Events</strong>: <code class="docutils literal notranslate"><span class="pre">UDS_EVT_RequestDownload</span></code>, <code class="docutils literal notranslate"><span class="pre">UDS_EVT_RequestUpload</span></code>, <code class="docutils literal notranslate"><span class="pre">UDS_EVT_TransferData</span></code>, <code class="docutils literal notranslate"><span class="pre">UDS_EVT_RequestTransferExit</span></code>, <code class="docutils literal notranslate"><span class="pre">UDS_EVT_RequestFileTransfer</span></code></p>
+<p>These services are handled internally by the library and <strong>do not support custom handlers</strong>.</p>
+<p>These services read from and write to flash memory or the file system.
+Note that they do not perform flash erase operations; any required erasure must be done beforehand (for example, via a routine).</p>
+<p><strong>Configuration</strong>:</p>
+<div class="highlight-cfg notranslate"><div class="highlight"><pre><span></span><span class="c1"># In prj.conf</span>
+<span class="na">CONFIG_UDS_FILE_TRANSFER</span><span class="o">=</span><span class="s">y</span><span class="w">              </span><span class="c1"># Required for file transfer (0x38)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="dynamic-registration">
+<h3>Dynamic Registration<a class="headerlink" href="#dynamic-registration" title="Permalink to this heading">¶</a></h3>
+<p>For scenarios where handlers need to be registered at runtime (e.g., based on configuration files, runtime conditions), the library supports dynamic registration.</p>
+<p><strong>Prerequisites</strong>:</p>
+<div class="highlight-cfg notranslate"><div class="highlight"><pre><span></span><span class="c1"># In prj.conf</span>
+<span class="na">CONFIG_UDS_USE_DYNAMIC_REGISTRATION</span><span class="o">=</span><span class="s">y</span>
+</pre></div>
+</div>
+<p><strong>Registration Process</strong>:</p>
+<ol class="arabic simple">
+<li><p>Create a <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">uds_registration_t</span></code> object with the desired configuration</p></li>
+<li><p>Call <code class="docutils literal notranslate"><span class="pre">instance.register_event_handler()</span></code></p></li>
+<li><p>Store the returned <code class="docutils literal notranslate"><span class="pre">dynamic_id</span></code> for later unregistration</p></li>
+</ol>
+<p><strong>Example</strong>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">uds_instance_t</span><span class="w"> </span><span class="n">instance</span><span class="p">;</span>
+
+<span class="c1">// Create registration</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">uds_registration_t</span><span class="w"> </span><span class="n">reg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">.</span><span class="n">instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">instance</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UDS_REGISTRATION_TYPE__DATA_IDENTIFIER</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">data_identifier</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="p">.</span><span class="n">data_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0xF190</span><span class="p">,</span>
+<span class="w">        </span><span class="p">.</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">my_vin_data</span><span class="p">,</span>
+<span class="w">        </span><span class="p">.</span><span class="n">read</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="p">.</span><span class="n">check</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">my_read_check</span><span class="p">,</span>
+<span class="w">            </span><span class="p">.</span><span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">my_read_action</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="p">.</span><span class="n">user_context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// Register dynamically</span>
+<span class="kt">uint32_t</span><span class="w"> </span><span class="n">dynamic_id</span><span class="p">;</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">uds_registration_t</span><span class="w"> </span><span class="o">*</span><span class="n">reg_ptr</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">instance</span><span class="p">.</span><span class="n">register_event_handler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">instance</span><span class="p">,</span><span class="w"> </span><span class="n">reg</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">dynamic_id</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">reg_ptr</span><span class="p">);</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Registration successful</span>
+<span class="p">}</span>
+
+<span class="c1">// Later, unregister</span>
+<span class="n">instance</span><span class="p">.</span><span class="n">unregister_event_handler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">instance</span><span class="p">,</span><span class="w"> </span><span class="n">dynamic_id</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Notes</strong>:</p>
+<ul class="simple">
+<li><p>Examine the static registration macros in <code class="docutils literal notranslate"><span class="pre">ardep/uds_macro.h</span></code> for guidance on structuring registration objects</p></li>
+<li><p>Dynamic handlers are checked <strong>after</strong> static handlers during event processing</p></li>
+<li><p>Returns <code class="docutils literal notranslate"><span class="pre">-ENOSPC</span></code> if all dynamic IDs are exhausted (1 to UINT32_MAX)</p></li>
+</ul>
+</section>
+</section>
+<section id="advanced-topics">
+<h2>Advanced Topics<a class="headerlink" href="#advanced-topics" title="Permalink to this heading">¶</a></h2>
+<section id="internals-and-architecture">
+<h3>Internals and Architecture<a class="headerlink" href="#internals-and-architecture" title="Permalink to this heading">¶</a></h3>
+<p>The UDS library uses Zephyr’s <a class="reference external" href="https://docs.zephyrproject.org/4.2.0/kernel/iterable_sections/index.html">Iterable Sections</a> for static event handlers and a singly-linked list for dynamic handlers.</p>
+<p><strong>Event Processing Order</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>Static handlers</strong> (defined via macros) - stored in iterable sections</p></li>
+<li><p><strong>Dynamic handlers</strong> (registered at runtime) - stored in linked list</p></li>
+<li><p><strong>Default negative response</strong> - if no handler processed the event</p></li>
+</ol>
+<p><strong>Performance Considerations</strong>:</p>
+<ul class="simple">
+<li><p>Static handlers have O(n) lookup time but zero memory allocation overhead</p></li>
+<li><p>Dynamic handlers also have O(n) lookup but require heap allocation</p></li>
+</ul>
+</section>
+<section id="handler-interaction">
+<h3>Handler Interaction<a class="headerlink" href="#handler-interaction" title="Permalink to this heading">¶</a></h3>
+<p>Multiple handlers can be registered for the same event type. The library processes them in order until one consumes the event.</p>
+<p><strong>Event Consumption</strong>:</p>
+<ul class="simple">
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">consume_event</span> <span class="pre">=</span> <span class="pre">true</span></code> to stop further processing</p></li>
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">consume_event</span> <span class="pre">=</span> <span class="pre">false</span></code> to allow subsequent handlers to process the event</p></li>
+</ul>
+<p><strong>Use Cases for Non-Consuming Handlers</strong>:</p>
+<ul class="simple">
+<li><p>Logging/monitoring without affecting normal processing</p></li>
+</ul>
+</section>
+<section id="best-practices">
+<h3>Best Practices<a class="headerlink" href="#best-practices" title="Permalink to this heading">¶</a></h3>
+<ol class="arabic">
+<li><p><strong>Use Default Handlers When Possible</strong></p>
+<p>The library provides tested implementations for common operations (memory access, ECU reset, link control). Use them unless you have specific requirements.</p>
+</li>
+<li><p><strong>Always Set consume_event</strong></p>
+<p>Explicitly set the <code class="docutils literal notranslate"><span class="pre">consume_event</span></code> flag in your action functions. Don’t rely on default values.</p>
+</li>
+<li><p><strong>Validate in Check Functions</strong></p>
+<p>Perform all validation in the <code class="docutils literal notranslate"><span class="pre">check</span></code> function. The <code class="docutils literal notranslate"><span class="pre">action</span></code> function should assume preconditions are met.</p>
+</li>
+<li><p><strong>Return Appropriate NRCs</strong></p>
+<p>Use ISO 14229-1 defined negative response codes (<code class="docutils literal notranslate"><span class="pre">UDS_NRC_*</span></code>) to provide meaningful feedback to diagnostic clients.</p>
+</li>
+<li><p><strong>Manage State Carefully</strong></p>
+<p>For services like Authentication that don’t store internal state, use the <code class="docutils literal notranslate"><span class="pre">user_context</span></code> to maintain necessary information.</p>
+</li>
+<li><p><strong>Test Session and Security Interactions</strong></p>
+<p>Many UDS services require specific diagnostic sessions or security levels. Ensure your handlers check these preconditions.</p>
+</li>
+</ol>
+</section>
+<section id="troubleshooting">
+<h3>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this heading">¶</a></h3>
+<p><strong>Handler Not Being Called</strong></p>
+<ul class="simple">
+<li><p>Verify the handler is registered (check return value of dynamic registration)</p></li>
+<li><p>Ensure <code class="docutils literal notranslate"><span class="pre">check</span></code> function returns <code class="docutils literal notranslate"><span class="pre">UDS_OK</span></code> and sets <code class="docutils literal notranslate"><span class="pre">apply_action</span> <span class="pre">=</span> <span class="pre">true</span></code></p></li>
+<li><p>Check if an earlier handler consumed the event</p></li>
+<li><p>For static handlers, verify the macro is at file scope (not in a function)</p></li>
+</ul>
+<p><strong>Wrong NRC Returned</strong></p>
+<ul class="simple">
+<li><p>Check that your <code class="docutils literal notranslate"><span class="pre">check</span></code> function returns the correct NRC</p></li>
+<li><p>Verify your <code class="docutils literal notranslate"><span class="pre">action</span></code> function doesn’t override the NRC on error paths</p></li>
+<li><p>Ensure you’re not consuming events that should be handled by later handlers</p></li>
+</ul>
+<p><strong>Link Control Issues</strong></p>
+<ul class="simple">
+<li><p>Verify <code class="docutils literal notranslate"><span class="pre">CONFIG_UDS_DEFAULT_CAN_BITRATE</span></code> matches your hardware configuration</p></li>
+<li><p>Check CAN driver supports runtime baudrate changes</p></li>
+<li><p>Ensure session handler doesn’t consume events when using default link control</p></li>
+</ul>
+<p><strong>Dynamic Registration Fails</strong></p>
+<ul class="simple">
+<li><p>Confirm <code class="docutils literal notranslate"><span class="pre">CONFIG_UDS_USE_DYNAMIC_REGISTRATION=y</span></code></p></li>
+<li><p>Check available heap memory</p></li>
+<li><p>Verify you’re not exceeding UINT32_MAX registrations</p></li>
+</ul>
+</section>
+<section id="further-reading">
+<h3>Further Reading<a class="headerlink" href="#further-reading" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../iso14229/README.html#iso14229-lib"><span class="std std-ref">ISO14229 Library</span></a> - Underlying ISO-TP and UDS protocol implementation</p></li>
+<li><p><a class="reference external" href="https://www.iso.org/standard/72439.html">ISO 14229-1:2020</a> - UDS specification</p></li>
+<li><p><a class="reference external" href="https://docs.zephyrproject.org/latest/kernel/iterable_sections/index.html">Zephyr Iterable Sections</a> - Understanding static registration</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">ARDEP</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bootloader/index.html">Bootloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware_loader/index.html">UDS Firmware Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../console/index.html">Console Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../error_handling/index.html">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">Documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Libraries</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../can_log/README.html">CAN Log Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../iso14229/README.html">ISO14229 Library</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">UDS Library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../scripts/ardep.html">ARDEP Command</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boards/mercedes/ardep/doc/index.html">ARDEP Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boards/shields/hv_shield/doc/index.html">ARDEP HV Shield</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boards/shields/power_io_shield/doc/index.html">ARDEP Power IO Shield</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../samples/index.html">Samples and Demos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../debugging/index.html">Debugging</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Libraries</a><ul>
+      <li>Previous: <a href="../iso14229/README.html" title="previous chapter">ISO14229 Library</a></li>
+      <li>Next: <a href="../../scripts/ardep.html" title="next chapter">ARDEP Command</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Frickly Systems GmbH.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 6.2.1</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../../_sources/lib/uds/README.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

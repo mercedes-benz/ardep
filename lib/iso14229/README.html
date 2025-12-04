@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>ISO14229 Library &#8212; ARDEP  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="UDS Library" href="../uds/README.html" />
+    <link rel="prev" title="CAN Log Library" href="../can_log/README.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="iso14229-library">
+<span id="iso14229-lib"></span><h1>ISO14229 Library<a class="headerlink" href="#iso14229-library" title="Permalink to this heading">¶</a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
+<p>The ISO14229 library provides a lightweight Zephyr-based wrapper around the <a class="reference external" href="https://github.com/driftregion/iso14229">iso14229 library</a> by driftregion. It enables implementation of ISO 14229-1 (Unified Diagnostic Services) compliant servers on Zephyr RTOS with minimal integration effort.</p>
+<p>This library serves as the <strong>low-level foundation</strong> for the <a class="reference internal" href="../uds/README.html#uds-lib"><span class="std std-ref">UDS Library</span></a>, which provides a higher-level, event-driven API for building UDS servers. Most applications should use the UDS library instead of directly interfacing with ISO14229.</p>
+<section id="key-features">
+<h3>Key Features<a class="headerlink" href="#key-features" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Event-Driven Architecture</strong>: Callback-based design for handling diagnostic requests</p></li>
+<li><p><strong>Minimal API Surface</strong>: Simple initialization and callback registration</p></li>
+<li><p><strong>Optional Threading</strong>: Built-in thread management eliminates the need for manual polling</p></li>
+<li><p><strong>ISO-TP Integration</strong>: Handles CAN transport layer (ISO 15765-2) automatically</p></li>
+</ul>
+</section>
+<section id="architecture">
+<h3>Architecture<a class="headerlink" href="#architecture" title="Permalink to this heading">¶</a></h3>
+<p>The library consists of three main components:</p>
+<ol class="arabic simple">
+<li><p><strong>ISO-TP Layer</strong>: Manages segmented CAN message transmission and reception</p></li>
+<li><p><strong>UDS Server</strong>: Processes diagnostic service requests and generates responses</p></li>
+<li><p><strong>Event Callback System</strong>: Notifies application code of incoming diagnostic events</p></li>
+</ol>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>┌─────────────────────────────────────────┐
+│     Application (Event Handler)         │
+└──────────────────┬──────────────────────┘
+                   │ Callbacks
+┌──────────────────▼──────────────────────┐
+│    ISO14229 Zephyr Wrapper (this lib)   │
+│  ┌────────────────────────────────────┐ │
+│  │   UDS Server (iso14229 upstream)   │ │
+│  └────────────────────────────────────┘ │
+│  ┌────────────────────────────────────┐ │
+│  │     ISO-TP (CAN Transport)         │ │
+│  └────────────────────────────────────┘ │
+└──────────────────┬──────────────────────┘
+                   │ CAN Frames
+┌──────────────────▼──────────────────────┐
+│      Zephyr CAN Driver (can_dev)        │
+└─────────────────────────────────────────┘
+</pre></div>
+</div>
+</section>
+<section id="when-to-use-this-library">
+<h3>When to Use This Library<a class="headerlink" href="#when-to-use-this-library" title="Permalink to this heading">¶</a></h3>
+<p><strong>Use ISO14229 library directly if:</strong></p>
+<ul class="simple">
+<li><p>You need fine-grained control over UDS event handling</p></li>
+<li><p>You’re implementing custom or non-standard diagnostic protocols</p></li>
+<li><p>You want to minimize memory overhead</p></li>
+</ul>
+<p><strong>Use the higher-level UDS library if:</strong></p>
+<ul class="simple">
+<li><p>You’re building a standard ISO 14229-1 compliant server</p></li>
+<li><p>You want to register handlers for specific services/subfunctions</p></li>
+<li><p>You need built-in support for session management, security access, etc.</p></li>
+</ul>
+</section>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this heading">¶</a></h2>
+<p>See <a class="reference internal" href="../../samples/iso14229/README.html#iso14229-sample"><span class="std std-ref">ISO14229 Sample</span></a>. The sample demonstrates:</p>
+<ul class="simple">
+<li><p>ISO-TP configuration</p></li>
+<li><p>CAN device initialization</p></li>
+<li><p>Event callback registration</p></li>
+<li><p>Session control handling</p></li>
+</ul>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">ARDEP</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bootloader/index.html">Bootloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware_loader/index.html">UDS Firmware Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../console/index.html">Console Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../error_handling/index.html">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">Documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Libraries</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../can_log/README.html">CAN Log Library</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ISO14229 Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../uds/README.html">UDS Library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../scripts/ardep.html">ARDEP Command</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boards/mercedes/ardep/doc/index.html">ARDEP Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boards/shields/hv_shield/doc/index.html">ARDEP HV Shield</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boards/shields/power_io_shield/doc/index.html">ARDEP Power IO Shield</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../samples/index.html">Samples and Demos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../debugging/index.html">Debugging</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Libraries</a><ul>
+      <li>Previous: <a href="../can_log/README.html" title="previous chapter">CAN Log Library</a></li>
+      <li>Next: <a href="../uds/README.html" title="next chapter">UDS Library</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Frickly Systems GmbH.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 6.2.1</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../../_sources/lib/iso14229/README.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

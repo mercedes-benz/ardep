@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>CAN USB Bridge sample &#8212; ARDEP  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/tabs.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Config Jumpers" href="../config_jumpers/README.html" />
+    <link rel="prev" title="CAN sample" href="../can/README.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="can-usb-bridge-sample">
+<span id="id1"></span><h1>CAN USB Bridge sample<a class="headerlink" href="#can-usb-bridge-sample" title="Permalink to this heading">¶</a></h1>
+<p>This sample uses the application from the CANnectivity repository and just provides overlays for compatability with the ARDEP board.</p>
+<p>It creates a CAN to USB bridge connecting <em>CAN A</em> of the ARDEP board to the USB Host.</p>
+<p>The <a class="reference external" href="https://github.com/CANnectivity/cannectivity">CANnectivity repository</a> is automatically downloaded as a Zephyr module with <code class="docutils literal notranslate"><span class="pre">west</span> <span class="pre">update</span></code> on workspace setup. You can find it under <code class="docutils literal notranslate"><span class="pre">{WORKSPACE_ROOT}/modules/lib/cannectivity</span></code>.</p>
+<p>As a <em>one-time setup</em>, you need to install the CANnectivity UDEV rule (analogous to the one we installed in <a class="reference internal" href="../../getting_started/index.html#getting-started"><span class="std std-ref">Getting Started</span></a> guide):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">cp</span> <span class="p">{</span><span class="n">WORKSPACE_ROOT</span><span class="p">}</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">cannectivity</span><span class="o">/</span><span class="mi">99</span><span class="o">-</span><span class="n">cannectivity</span><span class="o">.</span><span class="n">rules</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">udev</span><span class="o">/</span><span class="n">rules</span><span class="o">.</span><span class="n">d</span><span class="o">/</span>
+<span class="n">sudo</span> <span class="n">udevadm</span> <span class="n">control</span> <span class="o">--</span><span class="n">reload</span><span class="o">-</span><span class="n">rules</span>
+<span class="n">sudo</span> <span class="n">udevadm</span> <span class="n">trigger</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since the app manages the usb stack, there will be no USB-CDC-ACM device present to see the logs.
+Instead, they are redirected to UART-A (The same UART the bootloader uses).</p>
+</div>
+<section id="flash-and-run-the-example">
+<h2>Flash and run the example<a class="headerlink" href="#flash-and-run-the-example" title="Permalink to this heading">¶</a></h2>
+<p>Build the example with:</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Ardep v2.0.0 and later</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Ardep v1.0.0</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">west</span> <span class="n">build</span> <span class="o">--</span><span class="n">board</span> <span class="n">ardep</span><span class="o">@</span><span class="mf">2.0.0</span> <span class="o">../</span><span class="n">modules</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">cannectivity</span><span class="o">/</span><span class="n">app</span> <span class="o">--</span> \
+    <span class="o">-</span><span class="n">DFILE_SUFFIX</span><span class="o">=</span><span class="n">usbd_next</span> \
+    <span class="o">-</span><span class="n">DEXTRA_DTC_OVERLAY_FILE</span><span class="o">=../../../../</span><span class="n">ardep</span><span class="o">/</span><span class="n">samples</span><span class="o">/</span><span class="n">can_usb_bridge</span><span class="o">/</span><span class="n">cannectivity_2_0_0</span><span class="o">.</span><span class="n">overlay</span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">west</span> <span class="n">build</span> <span class="o">--</span><span class="n">board</span> <span class="n">ardep</span><span class="o">@</span><span class="mf">1.0.0</span> <span class="o">../</span><span class="n">modules</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">cannectivity</span><span class="o">/</span><span class="n">app</span> <span class="o">--</span> \
+    <span class="o">-</span><span class="n">DFILE_SUFFIX</span><span class="o">=</span><span class="n">usbd_next</span> \
+    <span class="o">-</span><span class="n">DEXTRA_CONF_FILE</span><span class="o">=../../../../</span><span class="n">ardep</span><span class="o">/</span><span class="n">samples</span><span class="o">/</span><span class="n">can_usb_bridge</span><span class="o">/</span><span class="n">cannectivity_1_0_0</span><span class="o">.</span><span class="n">conf</span> \
+    <span class="o">-</span><span class="n">DEXTRA_DTC_OVERLAY_FILE</span><span class="o">=../../../../</span><span class="n">ardep</span><span class="o">/</span><span class="n">samples</span><span class="o">/</span><span class="n">can_usb_bridge</span><span class="o">/</span><span class="n">cannectivity_1_0_0</span><span class="o">.</span><span class="n">overlay</span>
+</pre></div>
+</div>
+</div></div>
+<p>The <code class="docutils literal notranslate"><span class="pre">FILE_SUFFIX</span></code> selects the <cite>prj_usbd_next.conf</cite> file from the CANnectivity app folder, which enables the new USB stack.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">EXTRA_CONF_FILE</span></code> and <code class="docutils literal notranslate"><span class="pre">EXTRA_DTC_OVERLAY_FILE</span></code> options specify the additional configuration and overlay files found in the samples directory.
+The path is relative to the application directory.</p>
+<p>Flash the app using dfu-util:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>west<span class="w"> </span>flash
+</pre></div>
+</div>
+<p>After flashing, you should see an USB device named “Generic CANnectivity USB to CAN adapter” with a VID/PID of <code class="docutils literal notranslate"><span class="pre">1209:ca01</span></code>.
+Additionally you should also see a new can device on your host system.
+Configure it as follows to enable it:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Replace can0 with the device name on your system</span>
+
+sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>can0<span class="w"> </span><span class="nb">type</span><span class="w"> </span>can<span class="w"> </span>bitrate<span class="w"> </span><span class="m">500000</span>
+sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>up<span class="w"> </span>can0
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>For users of the <em>ARDEPv1</em> board:</p>
+<p>Since we don’t use the default USB PID/VID of the ARDEP board, the default ARDEP DFU will not work for firmware updates.
+Put the device in bootloader mode to flash another firmware.</p>
+<p>See <a class="reference internal" href="../../bootloader/index.html#bootloader-mode"><span class="std std-ref">Bootloader mode</span></a> for more information.</p>
+</div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">ARDEP</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bootloader/index.html">Bootloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware_loader/index.html">UDS Firmware Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../console/index.html">Console Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../error_handling/index.html">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/index.html">Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../scripts/ardep.html">ARDEP Command</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boards/mercedes/ardep/doc/index.html">ARDEP Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boards/shields/hv_shield/doc/index.html">ARDEP HV Shield</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boards/shields/power_io_shield/doc/index.html">ARDEP Power IO Shield</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Samples and Demos</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../adc/README.html">ADC Sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../can/README.html">CAN sample</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">CAN USB Bridge sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../config_jumpers/README.html">Config Jumpers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dac/README.html">DAC sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../digital_input_interrupt/README.html">Digital Input Interrupt Sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gpio_expander/README.html">GPIO Expander</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../hardware_test/README.html">Hardware Test Sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../hardware_tester/README.html">Hardware Tester Sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../hv_shield/README.html">HV Shield</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../iso14229/README.html">ISO14229 Sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../led/README.html">LED Sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lin/lin.html">Lin Samples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lin2can/lin2can.html">Lin2Can Samples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../power_io_shield/index.html">Power IO Shield Samples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../uart/README.html">UART Sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../uds/README.html">UDS Sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../uds_bus_sample/README.html">UDS Bus Sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../uds_legacy/README.html">UDS Sample (Legacy)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../debugging/index.html">Debugging</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Samples and Demos</a><ul>
+      <li>Previous: <a href="../can/README.html" title="previous chapter">CAN sample</a></li>
+      <li>Next: <a href="../config_jumpers/README.html" title="next chapter">Config Jumpers</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Frickly Systems GmbH.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 6.2.1</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../../_sources/samples/can_usb_bridge/README.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
