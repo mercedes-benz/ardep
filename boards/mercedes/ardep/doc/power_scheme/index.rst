@@ -13,7 +13,7 @@ In addition, the user can decide to supply the LIN bus via the Mainboard's inter
 
 The Internally generated 5V and 3.3V supply rails are accessible via the Mainboard’s pin headers and the spring contact headers.
 
-For detailed pinout information please refer to the :ref:`board_pinout`.
+For detailed pinout information please refer to the :ref:`ardep_board`.
 
 Voltage Inputs
 ===============
@@ -44,6 +44,10 @@ An LDO connected to the 5V rail generates a 3,3V rail used as the main supply fo
          - 4.75V
          - 5.25V
          - :smallfont:`Directly influences 5V rail`
+     *   - Debug-USB
+         - 4.75V
+         - 5.25V
+         - :smallfont:`Directly influences 5V rail (from rev 2.0.0 onwards)`
      *   - VLIN
          - 0V
          - 24V*
@@ -65,6 +69,8 @@ USB
 *****
 
 The 5V rail can also be directly fed from a standard USB-C cable.
+
+From revision 2.0.0 onwards, the ARDEP-USB and Debug-USB ports are multiplexed by an ideal diode and behave identical regarding the main boards supply.
 
 V_lin
 ******
