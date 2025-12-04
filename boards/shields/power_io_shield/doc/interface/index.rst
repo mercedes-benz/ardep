@@ -7,8 +7,8 @@
 ARDEP Interface
 ###############
 
-To allow more than one Power IO shield to be stacked, the shields do not directly interface with the ARDEP’s GPIOs but instead use an MCP23017T I²C port expander with individually configurable address.
-The shield’s I²C address can be configured to one of the 8 available addresses using a rotary selector that is directly connected to the MCP23017T address lines. 
+To allow more than one Power IO shield to be stacked, the shields do not directly interface with the ARDEP’s GPIOs but instead use an MCP23017T :math:`I^2C` port expander with individually configurable address.
+The shield’s :math:`I^2C` address can be configured to one of the 8 available addresses using a rotary selector that is directly connected to the MCP23017T address lines. 
 
 ..  figure:: rotary_switch.png
     :width: 50%
@@ -20,7 +20,7 @@ The shield’s I²C address can be configured to one of the 8 available addresse
    
     Port expander address line interface
 
-The shield’s I²C address is the sum of 0x20 and the number selected via the rotary switch.
+The shield’s :math:`I^2C` address is the sum of 0x20 and the number selected via the rotary switch.
 
 Interrupts
 ===========

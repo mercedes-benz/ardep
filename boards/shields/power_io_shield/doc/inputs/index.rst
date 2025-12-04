@@ -10,7 +10,7 @@ Power IO Inputs
 The Power IO shield offers 6 high-voltage-capable digital inputs, which can be accessed via a spring terminal block. 
 
 ..  figure:: inputs.png
-    :width: 75%
+    :width: 50%
    
 The input channels are implemented using a ULN2002 Darlington transistor array to provide a reasonable threshold voltage of ~10V.
 In addition, a 100V depletion-mode N-channel MOSFET is used as a high-voltage current source to limit each channel’s input current to less than 2 mA, well below the ULN2002’s maximum continuous base current of 25mA.

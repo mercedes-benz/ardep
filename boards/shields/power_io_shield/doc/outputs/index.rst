@@ -34,7 +34,7 @@ The Power IO shield uses LEDs next to the output driver ICs to indicate whether 
    
     Fault indicator LEDs for outputs 0 and 1
    
-In addition, three fault signals combining both channels of each driver IC are connected to the I²C port expander.
+In addition, three fault signals combining both channels of each driver IC are connected to the :math:`I^2C` port expander.
 They can be used as diagnostic feedback to the ARDEP mainboard.
 This diagnostic feedback can pinpoint an error to one of the ICs, but requires manual inspection to determine which of its two channels caused the error.
 
