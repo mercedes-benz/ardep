@@ -1,0 +1,678 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "4c0fe098-6632-46ad-81a7-18be79ce9b94")
+	(paper "A4")
+	(title_block
+		(title "Block Diagram")
+	)
+	(lib_symbols)
+	(bus
+		(pts
+			(xy 118.11 69.85) (xy 161.29 69.85)
+		)
+		(stroke
+			(width 0.254)
+			(type default)
+		)
+		(uuid "083e1efe-7a5c-4e50-aec8-d1ef2fd469f7")
+	)
+	(bus
+		(pts
+			(xy 193.04 58.42) (xy 229.87 58.42)
+		)
+		(stroke
+			(width 0.254)
+			(type default)
+		)
+		(uuid "0da1587e-d58f-4d83-ad8d-185183de5788")
+	)
+	(bus
+		(pts
+			(xy 118.11 106.68) (xy 161.29 106.68)
+		)
+		(stroke
+			(width 0.254)
+			(type default)
+		)
+		(uuid "36dff3d3-ce2c-430a-bef1-cfab668ab5fc")
+	)
+	(bus
+		(pts
+			(xy 193.04 48.26) (xy 229.87 48.26)
+		)
+		(stroke
+			(width 0.254)
+			(type default)
+		)
+		(uuid "40d28dc2-cc31-46fc-9bc2-587c63c5823d")
+	)
+	(bus
+		(pts
+			(xy 118.11 83.82) (xy 161.29 83.82)
+		)
+		(stroke
+			(width 0.254)
+			(type default)
+		)
+		(uuid "4e975aef-3c2b-4f4c-8c14-6f5225670cc9")
+	)
+	(bus
+		(pts
+			(xy 118.11 73.66) (xy 161.29 73.66)
+		)
+		(stroke
+			(width 0.254)
+			(type default)
+		)
+		(uuid "51efab55-31e1-4ea8-bacb-1182c1205599")
+	)
+	(wire
+		(pts
+			(xy 64.77 68.58) (xy 77.47 68.58)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5bf25b46-1d1f-4078-a3e0-1e7a2c15effc")
+	)
+	(bus
+		(pts
+			(xy 229.87 119.38) (xy 193.04 119.38)
+		)
+		(stroke
+			(width 0.254)
+			(type default)
+		)
+		(uuid "a9a249aa-0ff0-45cd-82ac-407e1b96fd14")
+	)
+	(bus
+		(pts
+			(xy 77.47 76.2) (xy 64.77 76.2)
+		)
+		(stroke
+			(width 0.254)
+			(type default)
+		)
+		(uuid "e14da1e1-503e-4e24-873b-3221285569ce")
+	)
+	(bus
+		(pts
+			(xy 77.47 64.77) (xy 64.77 64.77)
+		)
+		(stroke
+			(width 0.254)
+			(type default)
+		)
+		(uuid "f682a39c-8958-4978-80ce-d101f831db16")
+	)
+	(bus
+		(pts
+			(xy 118.11 80.01) (xy 161.29 80.01)
+		)
+		(stroke
+			(width 0.254)
+			(type default)
+		)
+		(uuid "fffde3b7-cba9-4bf4-a41d-3c776cd84057")
+	)
+	(label "OUT_A[0..2]"
+		(at 123.19 69.85 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "1f904df6-98b8-4d4e-bc9e-7faa7b29faab")
+	)
+	(label "HV_OUTA[0..2]"
+		(at 205.74 48.26 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "6698b2a2-bb40-436f-a944-9661945b2c5b")
+	)
+	(label "OUT_FAULT_A[0..2]"
+		(at 123.19 80.01 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "7bf15453-c9fd-4825-9b73-c3dc03cd04ea")
+	)
+	(label "LV_IN[0..5]"
+		(at 123.19 106.68 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "81ba7650-c0c0-45d0-ba3f-7fff4236b00e")
+	)
+	(label "HV_OUTB[0..2]"
+		(at 205.74 58.42 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "910b4dea-3dbe-43da-bd8d-1d85b0a310ff")
+	)
+	(label "OUT_FAULT_B[0..2]"
+		(at 123.19 83.82 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "cea022a7-e097-4088-a6ae-170469327d17")
+	)
+	(label "OUT_B[0..2]"
+		(at 123.19 73.66 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "d3f8b6d6-822c-457a-86fe-cb8bde74bf5b")
+	)
+	(sheet
+		(at 36.83 43.18)
+		(size 27.94 86.36)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0)
+			(type solid)
+			(color 128 0 0 1)
+		)
+		(fill
+			(color 183 183 183 1.0000)
+		)
+		(uuid "345cf427-937f-404e-b57d-133d1a773053")
+		(property "Sheetname" "ARDEP_Interface"
+			(at 38.1 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Sheetfile" "ARDEP_Interface.kicad_sch"
+			(at 36.195 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(pin "MASTER_RST" bidirectional
+			(at 64.77 68.58 0)
+			(uuid "1ae2b9f9-4f3a-4794-8de5-9785769eb822")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "INT[0..1]" input
+			(at 64.77 76.2 0)
+			(uuid "82f92df8-5723-460f-9e52-69cbe14cc4e1")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "I2C{SCL, SDA}" bidirectional
+			(at 64.77 64.77 0)
+			(uuid "3d26fe79-06cf-4be7-9bda-a10b5f8e2639")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 229.87 43.18)
+		(size 25.4 86.36)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0)
+			(type solid)
+			(color 128 0 0 1)
+		)
+		(fill
+			(color 128 255 128 1.0000)
+		)
+		(uuid "358dec23-38c9-4042-8e61-d794981c1325")
+		(property "Sheetname" "Terminals"
+			(at 229.87 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Sheetfile" "Terminals.kicad_sch"
+			(at 229.87 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(pin "HV_OUTA[0..2]" input
+			(at 229.87 48.26 180)
+			(uuid "14c2e5aa-c739-4cb9-be6c-e4e501344a73")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HV_OUTB[0..2]" input
+			(at 229.87 58.42 180)
+			(uuid "9d798eb7-7669-4a11-b1d1-7e37d75e70e1")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HV_IN[0..5]" output
+			(at 229.87 119.38 180)
+			(uuid "34ba361f-82ab-487c-9fc6-be208aef67a1")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94"
+					(page "5")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 161.29 43.18)
+		(size 31.75 45.72)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0)
+			(type solid)
+			(color 128 0 0 1)
+		)
+		(fill
+			(color 128 255 128 1.0000)
+		)
+		(uuid "4c7237e4-d878-4e31-9dbe-b6cfb0e97b0d")
+		(property "Sheetname" "Power_Outputs"
+			(at 161.29 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Power_Outputs.kicad_sch"
+			(at 161.29 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(pin "HV_OUTA[0..2]" input
+			(at 193.04 48.26 0)
+			(uuid "8abb6e4a-2ce7-4330-9970-986cba18cef0")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "HV_OUTB[0..2]" input
+			(at 193.04 58.42 0)
+			(uuid "e212f182-7f91-4380-9920-af5cce7f717f")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "OUT_A[0..2]" output
+			(at 161.29 69.85 180)
+			(uuid "69df4e50-e3fa-4018-891a-a5b80cdc4664")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "OUT_B[0..2]" output
+			(at 161.29 73.66 180)
+			(uuid "94ed4824-629a-437f-a908-8a433b3d7bd0")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "OUT_FAULT_A[0..2]" input
+			(at 161.29 80.01 180)
+			(uuid "14a96756-7f37-47ca-a841-0b5ad505060a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "OUT_FAULT_B[0..2]" input
+			(at 161.29 83.82 180)
+			(uuid "e607405d-4bbf-42f7-a90d-4d2764200813")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 161.29 100.33)
+		(size 31.75 29.21)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0)
+			(type solid)
+			(color 128 0 0 1)
+		)
+		(fill
+			(color 128 255 128 1.0000)
+		)
+		(uuid "a7d911c2-0c4c-4fd7-8776-90f1b1c16a46")
+		(property "Sheetname" "HV_Inputs"
+			(at 161.29 99.6184 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "HV_Inputs.kicad_sch"
+			(at 161.29 130.1246 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "LV_IN[0..5]" output
+			(at 161.29 106.68 180)
+			(uuid "fabb46d3-2b49-4812-b493-fd0b2c7a40a9")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HV_IN[0..5]" input
+			(at 193.04 119.38 0)
+			(uuid "9b7a42d0-b12c-461f-8fa3-97ab6da236bf")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 77.47 43.18)
+		(size 40.64 86.36)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0)
+			(type solid)
+			(color 128 0 0 1)
+		)
+		(fill
+			(color 183 183 183 1.0000)
+		)
+		(uuid "cccc12be-488b-489c-8cb9-9aba29213ea9")
+		(property "Sheetname" "I2C port extender"
+			(at 78.74 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Sheetfile" "I2C port extender.kicad_sch"
+			(at 78.74 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(pin "MASTER_RST" bidirectional
+			(at 77.47 68.58 180)
+			(uuid "24562aba-e6af-4a87-83a6-943c20137ab4")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "LV_IN[0..5]" input
+			(at 118.11 106.68 0)
+			(uuid "f5aadd6b-d78c-4d85-b63f-62c085da0665")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "INT[0..1]" output
+			(at 77.47 76.2 180)
+			(uuid "2ecde145-8d1d-48b5-9a7f-54283fceaba0")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "OUT_A[0..2]" output
+			(at 118.11 69.85 0)
+			(uuid "8a5bf00e-6a65-43f2-9d40-337c5b040144")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "OUT_B[0..2]" output
+			(at 118.11 73.66 0)
+			(uuid "e413db31-9f3e-4b65-9abb-9fe8594bcbef")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "OUT_FAULT_A[0..2]" input
+			(at 118.11 80.01 0)
+			(uuid "2109f70f-0aac-41f6-95fa-402ea6a3bc8c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "OUT_FAULT_B[0..2]" input
+			(at 118.11 83.82 0)
+			(uuid "c836e72b-43e5-401b-8f92-87b5c196186c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "I2C{SCL, SDA}" bidirectional
+			(at 77.47 64.77 180)
+			(uuid "264b3a5a-c88a-485a-8eee-2a5cdc5628e8")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94"
+					(page "6")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 36.83 137.16)
+		(size 218.44 10.16)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0)
+			(type solid)
+			(color 128 0 0 1)
+		)
+		(fill
+			(color 224 102 102 1.0000)
+		)
+		(uuid "f79abb6e-11e6-42e4-b7a6-9d3e2b87e89e")
+		(property "Sheetname" "Power"
+			(at 36.83 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Sheetfile" "Power.kicad_sch"
+			(at 36.83 137.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94"
+					(page "1")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "#")
+		)
+	)
+	(embedded_fonts no)
+)

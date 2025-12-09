@@ -1,0 +1,6165 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "bcca6f78-0a13-490f-b2c3-d30e6cf4cc60")
+	(paper "A4")
+	(lib_symbols
+		(symbol "ARDEP Power IO Shield Symbols:GND_POWER_GROUND"
+			(power)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#PWR"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "GND"
+				(at 0 -6.35 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name 'GND'"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "power-flag"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "GND_POWER_GROUND_0_0"
+				(polyline
+					(pts
+						(xy -2.54 -2.54) (xy 2.54 -2.54)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.778 -3.302) (xy 1.778 -3.302)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.016 -4.064) (xy 1.016 -4.064)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.254 -4.826) (xy 0.254 -4.826)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 -2.54)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin power_in line
+					(at 0 0 0)
+					(length 0)
+					(hide yes)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "ARDEP Power IO Shield Symbols:HV_BAR"
+			(power)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#PWR"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "HV"
+				(at 0 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name 'HV'"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "power-flag"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "HV_BAR_0_0"
+				(polyline
+					(pts
+						(xy -1.27 -2.54) (xy 1.27 -2.54)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 -2.54)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin power_in line
+					(at 0 0 0)
+					(length 0)
+					(hide yes)
+					(name "HV"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "ARDEP Power IO Shield Symbols:root_0_IPS2050HQ-32_Frickly Systems GmbH"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "High efficiency, high-side switch with extended diagnostics and smart driving for capacitive loads"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "*QFN50P800X600X90_HS-49N*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "root_0_IPS2050HQ-32_Frickly Systems GmbH_1_0"
+				(rectangle
+					(start 52.07 12.7)
+					(end 5.08 -34.29)
+					(stroke
+						(width 0)
+						(type solid)
+						(color 128 0 0 1)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(pin passive line
+					(at 0 7.62 0)
+					(length 5.08)
+					(name "IN1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 5.08 0)
+					(length 5.08)
+					(name "IPD1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "48"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 2.54 0)
+					(length 5.08)
+					(name "FLT1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "46"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 0)
+					(length 5.08)
+					(name "OUT1_1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "35"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -6.35 0)
+					(length 5.08)
+					(name "OUT1_2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "36"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -8.89 0)
+					(length 5.08)
+					(name "OUT1_3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "37"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -11.43 0)
+					(length 5.08)
+					(name "OUT1_4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "38"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -13.97 0)
+					(length 5.08)
+					(name "OUT1_5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "39"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -16.51 0)
+					(length 5.08)
+					(name "OUT1_6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "40"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -19.05 0)
+					(length 5.08)
+					(name "OUT1_7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "41"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -21.59 0)
+					(length 5.08)
+					(name "OUT1_8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "42"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -27.94 0)
+					(length 5.08)
+					(name "VCC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "49"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -31.75 0)
+					(length 5.08)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 13.97 17.78 270)
+					(length 5.08)
+					(name "NC_1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 16.51 17.78 270)
+					(length 5.08)
+					(name "NC_2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 17.78 -39.37 90)
+					(length 5.08)
+					(name "NC_12"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "25"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 19.05 17.78 270)
+					(length 5.08)
+					(name "NC_3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 20.32 -39.37 90)
+					(length 5.08)
+					(name "NC_13"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "26"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 21.59 17.78 270)
+					(length 5.08)
+					(name "NC_4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 22.86 -39.37 90)
+					(length 5.08)
+					(name "NC_14"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "27"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 24.13 17.78 270)
+					(length 5.08)
+					(name "NC_5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 25.4 -39.37 90)
+					(length 5.08)
+					(name "NC_15"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "28"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 26.67 17.78 270)
+					(length 5.08)
+					(name "NC_6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 27.94 -39.37 90)
+					(length 5.08)
+					(name "NC_16"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "29"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 29.21 17.78 270)
+					(length 5.08)
+					(name "NC_7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 30.48 -39.37 90)
+					(length 5.08)
+					(name "NC_17"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "30"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 31.75 17.78 270)
+					(length 5.08)
+					(name "NC_11"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "16"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 33.02 -39.37 90)
+					(length 5.08)
+					(name "NC_18"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "31"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 34.29 17.78 270)
+					(length 5.08)
+					(name "NC_10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "15"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 35.56 -39.37 90)
+					(length 5.08)
+					(name "NC_19"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "32"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 36.83 17.78 270)
+					(length 5.08)
+					(name "NC_9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "14"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 38.1 -39.37 90)
+					(length 5.08)
+					(name "NC_20"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "33"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 39.37 17.78 270)
+					(length 5.08)
+					(name "NC_8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "12"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 40.64 -39.37 90)
+					(length 5.08)
+					(name "NC_21"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "34"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 41.91 17.78 270)
+					(length 5.08)
+					(name "NC_22"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "43"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 43.18 -39.37 90)
+					(length 5.08)
+					(name "NC_23"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "44"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 45.72 -39.37 90)
+					(length 5.08)
+					(name "NC_24"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "45"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 48.26 -39.37 90)
+					(length 5.08)
+					(name "NC_25"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "47"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 57.15 8.89 180)
+					(length 5.08)
+					(name "IN2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 57.15 6.35 180)
+					(length 5.08)
+					(name "IPD2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "11"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 57.15 3.81 180)
+					(length 5.08)
+					(name "FLT2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "13"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 57.15 -2.54 180)
+					(length 5.08)
+					(name "OUT2_8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "24"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 57.15 -5.08 180)
+					(length 5.08)
+					(name "OUT2_7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "23"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 57.15 -7.62 180)
+					(length 5.08)
+					(name "OUT2_6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "22"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 57.15 -10.16 180)
+					(length 5.08)
+					(name "OUT2_5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "21"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 57.15 -12.7 180)
+					(length 5.08)
+					(name "OUT2_4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "20"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 57.15 -15.24 180)
+					(length 5.08)
+					(name "OUT2_3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "19"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 57.15 -17.78 180)
+					(length 5.08)
+					(name "OUT2_2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "18"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 57.15 -20.32 180)
+					(length 5.08)
+					(name "OUT2_1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "17"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "ARDEP Power IO Shield Symbols:root_0_mirrored_LED-RED-AK-2_Frickly Systems GmbH"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Single Color LED, Red, Water Clear, 1.4mm"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "*LED_0805_JB*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "root_0_mirrored_LED-RED-AK-2_Frickly Systems GmbH_1_0"
+				(polyline
+					(pts
+						(xy -2.54 2.54) (xy 0 0) (xy -2.54 -2.54) (xy -2.54 2.54)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+						(color 0 0 0 1)
+					)
+					(fill
+						(type color)
+						(color 255 0 0 1)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 3.556) (xy 1.778 5.334)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -2.54) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.016 2.54) (xy 2.794 4.318)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.778 5.334) (xy 1.27 4.318) (xy 0.762 4.826) (xy 1.778 5.334)
+					)
+					(stroke
+						(width -0.0001)
+						(type solid)
+						(color 0 0 0 1)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.794 4.318) (xy 2.286 3.302) (xy 1.778 3.81) (xy 2.794 4.318)
+					)
+					(stroke
+						(width -0.0001)
+						(type solid)
+						(color 0 0 0 1)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(pin passive line
+					(at -7.62 0 0)
+					(length 5.08)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 0 180)
+					(length 5.08)
+					(name "K"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "ARDEP Power IO Shield Symbols:root_1_Resistor_Frickly Systems GmbH"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Chip Resistor, 1,5 KOhm, +/-1%, 0.1 W, -55 to 155 degC, 0603 (1608 Metric)"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "*R_0603_JB*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "root_1_Resistor_Frickly Systems GmbH_1_0"
+				(polyline
+					(pts
+						(xy 0 5.08) (xy 0 4.064) (xy 0.508 3.81) (xy -0.508 3.302) (xy 0.508 2.794) (xy -0.508 2.286)
+						(xy 0.508 1.778) (xy -0.508 1.27) (xy 0 1.016) (xy 0 0)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at 0 7.62 270)
+					(length 2.54)
+					(name "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -2.54 90)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "ARDEP Power IO Shield Symbols:root_1_mirrored_Capacitor_Frickly Systems GmbH"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Ceramic Capacitor, Multilayer, Ceramic, 100V, 10% +Tol, 10% -Tol, X7R, 15% TC, 0.1uF, Surface Mount, 0805"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "*C_0805*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "root_1_mirrored_Capacitor_Frickly Systems GmbH_1_0"
+				(polyline
+					(pts
+						(xy -2.032 3.302) (xy 2.032 3.302)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 5.08) (xy 0 4.318)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.54) (xy 0 3.302)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.032 4.318) (xy -2.032 4.318)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at 0 7.62 270)
+					(length 2.54)
+					(name "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 0 90)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "ARDEP Power IO Shield Symbols:root_1_mirrored_Resistor_Frickly Systems GmbH"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Chip Resistor, 10 KOhm, +/-1%, 0.1 W, -55 to 155 degC, 0603 (1608 Metric)"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "*R_0603_JB*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "root_1_mirrored_Resistor_Frickly Systems GmbH_1_0"
+				(polyline
+					(pts
+						(xy 0 5.08) (xy 0 4.064) (xy -0.508 3.81) (xy 0.508 3.302) (xy -0.508 2.794) (xy 0.508 2.286)
+						(xy -0.508 1.778) (xy 0.508 1.27) (xy 0 1.016) (xy 0 0)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at 0 7.62 270)
+					(length 2.54)
+					(name "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -2.54 90)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "ARDEP Power IO Shield Symbols:root_2_mirrored_LED-RED-AK-2_Frickly Systems GmbH"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Single Color LED, Red, Water Clear, 1.4mm"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "*LED_0805_JB*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "root_2_mirrored_LED-RED-AK-2_Frickly Systems GmbH_1_0"
+				(polyline
+					(pts
+						(xy -2.794 -4.318) (xy -2.286 -3.302) (xy -1.778 -3.81) (xy -2.794 -4.318)
+					)
+					(stroke
+						(width -0.0001)
+						(type solid)
+						(color 0 0 0 1)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.778 -5.334) (xy -1.27 -4.318) (xy -0.762 -4.826) (xy -1.778 -5.334)
+					)
+					(stroke
+						(width -0.0001)
+						(type solid)
+						(color 0 0 0 1)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.016 -2.54) (xy -2.794 -4.318)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.54) (xy 0 -2.54)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -3.556) (xy -1.778 -5.334)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 -2.54) (xy 0 0) (xy 2.54 2.54) (xy 2.54 -2.54)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+						(color 0 0 0 1)
+					)
+					(fill
+						(type color)
+						(color 255 0 0 1)
+					)
+				)
+				(pin passive line
+					(at -5.08 0 0)
+					(length 5.08)
+					(name "K"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 7.62 0 180)
+					(length 5.08)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "root_1_mirrored_Capacitor_Frickly Systems GmbH_1"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Ceramic Capacitor, Multilayer, Ceramic, 50V, 10% +Tol, 10% -Tol, X7R, 15% TC, 0.1uF, Surface Mount, 0603"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "*C_0603_JB*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "root_1_mirrored_Capacitor_Frickly Systems GmbH_1_1_0"
+				(polyline
+					(pts
+						(xy -2.032 3.302) (xy 2.032 3.302)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 5.08) (xy 0 4.318)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.54) (xy 0 3.302)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.032 4.318) (xy -2.032 4.318)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at 0 7.62 270)
+					(length 2.54)
+					(name "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 0 90)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "root_1_mirrored_Capacitor_Frickly Systems GmbH_2"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Ceramic Capacitor, Multilayer, Ceramic, 50V, 10% +Tol, 10% -Tol, X7R, 15% TC, 0.1uF, Surface Mount, 0603"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "*C_0603_JB*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "root_1_mirrored_Capacitor_Frickly Systems GmbH_2_1_0"
+				(polyline
+					(pts
+						(xy -2.032 3.302) (xy 2.032 3.302)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 5.08) (xy 0 4.318)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.54) (xy 0 3.302)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.032 4.318) (xy -2.032 4.318)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at 0 7.62 270)
+					(length 2.54)
+					(name "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 0 90)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+	)
+	(text "Initial overcurrent limitation level for channel x set to 21.5 ms"
+		(exclude_from_sim no)
+		(at 243.586 121.92 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "12b2dd02-9d39-4595-b833-dce31861303e")
+	)
+	(text "100V caps"
+		(exclude_from_sim no)
+		(at 87.63 127 0)
+		(effects
+			(font
+				(size 1.397 1.397)
+				(thickness 0.2794)
+				(bold yes)
+			)
+			(justify right bottom)
+		)
+		(uuid "a9345d88-f8f4-403f-ad5a-69a8b2dbf6f2")
+	)
+	(junction
+		(at 186.69 100.33)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "2d83e2ce-88ca-4bbc-9a56-640e966cab9c")
+	)
+	(junction
+		(at 186.69 95.25)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "36a6e55b-6814-45b3-82bf-3bb4ec7330b3")
+	)
+	(junction
+		(at 119.38 99.06)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "3a1069f9-5fed-4d2d-99a1-31f7d2cf6f88")
+	)
+	(junction
+		(at 232.41 83.82)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "3ece0502-b323-4d82-9354-8cf0684bf518")
+	)
+	(junction
+		(at 119.38 101.6)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "44f51de4-1b9c-4fc9-902c-a14c34dce155")
+	)
+	(junction
+		(at 119.38 91.44)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "68aadf67-57e9-4770-8b08-29ac12acfeb8")
+	)
+	(junction
+		(at 62.23 85.09)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "6a7e14fe-d799-4406-8e71-11d4c64315df")
+	)
+	(junction
+		(at 186.69 97.79)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "708500d5-d99f-44a5-be40-151f58d87b82")
+	)
+	(junction
+		(at 186.69 105.41)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "7f8431a7-f6c2-417d-89ec-7d2e75505de4")
+	)
+	(junction
+		(at 198.12 78.74)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "81f57ed7-811e-4486-a243-e1cb3480bb73")
+	)
+	(junction
+		(at 106.68 80.01)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "992d9d2f-1b2f-4b65-a144-a073f0d0276b")
+	)
+	(junction
+		(at 119.38 96.52)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "9f3416b3-4f21-4cc9-81ce-7b877b2e6965")
+	)
+	(junction
+		(at 186.69 90.17)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a15704cf-dc9c-4033-8540-1db535fc76b4")
+	)
+	(junction
+		(at 119.38 106.68)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a260a648-87e4-42eb-9cfe-899ae63bea6e")
+	)
+	(junction
+		(at 186.69 92.71)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "b068d7ec-c9b2-4ac9-86e3-d75317e21a45")
+	)
+	(junction
+		(at 101.6 115.57)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "b1c66f90-cfdd-4355-bb98-b9dbde5cc105")
+	)
+	(junction
+		(at 91.44 115.57)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "b728a27a-fde1-43b4-b21d-7a3ae97dea67")
+	)
+	(junction
+		(at 119.38 93.98)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "c1178e69-7bd0-4288-9366-3e9f5475dac1")
+	)
+	(junction
+		(at 119.38 104.14)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "da70f1db-38f2-468b-a5e1-71cc1563cdbd")
+	)
+	(junction
+		(at 186.69 102.87)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "f8ee91ee-0ab2-4d59-8081-330af9dd0acd")
+	)
+	(no_connect
+		(at 148.59 69.85)
+		(uuid "029b2229-7afd-48db-82a8-95b1b453a8f3")
+	)
+	(no_connect
+		(at 138.43 69.85)
+		(uuid "05145b6a-1324-4524-965c-12fac226c70a")
+	)
+	(no_connect
+		(at 167.64 127)
+		(uuid "0a4a218e-4163-4ff2-b8c4-e5f328c1441f")
+	)
+	(no_connect
+		(at 162.56 127)
+		(uuid "1ad1d3a9-1172-4e68-8013-5c061c22fb5b")
+	)
+	(no_connect
+		(at 161.29 69.85)
+		(uuid "2178f10b-c70f-4ac3-bbd3-e4114d181f4a")
+	)
+	(no_connect
+		(at 163.83 69.85)
+		(uuid "297554dd-186a-4749-9271-a31b5f608142")
+	)
+	(no_connect
+		(at 170.18 127)
+		(uuid "398b699a-38d2-4de1-8d89-939fb147346c")
+	)
+	(no_connect
+		(at 144.78 127)
+		(uuid "4450374e-edcc-412b-9778-e14efb283b75")
+	)
+	(no_connect
+		(at 151.13 69.85)
+		(uuid "510618ff-cd60-4366-a99e-2c9f13e2e3db")
+	)
+	(no_connect
+		(at 149.86 127)
+		(uuid "5c9da1e8-255a-4998-9f55-c04c162dbeea")
+	)
+	(no_connect
+		(at 152.4 127)
+		(uuid "64347d81-153d-4616-a352-b40bbf31325e")
+	)
+	(no_connect
+		(at 166.37 69.85)
+		(uuid "64f508b4-317d-420e-9455-5a5a9cbb1860")
+	)
+	(no_connect
+		(at 143.51 69.85)
+		(uuid "714b4277-3bf2-42a0-ae81-3b7ab9c2e949")
+	)
+	(no_connect
+		(at 157.48 127)
+		(uuid "77e6d00d-1d22-434e-a5db-b9a8e8f15d90")
+	)
+	(no_connect
+		(at 158.75 69.85)
+		(uuid "78c0849e-0b9e-4f99-b27a-1df33655becf")
+	)
+	(no_connect
+		(at 153.67 69.85)
+		(uuid "7ec40d24-9de1-412e-bc5b-305a38502a5d")
+	)
+	(no_connect
+		(at 154.94 127)
+		(uuid "83f57718-2b31-4ddd-a698-facea40066da")
+	)
+	(no_connect
+		(at 142.24 127)
+		(uuid "90a150a1-be97-4c56-a63f-171d84997b84")
+	)
+	(no_connect
+		(at 147.32 127)
+		(uuid "9246e41f-c0ed-44b3-a4dd-80f18f18c5dc")
+	)
+	(no_connect
+		(at 172.72 127)
+		(uuid "a751438d-5e25-436d-bfa1-788382691e9a")
+	)
+	(no_connect
+		(at 160.02 127)
+		(uuid "aa327ea7-303d-4075-aade-c74f820b538e")
+	)
+	(no_connect
+		(at 156.21 69.85)
+		(uuid "bafde70c-5b78-461f-b959-3e7a034b2c75")
+	)
+	(no_connect
+		(at 165.1 127)
+		(uuid "c51ee366-7527-448a-9dd5-d1d3e368ddc2")
+	)
+	(no_connect
+		(at 140.97 69.85)
+		(uuid "dd9c32c9-4175-4d2e-a761-f7b091c52731")
+	)
+	(no_connect
+		(at 146.05 69.85)
+		(uuid "f028c574-03b0-4b6d-b265-4b8f5a718b42")
+	)
+	(wire
+		(pts
+			(xy 210.82 81.28) (xy 210.82 90.17)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "01a62480-308f-4915-a730-e07c7a6d364d")
+	)
+	(wire
+		(pts
+			(xy 186.69 90.17) (xy 186.69 92.71)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "02af6221-4031-492d-9e94-5e07016a5597")
+	)
+	(wire
+		(pts
+			(xy 186.69 100.33) (xy 181.61 100.33)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "07c0802d-4fbc-490a-a86b-cc2d7bf24f51")
+	)
+	(wire
+		(pts
+			(xy 232.41 88.9) (xy 232.41 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "082685e6-9c75-47e2-8b39-b36900d6e2a7")
+	)
+	(wire
+		(pts
+			(xy 119.38 101.6) (xy 124.46 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "112e8549-f4f8-436b-975a-6e5081b604f5")
+	)
+	(wire
+		(pts
+			(xy 101.6 125.73) (xy 101.6 128.27)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1f402af1-ea13-4deb-af55-fd3ac604cb8d")
+	)
+	(wire
+		(pts
+			(xy 119.38 93.98) (xy 124.46 93.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1fb0902e-3d2a-4c71-8d48-e28344247b3e")
+	)
+	(wire
+		(pts
+			(xy 186.69 90.17) (xy 181.61 90.17)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1fe79a90-0655-474f-bca5-b7d726ca3eb7")
+	)
+	(wire
+		(pts
+			(xy 186.69 49.53) (xy 186.69 90.17)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2286e58f-3b48-4edd-91e7-db0a0ab90402")
+	)
+	(wire
+		(pts
+			(xy 119.38 99.06) (xy 124.46 99.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "24a3aa56-dd49-4194-9d6a-d4744fe0f322")
+	)
+	(wire
+		(pts
+			(xy 181.61 83.82) (xy 217.17 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "28e71cea-d1ca-49d2-9140-ca769dabaf6b")
+	)
+	(wire
+		(pts
+			(xy 186.69 95.25) (xy 186.69 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "28efe0a8-9de0-4a7e-82c8-2b882d8ec9cb")
+	)
+	(wire
+		(pts
+			(xy 91.44 125.73) (xy 91.44 128.27)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "29a084bf-b3ef-47a7-82bb-bf552696bb3a")
+	)
+	(wire
+		(pts
+			(xy 119.38 109.22) (xy 124.46 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2c06d632-1ed7-4612-85d7-f09b18a1ba60")
+	)
+	(wire
+		(pts
+			(xy 119.38 91.44) (xy 119.38 93.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "301f59ed-6b19-4e51-985e-6152ee37dfbf")
+	)
+	(wire
+		(pts
+			(xy 186.69 102.87) (xy 186.69 105.41)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "311d3c2f-7f8c-4f1b-8591-e329e10465aa")
+	)
+	(wire
+		(pts
+			(xy 119.38 99.06) (xy 119.38 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3347d33a-0e7f-4133-b6a0-2e022b8a98a0")
+	)
+	(wire
+		(pts
+			(xy 119.38 50.8) (xy 119.38 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3431a3fb-5e28-4a23-be5a-afd5dd174b4d")
+	)
+	(wire
+		(pts
+			(xy 101.6 115.57) (xy 124.46 115.57)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "369ca887-f552-40e1-8dd2-4ebc0f974dfc")
+	)
+	(wire
+		(pts
+			(xy 124.46 82.55) (xy 85.09 82.55)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "36fad12f-a7af-4ef4-8a83-83f9d32766ab")
+	)
+	(wire
+		(pts
+			(xy 231.14 78.74) (xy 198.12 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "39dae962-1df7-4417-a016-74bb7352a386")
+	)
+	(wire
+		(pts
+			(xy 198.12 78.74) (xy 181.61 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4011b67c-348c-45b7-8ccb-a1608134df8e")
+	)
+	(wire
+		(pts
+			(xy 186.69 97.79) (xy 186.69 100.33)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "419eeb2e-4f17-4bc1-a49b-15aa20c6c70a")
+	)
+	(wire
+		(pts
+			(xy 106.68 105.41) (xy 106.68 99.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "44952b8f-faae-4d0f-8745-5b3a50310892")
+	)
+	(wire
+		(pts
+			(xy 200.242 49.53) (xy 186.69 49.53)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4a7aeeaa-f213-44fb-a30e-ebec2fd5b90d")
+	)
+	(wire
+		(pts
+			(xy 119.38 96.52) (xy 119.38 99.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4da3522a-6462-47b4-a350-a023eeec6954")
+	)
+	(wire
+		(pts
+			(xy 85.09 82.55) (xy 85.09 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5453a5f1-eee5-4d90-b09d-8ca733239db0")
+	)
+	(wire
+		(pts
+			(xy 119.38 106.68) (xy 124.46 106.68)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5ab8c9fd-1fd8-4ae9-9fbe-aca8eef452eb")
+	)
+	(wire
+		(pts
+			(xy 119.38 106.68) (xy 119.38 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5c1600a4-f416-4abc-b756-1cfe7df948b2")
+	)
+	(wire
+		(pts
+			(xy 186.69 92.71) (xy 181.61 92.71)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "65a1d8ab-fa4c-4b7b-beaf-8bc5b93f7d48")
+	)
+	(wire
+		(pts
+			(xy 119.38 101.6) (xy 119.38 104.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "68042545-d8ed-4223-bf9f-0f11f3005b20")
+	)
+	(wire
+		(pts
+			(xy 62.23 91.44) (xy 62.23 85.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "69bf8ba9-5f7c-45bb-bec7-32347e05f9d8")
+	)
+	(wire
+		(pts
+			(xy 198.12 100.33) (xy 198.12 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "77c51055-dc9e-49d2-af52-cc4fc5b067cd")
+	)
+	(wire
+		(pts
+			(xy 186.69 100.33) (xy 186.69 102.87)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7942959c-5d14-4204-be58-b851d2f17628")
+	)
+	(wire
+		(pts
+			(xy 186.69 105.41) (xy 186.69 107.95)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7c420b43-d3fd-4a2f-9c0e-fb88890c3a11")
+	)
+	(wire
+		(pts
+			(xy 119.38 91.44) (xy 124.46 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7df7cb08-270e-428b-9d21-dfbae157d519")
+	)
+	(wire
+		(pts
+			(xy 106.68 80.01) (xy 59.69 80.01)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7e3d0146-9f22-4b81-9f61-38f12c809281")
+	)
+	(wire
+		(pts
+			(xy 198.12 87.63) (xy 198.12 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "94be6027-5e33-4018-b7c0-116f426c5e1b")
+	)
+	(wire
+		(pts
+			(xy 91.44 115.57) (xy 101.6 115.57)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9766d969-f0aa-4c3c-9212-5c45eed3f024")
+	)
+	(wire
+		(pts
+			(xy 62.23 105.41) (xy 62.23 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9c1e887a-b94f-4767-a567-b7dbd76f8e26")
+	)
+	(wire
+		(pts
+			(xy 186.69 95.25) (xy 181.61 95.25)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9d065960-0353-468a-8de6-62973e22d390")
+	)
+	(wire
+		(pts
+			(xy 85.09 105.41) (xy 85.09 99.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a668518c-9ee5-4c80-b5c4-67018a9f9fc7")
+	)
+	(wire
+		(pts
+			(xy 103.288 50.8) (xy 119.38 50.8)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a91914de-72e3-458a-8859-259e9fac4c44")
+	)
+	(wire
+		(pts
+			(xy 232.41 100.33) (xy 232.41 99.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a91dd4ac-b9c3-4231-b569-8542aca31238")
+	)
+	(wire
+		(pts
+			(xy 119.38 104.14) (xy 124.46 104.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ab6499c2-0cd5-453c-9085-ab9c936b7081")
+	)
+	(wire
+		(pts
+			(xy 232.41 83.82) (xy 234.95 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ae056f2d-d8e7-4a6b-ad0d-6e3dd5033a2d")
+	)
+	(wire
+		(pts
+			(xy 186.69 105.41) (xy 181.61 105.41)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b257a585-af32-42e5-8c3a-aa50ed1c9772")
+	)
+	(wire
+		(pts
+			(xy 91.44 115.57) (xy 91.44 118.11)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bb520f0f-5d47-4587-b88c-8dd2658cd878")
+	)
+	(wire
+		(pts
+			(xy 229.87 83.82) (xy 232.41 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "be637e13-7749-44f8-ad73-0201f6e6d4bb")
+	)
+	(wire
+		(pts
+			(xy 78.74 85.09) (xy 124.46 85.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bf81ff81-c803-4265-8a7a-84e9432dced0")
+	)
+	(wire
+		(pts
+			(xy 186.69 92.71) (xy 186.69 95.25)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c3fb3967-02fb-426b-aaa3-6931ffb337a2")
+	)
+	(wire
+		(pts
+			(xy 181.61 81.28) (xy 210.82 81.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c6517a84-c410-4c41-b5c8-f1e2c004f0ae")
+	)
+	(wire
+		(pts
+			(xy 124.46 128.27) (xy 124.46 119.38)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c9641b57-c4d2-4fdb-b9f5-c686763e8999")
+	)
+	(wire
+		(pts
+			(xy 119.38 104.14) (xy 119.38 106.68)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d443222f-8942-417f-a306-bd0d731c28a2")
+	)
+	(wire
+		(pts
+			(xy 106.68 80.01) (xy 106.68 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d65f1ca3-8509-481a-b221-830bee177be1")
+	)
+	(wire
+		(pts
+			(xy 186.69 102.87) (xy 181.61 102.87)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dd7b6aab-aff9-47cc-8834-7b8d269510b8")
+	)
+	(wire
+		(pts
+			(xy 186.69 97.79) (xy 181.61 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "df361965-be1e-40e5-8677-9b26bebba910")
+	)
+	(wire
+		(pts
+			(xy 62.23 85.09) (xy 66.04 85.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "df54e403-0bd0-4e9b-9119-6c78fafd4012")
+	)
+	(wire
+		(pts
+			(xy 210.82 100.33) (xy 210.82 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e1988e25-3485-4d5e-988f-25baab4366cd")
+	)
+	(wire
+		(pts
+			(xy 124.46 80.01) (xy 106.68 80.01)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e29637ca-50be-4d75-945f-37c8956e88ae")
+	)
+	(wire
+		(pts
+			(xy 119.38 96.52) (xy 124.46 96.52)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e9c518a0-4a29-4d66-9637-90cc44c3a8fe")
+	)
+	(wire
+		(pts
+			(xy 186.69 107.95) (xy 181.61 107.95)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f52dab84-1bc4-4846-a863-c11f7e9cfa4e")
+	)
+	(wire
+		(pts
+			(xy 59.69 85.09) (xy 62.23 85.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f52dfcdd-ec11-4ada-b8e7-f8eb6d84afbb")
+	)
+	(wire
+		(pts
+			(xy 119.38 93.98) (xy 119.38 96.52)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ff9665d1-7fad-49c2-8cd4-dea664340b4f")
+	)
+	(wire
+		(pts
+			(xy 101.6 118.11) (xy 101.6 115.57)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ffdd547c-6427-42a7-badc-f76e191d92bf")
+	)
+	(hierarchical_label "OUT_B2"
+		(shape input)
+		(at 59.69 80.01 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "4b7b9532-f367-4c86-92ec-5faeef9624d7")
+	)
+	(hierarchical_label "OUT_FAULT_B2"
+		(shape output)
+		(at 59.69 85.09 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "5fd8ae05-1193-4c18-863f-e0ad4edd6108")
+	)
+	(hierarchical_label "OUT_A2"
+		(shape input)
+		(at 231.14 78.74 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "940eab1b-6a35-4af8-bc17-dc551e5d8278")
+	)
+	(hierarchical_label "HV_OUTA2"
+		(shape output)
+		(at 200.242 49.53 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "b0239a3e-57e8-4617-8fd5-7d64755d5d98")
+	)
+	(hierarchical_label "HV_OUTB2"
+		(shape output)
+		(at 103.288 50.8 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "d937639d-8cf9-4396-aae6-05a0365f5e76")
+	)
+	(hierarchical_label "OUT_FAULT_A2"
+		(shape output)
+		(at 234.95 83.82 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "f1bd2d94-d011-4ced-8727-60c5ce3d0486")
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:GND_POWER_GROUND")
+		(at 85.09 105.41 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "107f1ffc-2be7-44d4-af4c-1b49c2b1029f")
+		(property "Reference" "#PWR033"
+			(at 85.09 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 85.09 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 85.09 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 85.09 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 85.09 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "e0f56ad1-1c6b-4ace-ac94-0117025d6eea")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/4c7237e4-d878-4e31-9dbe-b6cfb0e97b0d/3fe3c5cc-f8e8-4b3f-836d-e95705c82244"
+					(reference "#PWR033")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:GND_POWER_GROUND")
+		(at 232.41 100.33 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "119da400-fb27-42a7-be58-d5417c4cee7f")
+		(property "Reference" "#PWR041"
+			(at 232.41 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 232.41 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 232.41 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 232.41 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 232.41 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "fec0dd3f-8188-423a-ac8e-6d8001bbd166")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/4c7237e4-d878-4e31-9dbe-b6cfb0e97b0d/3fe3c5cc-f8e8-4b3f-836d-e95705c82244"
+					(reference "#PWR041")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:HV_BAR")
+		(at 91.44 115.57 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "2985c962-0b68-4e02-ac45-1117b7b36373")
+		(property "Reference" "#PWR034"
+			(at 91.44 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "HV"
+			(at 91.44 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 91.44 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 91.44 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 91.44 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "420bd938-50cd-48b1-9255-bee087a65e0b")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/4c7237e4-d878-4e31-9dbe-b6cfb0e97b0d/3fe3c5cc-f8e8-4b3f-836d-e95705c82244"
+					(reference "#PWR034")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:root_0_mirrored_LED-RED-AK-2_Frickly Systems GmbH")
+		(at 224.79 83.82 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "30bb540f-5ba3-4f1e-a0cc-a74008138336")
+		(property "Reference" "DS300_3"
+			(at 221.996 89.154 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "150080RS75000"
+			(at 216.662 78.232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "LED_0805_JB"
+			(at 224.79 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 224.79 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Single Color LED, Red, Water Clear, 1.4mm"
+			(at 224.79 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "PINS" "2"
+			(at 216.662 78.232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "FORWARD VOLTAGE" "2V"
+			(at 216.662 78.232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "COLOUR" "Red"
+			(at 216.662 78.232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PEAK INVERSE VOLTAGE" ""
+			(at 216.662 78.232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS COMPLIANT" "Yes"
+			(at 216.662 78.232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX OPERATING TEMPERATURE" "85°C"
+			(at 216.662 78.232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX POWER DISSIPATION" ""
+			(at 216.662 78.232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX SURGE CURRENT" ""
+			(at 216.662 78.232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CASE/PACKAGE" "0805"
+			(at 216.662 78.232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MOUNTING TECHNOLOGY" "SMD"
+			(at 216.662 78.232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MIN OPERATING TEMPERATURE" "-40°C"
+			(at 216.662 78.232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "FORWARD CURRENT" "20mA"
+			(at 216.662 78.232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "944ca96b-b76d-4613-bbf4-69fb871be3c7")
+		)
+		(pin "2"
+			(uuid "ecdd31a2-63e8-406a-a1e9-1e90a04204b9")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/4c7237e4-d878-4e31-9dbe-b6cfb0e97b0d/3fe3c5cc-f8e8-4b3f-836d-e95705c82244"
+					(reference "DS300_3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:root_0_IPS2050HQ-32_Frickly Systems GmbH")
+		(at 124.46 87.63 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "42cbaa2a-709b-4d7b-9770-34f2af1becef")
+		(property "Reference" "U300_3"
+			(at 158.75 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "IPS2050HQ-32"
+			(at 158.75 137.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" "QFN50P800X600X90_HS-49N"
+			(at 124.46 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 124.46 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "High efficiency, high-side switch with extended diagnostics and smart driving for capacitive loads"
+			(at 124.46 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "COMPONENTLINK1DESCRIPTION" ""
+			(at 123.19 69.342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "OPERATING TEMPERATURE MIN" "-40"
+			(at 123.19 69.342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "COMPONENTLINK1URL" ""
+			(at 123.19 69.342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "OPERATING TEMPERATURE MAX" "125"
+			(at 123.19 69.342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "FREQUENCY RANGE" ""
+			(at 123.19 69.342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PACKAGING" "QFN-48"
+			(at 123.19 69.342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "COMPONENTLINK2URL" ""
+			(at 123.19 69.342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MANUFACTURER PART NUMBER" ""
+			(at 123.19 69.342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MATCH CODE" ""
+			(at 123.19 69.342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MANUFACTURER" ""
+			(at 123.19 69.342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "IMPEDANCE" ""
+			(at 123.19 69.342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MOUNT" "SMD"
+			(at 123.19 69.342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "SOURCE" ""
+			(at 123.19 69.342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PIN COUNT" "48"
+			(at 123.19 69.342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CATEGORY" ""
+			(at 123.19 69.342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "DESIGN ITEM ID" ""
+			(at 123.19 69.342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "COMPONENTLINK2DESCRIPTION" ""
+			(at 123.19 69.342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "COMPONENT TYPE" ""
+			(at 123.19 69.342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX OUTPUT CURRENT" "5.6A"
+			(at 123.952 69.342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX SUPPLY VOLTAGE" "60V"
+			(at 123.952 69.342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MIN SUPPLY VOLTAGE" "8V"
+			(at 123.952 69.342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "NUMBER OF CHANNELS" "2"
+			(at 123.952 69.342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "NUMBER OF TERMINALS" "48"
+			(at 123.952 69.342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TERMINAL PITCH" "500µm"
+			(at 123.952 69.342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "4fd435a7-d3ec-41bb-b579-5ef9c7664bfd")
+		)
+		(pin "3"
+			(uuid "77d49990-7ad4-4120-8415-73d7cddbec74")
+		)
+		(pin "2"
+			(uuid "60cc05ef-fab5-4c80-91dd-4df8674b3a3b")
+		)
+		(pin "4"
+			(uuid "44265fdc-cd71-4786-92e7-c5250f582cc0")
+		)
+		(pin "5"
+			(uuid "c44c7245-b90f-435e-a926-cd80c6907b9c")
+		)
+		(pin "7"
+			(uuid "0a5ee470-cfd4-4a88-b971-58d38a12195f")
+		)
+		(pin "6"
+			(uuid "29d0c5cb-7c34-4c28-a930-f5950fb17ee3")
+		)
+		(pin "8"
+			(uuid "97bd00ce-0946-4de1-93f4-68d41f32bf2e")
+		)
+		(pin "9"
+			(uuid "451caf3b-a08c-4cb9-bc10-c8949df07696")
+		)
+		(pin "10"
+			(uuid "0b03fcfa-5fb3-48fa-b912-f3a5b23a2843")
+		)
+		(pin "11"
+			(uuid "d6a40bc7-4d51-4cfb-84f4-be469b00a906")
+		)
+		(pin "12"
+			(uuid "3ae8e732-0459-4a57-9842-bf9ee8e1ac0e")
+		)
+		(pin "22"
+			(uuid "ace0fb99-7bfa-4105-acf6-f3d660111bcd")
+		)
+		(pin "27"
+			(uuid "c5e36591-048e-4c0e-bb96-da147e83ae37")
+		)
+		(pin "25"
+			(uuid "ebc22011-f7c6-499a-859b-31bb51dc38e8")
+		)
+		(pin "47"
+			(uuid "e8b9196d-6eb8-4e49-bc9e-a03639b3976e")
+		)
+		(pin "44"
+			(uuid "8eb05436-9018-41fc-b4d6-29cef62cad3e")
+		)
+		(pin "43"
+			(uuid "3085cee4-bfb9-4247-a6e7-eebb9127092f")
+		)
+		(pin "19"
+			(uuid "9db6ab5b-2176-4fd3-ace0-eabdf3802d25")
+		)
+		(pin "20"
+			(uuid "085076d1-9379-4350-b9b7-dea5e180b549")
+		)
+		(pin "33"
+			(uuid "267d47a5-fb9e-4f0d-a276-0a70f5b4b52a")
+		)
+		(pin "32"
+			(uuid "07aad5f6-4f4a-4f4d-8e92-4c4bea22bbf2")
+		)
+		(pin "48"
+			(uuid "c8ceabee-bb9e-4d8d-8719-f19822caeab2")
+		)
+		(pin "46"
+			(uuid "cc297d60-0de6-4d09-ab6c-c0776952c5fc")
+		)
+		(pin "29"
+			(uuid "20964513-939d-484e-95b1-3dd370cdd902")
+		)
+		(pin "21"
+			(uuid "4f34d6d0-0f13-418b-8f91-7525e8cf903d")
+		)
+		(pin "24"
+			(uuid "5dcbebd0-d3ce-44d6-9148-d55da8d692e8")
+		)
+		(pin "17"
+			(uuid "ef60989b-93a3-49a9-892c-71ab557e1fd6")
+		)
+		(pin "31"
+			(uuid "006eacf1-a70c-4d6c-9856-467ee836f9ba")
+		)
+		(pin "14"
+			(uuid "4f3863ef-c06e-4fa7-a617-3eb3750cc762")
+		)
+		(pin "15"
+			(uuid "42071e88-ff2b-4056-998e-352870ee4b3c")
+		)
+		(pin "16"
+			(uuid "0c12a12b-3d6b-4745-929a-2ea7a72778c8")
+		)
+		(pin "23"
+			(uuid "15a7df43-c1ac-46a0-9ce6-1a50d2d16d79")
+		)
+		(pin "34"
+			(uuid "3faf7aaf-8939-411e-a739-fce95e116b11")
+		)
+		(pin "30"
+			(uuid "b434c974-faa2-4c26-a42a-7e9a4a1bdc4e")
+		)
+		(pin "13"
+			(uuid "6b30417d-717c-4d3b-a9ce-5adec85ca37a")
+		)
+		(pin "18"
+			(uuid "a1ca3051-6140-417f-af6b-eea944ad8cf4")
+		)
+		(pin "28"
+			(uuid "1c47065d-8711-4bff-b682-8e117209d523")
+		)
+		(pin "26"
+			(uuid "bce4479f-787c-407c-a689-e9106efbd70a")
+		)
+		(pin "49"
+			(uuid "58dbd174-8c6b-4912-917f-6b36cf79440a")
+		)
+		(pin "45"
+			(uuid "9acd5b03-2eb5-4c79-a667-644c586ff7f1")
+		)
+		(pin "40"
+			(uuid "38f9c3b6-0877-40cf-8eab-2190b4802647")
+		)
+		(pin "37"
+			(uuid "6e3132d8-3860-4d62-9460-8374e6b5cf8c")
+		)
+		(pin "36"
+			(uuid "6ae6a1c5-51d1-49f5-85b4-62a34c4e6ffb")
+		)
+		(pin "38"
+			(uuid "9741ede3-8462-4724-8035-eb64db1d6a1f")
+		)
+		(pin "41"
+			(uuid "88c5dbf6-e6b7-428b-beab-dc60fc1a923b")
+		)
+		(pin "35"
+			(uuid "94642193-ef9f-4d20-99e5-e532a08139e4")
+		)
+		(pin "39"
+			(uuid "1c3071e0-8f78-406a-9633-695fff2c3f0f")
+		)
+		(pin "42"
+			(uuid "5bfd9933-16c5-4f7f-ac1f-a281928d9f4e")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/4c7237e4-d878-4e31-9dbe-b6cfb0e97b0d/3fe3c5cc-f8e8-4b3f-836d-e95705c82244"
+					(reference "U300_3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:GND_POWER_GROUND")
+		(at 91.44 128.27 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "56671f4c-c352-4d87-8ba5-740ef0232b08")
+		(property "Reference" "#PWR035"
+			(at 91.44 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 91.44 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 91.44 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 91.44 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 91.44 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "b5806c4d-3253-4766-9732-6c30a428be08")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/4c7237e4-d878-4e31-9dbe-b6cfb0e97b0d/3fe3c5cc-f8e8-4b3f-836d-e95705c82244"
+					(reference "#PWR035")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:root_1_Resistor_Frickly Systems GmbH")
+		(at 62.23 99.06 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp yes)
+		(uuid "57fd214e-6539-4722-a2b0-80fa6f62016b")
+		(property "Reference" "R301_3"
+			(at 62.992 96.266 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "1k5 +/-1% 0603 100 mW"
+			(at 61.468 90.932 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "R_0603_JB"
+			(at 62.23 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 62.23 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Chip Resistor, 1,5 KOhm, +/-1%, 0.1 W, -55 to 155 degC, 0603 (1608 Metric)"
+			(at 62.23 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "PINS" "2"
+			(at 61.468 90.932 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MIN OPERATING TEMPERATURE" "-55°C"
+			(at 61.468 90.932 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS COMPLIANT" "True"
+			(at 61.468 90.932 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "POWER" "100mW"
+			(at 61.468 90.932 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TOLERANCE" "1%"
+			(at 61.468 90.932 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ALTIUM_VALUE" "1.5k"
+			(at 62.992 98.806 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "MOUNTING TECHNOLOGY" "SM"
+			(at 61.468 90.932 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CASE/PACKAGE" "0603"
+			(at 61.468 90.932 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX OPERATING TEMPERATURE" "155°C"
+			(at 61.468 90.932 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "VOLTAGE RATING" "50V"
+			(at 61.468 90.932 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "baec3e9f-2bd8-41da-9184-c754ad879ff3")
+		)
+		(pin "2"
+			(uuid "88f38d0d-4640-445a-bbf3-10183d239eab")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/4c7237e4-d878-4e31-9dbe-b6cfb0e97b0d/3fe3c5cc-f8e8-4b3f-836d-e95705c82244"
+					(reference "R301_3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:root_2_mirrored_LED-RED-AK-2_Frickly Systems GmbH")
+		(at 71.12 85.09 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "5dd741a8-9a6a-48da-8473-d634b13ccad9")
+		(property "Reference" "DS301_3"
+			(at 68.072 93.218 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "150080RS75000"
+			(at 65.532 82.296 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "LED_0805_JB"
+			(at 71.12 85.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 71.12 85.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Single Color LED, Red, Water Clear, 1.4mm"
+			(at 71.12 85.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "PINS" "2"
+			(at 65.532 82.296 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "FORWARD VOLTAGE" "2V"
+			(at 65.532 82.296 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "COLOUR" "Red"
+			(at 65.532 82.296 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PEAK INVERSE VOLTAGE" ""
+			(at 65.532 82.296 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS COMPLIANT" "Yes"
+			(at 65.532 82.296 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX OPERATING TEMPERATURE" "85°C"
+			(at 65.532 82.296 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX POWER DISSIPATION" ""
+			(at 65.532 82.296 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX SURGE CURRENT" ""
+			(at 65.532 82.296 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CASE/PACKAGE" "0805"
+			(at 65.532 82.296 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MOUNTING TECHNOLOGY" "SMD"
+			(at 65.532 82.296 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MIN OPERATING TEMPERATURE" "-40°C"
+			(at 65.532 82.296 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "FORWARD CURRENT" "20mA"
+			(at 65.532 82.296 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a3896395-67b7-455e-a178-0dd5aa71eb67")
+		)
+		(pin "2"
+			(uuid "eea25854-c42b-4117-bad2-90ecc9a7457c")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/4c7237e4-d878-4e31-9dbe-b6cfb0e97b0d/3fe3c5cc-f8e8-4b3f-836d-e95705c82244"
+					(reference "DS301_3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:GND_POWER_GROUND")
+		(at 106.68 105.41 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "5de36915-bf23-4ca9-8012-8cab74560691")
+		(property "Reference" "#PWR037"
+			(at 106.68 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 106.68 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 106.68 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 106.68 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 106.68 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "2258af7b-8570-46bc-b9b2-b414449a7020")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/4c7237e4-d878-4e31-9dbe-b6cfb0e97b0d/3fe3c5cc-f8e8-4b3f-836d-e95705c82244"
+					(reference "#PWR037")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:root_1_mirrored_Capacitor_Frickly Systems GmbH")
+		(at 91.44 125.73 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "714666a8-db18-4aed-84e4-b01a1ec75acd")
+		(property "Reference" "C302_3"
+			(at 92.71 120.65 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "C-2.2uF-10%-100V-1210-X7R"
+			(at 89.154 117.602 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "C_1210"
+			(at 91.44 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 91.44 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Ceramic Capacitor, Multilayer, Ceramic, 100V, 10% +Tol, 10% -Tol, X7R, 15% TC, 2.2uF, Surface Mount, 1210"
+			(at 91.44 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MIN OPERATING TEMPERATURE" "-55°C"
+			(at 89.154 117.602 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TOLERANCE" "10%"
+			(at 89.154 117.602 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX OPERATING TEMPERATURE" "125°C"
+			(at 89.154 117.602 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PINS" ""
+			(at 89.154 117.602 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CASE/PACKAGE" "1210"
+			(at 89.154 117.602 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS COMPLIANT" "Yes"
+			(at 89.154 117.602 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PARAMETER 1" ""
+			(at 96.52 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "DIELECTRIC MATERIAL" "Ceramic"
+			(at 90.17 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CAPACITANCE" "2.2µF"
+			(at 92.71 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "RATED DC VOLTAGE (URDC)" "100V"
+			(at 90.17 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TEMPERATURE CHARACTERISTICS CODE" "X7R"
+			(at 90.17 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MOUNT" "Surface Mount"
+			(at 90.17 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TO BE CHECKED" "Yes, Part choices"
+			(at 90.17 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "SOURCE" ""
+			(at 90.17 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "b995259f-97c7-499d-8e91-55f1f2f74f53")
+		)
+		(pin "1"
+			(uuid "07b6a240-6498-4e25-9180-29f098cca4b5")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/4c7237e4-d878-4e31-9dbe-b6cfb0e97b0d/3fe3c5cc-f8e8-4b3f-836d-e95705c82244"
+					(reference "C302_3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:root_1_mirrored_Capacitor_Frickly Systems GmbH")
+		(at 101.6 125.73 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "791fee69-97ed-417c-8a86-73471a951be0")
+		(property "Reference" "C303_3"
+			(at 102.87 120.65 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "C-2.2uF-10%-100V-1210-X7R"
+			(at 99.314 117.602 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "C_1210"
+			(at 101.6 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 101.6 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Ceramic Capacitor, Multilayer, Ceramic, 100V, 10% +Tol, 10% -Tol, X7R, 15% TC, 2.2uF, Surface Mount, 1210"
+			(at 101.6 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MIN OPERATING TEMPERATURE" "-55°C"
+			(at 99.314 117.602 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TOLERANCE" "10%"
+			(at 99.314 117.602 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX OPERATING TEMPERATURE" "125°C"
+			(at 99.314 117.602 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PINS" ""
+			(at 99.314 117.602 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CASE/PACKAGE" "1210"
+			(at 99.314 117.602 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS COMPLIANT" "Yes"
+			(at 99.314 117.602 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PARAMETER 1" ""
+			(at 106.68 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "DIELECTRIC MATERIAL" "Ceramic"
+			(at 100.33 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CAPACITANCE" "2.2µF"
+			(at 102.87 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "RATED DC VOLTAGE (URDC)" "100V"
+			(at 100.33 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TEMPERATURE CHARACTERISTICS CODE" "X7R"
+			(at 100.33 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MOUNT" "Surface Mount"
+			(at 100.33 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TO BE CHECKED" "Yes, Part choices"
+			(at 100.33 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "SOURCE" ""
+			(at 100.33 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "1167dfbe-0390-41af-8489-505180a04cab")
+		)
+		(pin "2"
+			(uuid "d75b5076-73f2-4ede-aa42-d2443abb4473")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/4c7237e4-d878-4e31-9dbe-b6cfb0e97b0d/3fe3c5cc-f8e8-4b3f-836d-e95705c82244"
+					(reference "C303_3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_name "root_1_mirrored_Capacitor_Frickly Systems GmbH_1")
+		(lib_id "ARDEP Power IO Shield Symbols:root_1_mirrored_Capacitor_Frickly Systems GmbH_1")
+		(at 210.82 97.79 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "833dfff7-5397-4b19-a0c6-f22982341e3b")
+		(property "Reference" "C300_3"
+			(at 213.106 94.996 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "C-100nF-10%-50V-0603-X7R"
+			(at 208.534 89.662 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "C_0603_JB"
+			(at 210.82 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 210.82 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Ceramic Capacitor, Multilayer, Ceramic, 50V, 10% +Tol, 10% -Tol, X7R, 15% TC, 0.1uF, Surface Mount, 0603"
+			(at 210.82 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "CASE/PACKAGE" "0603"
+			(at 208.534 89.662 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TOLERANCE" "10%"
+			(at 208.534 89.662 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS COMPLIANT" "True"
+			(at 208.534 89.662 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX OPERATING TEMPERATURE" "125°C"
+			(at 208.534 89.662 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MIN OPERATING TEMPERATURE" "-55°C"
+			(at 208.534 89.662 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PINS" ""
+			(at 208.534 89.662 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CAPACITANCE" "100nF"
+			(at 213.106 97.536 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "DIELECTRIC MATERIAL" "Ceramic"
+			(at 208.534 89.662 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MOUNT" "Surface Mount"
+			(at 208.534 89.662 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "RATED DC VOLTAGE (URDC)" "50V"
+			(at 208.534 89.662 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "SOURCE" ""
+			(at 208.534 89.662 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TEMPERATURE CHARACTERISTICS CODE" "X7R"
+			(at 208.534 89.662 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TO BE CHECKED" ""
+			(at 208.534 89.662 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PARAMETER 1" ""
+			(at 213.106 97.536 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(pin "1"
+			(uuid "c144822e-0d83-4237-afa9-4a88efd82dc2")
+		)
+		(pin "2"
+			(uuid "d342498c-0f9f-44a4-aa2e-f696345f7fab")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/4c7237e4-d878-4e31-9dbe-b6cfb0e97b0d/3fe3c5cc-f8e8-4b3f-836d-e95705c82244"
+					(reference "C300_3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:GND_POWER_GROUND")
+		(at 101.6 128.27 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "8cc0e1fd-d707-4d80-9502-b4158e2cc9c2")
+		(property "Reference" "#PWR036"
+			(at 101.6 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 101.6 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 101.6 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 101.6 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 101.6 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "689643a1-ad89-4619-b0b3-9db1d03029da")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/4c7237e4-d878-4e31-9dbe-b6cfb0e97b0d/3fe3c5cc-f8e8-4b3f-836d-e95705c82244"
+					(reference "#PWR036")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:root_1_mirrored_Resistor_Frickly Systems GmbH")
+		(at 198.12 95.25 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a1db012b-d308-40c1-817f-552b58c8966c")
+		(property "Reference" "R302_3"
+			(at 198.882 92.456 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "Resistor 10k +/-1% 0603 100mW"
+			(at 197.358 87.122 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "R_0603_JB"
+			(at 198.12 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 198.12 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Chip Resistor, 10 KOhm, +/-1%, 0.1 W, -55 to 155 degC, 0603 (1608 Metric)"
+			(at 198.12 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "ALTIUM_VALUE" "10k"
+			(at 198.882 94.996 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "MAX OPERATING TEMPERATURE" "155°C"
+			(at 197.358 87.122 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS COMPLIANT" "Yes"
+			(at 197.358 87.122 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TOLERANCE" "1%"
+			(at 197.358 87.122 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PINS" "2"
+			(at 197.358 87.122 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "POWER" "100mW"
+			(at 197.358 87.122 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MIN OPERATING TEMPERATURE" "-55°C"
+			(at 197.358 87.122 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MOUNTING TECHNOLOGY" "Surface Mount"
+			(at 197.358 87.122 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CASE/PACKAGE" "0603"
+			(at 197.358 87.122 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "VOLTAGE RATING" "75V"
+			(at 197.358 87.122 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "49305cf1-0552-4fa0-a351-76a03dc0122b")
+		)
+		(pin "1"
+			(uuid "9420f42e-7288-4682-a16b-2bb687fb7b52")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/4c7237e4-d878-4e31-9dbe-b6cfb0e97b0d/3fe3c5cc-f8e8-4b3f-836d-e95705c82244"
+					(reference "R302_3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:GND_POWER_GROUND")
+		(at 210.82 100.33 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "ae241145-45e3-485c-9bc0-cd75443ce525")
+		(property "Reference" "#PWR040"
+			(at 210.82 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 210.82 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 210.82 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 210.82 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 210.82 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "0eac8a24-4688-4bd0-a9a1-f422d832a724")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/4c7237e4-d878-4e31-9dbe-b6cfb0e97b0d/3fe3c5cc-f8e8-4b3f-836d-e95705c82244"
+					(reference "#PWR040")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:root_1_mirrored_Resistor_Frickly Systems GmbH")
+		(at 106.68 96.52 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "b1a5af81-f685-4526-ba3b-6258e6e023eb")
+		(property "Reference" "R303_3"
+			(at 107.95 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "Resistor 10k +/-1% 0603 100mW"
+			(at 105.918 88.392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "R_0603_JB"
+			(at 106.68 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 106.68 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Chip Resistor, 10 KOhm, +/-1%, 0.1 W, -55 to 155 degC, 0603 (1608 Metric)"
+			(at 106.68 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "ALTIUM_VALUE" "10k"
+			(at 107.442 96.266 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "MAX OPERATING TEMPERATURE" "155°C"
+			(at 105.918 88.392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS COMPLIANT" "Yes"
+			(at 105.918 88.392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TOLERANCE" "1%"
+			(at 105.918 88.392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PINS" "2"
+			(at 105.918 88.392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "POWER" "100mW"
+			(at 105.918 88.392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MIN OPERATING TEMPERATURE" "-55°C"
+			(at 105.918 88.392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MOUNTING TECHNOLOGY" "Surface Mount"
+			(at 105.918 88.392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CASE/PACKAGE" "0603"
+			(at 105.918 88.392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "VOLTAGE RATING" "75V"
+			(at 105.918 88.392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "ca2cdfae-e3cf-4b4d-aae8-6a196435105a")
+		)
+		(pin "1"
+			(uuid "5afc1a33-fb5b-433e-89f1-ff918a60e7cd")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/4c7237e4-d878-4e31-9dbe-b6cfb0e97b0d/3fe3c5cc-f8e8-4b3f-836d-e95705c82244"
+					(reference "R303_3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_name "root_1_mirrored_Capacitor_Frickly Systems GmbH_2")
+		(lib_id "ARDEP Power IO Shield Symbols:root_1_mirrored_Capacitor_Frickly Systems GmbH_2")
+		(at 85.09 99.06 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "bdf35ac1-58b3-4ba5-b53b-6d3e294200ca")
+		(property "Reference" "C301_3"
+			(at 87.376 96.266 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "C-100nF-10%-50V-0603-X7R"
+			(at 82.804 90.932 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "C_0603_JB"
+			(at 85.09 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 85.09 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Ceramic Capacitor, Multilayer, Ceramic, 50V, 10% +Tol, 10% -Tol, X7R, 15% TC, 0.1uF, Surface Mount, 0603"
+			(at 85.09 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "CASE/PACKAGE" "0603"
+			(at 82.804 90.932 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TOLERANCE" "10%"
+			(at 82.804 90.932 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS COMPLIANT" "True"
+			(at 82.804 90.932 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX OPERATING TEMPERATURE" "125°C"
+			(at 82.804 90.932 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MIN OPERATING TEMPERATURE" "-55°C"
+			(at 82.804 90.932 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PINS" ""
+			(at 82.804 90.932 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CAPACITANCE" "100nF"
+			(at 87.376 98.806 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "DIELECTRIC MATERIAL" "Ceramic"
+			(at 82.804 90.932 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MOUNT" "Surface Mount"
+			(at 82.804 90.932 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "RATED DC VOLTAGE (URDC)" "50V"
+			(at 82.804 90.932 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "SOURCE" ""
+			(at 82.804 90.932 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TEMPERATURE CHARACTERISTICS CODE" "X7R"
+			(at 82.804 90.932 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TO BE CHECKED" ""
+			(at 82.804 90.932 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PARAMETER 1" ""
+			(at 87.376 98.806 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(pin "2"
+			(uuid "ba4d8c73-44ea-467a-bb9f-1b4b176791f0")
+		)
+		(pin "1"
+			(uuid "af6c71df-8186-4165-ae8a-c7970eb95c40")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/4c7237e4-d878-4e31-9dbe-b6cfb0e97b0d/3fe3c5cc-f8e8-4b3f-836d-e95705c82244"
+					(reference "C301_3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:root_1_Resistor_Frickly Systems GmbH")
+		(at 232.41 96.52 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp yes)
+		(uuid "be88802b-e878-497c-8f67-ade3a0dd18e1")
+		(property "Reference" "R300_3"
+			(at 233.172 93.726 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "1k5 +/-1% 0603 100 mW"
+			(at 231.648 88.392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "R_0603_JB"
+			(at 232.41 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 232.41 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Chip Resistor, 1,5 KOhm, +/-1%, 0.1 W, -55 to 155 degC, 0603 (1608 Metric)"
+			(at 232.41 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "PINS" "2"
+			(at 231.648 88.392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MIN OPERATING TEMPERATURE" "-55°C"
+			(at 231.648 88.392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS COMPLIANT" "True"
+			(at 231.648 88.392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "POWER" "100mW"
+			(at 231.648 88.392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TOLERANCE" "1%"
+			(at 231.648 88.392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ALTIUM_VALUE" "1.5k"
+			(at 233.172 96.266 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "MOUNTING TECHNOLOGY" "SM"
+			(at 231.648 88.392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CASE/PACKAGE" "0603"
+			(at 231.648 88.392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX OPERATING TEMPERATURE" "155°C"
+			(at 231.648 88.392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "VOLTAGE RATING" "50V"
+			(at 231.648 88.392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "85f2792e-5a76-4f9f-9e5a-a1107dca099b")
+		)
+		(pin "1"
+			(uuid "a487f94f-24a6-47fd-a152-d667e000d3b3")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/4c7237e4-d878-4e31-9dbe-b6cfb0e97b0d/3fe3c5cc-f8e8-4b3f-836d-e95705c82244"
+					(reference "R300_3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:GND_POWER_GROUND")
+		(at 62.23 105.41 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "c2d2cca0-7d81-4ade-82e8-605ab35df929")
+		(property "Reference" "#PWR032"
+			(at 62.23 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 62.23 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 62.23 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 62.23 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 62.23 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "d95af619-9117-4e6e-8728-4a193e4e3aaf")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/4c7237e4-d878-4e31-9dbe-b6cfb0e97b0d/3fe3c5cc-f8e8-4b3f-836d-e95705c82244"
+					(reference "#PWR032")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:GND_POWER_GROUND")
+		(at 124.46 128.27 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "d9876a08-8cb5-4552-a469-f5f37b95246e")
+		(property "Reference" "#PWR038"
+			(at 124.46 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 124.46 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 124.46 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 124.46 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 124.46 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "26037d36-fae1-4b3d-afbf-8b673c304d32")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/4c7237e4-d878-4e31-9dbe-b6cfb0e97b0d/3fe3c5cc-f8e8-4b3f-836d-e95705c82244"
+					(reference "#PWR038")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:GND_POWER_GROUND")
+		(at 198.12 100.33 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "ff61455d-0241-40a4-b3ef-3e6d0232b4d0")
+		(property "Reference" "#PWR039"
+			(at 198.12 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 198.12 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 198.12 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 198.12 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 198.12 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "e30b83d6-1bf3-4c42-9019-1c309c15dece")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/4c7237e4-d878-4e31-9dbe-b6cfb0e97b0d/3fe3c5cc-f8e8-4b3f-836d-e95705c82244"
+					(reference "#PWR039")
+					(unit 1)
+				)
+			)
+		)
+	)
+)

@@ -1,0 +1,9334 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "fa9ba16c-d2f5-4239-8035-264c90c15312")
+	(paper "User" 297.002 210.007)
+	(title_block
+		(title "ARDEP Interface")
+	)
+	(lib_symbols
+		(symbol "ARDEP Power IO Shield Symbols:3V3_BAR"
+			(power)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#PWR"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "3V3"
+				(at 0 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name '3V3'"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "power-flag"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "3V3_BAR_0_0"
+				(polyline
+					(pts
+						(xy -1.27 -2.54) (xy 1.27 -2.54)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 -2.54)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin power_in line
+					(at 0 0 0)
+					(length 0)
+					(hide yes)
+					(name "3V3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "ARDEP Power IO Shield Symbols:ARDEP_0_D-AK-2_Frickly Systems GmbH"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Rectifier Diode, 1 Phase, 1 Element, 0.2A, 100V V(RRM), Silicon"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "*D_SOD323-2_JB*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "ARDEP_0_D-AK-2_Frickly Systems GmbH_1_0"
+				(polyline
+					(pts
+						(xy 0 -2.54) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 2.54) (xy 0 0) (xy 2.54 -2.54) (xy 2.54 2.54)
+					)
+					(stroke
+						(width -0.0001)
+						(type solid)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(pin passive line
+					(at -5.08 0 0)
+					(length 5.08)
+					(name "K"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 7.62 0 180)
+					(length 5.08)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "ARDEP Power IO Shield Symbols:ARDEP_0_Symbol_Frickly Systems GmbH"
+			(pin_names
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "WS-TASV J-Bend SMT Tact Switch with ground terminal, 5x5x1.5mm, 160gf"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "*431183015816*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "ARDEP_0_Symbol_Frickly Systems GmbH_1_0"
+				(polyline
+					(pts
+						(xy 3.81 2.54) (xy 16.51 2.54) (xy 16.51 -10.16) (xy 3.81 -10.16) (xy 3.81 2.54)
+					)
+					(stroke
+						(width 0)
+						(type dash)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 3.81 0) (xy 16.51 0)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 9.906 -5.334) (xy 8.636 -2.286)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 10.16 0) (xy 10.16 -1.27)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 10.16 -1.778)
+					(radius 0.508)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 10.16 -5.842)
+					(radius 0.508)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 10.16 -7.62) (xy 10.16 -6.35)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 16.51 -7.62) (xy 3.81 -7.62)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(text "GND"
+					(at 14.732 -12.7 0)
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+						(justify right bottom)
+					)
+				)
+				(pin passive line
+					(at 0 0 0)
+					(length 3.81)
+					(name "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -7.62 0)
+					(length 3.81)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 10.16 -12.7 90)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "G1"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 20.32 0 180)
+					(length 3.81)
+					(name "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 20.32 -7.62 180)
+					(length 3.81)
+					(name "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "ARDEP Power IO Shield Symbols:ARDEP_0_UNI TVS_Frickly Systems GmbH"
+			(pin_names
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Trans Voltage Suppressor Diode, 158W, 3.3V V(RWM), Unidirectional, 1 Element, Silicon"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "*SOD-523_JB*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "ARDEP_0_UNI TVS_Frickly Systems GmbH_1_0"
+				(polyline
+					(pts
+						(xy -2.54 0) (xy -1.016 0)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.524 -1.524) (xy -1.016 -1.016) (xy -1.016 1.016) (xy -0.508 1.524)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.016 0) (xy 0.508 0.762) (xy 0.508 -0.762) (xy -1.016 0)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 0) (xy 0.508 0)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "K"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 0 180)
+					(length 2.54)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "ARDEP Power IO Shield Symbols:ARDEP_1_FUSE-2_Frickly Systems GmbH"
+			(pin_names
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Electric Fuse, Slow Blow, 3A, 63VAC, 63VDC, 50A (IR), Surface Mount, 1206"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "*FP-0468-MFG*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "ARDEP_1_FUSE-2_Frickly Systems GmbH_1_0"
+				(polyline
+					(pts
+						(xy 0 7.112) (xy 0 7.62)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start 0 5.08)
+					(mid -1.016 6.096)
+					(end 0 7.112)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start 0 5.08)
+					(mid 1.016 4.064)
+					(end 0 3.048)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 3.048) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at 0 10.16 270)
+					(length 2.54)
+					(name "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 0 90)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "ARDEP Power IO Shield Symbols:ARDEP_1_Symbol_Frickly Systems GmbH"
+			(pin_names
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "10mm long pins  8position socket header"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "*SSW-108-23-G-S*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "ARDEP_1_Symbol_Frickly Systems GmbH_1_0"
+				(polyline
+					(pts
+						(xy 0 5.08) (xy 0 0) (xy 22.86 0) (xy 22.86 5.08) (xy 0 5.08)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 0) (xy 2.54 1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 3.302 3.302)
+					(end 1.778 1.778)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 5.08 2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 5.08 0) (xy 5.08 1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 7.62 2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 7.62 0) (xy 7.62 1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 10.16 2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 10.16 0) (xy 10.16 1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 12.7 2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 12.7 0) (xy 12.7 1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 15.24 2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 15.24 0) (xy 15.24 1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 17.78 2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 17.78 0) (xy 17.78 1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 20.32 2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 20.32 0) (xy 20.32 1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at 2.54 -5.08 90)
+					(length 5.08)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -5.08 90)
+					(length 5.08)
+					(name "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 7.62 -5.08 90)
+					(length 5.08)
+					(name "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 10.16 -5.08 90)
+					(length 5.08)
+					(name "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 12.7 -5.08 90)
+					(length 5.08)
+					(name "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 15.24 -5.08 90)
+					(length 5.08)
+					(name "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 17.78 -5.08 90)
+					(length 5.08)
+					(name "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 20.32 -5.08 90)
+					(length 5.08)
+					(name "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "ARDEP Power IO Shield Symbols:ARDEP_1_mirrored_Resistor_Frickly Systems GmbH"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Chip Resistor, 10 KOhm, +/-1%, 0.1 W, -55 to 155 degC, 0603 (1608 Metric)"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "*R_0603_JB*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "ARDEP_1_mirrored_Resistor_Frickly Systems GmbH_1_0"
+				(polyline
+					(pts
+						(xy 0 5.08) (xy 0 4.064) (xy -0.508 3.81) (xy 0.508 3.302) (xy -0.508 2.794) (xy 0.508 2.286)
+						(xy -0.508 1.778) (xy 0.508 1.27) (xy 0 1.016) (xy 0 0)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at 0 7.62 270)
+					(length 2.54)
+					(name "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -2.54 90)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "ARDEP Power IO Shield Symbols:ARDEP_2_UNI TVS_Frickly Systems GmbH"
+			(pin_names
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Trans Voltage Suppressor Diode, 200W, 48V V(RWM), Unidirectional, 1 Element, Silicon"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "*FP-SMF48A-MFG*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "ARDEP_2_UNI TVS_Frickly Systems GmbH_1_0"
+				(polyline
+					(pts
+						(xy -2.54 0) (xy -0.508 0)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.016 0) (xy -0.508 -0.762) (xy -0.508 0.762) (xy 1.016 0)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.524 1.524) (xy 1.016 1.016) (xy 1.016 -1.016) (xy 0.508 -1.524)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 0) (xy 1.016 0)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 0 180)
+					(length 2.54)
+					(name "K"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "ARDEP Power IO Shield Symbols:ARDEP_3_Symbol_Frickly Systems GmbH"
+			(pin_names
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Headers & Wire Housings Tiger Buy Socket Strip with PCB Tails, .100 Pitch"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "*SSW-106-23-G-S*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "ARDEP_3_Symbol_Frickly Systems GmbH_1_0"
+				(polyline
+					(pts
+						(xy -15.24 0) (xy -15.24 -1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center -15.24 -2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -12.7 0) (xy -12.7 -1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center -12.7 -2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -10.16 0) (xy -10.16 -1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center -10.16 -2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -7.62 0) (xy -7.62 -1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center -7.62 -2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -5.08 0) (xy -5.08 -1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center -5.08 -2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.54 0) (xy -2.54 -1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.778 -1.778)
+					(end -3.302 -3.302)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -5.08) (xy 0 0) (xy -17.78 0) (xy -17.78 -5.08) (xy 0 -5.08)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at -15.24 5.08 270)
+					(length 5.08)
+					(name "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -12.7 5.08 270)
+					(length 5.08)
+					(name "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -10.16 5.08 270)
+					(length 5.08)
+					(name "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -7.62 5.08 270)
+					(length 5.08)
+					(name "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 5.08 270)
+					(length 5.08)
+					(name "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -2.54 5.08 270)
+					(length 5.08)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "ARDEP Power IO Shield Symbols:ARDEP_HV_BAR"
+			(power)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#PWR"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "ARDEP_HV"
+				(at 0 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name 'ARDEP_HV'"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "power-flag"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "ARDEP_HV_BAR_0_0"
+				(polyline
+					(pts
+						(xy -1.27 -2.54) (xy 1.27 -2.54)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 -2.54)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin power_in line
+					(at 0 0 0)
+					(length 0)
+					(hide yes)
+					(name "ARDEP_HV"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "ARDEP Power IO Shield Symbols:AREF_BAR"
+			(power)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#PWR"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "AREF"
+				(at 0 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name 'AREF'"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "power-flag"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "AREF_BAR_0_0"
+				(polyline
+					(pts
+						(xy -1.27 -2.54) (xy 1.27 -2.54)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 -2.54)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin power_in line
+					(at 0 0 0)
+					(length 0)
+					(hide yes)
+					(name "AREF"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "ARDEP Power IO Shield Symbols:GND_POWER_GROUND"
+			(power)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#PWR"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "GND"
+				(at 0 -6.35 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name 'GND'"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "power-flag"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "GND_POWER_GROUND_0_0"
+				(polyline
+					(pts
+						(xy -2.54 -2.54) (xy 2.54 -2.54)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.778 -3.302) (xy 1.778 -3.302)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.016 -4.064) (xy 1.016 -4.064)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.254 -4.826) (xy 0.254 -4.826)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 -2.54)
+					)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin power_in line
+					(at 0 0 0)
+					(length 0)
+					(hide yes)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "ARDEP_1_Symbol_Frickly Systems GmbH_1"
+			(pin_names
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Headers & Wire Housings Tiger Buy Socket Strip with PCB Tails, .100 Pitch"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "*SSW-110-23-G-S*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "ARDEP_1_Symbol_Frickly Systems GmbH_1_1_0"
+				(polyline
+					(pts
+						(xy 0 5.08) (xy 0 0) (xy 27.94 0) (xy 27.94 5.08) (xy 0 5.08)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 0) (xy 2.54 1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 3.302 3.302)
+					(end 1.778 1.778)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 5.08 2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 5.08 0) (xy 5.08 1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 7.62 2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 7.62 0) (xy 7.62 1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 10.16 2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 10.16 0) (xy 10.16 1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 12.7 2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 12.7 0) (xy 12.7 1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 15.24 2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 15.24 0) (xy 15.24 1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 17.78 2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 17.78 0) (xy 17.78 1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 20.32 2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 20.32 0) (xy 20.32 1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 22.86 2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 22.86 0) (xy 22.86 1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 25.4 2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 25.4 0) (xy 25.4 1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at 2.54 -5.08 90)
+					(length 5.08)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -5.08 90)
+					(length 5.08)
+					(name "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 7.62 -5.08 90)
+					(length 5.08)
+					(name "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 10.16 -5.08 90)
+					(length 5.08)
+					(name "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 12.7 -5.08 90)
+					(length 5.08)
+					(name "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 15.24 -5.08 90)
+					(length 5.08)
+					(name "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 17.78 -5.08 90)
+					(length 5.08)
+					(name "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 20.32 -5.08 90)
+					(length 5.08)
+					(name "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 22.86 -5.08 90)
+					(length 5.08)
+					(name "9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 25.4 -5.08 90)
+					(length 5.08)
+					(name "10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "ARDEP_3_Symbol_Frickly Systems GmbH_1"
+			(pin_names
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "10mm long pins  8position socket header"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "*SSW-108-23-G-S*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "ARDEP_3_Symbol_Frickly Systems GmbH_1_1_0"
+				(polyline
+					(pts
+						(xy -20.32 0) (xy -20.32 -1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center -20.32 -2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -17.78 0) (xy -17.78 -1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center -17.78 -2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -15.24 0) (xy -15.24 -1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center -15.24 -2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -12.7 0) (xy -12.7 -1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center -12.7 -2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -10.16 0) (xy -10.16 -1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center -10.16 -2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -7.62 0) (xy -7.62 -1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center -7.62 -2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -5.08 0) (xy -5.08 -1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center -5.08 -2.54)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.54 0) (xy -2.54 -1.778)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.778 -1.778)
+					(end -3.302 -3.302)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -5.08) (xy 0 0) (xy -22.86 0) (xy -22.86 -5.08) (xy 0 -5.08)
+					)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at -20.32 5.08 270)
+					(length 5.08)
+					(name "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -17.78 5.08 270)
+					(length 5.08)
+					(name "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -15.24 5.08 270)
+					(length 5.08)
+					(name "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -12.7 5.08 270)
+					(length 5.08)
+					(name "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -10.16 5.08 270)
+					(length 5.08)
+					(name "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -7.62 5.08 270)
+					(length 5.08)
+					(name "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 5.08 270)
+					(length 5.08)
+					(name "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -2.54 5.08 270)
+					(length 5.08)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+	)
+	(bus_alias "I2C"
+		(members "SCL" "SDA")
+	)
+	(text "PE5"
+		(exclude_from_sim no)
+		(at 102.87 150.3172 0)
+		(effects
+			(font
+				(size 1.016 1.016)
+				(thickness 0.2032)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+		(uuid "65c4fe9e-31ab-4936-9a2b-262951d93e59")
+	)
+	(text "PE5"
+		(exclude_from_sim no)
+		(at 102.87 150.3172 0)
+		(effects
+			(font
+				(size 1.016 1.016)
+				(thickness 0.2032)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+		(uuid "65c4fe9e-31ab-4936-9a2b-262951d93e5a")
+	)
+	(text "Arduino Header"
+		(exclude_from_sim no)
+		(at 154.94 122.3772 0)
+		(effects
+			(font
+				(size 4.572 4.572)
+			)
+			(justify left bottom)
+		)
+		(uuid "78f7985c-cc52-462d-9d10-d8f1ff38f070")
+	)
+	(text "Arduino Header"
+		(exclude_from_sim no)
+		(at 154.94 122.3772 0)
+		(effects
+			(font
+				(size 4.572 4.572)
+			)
+			(justify left bottom)
+		)
+		(uuid "78f7985c-cc52-462d-9d10-d8f1ff38f071")
+	)
+	(text "PE2"
+		(exclude_from_sim no)
+		(at 102.87 140.1572 0)
+		(effects
+			(font
+				(size 1.016 1.016)
+				(thickness 0.2032)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+		(uuid "c01a29e6-b023-4bc4-a999-5d57d356ccea")
+	)
+	(text "PE2"
+		(exclude_from_sim no)
+		(at 102.87 140.1572 0)
+		(effects
+			(font
+				(size 1.016 1.016)
+				(thickness 0.2032)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+		(uuid "c01a29e6-b023-4bc4-a999-5d57d356cceb")
+	)
+	(junction
+		(at 96.52 62.6872)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "03c65ea7-5a1d-4865-b273-6796c7963521")
+	)
+	(junction
+		(at 200.66 46.1772)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "0e42a04c-7ee5-423d-ab56-03fa5c2f97d2")
+	)
+	(junction
+		(at 170.434 70.3072)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "12d0d951-95d2-4c83-bdf4-6edc4ed58b8b")
+	)
+	(junction
+		(at 180.594 70.3072)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "15c1bfd2-7925-4db6-bda9-664edbc04d11")
+	)
+	(junction
+		(at 193.04 89.3572)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "6862da42-4328-4913-8ea3-0edc9092f2bc")
+	)
+	(junction
+		(at 203.2 60.1472)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "7fc3c88c-39bd-44a8-aa8c-afad046cc2f9")
+	)
+	(junction
+		(at 190.5 70.3072)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "8e40e864-34c7-4d8c-9801-60540167baf4")
+	)
+	(junction
+		(at 127 138.8872)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "b25d4a25-e98d-4b79-b809-cb474615f266")
+	)
+	(junction
+		(at 133.35 151.5872)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "d0eee782-0af4-4efc-8186-6435abe2a37a")
+	)
+	(no_connect
+		(at 86.36 56.3372)
+		(uuid "18699aee-a716-4144-a53f-02b04802d59f")
+	)
+	(no_connect
+		(at 106.68 48.74)
+		(uuid "52d6c3aa-1fb6-46a6-a4bb-b39f3a12198d")
+	)
+	(bus_entry
+		(at 66.04 99.695)
+		(size -2.54 -2.54)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0ed07b07-cdb3-41f2-9437-c4754b4ada7e")
+	)
+	(bus_entry
+		(at 66.04 99.695)
+		(size -2.54 -2.54)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0ed07b07-cdb3-41f2-9437-c4754b4ada7f")
+	)
+	(bus_entry
+		(at 69.12 141.9672)
+		(size 2 2)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "950de4aa-af91-4896-9b46-177b796df676")
+	)
+	(bus_entry
+		(at 69.12 141.9672)
+		(size 2 2)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "950de4aa-af91-4896-9b46-177b796df677")
+	)
+	(bus_entry
+		(at 66.04 102.235)
+		(size -2.54 -2.54)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b1f47faf-0106-44a2-bd51-4dbb9dc00c3c")
+	)
+	(bus_entry
+		(at 66.04 102.235)
+		(size -2.54 -2.54)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b1f47faf-0106-44a2-bd51-4dbb9dc00c3d")
+	)
+	(bus_entry
+		(at 69.12 144.5072)
+		(size 2 2)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d0cb2661-5ac9-4d03-8438-a312ed2bb378")
+	)
+	(bus_entry
+		(at 69.12 144.5072)
+		(size 2 2)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d0cb2661-5ac9-4d03-8438-a312ed2bb379")
+	)
+	(wire
+		(pts
+			(xy 190.5 83.0072) (xy 190.5 91.8972)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "04278ae3-21ac-4b67-a206-e79acd74f822")
+	)
+	(bus
+		(pts
+			(xy 63.5 99.695) (xy 63.5 97.155)
+		)
+		(stroke
+			(width 0.508)
+			(type default)
+			(color 173 188 231 1)
+		)
+		(uuid "04c029b9-54b6-4b8a-a4e3-9503f31591d3")
+	)
+	(wire
+		(pts
+			(xy 168.91 70.3072) (xy 170.434 70.3072)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "084b361b-9a9a-4da7-88bc-9feaf4f5c2fd")
+	)
+	(bus
+		(pts
+			(xy 44.45 92.71) (xy 63.5 92.71)
+		)
+		(stroke
+			(width 0.508)
+			(type solid)
+			(color 173 188 231 1)
+		)
+		(uuid "0889404b-7342-4932-a6a4-1da02cc4147e")
+	)
+	(wire
+		(pts
+			(xy 190.5 41.0972) (xy 190.5 70.3072)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0f1aedf3-66fa-442f-a274-881eae69c2b6")
+	)
+	(wire
+		(pts
+			(xy 152.4 147.7772) (xy 152.4 145.2372)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "224b1bc8-f9c8-43fb-b9ff-2094e4f9f19e")
+	)
+	(wire
+		(pts
+			(xy 200.66 46.1772) (xy 200.66 91.8972)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "227af4fd-5e16-4e46-a445-b0ac7406322c")
+	)
+	(bus
+		(pts
+			(xy 69.12 144.5072) (xy 69.12 141.9672)
+		)
+		(stroke
+			(width 0.254)
+			(type default)
+		)
+		(uuid "22d23f5f-c006-4050-8a0b-a605ca48003c")
+	)
+	(bus
+		(pts
+			(xy 68.58 141.4272) (xy 52.763 141.4272)
+		)
+		(stroke
+			(width 0.254)
+			(type default)
+		)
+		(uuid "25909e56-6c28-4352-8f64-af3dcffc0d62")
+	)
+	(wire
+		(pts
+			(xy 106.68 143.9672) (xy 106.68 138.8872)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "263fbcb6-939d-4f55-b00d-dd1fb19a6aac")
+	)
+	(wire
+		(pts
+			(xy 203.2 60.1472) (xy 204.47 60.1472)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2a8d23a0-21eb-433d-b6dc-f6ed287296a0")
+	)
+	(wire
+		(pts
+			(xy 133.35 136.3472) (xy 133.35 151.5872)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2c65d889-420a-485b-8cb2-92673ed0d789")
+	)
+	(wire
+		(pts
+			(xy 181.61 89.3572) (xy 193.04 89.3572)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2df433b0-cc2e-40ae-a287-cbf947247d7c")
+	)
+	(wire
+		(pts
+			(xy 127 136.3472) (xy 127 138.8872)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "32f23561-6139-4b0f-b09b-861d5406b2b3")
+	)
+	(wire
+		(pts
+			(xy 214.63 60.1472) (xy 223.52 60.1472)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "342c2b30-1e8f-42bf-8d48-51b5e3b9280e")
+	)
+	(wire
+		(pts
+			(xy 193.04 89.3572) (xy 195.58 89.3572)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "39d5b9f4-ed2a-4e8f-9612-b42a2bf4a9f8")
+	)
+	(wire
+		(pts
+			(xy 157.48 147.7772) (xy 157.48 145.2372)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3a82e941-576c-479c-bde9-3fe7dbc7435f")
+	)
+	(wire
+		(pts
+			(xy 133.35 123.6472) (xy 133.35 126.1872)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3cde030e-eef0-418a-b63b-7d87d059677f")
+	)
+	(wire
+		(pts
+			(xy 223.52 60.1472) (xy 223.52 63.9572)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3dd3e48d-198d-4003-8997-b448d149b349")
+	)
+	(wire
+		(pts
+			(xy 106.68 56.3372) (xy 106.68 62.6872)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "46224afc-bb6f-4647-b86f-66bcd0e61b08")
+	)
+	(wire
+		(pts
+			(xy 200.66 41.0972) (xy 200.66 46.1772)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4d44c837-4c99-4308-a729-e2c449b6b437")
+	)
+	(wire
+		(pts
+			(xy 203.2 60.1472) (xy 203.2 55.0672)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4daef7cc-aca9-4cb9-a536-56a1e87e30e9")
+	)
+	(wire
+		(pts
+			(xy 154.94 89.3572) (xy 154.94 91.8972)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4e7b3293-df94-4150-aa6c-7c3532156f48")
+	)
+	(wire
+		(pts
+			(xy 106.68 62.6872) (xy 96.52 62.6872)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4e7fae6b-5049-462f-81de-380e0fa1d479")
+	)
+	(wire
+		(pts
+			(xy 187.96 147.7772) (xy 187.96 145.2372)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "53ca8891-1ce3-4520-a00d-0dfe49008e2e")
+	)
+	(wire
+		(pts
+			(xy 200.66 46.1772) (xy 204.47 46.1772)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "56f0d76d-2548-4e0b-9363-b9cf6cb58aa0")
+	)
+	(wire
+		(pts
+			(xy 96.52 63.9572) (xy 96.52 62.6872)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "57d9b41e-31ec-4012-b82e-c52d858824a2")
+	)
+	(wire
+		(pts
+			(xy 167.64 147.7772) (xy 167.64 145.2372)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "57e84726-be13-490e-8f82-bcdd791e44d4")
+	)
+	(wire
+		(pts
+			(xy 193.04 147.7772) (xy 193.04 145.2372)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5da3d824-b60c-4b5f-a9e9-5716e32de935")
+	)
+	(wire
+		(pts
+			(xy 198.12 147.7772) (xy 198.12 145.2372)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5f83935a-753b-4927-b2b2-41f74506391e")
+	)
+	(wire
+		(pts
+			(xy 127 138.8872) (xy 121.92 138.8872)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "60fb2d78-2460-4035-b6cf-a653663f945e")
+	)
+	(wire
+		(pts
+			(xy 66.04 102.235) (xy 79.375 102.235)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "61b7ebba-72b4-497e-9c5f-1dd5fa0148e4")
+	)
+	(wire
+		(pts
+			(xy 71.12 143.9672) (xy 106.68 143.9672)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7032b5ac-a5fa-4134-9846-55dc664b3a94")
+	)
+	(wire
+		(pts
+			(xy 154.94 147.7772) (xy 154.94 145.2372)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7431fa78-a062-4c77-84db-a92130200b8e")
+	)
+	(wire
+		(pts
+			(xy 106.68 146.5072) (xy 106.68 151.5872)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7694f133-895f-4060-a6af-a8e91a2e329c")
+	)
+	(wire
+		(pts
+			(xy 168.91 72.8472) (xy 168.91 70.3072)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "771707d2-528b-44b3-b27d-a9e932f278ff")
+	)
+	(wire
+		(pts
+			(xy 165.1 89.3572) (xy 165.1 91.8972)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7c14842f-7e5b-4b04-bb53-e0918d2fd96f")
+	)
+	(wire
+		(pts
+			(xy 140.97 138.8872) (xy 127 138.8872)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7dcb2a07-e4d2-4bab-b025-e85a8a4e66eb")
+	)
+	(wire
+		(pts
+			(xy 203.2 145.2372) (xy 203.2 157.9372)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7dd2bd25-c73b-47d2-bd2c-b30f23667da5")
+	)
+	(wire
+		(pts
+			(xy 162.56 147.7772) (xy 162.56 145.2372)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "82806018-574a-4649-a00e-3d9500640465")
+	)
+	(wire
+		(pts
+			(xy 160.02 147.7772) (xy 160.02 145.2372)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "86dbd76c-7197-49cf-a835-de471be099ed")
+	)
+	(wire
+		(pts
+			(xy 157.48 89.3572) (xy 157.48 91.8972)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "87883f6e-321a-4ad4-8e0c-9094fa8f6b0c")
+	)
+	(wire
+		(pts
+			(xy 71.12 146.5072) (xy 106.68 146.5072)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8b8a8452-ac4f-496f-a6ff-070914318134")
+	)
+	(wire
+		(pts
+			(xy 200.66 147.7772) (xy 200.66 145.2372)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8d3e8699-16d0-4946-97cc-e4d77d163518")
+	)
+	(wire
+		(pts
+			(xy 160.02 89.3572) (xy 160.02 91.8972)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8d9fed4a-13f2-490b-a67c-3fe75c7df7e9")
+	)
+	(wire
+		(pts
+			(xy 165.1 147.7772) (xy 165.1 145.2372)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "99130cd0-e87d-4631-878a-e63c156ac2c9")
+	)
+	(wire
+		(pts
+			(xy 223.52 51.2572) (xy 223.52 46.1772)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9a9f80e9-6d8d-4327-a8b3-9ba6b906c7e5")
+	)
+	(wire
+		(pts
+			(xy 195.58 89.3572) (xy 195.58 91.8972)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a6c3aa00-27ef-44ee-b5e7-7dc9fa1d6120")
+	)
+	(wire
+		(pts
+			(xy 180.34 70.3072) (xy 180.594 70.3072)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a76d4486-2fdb-4145-b4b8-56fd70f891aa")
+	)
+	(wire
+		(pts
+			(xy 223.52 46.1772) (xy 214.63 46.1772)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a83303e1-fbf2-4b05-9d38-07a237e45a08")
+	)
+	(wire
+		(pts
+			(xy 133.35 151.5872) (xy 121.92 151.5872)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b02eea7d-dece-419a-87f3-58cf29e9e4fd")
+	)
+	(wire
+		(pts
+			(xy 205.74 155.3972) (xy 205.74 145.2372)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b4dac396-d30c-4253-a302-54ece4b0e32c")
+	)
+	(wire
+		(pts
+			(xy 195.58 147.7772) (xy 195.58 145.2372)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ba00ef67-ce50-488d-b5aa-6c244466cbb0")
+	)
+	(wire
+		(pts
+			(xy 203.2 91.8972) (xy 203.2 60.1472)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c08a43d3-6c9e-46a4-b671-1dcf821273c6")
+	)
+	(wire
+		(pts
+			(xy 208.28 147.7772) (xy 208.28 145.2372)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c25e4674-8c4f-4f7a-ba51-83604788966a")
+	)
+	(wire
+		(pts
+			(xy 167.64 89.3572) (xy 167.64 91.8972)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c2ffb604-2f3e-43ab-9352-76709124f9c5")
+	)
+	(wire
+		(pts
+			(xy 106.68 138.8872) (xy 109.22 138.8872)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c44a0bda-604c-48af-84b3-ecc19e135a4d")
+	)
+	(bus
+		(pts
+			(xy 69.12 141.9672) (xy 68.58 141.4272)
+		)
+		(stroke
+			(width 0.254)
+			(type default)
+		)
+		(uuid "c730ee94-b22a-4c08-9ae2-c6b816cedb26")
+	)
+	(bus
+		(pts
+			(xy 63.5 97.155) (xy 63.5 92.71)
+		)
+		(stroke
+			(width 0.508)
+			(type default)
+			(color 173 188 231 1)
+		)
+		(uuid "c9e620b2-3fb4-45ed-a848-0aa4f436bc01")
+	)
+	(wire
+		(pts
+			(xy 106.68 151.5872) (xy 109.22 151.5872)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ca5c325d-e6dd-4594-a184-06a0f0f9f7c6")
+	)
+	(wire
+		(pts
+			(xy 170.18 147.7772) (xy 170.18 145.2372)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ca8a9a04-cf4f-40d3-ba82-66d58b64094a")
+	)
+	(wire
+		(pts
+			(xy 170.434 70.3072) (xy 171.196 70.3072)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cac9adad-9700-4a60-82d4-60261f554f36")
+	)
+	(wire
+		(pts
+			(xy 96.52 62.6872) (xy 96.52 61.4172)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cd8e7e72-70f3-45b1-8866-2b28c4a4e5c8")
+	)
+	(wire
+		(pts
+			(xy 190.5 70.3072) (xy 190.5 72.8472)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d1b7befa-aa40-47e3-a818-bd564006a9fb")
+	)
+	(wire
+		(pts
+			(xy 162.56 89.3572) (xy 162.56 91.8972)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d3654b70-4d9d-4afe-a1cc-650eba542301")
+	)
+	(wire
+		(pts
+			(xy 210.82 147.7772) (xy 210.82 145.2372)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d4d138eb-fc8c-4c45-ab8d-983df63cfbce")
+	)
+	(wire
+		(pts
+			(xy 50.159 48.7172) (xy 86.36 48.7172)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "da0476b3-7f25-4375-b762-9130e1aed176")
+	)
+	(wire
+		(pts
+			(xy 180.594 70.3072) (xy 190.5 70.3072)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dc028623-e7a1-4db2-bd0c-1103fcfe5282")
+	)
+	(wire
+		(pts
+			(xy 190.5 147.7772) (xy 190.5 145.2372)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dc38fd64-2733-457e-81c5-ed5b0964f8ac")
+	)
+	(wire
+		(pts
+			(xy 66.04 99.695) (xy 79.375 99.695)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "de767b00-aa42-4ad7-ba76-277016c060fd")
+	)
+	(wire
+		(pts
+			(xy 193.04 91.8972) (xy 193.04 89.3572)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e7124b50-aab1-45d3-b8c6-b52370fa171a")
+	)
+	(wire
+		(pts
+			(xy 127 123.6472) (xy 127 126.1872)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e78ab9c4-0df3-4353-829f-74485d2e7a35")
+	)
+	(wire
+		(pts
+			(xy 140.97 151.5872) (xy 133.35 151.5872)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f3bfbd84-b3e6-48bf-aa90-5e3ebbaa6bf1")
+	)
+	(wire
+		(pts
+			(xy 181.61 93.1672) (xy 181.61 89.3572)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f65586df-0596-47e7-b45d-5a9bd9aa3d38")
+	)
+	(label "PA1"
+		(at 167.64 91.8972 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "000bcae6-e2e2-4bf5-8f76-eff07b0ab45c")
+	)
+	(label "PE5"
+		(at 198.12 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "00aa70bb-ddcd-431c-b760-09b81afe8252")
+	)
+	(label "PE3"
+		(at 193.04 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "01e58f8b-3b41-4b30-8c61-7b4815f8b839")
+	)
+	(label "I2C.SDA"
+		(at 69.85 102.235 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "05c38e23-cce8-4560-b399-a7f19f75f68c")
+	)
+	(label "PB13"
+		(at 160.02 91.8972 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "05ec636c-1a10-4250-a49e-c89bcbeacb4d")
+	)
+	(label "MASTER_RST"
+		(at 68.58 48.7172 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "0624c3ea-6519-4173-9343-ba43c13d45ff")
+	)
+	(label "PD15"
+		(at 167.64 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "10e29f37-558b-41eb-bb9e-e3465d549b05")
+	)
+	(label "PA7"
+		(at 165.1 91.8972 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "18c6bece-0c32-4774-86e7-4465c1da32b2")
+	)
+	(label "PD9"
+		(at 152.4 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "19cb4c1d-6167-4503-ac83-6ccc49f4b6f6")
+	)
+	(label "PC6"
+		(at 187.96 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "19cd93d9-4f89-4e9f-96d8-80048cce12c0")
+	)
+	(label "PD11"
+		(at 160.02 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "20f9a502-879d-4cae-bb05-496100d8b4e1")
+	)
+	(label "PB13"
+		(at 160.02 91.8972 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "2c7b1463-20dd-432b-8dc4-edd801d7b1c4")
+	)
+	(label "INT[0..1]"
+		(at 54.61 141.4272 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "2d4a7010-8c5e-4b50-b399-90e21e5caff6")
+	)
+	(label "PD11"
+		(at 160.02 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "2e27fb41-5dab-4c12-bbb2-ad0a1f92e41b")
+	)
+	(label "PD14"
+		(at 170.18 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "2fdfa3ef-6e3b-4cee-aada-7b54eb4f3d6a")
+	)
+	(label "MASTER_RST"
+		(at 68.58 48.7172 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "303de5f8-b582-4780-bf05-1d8aff9d80b1")
+	)
+	(label "PE2"
+		(at 140.97 138.8872 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "3406f898-a559-47c2-9aa9-f905326a79d8")
+	)
+	(label "PD12"
+		(at 162.56 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "3dd6feb3-2e9d-4e52-88db-5132992f51cd")
+	)
+	(label "PE2"
+		(at 200.66 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "3ecd8350-effa-4233-8b82-423cf7505adf")
+	)
+	(label "PA8"
+		(at 79.375 102.235 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "455a8f49-fdae-435a-b909-9ca86e16139f")
+	)
+	(label "PA9"
+		(at 210.82 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "49788f6c-cdc6-40d6-a718-7ae9e7c872c1")
+	)
+	(label "PD10"
+		(at 157.48 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "4b654738-c2a9-4c80-8c56-9261f0500446")
+	)
+	(label "PE5"
+		(at 140.97 151.5872 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "4c08339d-6c76-4657-9485-b546f844b8e0")
+	)
+	(label "PA9"
+		(at 210.82 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "4c96cd70-1f22-4ad2-8fc3-da09def5b417")
+	)
+	(label "PD9"
+		(at 152.4 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "527ea8ff-d28d-4fa8-b1b5-cff8e9a0ddb8")
+	)
+	(label "PD12"
+		(at 162.56 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "6cff6324-529a-40ad-a5ff-0686acf56602")
+	)
+	(label "PB0"
+		(at 162.56 91.8972 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "70ae2e2e-dc26-43db-9c5c-3e0aea8f5d22")
+	)
+	(label "PD14"
+		(at 170.18 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "71b1f119-5d61-40e8-bd09-0dc025c72595")
+	)
+	(label "I2C.SCL"
+		(at 69.899 99.695 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "72ae4d2d-1817-4c8c-bab1-48929b797086")
+	)
+	(label "PA8"
+		(at 208.28 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "72bc7e6c-a212-4d00-9078-3ef26e825e86")
+	)
+	(label "PB0"
+		(at 162.56 91.8972 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "83c35172-40fd-454d-8246-8e3156d3e51e")
+	)
+	(label "PB14"
+		(at 157.48 91.8972 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "94baf2b1-de5a-480c-9a0d-8f0d7085259b")
+	)
+	(label "MASTER_RST"
+		(at 203.2 55.0672 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "95560bab-642a-468b-97ec-d33500c5b4ed")
+	)
+	(label "PA9"
+		(at 79.375 99.695 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "958ba8f3-ece0-4ca5-a3df-921d6e9716c4")
+	)
+	(label "INT[0..1]"
+		(at 54.61 141.4272 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "9e9cf513-c7b5-4346-9b16-48f1ec7edf90")
+	)
+	(label "PB12"
+		(at 154.94 91.8972 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "a1912685-77a2-4cba-b384-503d37b5ebe3")
+	)
+	(label "PE2"
+		(at 140.97 138.8872 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "a2baf003-9037-401e-bf58-90f9124d25ac")
+	)
+	(label "PA7"
+		(at 165.1 91.8972 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "a5feffec-0101-47f5-8673-3c1159e0746a")
+	)
+	(label "PC6"
+		(at 187.96 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "a6b9d9e1-3847-4151-8af4-7666995fe490")
+	)
+	(label "MASTER_RST"
+		(at 203.2 55.0672 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "a76664be-aae1-41fa-bb71-5edbf6a2feef")
+	)
+	(label "PD13"
+		(at 165.1 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "b26f6425-0f97-4384-87c6-d3683cf014b6")
+	)
+	(label "INT1"
+		(at 76.2 146.5072 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "b32c60cd-e251-4ff3-a7e3-1640fce541cd")
+	)
+	(label "PE3"
+		(at 193.04 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "b7f0bb65-2d10-46f0-954e-59d9c47bbec1")
+	)
+	(label "PE6"
+		(at 195.58 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "beabb155-5a84-4e28-8c8c-d767e3e9a4eb")
+	)
+	(label "PA1"
+		(at 167.64 91.8972 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "bec1231c-7cf8-4b77-b940-edb95816907b")
+	)
+	(label "PA9"
+		(at 79.375 99.695 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "bfa136f9-dcab-49db-9c11-1381a6c963b6")
+	)
+	(label "PD13"
+		(at 165.1 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "c02584ee-8197-45ac-b121-f4f6c1a56ac8")
+	)
+	(label "PE6"
+		(at 195.58 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "c5763ca1-0abb-4217-9595-3865d44a0529")
+	)
+	(label "PB12"
+		(at 154.94 91.8972 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "c5af818a-b854-4751-963f-704028c397a6")
+	)
+	(label "PD10"
+		(at 157.48 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "cbc2ebb4-c4e4-4898-b851-2b9a1f705f6f")
+	)
+	(label "PA8"
+		(at 208.28 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "ce062b3b-a18f-484d-9460-6067f85613ff")
+	)
+	(label "INT0"
+		(at 76.2 143.9672 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "cfbf4e37-a6de-4013-973b-e2ee10b6d4b8")
+	)
+	(label "PD15"
+		(at 167.64 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "d16ccfb4-2f7e-4e03-b654-1aa6669aef6f")
+	)
+	(label "PD8"
+		(at 154.94 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "d5fdb5b5-1640-4402-ab70-40d9e3f8f3eb")
+	)
+	(label "PE5"
+		(at 140.97 151.5872 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "d84501c3-10ea-4499-a50c-64f87183a379")
+	)
+	(label "PC7"
+		(at 190.5 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "df1b55f0-9eb4-4090-bd41-73bb65e80f4c")
+	)
+	(label "PC7"
+		(at 190.5 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "dfd46114-161a-4505-9a97-197c017e3d59")
+	)
+	(label "PE5"
+		(at 198.12 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "eec375a2-05fe-4f80-852b-74b906407527")
+	)
+	(label "PE2"
+		(at 200.66 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "f2ee9fa5-0662-4274-b937-6c2de851b92e")
+	)
+	(label "PD8"
+		(at 154.94 147.7772 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "f3115831-1a73-487a-9773-818b26749b69")
+	)
+	(label "PB14"
+		(at 157.48 91.8972 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "f6467a85-532f-4a19-a33d-e3ee459a8753")
+	)
+	(label "PA8"
+		(at 79.375 102.235 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "f712d679-ac64-4757-b736-d43f3531cff5")
+	)
+	(hierarchical_label "MASTER_RST"
+		(shape bidirectional)
+		(at 50.159 48.7172 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "45153951-c112-4286-9ab4-e00e33f78408")
+	)
+	(hierarchical_label "MASTER_RST"
+		(shape bidirectional)
+		(at 50.159 48.7172 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "4bcebe26-783b-403b-af41-1e1c89519248")
+	)
+	(hierarchical_label "I2C{SCL, SDA}"
+		(shape bidirectional)
+		(at 44.45 92.71 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "6faeb6ee-770d-4536-86eb-ff6fcf67091e")
+	)
+	(hierarchical_label "INT[0..1]"
+		(shape input)
+		(at 52.763 141.4272 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "cc871de7-586a-44aa-950d-d1aaa83a5ece")
+	)
+	(hierarchical_label "INT[0..1]"
+		(shape input)
+		(at 52.763 141.4272 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "f12667e1-e3d5-4797-a6f4-483f95a41e3e")
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:3V3_BAR")
+		(at 133.35 123.6472 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "02f4a7c7-2340-499c-a2b5-89d6232a520b")
+		(property "Reference" "#PWR0204"
+			(at 133.35 123.6472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "3V3"
+			(at 133.35 119.8372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 133.35 123.6472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 133.35 123.6472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 133.35 123.6472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "89aaf9ce-f8c5-4e00-8b38-c1d92d74708f")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "#PWR0204")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:GND_POWER_GROUND")
+		(at 181.61 93.1672 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "0e5ed8c0-7cc6-4074-9c6c-d52c12a04bd2")
+		(property "Reference" "#PWR0208"
+			(at 181.61 93.1672 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 181.61 99.5172 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 181.61 93.1672 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 181.61 93.1672 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 181.61 93.1672 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "ca96a35d-7120-4dce-8970-8ed6818c0b0f")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "#PWR0208")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:GND_POWER_GROUND")
+		(at 96.52 63.9572 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "1154a22b-cf19-4228-a920-7c35d2ef0769")
+		(property "Reference" "#PWR0200"
+			(at 96.52 63.9572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 96.52 70.3072 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 96.52 63.9572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 96.52 63.9572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 96.52 63.9572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "1d7077e8-4416-4799-bd2b-4da3f6bb637a")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "#PWR0200")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:GND_POWER_GROUND")
+		(at 203.2 157.9372 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "1240f7ee-8851-4194-84bd-3660342f44f4")
+		(property "Reference" "#PWR0214"
+			(at 203.2 157.9372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 203.2 164.2872 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 203.2 157.9372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 203.2 157.9372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 203.2 157.9372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "a3f9a48d-62ba-4dbb-a5b8-d2c7bbbee683")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "#PWR0214")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:3V3_BAR")
+		(at 127 123.6472 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "1b91f95f-65b4-468f-9478-f092fea9b319")
+		(property "Reference" "#PWR0202"
+			(at 127 123.6472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "3V3"
+			(at 127 119.8372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 127 123.6472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 127 123.6472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 127 123.6472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "1855b7bf-477c-41c6-acf4-bda6d08845ae")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "#PWR0202")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:GND_POWER_GROUND")
+		(at 168.91 72.8472 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "1c6ea6d4-168d-4115-b162-3b89488e8ac1")
+		(property "Reference" "#PWR0206"
+			(at 168.91 72.8472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 168.91 79.1972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 168.91 72.8472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 168.91 72.8472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 168.91 72.8472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "07fdf13e-e0d3-433c-84fb-e4a7e9921e3f")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "#PWR0206")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:GND_POWER_GROUND")
+		(at 203.2 157.9372 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "40a410a8-ffed-432c-8912-77a3fe7ce183")
+		(property "Reference" "#PWR0215"
+			(at 203.2 157.9372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 203.2 164.2872 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 203.2 157.9372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 203.2 157.9372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 203.2 157.9372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "b3c1b25e-963f-4c98-b74e-f56f2291b9ec")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "#PWR0215")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:ARDEP_0_D-AK-2_Frickly Systems GmbH")
+		(at 114.3 138.8872 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "50fa2fe6-8ba4-4b99-b751-0792b44f1cd1")
+		(property "Reference" "D201"
+			(at 114.046 136.0932 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "1N4148WS"
+			(at 113.03 131.2672 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" "D_SOD323-2_JB"
+			(at 114.3 138.8872 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 114.3 138.8872 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Rectifier Diode, 1 Phase, 1 Element, 0.2A, 100V V(RRM), Silicon"
+			(at 114.3 138.8872 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "CASE/PACKAGE" ""
+			(at 108.712 135.0772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX SURGE CURRENT" ""
+			(at 108.712 135.0772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MOUNTING TECHNOLOGY" ""
+			(at 108.712 135.0772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PEAK INVERSE VOLTAGE" ""
+			(at 108.712 135.0772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX OPERATING TEMPERATURE" "150°C"
+			(at 108.712 135.0772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PINS" ""
+			(at 108.712 135.0772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "FORWARD VOLTAGE" ""
+			(at 108.712 135.0772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS COMPLIANT" "Yes"
+			(at 108.712 135.0772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "FORWARD CURRENT" ""
+			(at 108.712 135.0772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MIN OPERATING TEMPERATURE" "-55°C"
+			(at 108.712 135.0772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ed6bdbb6-1b28-464c-9368-94f73e65b559")
+		)
+		(pin "2"
+			(uuid "c711f93b-9a53-4f3a-8b62-a97bcb4f3a42")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "D201")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:3V3_BAR")
+		(at 133.35 123.6472 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "564167f4-94cc-4030-9310-081274929c97")
+		(property "Reference" "#PWR0205"
+			(at 133.35 123.6472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "3V3"
+			(at 133.35 119.8372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 133.35 123.6472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 133.35 123.6472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 133.35 123.6472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "77bd40ad-9136-4cf2-b714-37c0c9bc70c7")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "#PWR0205")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:ARDEP_0_UNI TVS_Frickly Systems GmbH")
+		(at 209.55 46.1772 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "57aa849f-c6d9-4a75-aa7b-13947a24c2f4")
+		(property "Reference" "D200"
+			(at 207.01 44.3992 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "ESD5Z3.3T5G"
+			(at 203.708 51.2572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" "SOD-523_JB"
+			(at 209.55 46.1772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 209.55 46.1772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Trans Voltage Suppressor Diode, 158W, 3.3V V(RWM), Unidirectional, 1 Element, Silicon"
+			(at 209.55 46.1772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "PEAK INVERSE VOLTAGE" "14.1V"
+			(at 204.216 44.3992 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MOUNTING TECHNOLOGY" "SMD"
+			(at 204.216 44.3992 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "FORWARD CURRENT" ""
+			(at 204.216 44.3992 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX SURGE CURRENT" "11.2A"
+			(at 204.216 44.3992 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "FORWARD VOLTAGE" ""
+			(at 204.216 44.3992 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX OPERATING TEMPERATURE" "150°C"
+			(at 204.216 44.3992 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MIN OPERATING TEMPERATURE" "-55°C"
+			(at 204.216 44.3992 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PINS" "2"
+			(at 204.216 44.3992 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS COMPLIANT" "Yes"
+			(at 204.216 44.3992 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CASE/PACKAGE" "SOD-523-2"
+			(at 204.216 44.3992 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "a57a1e11-6b6b-4636-b5aa-419ffc7303c7")
+		)
+		(pin "1"
+			(uuid "b4ebac1c-0a73-40d0-8169-55b6b188d3ef")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "D200")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:ARDEP_3_Symbol_Frickly Systems GmbH")
+		(at 170.18 96.9772 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "599cce52-9856-4d27-9ec7-d2f2edbd3084")
+		(property "Reference" "J200"
+			(at 152.146 104.8512 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "SSW-106-23-G-S"
+			(at 152.146 106.8832 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" "SSW-106-23-G-S"
+			(at 170.18 96.9772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 170.18 96.9772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Headers & Wire Housings Tiger Buy Socket Strip with PCB Tails, .100 Pitch"
+			(at 170.18 96.9772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "RADIATION HARDENING" "No"
+			(at 152.146 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TERMINATION" "Solder"
+			(at 152.146 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS COMPLIANT" ""
+			(at 152.146 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS" "Compliant"
+			(at 152.146 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "COLOR" "Black"
+			(at 152.146 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CONTACT PLATING" "Gold"
+			(at 152.146 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MIN OPERATING TEMPERATURE" ""
+			(at 152.146 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "LEAD PITCH" "2.54mm"
+			(at 152.146 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "LEAD FREE" "Lead Free"
+			(at 152.146 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "LIFECYCLE STATUS" "Production"
+			(at 152.146 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MOUNTING TECHNOLOGY" "THT"
+			(at 152.146 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PINS" "6"
+			(at 152.146 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "VOLTAGE RATING (DC)" "655V"
+			(at 152.146 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CASE/PACKAGE" ""
+			(at 152.146 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "GENDER" "Female"
+			(at 152.146 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX OPERATING TEMPERATURE" ""
+			(at 152.146 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CONNECTOR TYPE" "2.54mm"
+			(at 152.146 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "NUMBER OF CONTACTS" "6"
+			(at 152.146 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CONTACT MATERIAL" "Bronze"
+			(at 152.146 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MANUFACTURER LIFECYCLE STATUS" "PRODUCTION"
+			(at 152.146 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "VOLTAGE RATING (AC)" "465V"
+			(at 152.146 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PACKAGING" "Bulk"
+			(at 152.146 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PITCH" "2.54mm"
+			(at 152.146 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "NUMBER OF ROWS" "1"
+			(at 152.146 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "4591c577-6ac8-4a9f-aa7f-31ff121be420")
+		)
+		(pin "3"
+			(uuid "8b896bf6-9607-4a95-9b60-90047df86b6b")
+		)
+		(pin "4"
+			(uuid "c7246b38-1c56-4730-b58f-47e5f8657684")
+		)
+		(pin "5"
+			(uuid "8f80d0fc-77bd-4d7b-a035-877bbe3982b0")
+		)
+		(pin "6"
+			(uuid "b2a6f5ac-dbfe-49da-bc33-fe48c45cb06d")
+		)
+		(pin "1"
+			(uuid "374ddb10-9d75-4a0d-aa9a-8946cb2c0c4c")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "J200")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:GND_POWER_GROUND")
+		(at 223.52 51.2572 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "5ceb145c-8fbb-4e28-80ad-8e1f1a42fb44")
+		(property "Reference" "#PWR0218"
+			(at 223.52 51.2572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 223.52 57.6072 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 223.52 51.2572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 223.52 51.2572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 223.52 51.2572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "2ea7ebc4-85f8-4080-ace0-6e1ac288ac17")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "#PWR0218")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:AREF_BAR")
+		(at 205.74 155.3972 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "6544512b-77b4-4897-8e06-df880af13906")
+		(property "Reference" "#PWR0216"
+			(at 205.74 155.3972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "AREF"
+			(at 209.55 155.3972 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 205.74 155.3972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 205.74 155.3972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 205.74 155.3972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "906dc5b8-4fc1-4359-9626-3c7bf705452c")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "#PWR0216")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:ARDEP_2_UNI TVS_Frickly Systems GmbH")
+		(at 175.514 70.3072 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "7c28be42-4f60-47c1-8e19-7a176373e15f")
+		(property "Reference" "D203"
+			(at 173.482 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "SMF48A"
+			(at 173.482 74.6252 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" "FP-SMF48A-MFG"
+			(at 175.514 70.3072 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 175.514 70.3072 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Trans Voltage Suppressor Diode, 200W, 48V V(RWM), Unidirectional, 1 Element, Silicon"
+			(at 175.514 70.3072 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "SURFACE MOUNT" "Yes"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MOUNTING TECHNOLOGY" "SMD"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PACKAGE BODY MATERIAL" "Plastic"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "JESD-609 CODE" "e3"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "POLARITY" "Unidirectional"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "REACH SVHC COMPLIANT" "No"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX BREAKDOWN VOLTAGE" "71.2V"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "BREAKDOWN VOLTAGE-NOM" "56.1V"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "DIODE ELEMENT MATERIAL" "SILICON"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PEAK INVERSE VOLTAGE" ""
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PINS" "2"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "JESD-30 CODE" "R-PDSO-F2"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CASE/PACKAGE" "SOD-123F"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "NON-REP PEAK REV POWER DIS-MAX" "200W"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TECHNOLOGY" "AVALANCHE"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TERMINAL FORM" "Flat"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "FORWARD VOLTAGE" ""
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PEAK REFLOW TEMPERATURE (CEL)" "260°C"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "FORWARD CURRENT" ""
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PACKAGE SHAPE" "Rectangular"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX SURGE CURRENT" "2.6A"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ADDITIONAL FEATURE" "EXCELLENT CLAMPING CAPABILITY"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "REP PK REVERSE VOLTAGE-MAX" "48V"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "NUMBER OF ELEMENTS" "1"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS COMPLIANT" "Yes"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX OPERATING TEMPERATURE" "150°C"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MIN OPERATING TEMPERATURE" "-55°C"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TIME @ PEAK REFLOW TEMPERATURE-MAX (S)" "40s"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TERMINAL FINISH" "Tin"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PACKAGE STYLE" "SMALL OUTLINEMeter"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MIN BREAKDOWN VOLTAGE" "64.4V"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CLAMPING VOLTAGE-MAX" "77.4V"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "DIODE TYPE" "TRANS VOLTAGE SUPPRESSOR"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MOISTURE SENSITIVITY LEVEL" "1"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TERMINAL POSITION" "DUAL"
+			(at 170.688 68.5292 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d4f94272-e80b-4824-998f-0463be223024")
+		)
+		(pin "2"
+			(uuid "d8529024-7790-4f3f-b407-4bf098724bbb")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "D203")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:ARDEP_0_D-AK-2_Frickly Systems GmbH")
+		(at 114.3 151.5872 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "85daef43-2297-478f-8756-b06a70f8f78d")
+		(property "Reference" "D204"
+			(at 114.046 148.7932 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "1N4148WS"
+			(at 114.046 156.9212 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" "D_SOD323-2_JB"
+			(at 114.3 151.5872 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 114.3 151.5872 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Rectifier Diode, 1 Phase, 1 Element, 0.2A, 100V V(RRM), Silicon"
+			(at 114.3 151.5872 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "CASE/PACKAGE" ""
+			(at 108.712 147.7772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX SURGE CURRENT" ""
+			(at 108.712 147.7772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MOUNTING TECHNOLOGY" ""
+			(at 108.712 147.7772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PEAK INVERSE VOLTAGE" ""
+			(at 108.712 147.7772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX OPERATING TEMPERATURE" "150°C"
+			(at 108.712 147.7772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PINS" ""
+			(at 108.712 147.7772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "FORWARD VOLTAGE" ""
+			(at 108.712 147.7772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS COMPLIANT" "Yes"
+			(at 108.712 147.7772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "FORWARD CURRENT" ""
+			(at 108.712 147.7772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MIN OPERATING TEMPERATURE" "-55°C"
+			(at 108.712 147.7772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "335409d2-6093-4d8f-a975-dadcdd0bfbc4")
+		)
+		(pin "2"
+			(uuid "cde2ff48-8bdd-4a17-b1b8-82a0508e3f9a")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "D204")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:3V3_BAR")
+		(at 127 123.6472 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "8bc424a5-2b5e-467a-998f-23a2eeaac361")
+		(property "Reference" "#PWR0203"
+			(at 127 123.6472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "3V3"
+			(at 127 119.8372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 127 123.6472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 127 123.6472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 127 123.6472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "4afdeb8f-acb0-4d42-a4f2-916dea54ec6b")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "#PWR0203")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_name "ARDEP_3_Symbol_Frickly Systems GmbH_1")
+		(lib_id "ARDEP Power IO Shield Symbols:ARDEP_3_Symbol_Frickly Systems GmbH_1")
+		(at 210.82 96.9772 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "8d188cf7-e13a-4a80-9568-92795e64ba97")
+		(property "Reference" "J203"
+			(at 187.706 104.8512 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "SSW-108-23-G-S"
+			(at 196.85 104.5972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" "SSW-108-23-G-S"
+			(at 210.82 96.9772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 210.82 96.9772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "10mm long pins  8position socket header"
+			(at 210.82 96.9772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "PIN LENGTH" "10 mm"
+			(at 187.706 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CONNECTOR TYPE" "2.45mm"
+			(at 187.706 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PACKAGING" "Bulk"
+			(at 187.706 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CASE/PACKAGE" ""
+			(at 187.706 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "COLOR" "Black"
+			(at 187.706 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "LIFECYCLE STATUS" "Production"
+			(at 187.706 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "LEAD FREE" "Lead Free"
+			(at 187.706 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CONTACT MATERIAL" "Bronze"
+			(at 187.706 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CONTACT PLATING" "Gold"
+			(at 187.706 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "LEAD PITCH" "2.54mm"
+			(at 187.706 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS" "Compliant"
+			(at 187.706 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PINS" "8"
+			(at 187.706 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TERMINATION" "Solder"
+			(at 187.706 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "VOLTAGE RATING (DC)" "655V"
+			(at 187.706 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "VOLTAGE RATING (AC)" "465V"
+			(at 187.706 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "NUMBER OF ROWS" "1"
+			(at 187.706 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX OPERATING TEMPERATURE" ""
+			(at 187.706 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "GENDER" "Female"
+			(at 187.706 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MIN OPERATING TEMPERATURE" ""
+			(at 187.706 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "RADIATION HARDENING" "No"
+			(at 187.706 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MOUNTING TECHNOLOGY" "Through Hole"
+			(at 187.706 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS COMPLIANT" ""
+			(at 187.706 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MANUFACTURER LIFECYCLE STATUS" "PRODUCTION"
+			(at 187.706 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "NUMBER OF CONTACTS" "8"
+			(at 187.706 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PITCH" "2.54mm"
+			(at 187.706 91.3892 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "29b92c3b-104a-444c-b80a-fc2c2919adcf")
+		)
+		(pin "3"
+			(uuid "68eb675e-7850-44b1-82e4-6a325cceb089")
+		)
+		(pin "1"
+			(uuid "48e61595-bfb5-48a7-aae1-5e57cb64912e")
+		)
+		(pin "7"
+			(uuid "3d99a1f1-ed8e-4f86-951b-4e81ff076317")
+		)
+		(pin "8"
+			(uuid "1f6db9f1-bae8-4758-9bf2-f4474c169876")
+		)
+		(pin "6"
+			(uuid "d33f7b96-fd0c-409e-9794-ad8a94fed15f")
+		)
+		(pin "4"
+			(uuid "1e201176-ac30-4f1b-844b-973fed102d4c")
+		)
+		(pin "5"
+			(uuid "5088165d-0404-4cdd-9dc1-7a6cd59c28e1")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "J203")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:GND_POWER_GROUND")
+		(at 223.52 51.2572 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "8e84e612-424e-4258-a7cb-15f34d468f0a")
+		(property "Reference" "#PWR0219"
+			(at 223.52 51.2572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 223.52 57.6072 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 223.52 51.2572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 223.52 51.2572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 223.52 51.2572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "0c045c55-cb21-4d1a-92b1-d7b440e0fde8")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "#PWR0219")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:GND_POWER_GROUND")
+		(at 181.61 93.1672 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "9a874bcf-1482-4060-b261-ac68f95d19b9")
+		(property "Reference" "#PWR0209"
+			(at 181.61 93.1672 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 181.61 99.5172 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 181.61 93.1672 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 181.61 93.1672 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 181.61 93.1672 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "d8daa6f5-7aa4-4505-ab86-ee3fcd26fbde")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "#PWR0209")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:3V3_BAR")
+		(at 200.66 41.0972 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "9cdcfc27-96fc-42b3-bcc9-b55a6b98b918")
+		(property "Reference" "#PWR0212"
+			(at 200.66 41.0972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "3V3"
+			(at 200.66 37.2872 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 200.66 41.0972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 200.66 41.0972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 200.66 41.0972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "7b49d54f-11bc-4bc4-b77d-1c5f0d0dddf6")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "#PWR0212")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_name "ARDEP_1_Symbol_Frickly Systems GmbH_1")
+		(lib_id "ARDEP Power IO Shield Symbols:ARDEP_1_Symbol_Frickly Systems GmbH_1")
+		(at 185.42 140.1572 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "b6708df8-5fdb-4e38-825f-cdacf4db30fc")
+		(property "Reference" "J201"
+			(at 185.166 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "SSW-110-23-G-S"
+			(at 200.66 135.0772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" "SSW-110-23-G-S"
+			(at 185.42 140.1572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 185.42 140.1572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Headers & Wire Housings Tiger Buy Socket Strip with PCB Tails, .100 Pitch"
+			(at 185.42 140.1572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "CASE/PACKAGE" ""
+			(at 185.166 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CONTACT MATERIAL" "Bronze"
+			(at 185.166 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PITCH" "2.54mm"
+			(at 185.166 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX OPERATING TEMPERATURE" ""
+			(at 185.166 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS" "Compliant"
+			(at 185.166 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "COLOR" "Black"
+			(at 185.166 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CONNECTOR TYPE" "2.54mm"
+			(at 185.166 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "NUMBER OF ROWS" "1"
+			(at 185.166 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "LIFECYCLE STATUS" "Production"
+			(at 185.166 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MIN OPERATING TEMPERATURE" ""
+			(at 185.166 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "VOLTAGE RATING (DC)" "655V"
+			(at 185.166 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "VOLTAGE RATING (AC)" "465V"
+			(at 185.166 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PACKAGING" "Bulk"
+			(at 185.166 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "NUMBER OF CONTACTS" "10"
+			(at 185.166 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MANUFACTURER LIFECYCLE STATUS" "PRODUCTION"
+			(at 185.166 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MOUNTING TECHNOLOGY" "THT"
+			(at 185.166 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CONTACT PLATING" "Gold"
+			(at 185.166 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "GENDER" "Female"
+			(at 185.166 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TERMINATION" "Solder"
+			(at 185.166 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "LEAD PITCH" "2.54mm"
+			(at 185.166 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS COMPLIANT" ""
+			(at 185.166 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "RADIATION HARDENING" "No"
+			(at 185.166 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PINS" "10"
+			(at 185.166 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "LEAD FREE" "Lead Free"
+			(at 185.166 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b0e70d9c-ddbb-4e99-b128-f146f2723712")
+		)
+		(pin "2"
+			(uuid "7a42d850-6d5c-45ba-878a-6cf33fb17611")
+		)
+		(pin "3"
+			(uuid "0cb3020f-b50b-4313-a12a-dc427f926d2a")
+		)
+		(pin "7"
+			(uuid "7ac9a8f6-3a34-49d0-ba03-76accf94736f")
+		)
+		(pin "5"
+			(uuid "0be99ec8-3fa1-4b4b-9ca3-a2ef96b748ac")
+		)
+		(pin "9"
+			(uuid "640346f0-24b9-4a56-8de1-32bff9b444ae")
+		)
+		(pin "10"
+			(uuid "2cc6203d-b5d0-42f3-a940-aacfd38984af")
+		)
+		(pin "6"
+			(uuid "d8cff4ba-0357-45ac-a616-ee92389b8363")
+		)
+		(pin "8"
+			(uuid "4bea62bd-e81f-4912-b7fd-2e47df02f97b")
+		)
+		(pin "4"
+			(uuid "b3e9a025-3879-47a5-b4f3-c3abca72c575")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "J201")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:ARDEP_HV_BAR")
+		(at 190.5 41.0972 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "ba6898c4-dd37-43ee-a613-78e7a5a30f40")
+		(property "Reference" "#PWR0210"
+			(at 190.5 41.0972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "ARDEP_HV"
+			(at 190.5 37.2872 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 190.5 41.0972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 190.5 41.0972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 190.5 41.0972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "fed88e13-966b-42fb-88ba-563d94d69640")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "#PWR0210")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:GND_POWER_GROUND")
+		(at 168.91 72.8472 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "c5340787-bb6b-4971-be1c-a8420f06cf6f")
+		(property "Reference" "#PWR0207"
+			(at 168.91 72.8472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 168.91 79.1972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 168.91 72.8472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 168.91 72.8472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 168.91 72.8472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "8b486d28-6f20-41e8-adb6-da87f5857bc5")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "#PWR0207")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:GND_POWER_GROUND")
+		(at 223.52 63.9572 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "cb3a27d2-2c03-4b5b-92ef-3650cbf9e1ca")
+		(property "Reference" "#PWR0220"
+			(at 223.52 63.9572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 223.52 70.3072 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 223.52 63.9572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 223.52 63.9572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 223.52 63.9572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "13a21c05-da37-4fbe-bc58-91e96175e8d5")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "#PWR0220")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:ARDEP_1_mirrored_Resistor_Frickly Systems GmbH")
+		(at 127 133.8072 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "d157cceb-c6b1-417f-899c-7d8cf60d8cb8")
+		(property "Reference" "R605"
+			(at 127 129.9972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "Resistor 10k +/-1% 0603 100mW"
+			(at 126.238 125.6792 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "R_0603_JB"
+			(at 127 133.8072 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 127 133.8072 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Chip Resistor, 10 KOhm, +/-1%, 0.1 W, -55 to 155 degC, 0603 (1608 Metric)"
+			(at 127 133.8072 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "ALTIUM_VALUE" "10k"
+			(at 127.762 133.5532 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "MAX OPERATING TEMPERATURE" "155°C"
+			(at 126.238 125.6792 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS COMPLIANT" "Yes"
+			(at 126.238 125.6792 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TOLERANCE" "1%"
+			(at 126.238 125.6792 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PINS" "2"
+			(at 126.238 125.6792 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "POWER" "100mW"
+			(at 126.238 125.6792 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MIN OPERATING TEMPERATURE" "-55°C"
+			(at 126.238 125.6792 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MOUNTING TECHNOLOGY" "Surface Mount"
+			(at 126.238 125.6792 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CASE/PACKAGE" "0603"
+			(at 126.238 125.6792 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "VOLTAGE RATING" "75V"
+			(at 126.238 125.6792 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "afdf6849-d3e3-42ab-b6b3-02643c165d5d")
+		)
+		(pin "1"
+			(uuid "f9f33824-d9ff-4187-b0ec-1263eedf1ab3")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "R605")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:GND_POWER_GROUND")
+		(at 223.52 63.9572 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "d5087f3a-28cd-476e-a5fe-da306c1e3657")
+		(property "Reference" "#PWR0221"
+			(at 223.52 63.9572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 223.52 70.3072 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 223.52 63.9572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 223.52 63.9572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 223.52 63.9572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "01111eaf-8b73-4386-b8e6-e598bf8e5f3f")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "#PWR0221")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:ARDEP_0_UNI TVS_Frickly Systems GmbH")
+		(at 209.55 60.1472 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "d5e77dd6-f5a5-490d-b537-42030d836fd4")
+		(property "Reference" "D202"
+			(at 207.01 58.3692 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "ESD5Z3.3T5G"
+			(at 203.708 65.2272 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" "SOD-523_JB"
+			(at 209.55 60.1472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 209.55 60.1472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Trans Voltage Suppressor Diode, 158W, 3.3V V(RWM), Unidirectional, 1 Element, Silicon"
+			(at 209.55 60.1472 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "PEAK INVERSE VOLTAGE" "14.1V"
+			(at 204.216 58.3692 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MOUNTING TECHNOLOGY" "SMD"
+			(at 204.216 58.3692 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "FORWARD CURRENT" ""
+			(at 204.216 58.3692 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX SURGE CURRENT" "11.2A"
+			(at 204.216 58.3692 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "FORWARD VOLTAGE" ""
+			(at 204.216 58.3692 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX OPERATING TEMPERATURE" "150°C"
+			(at 204.216 58.3692 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MIN OPERATING TEMPERATURE" "-55°C"
+			(at 204.216 58.3692 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PINS" "2"
+			(at 204.216 58.3692 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS COMPLIANT" "Yes"
+			(at 204.216 58.3692 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CASE/PACKAGE" "SOD-523-2"
+			(at 204.216 58.3692 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "05bf1b73-6735-46bc-83e4-6de446b9d87e")
+		)
+		(pin "2"
+			(uuid "57912983-df08-4954-a279-2b0642043517")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "D202")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:ARDEP_HV_BAR")
+		(at 190.5 41.0972 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "d70ea706-bccd-4fa7-a51d-1fcd0f32f4fa")
+		(property "Reference" "#PWR0211"
+			(at 190.5 41.0972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "ARDEP_HV"
+			(at 190.5 37.2872 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 190.5 41.0972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 190.5 41.0972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 190.5 41.0972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "10a4fa7a-8a1d-4ad8-a2c4-3f0a146f261e")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "#PWR0211")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:ARDEP_1_mirrored_Resistor_Frickly Systems GmbH")
+		(at 133.35 133.8072 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "d982511d-6b1b-42e1-ad98-e0cf5063af91")
+		(property "Reference" "R606"
+			(at 133.35 129.9972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "Resistor 10k +/-1% 0603 100mW"
+			(at 132.588 125.6792 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "R_0603_JB"
+			(at 133.35 133.8072 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 133.35 133.8072 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Chip Resistor, 10 KOhm, +/-1%, 0.1 W, -55 to 155 degC, 0603 (1608 Metric)"
+			(at 133.35 133.8072 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "ALTIUM_VALUE" "10k"
+			(at 134.112 133.5532 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "MAX OPERATING TEMPERATURE" "155°C"
+			(at 132.588 125.6792 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS COMPLIANT" "Yes"
+			(at 132.588 125.6792 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TOLERANCE" "1%"
+			(at 132.588 125.6792 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PINS" "2"
+			(at 132.588 125.6792 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "POWER" "100mW"
+			(at 132.588 125.6792 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MIN OPERATING TEMPERATURE" "-55°C"
+			(at 132.588 125.6792 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MOUNTING TECHNOLOGY" "Surface Mount"
+			(at 132.588 125.6792 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CASE/PACKAGE" "0603"
+			(at 132.588 125.6792 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "VOLTAGE RATING" "75V"
+			(at 132.588 125.6792 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "2fe958f4-6617-47ea-a491-2a360b35279d")
+		)
+		(pin "1"
+			(uuid "6fde1976-b256-4e92-ae90-fcc1ae0f8628")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "R606")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:GND_POWER_GROUND")
+		(at 96.52 63.9572 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "da86c829-bd22-4c93-a969-5fe234868b4b")
+		(property "Reference" "#PWR0201"
+			(at 96.52 63.9572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 96.52 70.3072 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 96.52 63.9572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 96.52 63.9572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 96.52 63.9572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "188cea5c-c9a8-4b1f-857e-3ec119e70a1c")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "#PWR0201")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:AREF_BAR")
+		(at 205.74 155.3972 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "dfc4f5dd-2960-4f81-96c1-47a82b0283f4")
+		(property "Reference" "#PWR0217"
+			(at 205.74 155.3972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "AREF"
+			(at 209.55 155.3972 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 205.74 155.3972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 205.74 155.3972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 205.74 155.3972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "2a311e8a-4840-4023-83d3-525f6cdd5dc6")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "#PWR0217")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:ARDEP_1_FUSE-2_Frickly Systems GmbH")
+		(at 190.5 83.0072 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "e0e28411-a097-43b3-9c64-b10c627fb969")
+		(property "Reference" "F200"
+			(at 183.515 78.105 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "0685T3000-01"
+			(at 176.53 81.7372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "FP-0468-MFG"
+			(at 190.5 83.0072 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 190.5 83.0072 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Electric Fuse, Slow Blow, 3A, 63VAC, 63VDC, 50A (IR), Surface Mount, 1206"
+			(at 190.5 83.0072 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "JESD-609 CODE" "e3"
+			(at 189.484 72.3392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CASE/PACKAGE" "1206"
+			(at 189.484 72.3392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PINS" "2"
+			(at 189.484 72.3392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TERMINAL FINISH" "Nickel"
+			(at 189.484 72.3392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MIN OPERATING TEMPERATURE" "-55°C"
+			(at 189.484 72.3392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MOUNTING TECHNOLOGY" "Surface Mount"
+			(at 189.484 72.3392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CURRENT RATING" "3A"
+			(at 185.42 80.4672 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "CIRCUIT PROTECTION TYPE" "Electric Fuse"
+			(at 189.484 72.3392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX OPERATING TEMPERATURE" "125°C"
+			(at 189.484 72.3392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS COMPLIANT" "Yes"
+			(at 189.484 72.3392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "REACH SVHC COMPLIANT" "Yes"
+			(at 189.484 72.3392 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TYPE" "slow-blow"
+			(at 189.992 77.9272 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "aeef49ea-877f-44e0-8761-097cd6aa5aba")
+		)
+		(pin "2"
+			(uuid "b9790b3d-ad6a-45e9-ad12-6878b2e802ef")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "F200")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:ARDEP_1_Symbol_Frickly Systems GmbH")
+		(at 149.86 140.1572 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "e12217c5-ba7c-4d01-8555-30ca15e36c68")
+		(property "Reference" "J205"
+			(at 149.606 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "SSW-108-23-G-S"
+			(at 160.02 135.0772 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Footprint" "SSW-108-23-G-S"
+			(at 149.86 140.1572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 149.86 140.1572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "10mm long pins  8position socket header"
+			(at 149.86 140.1572 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "PIN LENGTH" "10 mm"
+			(at 149.606 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CONNECTOR TYPE" "2.45mm"
+			(at 149.606 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PACKAGING" "Bulk"
+			(at 149.606 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CASE/PACKAGE" ""
+			(at 149.606 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "COLOR" "Black"
+			(at 149.606 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "LIFECYCLE STATUS" "Production"
+			(at 149.606 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "LEAD FREE" "Lead Free"
+			(at 149.606 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CONTACT MATERIAL" "Bronze"
+			(at 149.606 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CONTACT PLATING" "Gold"
+			(at 149.606 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "LEAD PITCH" "2.54mm"
+			(at 149.606 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS" "Compliant"
+			(at 149.606 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PINS" "8"
+			(at 149.606 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TERMINATION" "Solder"
+			(at 149.606 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "VOLTAGE RATING (DC)" "655V"
+			(at 149.606 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "VOLTAGE RATING (AC)" "465V"
+			(at 149.606 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "NUMBER OF ROWS" "1"
+			(at 149.606 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX OPERATING TEMPERATURE" ""
+			(at 149.606 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "GENDER" "Female"
+			(at 149.606 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MIN OPERATING TEMPERATURE" ""
+			(at 149.606 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "RADIATION HARDENING" "No"
+			(at 149.606 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MOUNTING TECHNOLOGY" "Through Hole"
+			(at 149.606 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS COMPLIANT" ""
+			(at 149.606 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MANUFACTURER LIFECYCLE STATUS" "PRODUCTION"
+			(at 149.606 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "NUMBER OF CONTACTS" "8"
+			(at 149.606 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PITCH" "2.54mm"
+			(at 149.606 134.8232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "744273eb-61bb-4033-8f76-62202c5b9c1b")
+		)
+		(pin "7"
+			(uuid "568d07eb-b004-4506-b074-d910b143106c")
+		)
+		(pin "2"
+			(uuid "d385a177-fe15-4590-9a9b-026bbe62e510")
+		)
+		(pin "3"
+			(uuid "52ae9465-8bf2-403a-b3d1-271db7ac2e06")
+		)
+		(pin "4"
+			(uuid "25cc4e70-dac2-44b7-89dc-7cdc70f394ea")
+		)
+		(pin "5"
+			(uuid "48a747ac-b6fb-4882-9365-fc19dfa2eb4b")
+		)
+		(pin "6"
+			(uuid "a4de9f74-9cee-4b03-8bb3-49afc79f0c17")
+		)
+		(pin "8"
+			(uuid "cd798766-a5bd-4f97-b884-a6c3c0c5329c")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "J205")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:3V3_BAR")
+		(at 200.66 41.0972 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "f8d198c9-e10e-478f-8eaf-eecfb2acd024")
+		(property "Reference" "#PWR0213"
+			(at 200.66 41.0972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "3V3"
+			(at 200.66 37.2872 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 200.66 41.0972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 200.66 41.0972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 200.66 41.0972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin ""
+			(uuid "603adbfd-7172-47ce-bb5d-572c3610f9cf")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "#PWR0213")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ARDEP Power IO Shield Symbols:ARDEP_0_Symbol_Frickly Systems GmbH")
+		(at 86.36 48.7172 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "fa9c190d-6fc5-450f-b233-940254b5ab16")
+		(property "Reference" "SW200"
+			(at 89.916 45.9232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Value" "431183015816"
+			(at 109.22 74.1172 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "431183015816"
+			(at 86.36 48.7172 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 86.36 48.7172 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "WS-TASV J-Bend SMT Tact Switch with ground terminal, 5x5x1.5mm, 160gf"
+			(at 86.36 48.7172 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "SOURCE" "WS-TASV.SchLib"
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "SIZE" "5x5x1.5mm"
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "COMPONENTLINK1URL" "http://www.we-online.de"
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CURRENT RATING" ""
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "WASHABLE" "No"
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "COMPONENTLINK2URL" "https://www.we-online.com/catalog/datasheet/431183015816.pdf"
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CONTACT MATERIAL" "Stainless Steel"
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PUBLISHED DATE" "November 2020"
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MANUFACTURER PART NUMBER" "431183015816"
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CASE/PACKAGE" ""
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MOUNTING TECHNOLOGY" "SMT"
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TERMINAL PLATING" "Silver"
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "THROW CONFIGURATION" ""
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "ROHS COMPLIANT" ""
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "RATED VOLTAGE" "15VDC"
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "TERMINAL MATERIAL" "Copper Alloy"
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PACKAGING" "Tape and Reel"
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "CONTACT PLATING" "Silver"
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "OPERATION FORCE" "160gf"
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "DESIGN ITEM ID" "431183015816"
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "COMPONENTLINK1DESCRIPTION" "Manufacturer"
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MANUFACTURER" "Wurth Elektronik"
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "OPERATING TEMPERATURE" "-40 to +85degC"
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "COMPONENTLINK2DESCRIPTION" "Datasheet"
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "VOLTAGE RATING" ""
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "PINS" ""
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MIN OPERATING TEMPERATURE" ""
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "RATED CURRENT" "20mA"
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "MAX OPERATING TEMPERATURE" ""
+			(at 85.852 43.6372 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "5c58b0d4-9b6b-41e4-986a-5e3a4a121759")
+		)
+		(pin "3"
+			(uuid "f0853e85-69a5-4765-a1b0-ae43378540c8")
+		)
+		(pin "1"
+			(uuid "4084f4a9-10d6-4302-9e1c-8c41dc7222a5")
+		)
+		(pin "2"
+			(uuid "7ddb0518-6005-4a71-aa2c-17094e912762")
+		)
+		(pin "G1"
+			(uuid "38c5fbdc-ea40-4fb4-98d1-d1a9aadd3f2b")
+		)
+		(instances
+			(project "ARDEP2_PowerIO-Shield"
+				(path "/4c0fe098-6632-46ad-81a7-18be79ce9b94/345cf427-937f-404e-b57d-133d1a773053"
+					(reference "SW200")
+					(unit 1)
+				)
+			)
+		)
+	)
+)
