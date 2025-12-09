@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "ARDEP2_Mainboard")(type "KiCad")(uri "${KIPRJMOD}/ARDEP2_Mainboard.pretty")(options "")(descr ""))
+)
