@@ -7,6 +7,14 @@ Changelog
    :local:
    :depth: 2
 
+Rev 2.1
+==============
+
+- Added an On-Board-Debugger
+- Adapted the GPIO protection
+- Changed the Power Multiplexing from discrete components to Ideal Diode ICs
+
+
 Rev 1.1
 ==============
 

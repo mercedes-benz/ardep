@@ -19,8 +19,16 @@ Ardep v2.0.0
 
 .. TODO: Image of Board V2
 
-.. ..  image:: 3d_view_v2.png
+.. ..  image:: 3d_view_v2.svg
 ..     :width: 100%
+
+.. _board_pinout:
+
+Pinout
+======
+
+..  image:: pinout_v2.svg
+    :width: 100%
 
 Ardep v1.0.0
 ------------
