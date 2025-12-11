@@ -18,12 +18,12 @@ The GPIOs can be accessed via an Arduino-compatible pin header arrangement and a
 Arduino Header
 ==============
 
-..  figure:: arduino_pinout_rev0_2.png
+..  figure:: arduino_pinout_rev0_2_0.png
     :width: 600px
 
     Arduino Pinout starting from rev 0.2
 
-..  figure:: arduino_pinout_rev0_1.jpg
+..  figure:: arduino_pinout_rev0_1_0.jpg
     :width: 600px
 
     Arduino Pinout up to rev 0.1
@@ -32,12 +32,12 @@ Arduino Header
 =============
 
 
-..  figure:: 32pin_header_rev0_2.png
+..  figure:: 32pin_header_rev0_2_0.png
     :width: 300px
 
     32-Pin connector starting from rev 0.2
 
-..  figure:: 32pin_header_rev0_1.png
+..  figure:: 32pin_header_rev0_1_0.png
     :width: 300px
 
     32-Pin connector up to rev 0.1
