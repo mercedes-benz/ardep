@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Analog I/O &#8212; ARDEP  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/css/custom.css" />
+    <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+    <script src="../../../../../_static/doctools.js"></script>
+    <script src="../../../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../../../_static/clipboard.min.js"></script>
+    <script src="../../../../../_static/copybutton.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link rel="next" title="Changelog" href="../changelog/index.html" />
+    <link rel="prev" title="ARDEP HV Shield" href="../index.html" />
+   
+  <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="analog-i-o">
+<span id="hv-extension-shield-analog-io"></span><h1>Analog I/O<a class="headerlink" href="#analog-i-o" title="Permalink to this heading">¶</a></h1>
+<nav class="contents local" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#analog-input" id="id4">Analog Input</a></p>
+<ul>
+<li><p><a class="reference internal" href="#voltage-divider" id="id5">Voltage Divider</a></p></li>
+<li><p><a class="reference internal" href="#pga" id="id6">PGA</a></p></li>
+<li><p><a class="reference internal" href="#error-margins" id="id7">Error margins</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#analog-output" id="id8">Analog Output</a></p>
+<ul>
+<li><p><a class="reference internal" href="#amplifier-circuit" id="id9">Amplifier Circuit</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<section id="analog-input">
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Analog Input</a><a class="headerlink" href="#analog-input" title="Permalink to this heading">¶</a></h2>
+<p>To read high-voltage analog signals a 15:1 voltage divider is implemented on the shield.
+It maps an input voltage of 0V - 50V down to 0 V - 3.33V.
+The ADC input pins connected to those voltage dividers can also be configured as Programmable Gain Amplifier (PGA) input pins.
+This allows the user to make the best use of the ADCs resolution by amplifying small input voltages by a software-defined multiplier.</p>
+<section id="voltage-divider">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Voltage Divider</a><a class="headerlink" href="#voltage-divider" title="Permalink to this heading">¶</a></h3>
+<p>In addition to being a 15:1 voltage divider.
+The input structure represents a low-pass filter, with a -3dB cut-off frequency of ~70 kHz to reduce high-frequency noise on the signal lines.
+The input structure has an impedance of ~15kHz at DC.</p>
+<figure class="align-default" id="id1">
+<a class="reference internal image-reference" href="../../../../../_images/voltage_divider.png"><img alt="../../../../../_images/voltage_divider.png" src="../../../../../_images/voltage_divider.png" style="width: 600px;" /></a>
+<figcaption>
+<p><span class="caption-text">Voltage divider as used on the HV-Expansion Shield</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="pga">
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">PGA</a><a class="headerlink" href="#pga" title="Permalink to this heading">¶</a></h3>
+<p>This Feature is Implemented in hardware, but does not yet have any software support</p>
+</section>
+<section id="error-margins">
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Error margins</a><a class="headerlink" href="#error-margins" title="Permalink to this heading">¶</a></h3>
+<p>The worst-case error margins have been calculated as follows:</p>
+<figure class="align-default" id="id2">
+<a class="reference internal image-reference" href="../../../../../_images/worst_case_error_margins_1.png"><img alt="../../../../../_images/worst_case_error_margins_1.png" src="../../../../../_images/worst_case_error_margins_1.png" style="width: 600px;" /></a>
+<figcaption>
+<p><span class="caption-text">Worst-case error margin calculation</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p><span class="math notranslate nohighlight">\(V_{in}\)</span> is the input Voltage, <span class="math notranslate nohighlight">\(R_2\)</span> is the series- and <span class="math notranslate nohighlight">\(R_1\)</span> is the output resistor.
+<span class="math notranslate nohighlight">\(V_m\)</span> is the output voltage at the ADC pin.</p>
+<p>Using 1% Resistors and a divider ratio of K = 1/15 results in a relative gain error of 1,87%.
+This ignores possible errors of the µC ADC.</p>
+<a class="reference internal image-reference" href="../../../../../_images/worst_case_error_margins_2.png"><img alt="../../../../../_images/worst_case_error_margins_2.png" src="../../../../../_images/worst_case_error_margins_2.png" style="width: 600px;" /></a>
+<p>Using 0,5% resistors, this error can be reduced to 0,93%</p>
+</section>
+</section>
+<section id="analog-output">
+<span id="hv-extension-shield-analog-output"></span><h2><a class="toc-backref" href="#id8" role="doc-backlink">Analog Output</a><a class="headerlink" href="#analog-output" title="Permalink to this heading">¶</a></h2>
+<p>All of the digital IOs are implemented using a push-pull output driver.
+It is therefore possible for any PWM-capable IO to generate a quasi-analog PWM output signal.
+This signal will automatically be mapped to the voltage level connected to the corresponding IO bank.</p>
+<p>In Addition, two analog amplifier circuits have been implemented, which allow the use of two real DACs to output an analog signal with a software-defined voltage gain.</p>
+<section id="amplifier-circuit">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Amplifier Circuit</a><a class="headerlink" href="#amplifier-circuit" title="Permalink to this heading">¶</a></h3>
+<p>The amplifier circuit has been implemented as follows:</p>
+<figure class="align-default" id="id3">
+<a class="reference internal image-reference" href="../../../../../_images/analog_gain_amplifier.png"><img alt="../../../../../_images/analog_gain_amplifier.png" src="../../../../../_images/analog_gain_amplifier.png" style="width: 600px;" /></a>
+<figcaption>
+<p><span class="caption-text">Analog Gain Amplifier (Channel 2)</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>The voltage Gain can be set via the IO-Config register.
+The gains have been chosen to be powers of two in order to simplify calculations in software.
+The resulting truth table is shown below.
+AV0..3 resemble the config bits of the first amplifier, while AV4..7 are used to configure Channel 2.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>AV0/4</p></th>
+<th class="head"><p>AV1/5</p></th>
+<th class="head"><p>AV2/6</p></th>
+<th class="head"><p>AV3/7</p></th>
+<th class="head"><p>Gain</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>16</p></td>
+</tr>
+</tbody>
+</table>
+<section id="calculating-the-gain">
+<h4>Calculating the Gain<a class="headerlink" href="#calculating-the-gain" title="Permalink to this heading">¶</a></h4>
+<div class="math notranslate nohighlight">
+\[Gain = 1 + ( x_1 / 33.2k + x_2 / 16.9k + x_3 / 8.25k + x_4 / 4.22k) * 33.2k\]</div>
+<p><span class="math notranslate nohighlight">\(x_i\)</span> are the corresponding Bits AV0…3 which can therefore take on values of zero or one.</p>
+</section>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../../index.html">ARDEP</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../introduction/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../bootloader/index.html">Bootloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../firmware_loader/index.html">UDS Firmware Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../console/index.html">Console Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../error_handling/index.html">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../README.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../lib/index.html">Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../scripts/ardep.html">ARDEP Command</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mercedes/ardep/doc/index.html">ARDEP Board</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">ARDEP HV Shield</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Analog I/O</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog/index.html">Changelog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../high_voltage_digital_io/index.html">High Voltage Digital I/O</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../io_config_register/index.html">I/O Config Register</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../voltage_supply/index.html">Voltage Supply</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#pinout">Pinout</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../power_io_shield/doc/index.html">ARDEP Power IO Shield</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../samples/index.html">Samples and Demos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../debugging/index.html">Debugging</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">ARDEP HV Shield</a><ul>
+      <li>Previous: <a href="../index.html" title="previous chapter">ARDEP HV Shield</a></li>
+      <li>Next: <a href="../changelog/index.html" title="next chapter">Changelog</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Frickly Systems GmbH.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 6.2.1</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../../../../../_sources/boards/shields/hv_shield/doc/analog_io/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Power IO Voltage Supply &#8212; ARDEP  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/css/custom.css" />
+    <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+    <script src="../../../../../_static/doctools.js"></script>
+    <script src="../../../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../../../_static/clipboard.min.js"></script>
+    <script src="../../../../../_static/copybutton.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link rel="next" title="Samples and Demos" href="../../../../../samples/index.html" />
+    <link rel="prev" title="Power IO Outputs" href="../outputs/index.html" />
+   
+  <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="power-io-voltage-supply">
+<span id="power-io-shield-voltage-supply"></span><h1>Power IO Voltage Supply<a class="headerlink" href="#power-io-voltage-supply" title="Permalink to this heading">¶</a></h1>
+<p>The Power IO shield has two main supply rails. It uses 3.3V as a logic supply and a high-voltage rail for the output drivers.</p>
+<section id="logic-supply">
+<h2>Logic Supply<a class="headerlink" href="#logic-supply" title="Permalink to this heading">¶</a></h2>
+<p>The 3.3V logic supply is provided via the mainboard’s Arduino-like pin header and is therefore compatible with any base-boards using the same standardized pinout.</p>
+</section>
+<section id="high-voltage-supply">
+<h2>High Voltage Supply<a class="headerlink" href="#high-voltage-supply" title="Permalink to this heading">¶</a></h2>
+<p>The shield is specified to operate within a range of 12V - 48V, and a maximum total current of 10A.
+Exceeding this specified range is not recommended, and might lead to unexpected behaviour or physical damage to the shield.
+If exceeded, the first point of failure is expected to be the output driver with an 8V undervoltage lockout and a 65V absolute maximum rating.</p>
+<section id="supply-mode-selection">
+<h3>Supply Mode Selection<a class="headerlink" href="#supply-mode-selection" title="Permalink to this heading">¶</a></h3>
+<p>The ARDEP’s Arduino-like pin header provides a direct connection to the mainboard’s high-voltage supply rail.
+Depending on the application, the user might want to either supply the Power IO shield from the mainboard or supply the mainboard from the IO shield.
+The shield’s high-voltage supply can therefore be configured to one of three available options using a 0.1” jumper header.</p>
+<figure class="align-default" id="id1">
+<a class="reference internal image-reference" href="../../../../../_images/power_config_header.png"><img alt="../../../../../_images/power_config_header.png" src="../../../../../_images/power_config_header.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-text">Power Configuration Header</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="default-no-jumper">
+<h3>Default: No Jumper<a class="headerlink" href="#default-no-jumper" title="Permalink to this heading">¶</a></h3>
+<p>The high-voltage supply of the ARDEP mainboard and the Power IO Shield are decoupled and must be supplied individually.
+This configuration allows the user to individually select the two boards’ supply levels.</p>
+</section>
+<section id="power-via-the-ardep-mainboard">
+<h3>Power Via the ARDEP Mainboard<a class="headerlink" href="#power-via-the-ardep-mainboard" title="Permalink to this heading">¶</a></h3>
+<p>With the selection jumper in the top position, the HV outputs are powered via the ARDEP mainboard and a Schottky diode.
+This setting can be used  if the ARDEP mainboard is connected to a high-voltage supply and the power IO outputs do not need to supply a lot of current (E.g. for testing or toggling high voltage signals)</p>
+<p>In this configuration, the total current draw <span class="red">must not exceed 3A</span>.
+Exceeding this limit will cause F200 to fail.</p>
+</section>
+<section id="power-via-the-power-io-shield">
+<h3>Power Via the Power IO Shield<a class="headerlink" href="#power-via-the-power-io-shield" title="Permalink to this heading">¶</a></h3>
+<p>In this configuration, the ARDEP mainboard is supplied from the Power IO Shield’s high voltage rail via a Schottky diode.
+Therefore, the shield has to be supplied via one of the two power connectors, <span class="red">and no additional supply must be connected to the ARDEP mainboard</span>.</p>
+</section>
+</section>
+<section id="power-connectors">
+<h2>Power Connectors<a class="headerlink" href="#power-connectors" title="Permalink to this heading">¶</a></h2>
+<p>The Power IO shield is equipped with an XT-30 connector and a 6-pin spring contact terminal.
+The spring contact terminal offers 3 hookup points each for GND and the positive supply.
+This enables the user to conveniently distribute power when using a stack multiple shields.</p>
+<figure class="align-default" id="id2">
+<a class="reference internal image-reference" href="../../../../../_images/connectors.png"><img alt="../../../../../_images/connectors.png" src="../../../../../_images/connectors.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-text">The Power IO shield’s supply connectors. Spring terminal (Left) and XT-30 connector (right)</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>The Spring terminals contacts are rated for 13.5 A each, and the XT30 connector is rated at 15 A.
+This has to be kept in mind when stacking multiple shields and routing the power via the spring contact terminals, or when stressing the shield beyond the tested current range.</p>
+</section>
+<section id="fuses">
+<h2>Fuses<a class="headerlink" href="#fuses" title="Permalink to this heading">¶</a></h2>
+<p>If the ARDEP Mainboard is used to supply the Power IO shield, F200, a 3A - 63V slow-blow fuse is used as a last resort to prevent uncontrolled damage to the mainboard or the shield.
+This fuse has to be replaced by means of soldering.</p>
+<p>When supplied via one of the two power connectors, the shield is fused with a 10A automotive miniblade fuse.
+The shield is initially provided with a 0997010.WXN 10A - 58V fuse.
+When sourcing a replacement fuse, the user has to pay attention to the fuse’s voltage rating, as both 32V and 58V variants are available for purchase, where the first might not be safe to use in the intended application.</p>
+<p><span class="red">In case of fuse replacement, ensure that a fuse with an appropriate voltage rating is installed for the intended Application.</span></p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../../index.html">ARDEP</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../introduction/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../bootloader/index.html">Bootloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../firmware_loader/index.html">UDS Firmware Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../console/index.html">Console Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../error_handling/index.html">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../README.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../lib/index.html">Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../scripts/ardep.html">ARDEP Command</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mercedes/ardep/doc/index.html">ARDEP Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../hv_shield/doc/index.html">ARDEP HV Shield</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">ARDEP Power IO Shield</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../inputs/index.html">Power IO Inputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interface/index.html">ARDEP Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outputs/index.html">Power IO Outputs</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Power IO Voltage Supply</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../samples/index.html">Samples and Demos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../debugging/index.html">Debugging</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">ARDEP Power IO Shield</a><ul>
+      <li>Previous: <a href="../outputs/index.html" title="previous chapter">Power IO Outputs</a></li>
+      <li>Next: <a href="../../../../../samples/index.html" title="next chapter">Samples and Demos</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Frickly Systems GmbH.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 6.2.1</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../../../../../_sources/boards/shields/power_io_shield/doc/power_supply/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

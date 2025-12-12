@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>CAN and LIN &#8212; ARDEP  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/css/custom.css" />
+    <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+    <script src="../../../../../_static/doctools.js"></script>
+    <script src="../../../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../../../_static/clipboard.min.js"></script>
+    <script src="../../../../../_static/copybutton.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link rel="next" title="Changelog" href="../changelog/index.html" />
+    <link rel="prev" title="ARDEP Board" href="../index.html" />
+   
+  <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="can-and-lin">
+<span id="ardep-board-can-and-lin"></span><h1>CAN and LIN<a class="headerlink" href="#can-and-lin" title="Permalink to this heading">¶</a></h1>
+<nav class="contents local" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#can" id="id8">CAN</a></p></li>
+<li><p><a class="reference internal" href="#pin-mapping" id="id9">Pin-mapping</a></p>
+<ul>
+<li><p><a class="reference internal" href="#can-a" id="id10">CAN A</a></p></li>
+<li><p><a class="reference internal" href="#can-b" id="id11">CAN B</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#lin" id="id12">LIN</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id13">Pin-mapping</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<p>CAN and LIN share a single DB-9 connector in accordance with the Pinout proposed by Vector.</p>
+<figure class="align-default" id="id2">
+<a class="reference internal image-reference" href="../../../../../_images/can_and_lin_vectors.png"><img alt="../../../../../_images/can_and_lin_vectors.png" src="../../../../../_images/can_and_lin_vectors.png" style="width: 600px;" /></a>
+<figcaption>
+<p><span class="caption-text">Source: <a class="reference external" href="https://www.vector.com/int/en/products/products-a-z/hardware/network-interfaces/cables/can-cables/#c134923">Vector Website</a></span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>On the ARDEP mainboard, the pinout is configured as shown below.
+CAN Channel B is permanently connected to the DB-9 connector.
+CAN Channel A and LIN are permanently connected to the spring terminal block.
+Using SW1, the user can choose to connect CAN-A or LIN to the DB-9 connector.</p>
+<figure class="align-default" id="id3">
+<a class="reference internal image-reference" href="../../../../../_images/can_and_lin_db9_pinout.png"><img alt="../../../../../_images/can_and_lin_db9_pinout.png" src="../../../../../_images/can_and_lin_db9_pinout.png" style="width: 600px;" /></a>
+<figcaption>
+<p><span class="caption-text">DB-9 Pinout</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id4">
+<a class="reference internal image-reference" href="../../../../../_images/can_and_lin_spring_terminal_pinout.png"><img alt="../../../../../_images/can_and_lin_spring_terminal_pinout.png" src="../../../../../_images/can_and_lin_spring_terminal_pinout.png" style="width: 600px;" /></a>
+<figcaption>
+<p><span class="caption-text">Spring terminal pinout</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<section id="can">
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">CAN</a><a class="headerlink" href="#can" title="Permalink to this heading">¶</a></h2>
+<p>The ARDEP Mainboard comes with two CAN-FD capable CAN Transceivers.
+each of which, is connected to a common mode choke, ESD protection as well as a hardware configurable 120-Ohm termination.</p>
+<figure class="align-default" id="id5">
+<a class="reference internal image-reference" href="../../../../../_images/can_interface_rev0_2.png"><img alt="../../../../../_images/can_interface_rev0_2.png" src="../../../../../_images/can_interface_rev0_2.png" style="width: 600px;" /></a>
+<figcaption>
+<p><span class="caption-text">CAN Interface rev. 0.2</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>In rev 0.1 the Termination was implemented to be software-configurable.
+This feature has been removed starting from rev 0.2 due to cost and practicality reasons.</p>
+<figure class="align-default" id="id6">
+<a class="reference internal image-reference" href="../../../../../_images/can_interface_rev0_1.png"><img alt="../../../../../_images/can_interface_rev0_1.png" src="../../../../../_images/can_interface_rev0_1.png" style="width: 600px;" /></a>
+<figcaption>
+<p><span class="caption-text">CAN Interface rev. 0.1</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="pin-mapping">
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Pin-mapping</a><a class="headerlink" href="#pin-mapping" title="Permalink to this heading">¶</a></h2>
+<section id="can-a">
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">CAN A</a><a class="headerlink" href="#can-a" title="Permalink to this heading">¶</a></h3>
+<p>CAN A is directly connected to the spring contact terminal and can be connected to the DB-9 connector with the help of SW1.
+lToggling SW1 will disconnect LIN from Pin7 and connect CANA to pin 7 and 2</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Description</p></th>
+<th class="head"><p>STM32 Pin</p></th>
+<th class="head"><p>Comment</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CAN RX</p></td>
+<td><p>PD0</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>CAN TX</p></td>
+<td><p>PD1</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>CAN STBY</p></td>
+<td><p>PD2</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Term_EN</p></td>
+<td><p>PD3</p></td>
+<td><p><span class="red">Only in rev 0.1</span></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="can-b">
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">CAN B</a><a class="headerlink" href="#can-b" title="Permalink to this heading">¶</a></h3>
+<p>CAN B is permanently connected to the CAN B channel of the DB-9 connector in accordance with the Vector pinout.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Description</p></th>
+<th class="head"><p>STM32 Pin</p></th>
+<th class="head"><p>Comment</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CAN RX</p></td>
+<td><p>PB5</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>CAN TX</p></td>
+<td><p>PB6</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>CAN STBY</p></td>
+<td><p>PB7</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Term_EN</p></td>
+<td><p>PB4</p></td>
+<td><p><span class="red">Only in rev 0.1</span></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="lin">
+<h2><a class="toc-backref" href="#id12" role="doc-backlink">LIN</a><a class="headerlink" href="#lin" title="Permalink to this heading">¶</a></h2>
+<p>LIN is permanently connected to the spring contact terminal and can be connected to the DB-9 connector with the help of SW1.
+Toggling SW1 will disconnect CAN-A from Pin 7 &amp; 2 and instead connect LIN to Pin 7.</p>
+<p>The User can select to Supply the LIN driver from the mainboard internal 5 V supply, or an external Supply connected to the spring contact terminal.
+The LIN supply is specified for up to 24 V and is additionally connected to one of the 0.1” Header connectors.</p>
+<p>Using a solid-state Relay The LIN Interface can be software-configured for master- or slave mode.</p>
+<figure class="align-default" id="id7">
+<a class="reference internal image-reference" href="../../../../../_images/lin_interface.png"><img alt="../../../../../_images/lin_interface.png" src="../../../../../_images/lin_interface.png" style="width: 600px;" /></a>
+<figcaption>
+<p><span class="caption-text">ARDEP LIN INterface</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<section id="id1">
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">Pin-mapping</a><a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Description</p></th>
+<th class="head"><p>STM32-Pin</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>LIN RX</p></td>
+<td><p>PE1</p></td>
+</tr>
+<tr class="row-odd"><td><p>LIN TX</p></td>
+<td><p>PE0</p></td>
+</tr>
+<tr class="row-even"><td><p>LIN Enable</p></td>
+<td><p>PD7</p></td>
+</tr>
+<tr class="row-odd"><td><p>LIN Master</p></td>
+<td><p>PB9</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../../index.html">ARDEP</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../introduction/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../bootloader/index.html">Bootloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../firmware_loader/index.html">UDS Firmware Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../console/index.html">Console Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../error_handling/index.html">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../README.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../lib/index.html">Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../scripts/ardep.html">ARDEP Command</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">ARDEP Board</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">CAN and LIN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog/index.html">Changelog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gearshift/index.html">Gearshift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gpio/index.html">GPIO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../heartbeat_led/index.html">Heartbeat LED</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../on_board_debugger/index.html">On-Board Debugger (OBD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../power_scheme/index.html">Power Scheme</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#ardep-v2-0-0">Ardep v2.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#ardep-v1-0-0">Ardep v1.0.0</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../shields/hv_shield/doc/index.html">ARDEP HV Shield</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../shields/power_io_shield/doc/index.html">ARDEP Power IO Shield</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../samples/index.html">Samples and Demos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../debugging/index.html">Debugging</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">ARDEP Board</a><ul>
+      <li>Previous: <a href="../index.html" title="previous chapter">ARDEP Board</a></li>
+      <li>Next: <a href="../changelog/index.html" title="next chapter">Changelog</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Frickly Systems GmbH.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 6.2.1</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../../../../../_sources/boards/mercedes/ardep/doc/can_and_lin/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

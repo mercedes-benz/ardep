@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Error Handling &#8212; ARDEP  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Documentation" href="../README.html" />
+    <link rel="prev" title="Console Output" href="../console/index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="error-handling">
+<span id="id1"></span><h1>Error Handling<a class="headerlink" href="#error-handling" title="Permalink to this heading">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The following intructions only apply to Ardep v1 since later versions have an <a class="reference internal" href="../boards/mercedes/ardep/doc/on_board_debugger/index.html#on-board-debugger"><span class="std std-ref">On-Board Debugger (OBD)</span></a> and the bootloader logs are accessible via the forwarded UART-A device.
+Additionally, you can flash the bootloader and the firmware via <code class="docutils literal notranslate"><span class="pre">west</span> <span class="pre">flash</span></code> using the on board debugger.</p>
+</div>
+<p>When encountering an error, you have several options, depending on the severity of the error.
+Generally, it is helpful to see if your application gets started from the bootloader.
+See the <a class="reference internal" href="../console/index.html#console"><span class="std std-ref">Console Output</span></a> documentation for more information about where you find the application and bootloader output.</p>
+<p>If your application keeps running, you can just perform an update via dfu-util. See the <a class="reference internal" href="../getting_started/index.html#getting-started"><span class="std std-ref">Getting Started</span></a> guide for an example.</p>
+<p>If you application keeps hangig itself up (e.g. segfaults) and a dfu is not possible, boot into the <a class="reference internal" href="../bootloader/index.html#bootloader-mode"><span class="std std-ref">Bootloader mode</span></a> and flash a new application from there.</p>
+<p>If you can’t get into bootloader mode, you should delete the whole flash memory and flash a new bootloader and application.
+For this, you need to connect an external debugger on the SWD pins on the board.</p>
+<p>To build the bootloader, you can use the following command:</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">west</span> <span class="pre">ardep</span> <span class="pre">build-bootloader</span></code></p>
+</div></blockquote>
+<p>Then erase the flash memory of the ardep board.</p>
+<p>Next, flash the bootloader. You can use a debugger of your choice or use the <code class="docutils literal notranslate"><span class="pre">west</span> <span class="pre">flash</span></code> command.
+For an overview of the <code class="docutils literal notranslate"><span class="pre">west</span> <span class="pre">flash</span></code> command see <a class="reference external" href="https://docs.zephyrproject.org/4.2.0/develop/west/build-flash-debug.html#flashing-west-flash">Zephyr’s documentation on the west command</a>, <code class="docutils literal notranslate"><span class="pre">west</span> <span class="pre">flash</span> <span class="pre">-h</span></code> and the <em>board.cmake</em> file under <em>boards/arm/ardep</em> for an overview of supported runners.</p>
+<p>After flashing the bootloader, flash the application of your choice. See the <a class="reference internal" href="../getting_started/index.html#getting-started"><span class="std std-ref">Getting Started</span></a> guide and the <a class="reference internal" href="../bootloader/index.html#bootloader-mode"><span class="std std-ref">Bootloader mode</span></a> documentation for this.</p>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">ARDEP</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bootloader/index.html">Bootloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../firmware_loader/index.html">UDS Firmware Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../console/index.html">Console Output</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/index.html">Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scripts/ardep.html">ARDEP Command</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boards/mercedes/ardep/doc/index.html">ARDEP Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boards/shields/hv_shield/doc/index.html">ARDEP HV Shield</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boards/shields/power_io_shield/doc/index.html">ARDEP Power IO Shield</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../samples/index.html">Samples and Demos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../debugging/index.html">Debugging</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../console/index.html" title="previous chapter">Console Output</a></li>
+      <li>Next: <a href="../README.html" title="next chapter">Documentation</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Frickly Systems GmbH.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 6.2.1</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/error_handling/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

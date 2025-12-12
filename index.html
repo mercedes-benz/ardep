@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Welcome to the ARDEP documentation! &#8212; ARDEP  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Introduction" href="introduction/index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="welcome-to-the-ardep-documentation">
+<h1>Welcome to the ARDEP documentation!<a class="headerlink" href="#welcome-to-the-ardep-documentation" title="Permalink to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction/index.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="introduction/index.html#key-features">Key Features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started/index.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="getting_started/index.html#install-dependencies">Install dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started/index.html#set-up-your-workspace">Set up your workspace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started/index.html#install-the-zephyr-sdk">Install the Zephyr SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started/index.html#enable-the-dfu-util-to-perform-firmware-upgrades">Enable the DFU-Util to perform firmware upgrades</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started/index.html#enable-the-black-magic-debugger-on-your-host">Enable the Black-Magic Debugger on your host</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started/index.html#build-your-first-app">Build your first app</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bootloader/index.html">Bootloader</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bootloader/index.html#building-the-bootloader">Building the bootloader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bootloader/index.html#flashing-the-bootloader">Flashing the bootloader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bootloader/index.html#bootloader-mode">Bootloader mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bootloader/index.html#uds-bootloader">UDS Bootloader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bootloader/index.html#sysbuild">Sysbuild</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="firmware_loader/index.html">UDS Firmware Loader</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="firmware_loader/index.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firmware_loader/index.html#building-using-sysbuild">Building using sysbuild</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="console/index.html">Console Output</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="console/index.html#fimrware-output">Fimrware Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console/index.html#bootloader-output">Bootloader Output</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="error_handling/index.html">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html">Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="README.html#building-the-documentation">Building the documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#live-preview-sort-of">Live-preview (sort of…)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#including-files-above-the-doc-directory">Including files above the <em>doc</em> directory</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lib/index.html">Libraries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lib/can_log/README.html">CAN Log Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib/iso14229/README.html">ISO14229 Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib/uds/README.html">UDS Library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="scripts/ardep.html">ARDEP Command</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boards/mercedes/ardep/doc/index.html">ARDEP Board</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="boards/mercedes/ardep/doc/can_and_lin/index.html">CAN and LIN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boards/mercedes/ardep/doc/changelog/index.html">Changelog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boards/mercedes/ardep/doc/gearshift/index.html">Gearshift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boards/mercedes/ardep/doc/gpio/index.html">GPIO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boards/mercedes/ardep/doc/heartbeat_led/index.html">Heartbeat LED</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boards/mercedes/ardep/doc/on_board_debugger/index.html">On-Board Debugger (OBD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boards/mercedes/ardep/doc/power_scheme/index.html">Power Scheme</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boards/mercedes/ardep/doc/index.html#ardep-v2-0-0">Ardep v2.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boards/mercedes/ardep/doc/index.html#ardep-v1-0-0">Ardep v1.0.0</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="boards/shields/hv_shield/doc/index.html">ARDEP HV Shield</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="boards/shields/hv_shield/doc/analog_io/index.html">Analog I/O</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boards/shields/hv_shield/doc/changelog/index.html">Changelog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boards/shields/hv_shield/doc/high_voltage_digital_io/index.html">High Voltage Digital I/O</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boards/shields/hv_shield/doc/io_config_register/index.html">I/O Config Register</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boards/shields/hv_shield/doc/voltage_supply/index.html">Voltage Supply</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boards/shields/hv_shield/doc/index.html#pinout">Pinout</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="boards/shields/power_io_shield/doc/index.html">ARDEP Power IO Shield</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="boards/shields/power_io_shield/doc/inputs/index.html">Power IO Inputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boards/shields/power_io_shield/doc/interface/index.html">ARDEP Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boards/shields/power_io_shield/doc/outputs/index.html">Power IO Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boards/shields/power_io_shield/doc/power_supply/index.html">Power IO Voltage Supply</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="samples/index.html">Samples and Demos</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="samples/adc/README.html">ADC Sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="samples/can/README.html">CAN sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="samples/can_usb_bridge/README.html">CAN USB Bridge sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="samples/config_jumpers/README.html">Config Jumpers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="samples/dac/README.html">DAC sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="samples/digital_input_interrupt/README.html">Digital Input Interrupt Sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="samples/gpio_expander/README.html">GPIO Expander</a></li>
+<li class="toctree-l2"><a class="reference internal" href="samples/hardware_test/README.html">Hardware Test Sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="samples/hardware_tester/README.html">Hardware Tester Sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="samples/hv_shield/README.html">HV Shield</a></li>
+<li class="toctree-l2"><a class="reference internal" href="samples/iso14229/README.html">ISO14229 Sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="samples/led/README.html">LED Sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="samples/lin/lin.html">Lin Samples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="samples/lin2can/lin2can.html">Lin2Can Samples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="samples/power_io_shield/index.html">Power IO Shield Samples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="samples/uart/README.html">UART Sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="samples/uds/README.html">UDS Sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="samples/uds_bus_sample/README.html">UDS Bus Sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="samples/uds_legacy/README.html">UDS Sample (Legacy)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="debugging/index.html">Debugging</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="debugging/index.html#ardep-v2-0-0-and-later">Ardep v2.0.0 and later</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging/index.html#ardep-v1-0-0">Ardep v1.0.0</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="doxygen/index.html">API reference</a></p></li>
+<li><p><a class="reference external" href="https://github.com/frickly-systems/ardep">Github</a></p></li>
+<li><p><a class="reference external" href="https://www.zephyrproject.org">Zephyr RTOS</a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">ARDEP</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bootloader/index.html">Bootloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firmware_loader/index.html">UDS Firmware Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="console/index.html">Console Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="error_handling/index.html">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lib/index.html">Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scripts/ardep.html">ARDEP Command</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boards/mercedes/ardep/doc/index.html">ARDEP Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boards/shields/hv_shield/doc/index.html">ARDEP HV Shield</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boards/shields/power_io_shield/doc/index.html">ARDEP Power IO Shield</a></li>
+<li class="toctree-l1"><a class="reference internal" href="samples/index.html">Samples and Demos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debugging/index.html">Debugging</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="introduction/index.html" title="next chapter">Introduction</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Frickly Systems GmbH.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 6.2.1</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

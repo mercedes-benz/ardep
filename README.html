@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Documentation &#8212; ARDEP  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/tabs.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Libraries" href="lib/index.html" />
+    <link rel="prev" title="Error Handling" href="error_handling/index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="documentation">
+<span id="id1"></span><h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading">¶</a></h1>
+<p>The main documentation is build with <a class="reference external" href="https://www.sphinx-doc.org/en/master/">sphinx</a>. Code docs are generated using <a class="reference external" href="https://www.doxygen.nl/">doxygen</a>.</p>
+<p>Generally, we try to keep the documentation as close to the code as possible, so it’s easier to keep it up to date:</p>
+<ul class="simple">
+<li><p>Board specific documentation in <em>/boards/arm/ardep</em></p></li>
+<li><p>samples specific documentation sample-specific directory under  <em>/samples</em></p></li>
+<li><p>scripts and <code class="docutils literal notranslate"><span class="pre">west</span></code> subcommands in <em>/scripts</em></p></li>
+<li><p>generic documentaion in <em>/doc</em></p></li>
+</ul>
+<section id="building-the-documentation">
+<h2>Building the documentation<a class="headerlink" href="#building-the-documentation" title="Permalink to this heading">¶</a></h2>
+<p>Install necessary dependencies:</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Linux</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Windows</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>doc/requirements.txt
+apt<span class="w"> </span>install<span class="w"> </span>doxygen<span class="w"> </span>rsync
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><ul>
+<li><p>Install the python requirements with:</p>
+<blockquote>
+<div><div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">-r</span> <span class="n">doc</span><span class="p">/</span><span class="n">requirements</span><span class="p">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Install doxygen from the following link: <a class="reference external" href="https://www.doxygen.nl/download.html">https://www.doxygen.nl/download.html</a></p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">rsync</span></code> command will be used through the <a class="reference external" href="https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux">Windows Subsystem for Linux (WSL)</a>.</p></li>
+</ul>
+</div></div>
+<p>To build the API Reference run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>doxygen
+</pre></div>
+</div>
+<p>To build the html documentation run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>html
+</pre></div>
+</div>
+<p>This copies all *.rst and associated media files from the project root into <em>/doc/_board</em> directory, so sphinx can find and correctly include these files.</p>
+<p>If you don’t want to copy any files, you can run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">html</span> <span class="pre">SYNC=off</span></code> instead:</p>
+</section>
+<section id="live-preview-sort-of">
+<h2>Live-preview (sort of…)<a class="headerlink" href="#live-preview-sort-of" title="Permalink to this heading">¶</a></h2>
+<p>To archive something like a hot-reload / live-preview, you can use a command like this from inside the <em>doc</em> directory:</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">Linux</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">Windows</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sphinx-autobuild<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--pre-build<span class="w"> </span><span class="s1">&#39;rsync -avm --exclude=&quot;/doc&quot; --include=&quot;*/&quot; --include=&quot;*.rst&quot; --include=&quot;*.png&quot; --exclude=&quot;*&quot; .. _board&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--pre-build<span class="w"> </span><span class="s2">&quot;mkdir -p _build/html&quot;</span><span class="se">\</span>
+<span class="w">    </span>--pre-build<span class="w"> </span><span class="s2">&quot;doxygen&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>.<span class="w"> </span>_build/html
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0"><div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">sphinx-autobuild</span> <span class="p">`</span>
+    <span class="p">-</span><span class="n">-pre-build</span> <span class="s2">&quot;wsl rsync -avm --exclude=/doc --include=*/ --include=*.rst --include=*.png --exclude=* .. _board&quot;</span> <span class="p">`</span>
+    <span class="p">-</span><span class="n">-pre-build</span> <span class="s2">&quot;python -c \&quot;</span><span class="n">import</span> <span class="n">pathlib</span><span class="p">;</span> <span class="n">pathlib</span><span class="p">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;_build/html&#39;</span><span class="p">).</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="p">=</span><span class="n">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="p">=</span><span class="n">True</span><span class="p">)\</span><span class="s2">&quot;&quot;</span> <span class="p">`</span>
+    <span class="p">-</span><span class="n">-pre-build</span> <span class="s2">&quot;doxygen&quot;</span> <span class="p">`</span>
+    <span class="p">.</span> <span class="n">_build</span><span class="p">/</span><span class="n">html</span>
+</pre></div>
+</div>
+</div></div>
+<p>The pre-build commands are taken from the Makefile.</p>
+<p>This automatically copies all files and rebuilds the documentation, if sphinx notices a change.
+But since sphinx only works on a copy of the original files, changes outside of the <em>doc</em> directory will not be noticed.</p>
+<p>To force a rebuild, <em>save</em> or <cite>touch</cite> a file inside the <em>doc</em> directory.</p>
+<p>If you want to omit the file sync and api-reference build, simply call the command without the <code class="docutils literal notranslate"><span class="pre">--pre-build</span></code> options.</p>
+</section>
+<section id="including-files-above-the-doc-directory">
+<h2>Including files above the <em>doc</em> directory<a class="headerlink" href="#including-files-above-the-doc-directory" title="Permalink to this heading">¶</a></h2>
+<p>In sphinx you can’t include a file above the sphinx root directory (here <em>/doc</em>) in the toctree.
+To bypass this, we copy all *.rst and related media files into the <em>/doc</em> directory before the build using rsync.
+The directory structure should be preserved, so referencing a file in the toctree should follow the same path as in the repository (e.g. <em>samples/uds/index.rst</em> to reference the uds sample).</p>
+<p>When you add a media file, make sure it is copied by rsync. If necessary, update the command in the Makefile.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">ARDEP</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bootloader/index.html">Bootloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firmware_loader/index.html">UDS Firmware Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="console/index.html">Console Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="error_handling/index.html">Error Handling</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#building-the-documentation">Building the documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#live-preview-sort-of">Live-preview (sort of…)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#including-files-above-the-doc-directory">Including files above the <em>doc</em> directory</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lib/index.html">Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scripts/ardep.html">ARDEP Command</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boards/mercedes/ardep/doc/index.html">ARDEP Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boards/shields/hv_shield/doc/index.html">ARDEP HV Shield</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boards/shields/power_io_shield/doc/index.html">ARDEP Power IO Shield</a></li>
+<li class="toctree-l1"><a class="reference internal" href="samples/index.html">Samples and Demos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debugging/index.html">Debugging</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="error_handling/index.html" title="previous chapter">Error Handling</a></li>
+      <li>Next: <a href="lib/index.html" title="next chapter">Libraries</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Frickly Systems GmbH.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 6.2.1</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/README.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
