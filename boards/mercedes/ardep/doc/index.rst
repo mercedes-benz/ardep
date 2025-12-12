@@ -34,8 +34,6 @@ Ardep v1.0.0
 ..  image:: 3d_view_v1_0_0.png
     :width: 100%
 
-.. _board_pinout:
-
 Pinout
 ======
 
