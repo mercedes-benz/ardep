@@ -17,17 +17,15 @@ If you are looking for documentation on the HV Extension Shield, see :ref:`here 
 Ardep v2.0.0
 ------------
 
-.. TODO: Image of Board V2
-
-.. ..  image:: 3d_view_v2.svg
-..     :width: 100%
+..  image:: 3d_view_v2.png
+    :width: 100%
 
 .. _board_pinout:
 
 Pinout
 ======
 
-..  image:: pinout_v2.svg
+..  image:: pinout_v2.png
     :width: 100%
 
 Ardep v1.0.0
