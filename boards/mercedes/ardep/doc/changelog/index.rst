@@ -20,9 +20,9 @@ Rev 1.1
 
 See also:
 
-- :download:`Schematics <ardep_board_rev_1_1_schematic.pdf>`
-- :download:`Gerber File <ardep_board_rev_1_1_gerber.zip>`
-- :download:`Altium Source Files <ardep_board_rev_1_1_sourcefiles.zip>`
+- `Schematics <https://github.com/mercedes-benz/ardep/tree/main/hardware/mainboard/mainboard_rev1/altium/ardep_board_rev_1_1_schematic.pdf>`_
+- `Gerber File <https://github.com/mercedes-benz/ardep/tree/main/hardware/mainboard/mainboard_rev1/fabrication_data/ardep_board_rev_1_1_gerber.zip>`_
+- `Altium Source Files <https://github.com/mercedes-benz/ardep/tree/main/hardware/mainboard/mainboard_rev1/altium/ardep_board_rev_1_1_sourcefiles.zip>`_
 
 
 Rev 1.0

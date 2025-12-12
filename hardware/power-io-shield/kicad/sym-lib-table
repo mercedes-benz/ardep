@@ -1,0 +1,5 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "ARDEP2_PowerIO-Shield-altium-import")(type "KiCad")(uri "${KIPRJMOD}/ARDEP2_PowerIO-Shield-altium-import.kicad_sym")(options "")(descr ""))
+  (lib (name "ARDEP Power IO Shield Symbols")(type "KiCad")(uri "${KIPRJMOD}/ARDEP Power IO Shield Symbols.kicad_sym")(options "")(descr ""))
+)

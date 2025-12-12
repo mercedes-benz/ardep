@@ -29,4 +29,4 @@ Expected behavior
 The Power IO Shield's output pins should count up in binary every second. The inputs and faults are also logged once every second
 
 .. note::
-  Don't forget to connect a suitable power supply to the Power IO Shield to see the outputs toggling. See :ref:`power_io_shield_power_supply` for more information
+  Don't forget to connect a suitable power supply to the Power IO Shield to see the outputs toggling. See :ref:`power_io_shield_voltage_supply` for more information
