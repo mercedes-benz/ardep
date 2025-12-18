@@ -9,6 +9,7 @@ build:
 
 runners:
   - file: scripts/runner/ardep.py
+  - file: scripts/runner/ardep-uds.py
 
 package-managers:
   pip:

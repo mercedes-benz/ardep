@@ -16,6 +16,8 @@ elseif(BOARD_REVISION STREQUAL "2.0.0")
     include(${ZEPHYR_BASE}/boards/common/blackmagicprobe.board.cmake)
 endif()
 
+include(${CMAKE_CURRENT_LIST_DIR}/../../common/ardep-uds.board.cmake)
+
 include(${ZEPHYR_BASE}/boards/common/jlink.board.cmake)
 include(${ZEPHYR_BASE}/boards/common/openocd.board.cmake)
 include(${ZEPHYR_BASE}/boards/common/stm32cubeprogrammer.board.cmake)

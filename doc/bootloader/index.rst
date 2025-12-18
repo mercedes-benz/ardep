@@ -180,6 +180,8 @@ Or more permanently by creating a ``sysbuild.conf`` file in your application fol
     If you create a custom UDS instance or disable the automatic switch, you must call ``uds_switch_to_firmware_loader_with_programming_session()`` in your diagnostic session control action handler when a programming session is requested.
 
 
+To flash an application with the UDS firmware loader, see :ref:`ardep_uds`.
+
 Sysbuild
 ++++++++
 

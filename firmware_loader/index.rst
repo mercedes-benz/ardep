@@ -22,6 +22,12 @@ This firmware registers an *erase slot0* routine with id ``0xFF00`` which, if st
 Then, using `RequestDownload`, `TransferData`, `RequestTransferExit` the application can be updated. Finally, use an `ECUReset` to let mcuboot boot into the fresh application.
 
 
+Flashing firmware
++++++++++++++++++
+
+If your application supports UDS firmware loading, you can use the :ref:`ardep_uds` runner to flash the new firmware.
+
+
 Building using sysbuild
 +++++++++++++++++++++++
 
