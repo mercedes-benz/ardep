@@ -1,62 +1,92 @@
 ARDEP - Automotive Rapid Development Platform
-##############################################
+#############################################
 
-ARDEP is a powerful toolkit specifically designed for automotive developers based on the `Zephyr RTOS <https://www.zephyrproject.org/>`_.
-It provides easy to use abstractions, features and tools to simplify the development process for automotive applications.
+.. image:: boards/mercedes/ardep/doc/3d_view_v2.png
+   :align: center
+   :width: 50%
+
+
+ARDEP (**A**\ utomotive **R**\ apid **DE**\ velopment **P**\ latform) is an open-source hardware and software platform 
+that simplifies automotive development. It combines a feature-rich development board with a robust 
+Zephyr-based software framework, enabling you to build and deploy automotive applications quickly.
+
+Whether you're prototyping a new automotive device or experimenting with diagnostics,
+ARDEP provides the tools and infrastructure you need.
+
+
+Waypoints
+=========
+
+* **Documentation**
+   * `Documentation <https://mercedes-benz.github.io/ardep/>`_
+   * `Getting Started Guide <https://mercedes-benz.github.io/ardep/getting_started/index.html>`_
+
+* **Hardware**
+   * `Hardware documentation <https://mercedes-benz.github.io/ardep/boards/mercedes/ardep/doc/index.html>`_
+   * `PowerIO Shield documentation <https://mercedes-benz.github.io/ardep/boards/shields/power_io_shield/doc/index.html>`_
+   * `Hardware files <hardware/>`_
+
+* **Software**
+   * `UDS Library documentation <https://mercedes-benz.github.io/ardep/lib/uds/README.html>`_
+   * `Sample documentation <https://mercedes-benz.github.io/ardep/samples/>`_
+   * `Sample sources <samples/>`_
+
+* **Project**
+   * `Contributing guidelines <CONTRIBUTING.md>`_
+   * `License <LICENSE>`_
+
+
+At a Glance
+===========
+
+* **Complete hardware solution** - Ready-to-use development board with CAN, LIN and other common communication interfaces
+* **PowerIO Shield** - Extended Power capabilities for 6 Outputs and 6 Inputs up to 48V and 3A per channel
+* **Automotive-ready software** - Built-in UDS diagnostics (ISO 14229) and DFU firmware update support
+* **Proven foundation** - Based on the reliable Zephyr RTOS with a large ecosystem
+* **Fast prototyping** - Develop and iterate quickly without worrying about hardware integration
+
+
+Key Features
+============
+
+**Hardware**
+
+* **Integrated development board** - Open-source design with everything you need built-in
+* **Automotive communication** - Onboard CAN and LIN transceivers (no external components needed)
+* **Debugger & programmer onboard** - Integrated debugger and programmer with UART connection
+* **PowerIO Shield** - Extended power capabilities with six 3A high-side switches at up to 48V
+* **Arduino headers** - Compatible with a wide range of Arduino shields and accessories
+
+**Software & Framework**
+
+* **Zephyr RTOS based** - Built on the reliable, widely-adopted open-source Zephyr RTOS
+* **Automotive diagnostics** - Built-in UDS support (ISO 14229) for professional diagnostics
+* **Firmware updates** - Integrated DFU (Device Firmware Update) over UDS
+* **Modular architecture** - Clean separation of concerns, designed for long-term maintainability
+* **Rich connectivity** - CAN, LIN, SPI, I2C, UART and more with unified and easy-to-use APIs
+
 
 Getting Started
 ===============
 
-See our `documentation <https://mercedes-benz.github.io/ardep/>`_  for more information on how to use ARDEP.
+Ready to dive in? Start with the `Getting Started Guide <https://mercedes-benz.github.io/ardep/getting_started/index.html>`_ 
+for a comprehensive step-by-step introduction. You'll find sample projects and examples to help you get up and running quickly.
 
-Follow our `Getting Started Guide <https://mercedes-benz.github.io/ardep/getting_started/index.html>`_ for a quick introduction
-
-
-Create zephyr workspace
-=======================
-
-Create workspace from west.yml in this directory, e.g.
+For detailed information on using ARDEP, API references, and troubleshooting, refer to the 
+`complete documentation <https://mercedes-benz.github.io/ardep/>`_.
 
 
-.. code-block:: console
+Contributing
+============
 
-    # create a workspace
-    mkdir ardep-workspace
-    # clone this repo into workspace
-    cd ardep-workspace && git clone git@github.com:mercedes-benz/ardep.git  ardep
-    # init west workspace from west.yml
-    cd ardep && west init -l --mf ./west.yml .
-    # update workspace, fetches dependencies
-    west update
+Contributions are welcome and appreciated.
+Please see `CONTRIBUTING.md <CONTRIBUTING.md>`_ for guidelines and further
+information.
 
-Development bootloader
-======================
-
-Per default if the board is selected we build images to be used by the bootloader.
-Those images are not signed (without signature validation).
-
-
-Build the bootloader
---------------------
-
-It is recommended to use the `ardep` subcommand of `west` to build the bootloader.
-
-.. code-block:: console
-   
-   west ardep build-bootloader
-
-
-If you want to see the raw command, execute the above and look at the first lines of output. It should look something like this:
-
-.. code-block:: console
-
-    west build --pristine auto --board ardep --build-dir build \
-        {...}/ardep-workspace/bootloader/mcuboot/boot/zephyr -- \
-        -DEXTRA_CONF_FILE={...}/ardep-workspace/ardep/boards/arm/ardep/mcuboot.conf \
-        -DEXTRA_DTC_OVERLAY_FILE={...}/ardep-workspace/ardep/boards/arm/ardep/mcuboot.overlay
 
 License
 =======
+
 Copyright Mercedes-Benz AG
 
-This project is licensed under the `Apache 2.0 license <LICENSE>`_.
+This project is licensed under the `Apache 2.0 License <LICENSE>`_.
