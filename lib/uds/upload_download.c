@@ -172,7 +172,7 @@ static UDSErr_t continue_download(const struct uds_context* const context) {
     return UDS_NRC_RequestOutOfRange;
   }
 
-  LOG_INF("Writing to flash at addr 0x%08lx, size %u",
+  LOG_DBG("Writing to flash at addr 0x%08lx, size %u",
           upload_download_state.current_address, args->len);
 
   // Flash can only be written to in blocks of write_block_size, first we
@@ -215,7 +215,7 @@ static UDSErr_t continue_download(const struct uds_context* const context) {
     }
   }
 
-  LOG_INF("Write finished");
+  LOG_DBG("Write finished");
 
   upload_download_state.current_address += args->len;
 
