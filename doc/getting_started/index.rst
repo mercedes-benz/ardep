@@ -329,13 +329,39 @@ Build the :ref:`led_sample` with:
                         
 .. note::
 
-    If you're using an older version of the board, append the board version to the boards name (e.g. ``--board ardep@a1.0.0`` or ``--board ardep@1`` for version 1 of the board).
+    **ARDEP boards are shipped with the bootloader and firmware loader pre-installed.** You can start building and flashing applications immediately. You only need to flash the bootloader and firmware loader if you're upgrading them or recovering from a corrupted state.
+    
+    All ARDEP boards now use the unified firmware loader by default, which supports both UDS DFU (via CAN) and USB DFU (via USB) for **application** updates. If you're using an older board version, append the board version to the board name (e.g. ``--board ardep@1.0.0`` or ``--board ardep@1`` for version 1).
 
-Flash the app using dfu-util:
+.. important::
+
+    Use the DEBUG USB Port on the ARDEP v2 board for flashing and debugging
+
+
+Flash the app:
 
     .. code-block:: bash
 
         west flash
+        
+.. note::
+
+    **Default flash runners:**
+    
+    - **v2 boards**: ``west flash`` uses the on-board debugger (OBD) by default
+    - **v1 boards**: ``west flash`` uses the ardep runner (dfu-util) by default
+    
+    **For application updates:**
+    
+    - **v2**: Simply run ``west flash`` (uses the OBD)
+    - **v1**: Run ``west flash`` OR use an external probe with ``west flash -r {runner}``
+    
+    **For bootloader/firmware loader updates (only when upgrading or recovering):**
+    
+    - **v2**: Use ``west flash`` with sysbuild (uses the OBD), see :ref:`flashing_the_bootloader`
+    - **v1**: Must use an external debug probe: ``west flash -r {runner}`` with sysbuild
+    
+    **Important**: The bootloader and firmware loader themselves can ONLY be flashed via debugger (OBD or external probe), never via DFU.
 
 .. [1] Tested on Ubuntu 24.04 and Windows (Version 24H2 Build 26100.5074), Zephyr SDK 0.17.2 and Zephyr RTOS 4.2.0
 

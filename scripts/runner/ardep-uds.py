@@ -77,9 +77,9 @@ class ArdepUDSRunner(ZephyrBinaryRunner):
     def do_create(cls, cfg, args):
         return cls(
             cfg,
-            can_interface=args.can_interface,
-            uds_source_address=args.uds_source_address,
-            uds_target_address=args.uds_target_address,
+            can_interface=args.iface,
+            uds_source_address=args.uds_source_id,
+            uds_target_address=args.uds_target_id,
             gearshift=args.gearshift,
             block_size=args.block_size,
         )

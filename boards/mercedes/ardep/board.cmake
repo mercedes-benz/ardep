@@ -10,12 +10,11 @@ board_runner_args(pyocd "--target=stm32g474retx")
 board_runner_args(stm32cubeprogrammer "--port=swd" "--reset-mode=hw")
 
 
-if(BOARD_REVISION STREQUAL "1.0.0")
-    include(${CMAKE_CURRENT_LIST_DIR}/../../common/ardep.board.cmake)
-elseif(BOARD_REVISION STREQUAL "2.0.0")
+if(BOARD_REVISION STREQUAL "2.0.0")
     include(${ZEPHYR_BASE}/boards/common/blackmagicprobe.board.cmake)
 endif()
 
+include(${CMAKE_CURRENT_LIST_DIR}/../../common/ardep.board.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../../common/ardep-uds.board.cmake)
 
 include(${ZEPHYR_BASE}/boards/common/jlink.board.cmake)

@@ -3,13 +3,15 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-# Set USB device descriptors for ARDEP board
+# lower log level of usb device stack to reduce log spam
+choice USBD_LOG_LEVEL_CHOICE
+  default USBD_LOG_LEVEL_ERR
+endchoice
 
-config USB_DEVICE_PRODUCT
-	default "ARDEP Board"
-config USB_DEVICE_VID
-	default 0x25E1
-config USB_DEVICE_PID
-	default 0x1B1E
-config USB_DEVICE_DFU_PID
-	default 0x1B1E
+choice UDC_DRIVER_LOG_LEVEL_CHOICE
+  default UDC_DRIVER_LOG_LEVEL_ERR
+endchoice
+
+choice USBD_CDC_ACM_LOG_LEVEL_CHOICE
+  default USBD_CDC_ACM_LOG_LEVEL_OFF
+endchoice

@@ -69,8 +69,6 @@ class ArdepRunner(ZephyrBinaryRunner):
         result = subprocess.Popen(
             [
                 "dfu-util",
-                "--alt",
-                "1",
                 "--device",
                 f"{self.device}",
                 "--download",
@@ -92,32 +90,6 @@ class ArdepRunner(ZephyrBinaryRunner):
 
             self.logger.error(f"dfu-util subprocess output:\n{subprocess_output}\n")
             self.logger.error("Failed to flash firmware to ardep")
-
-            exit(result.returncode)
-
-        result = subprocess.Popen(
-            [
-                "dfu-util",
-                "--alt",
-                "1",
-                "--device",
-                f"{self.device}",
-                "--detach",
-            ],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            encoding="utf-8",
-            text=True,
-        )
-
-        while result.poll() is None:
-            print("detaching ...", end="\r")
-            time.sleep(1)
-
-        print("")
-        if result.returncode != 0:
-            self.logger.error(f"dfu-util subprocess output:\n{result.stdout.read()}\n")
-            self.logger.error("Failed to detach dfu-util from ardep")
 
             exit(result.returncode)
 

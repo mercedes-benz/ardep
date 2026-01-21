@@ -8,8 +8,6 @@ menuconfig UDS_LEGACY
     depends on CAN
     depends on ISOTP
 
-    depends on CAN_MAX_FILTER >= 8
-
     depends on BOOTLOADER_MCUBOOT
     depends on IMG_MANAGER
     depends on REBOOT

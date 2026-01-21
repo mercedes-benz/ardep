@@ -14,9 +14,12 @@ config SPI_STM32_INTERRUPT
 	default y
 	depends on SPI
 
-config CAN_MAX_FILTER
+config CAN_MAX_STD_ID_FILTER
+	default 12
+
+config CAN_MAX_EXT_ID_FILTER
 	default 8
-		
+
 rsource "Kconfig.usb"
 
 # These options are only relevant if we don't build MCUBOOT.

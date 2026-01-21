@@ -153,15 +153,14 @@ struct hv_shield_api_t api = {
   .set_gpio_output_enable = hvs_set_gpio_output_enable,
 };
 
-#define HV_SHIELD_EACH(n)                                               \
-  static const struct hv_shield_config_t hv_shield_config_##n = {       \
-    .spi_spec =                                                         \
-        SPI_DT_SPEC_INST_GET(n, SPI_TRANSFER_MSB | SPI_WORD_SET(8), 0), \
-    .oe_gpio_spec = GPIO_DT_SPEC_INST_GET(n, oe_gpios),                 \
-  };                                                                    \
-  struct hv_shield_data_t hv_shield_data_##n = {};                      \
-  DEVICE_DT_INST_DEFINE(n, hv_shield_init, NULL, &hv_shield_data_##n,   \
-                        &hv_shield_config_##n, POST_KERNEL,             \
+#define HV_SHIELD_EACH(n)                                                    \
+  static const struct hv_shield_config_t hv_shield_config_##n = {            \
+    .spi_spec = SPI_DT_SPEC_INST_GET(n, SPI_TRANSFER_MSB | SPI_WORD_SET(8)), \
+    .oe_gpio_spec = GPIO_DT_SPEC_INST_GET(n, oe_gpios),                      \
+  };                                                                         \
+  struct hv_shield_data_t hv_shield_data_##n = {};                           \
+  DEVICE_DT_INST_DEFINE(n, hv_shield_init, NULL, &hv_shield_data_##n,        \
+                        &hv_shield_config_##n, POST_KERNEL,                  \
                         CONFIG_HV_SHIELD_INIT_PRIORITY, &api);
 
 DT_INST_FOREACH_STATUS_OKAY(HV_SHIELD_EACH);

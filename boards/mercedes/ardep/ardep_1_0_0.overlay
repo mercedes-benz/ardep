@@ -16,8 +16,6 @@
 };
 
 &usb {
-    status = "okay";
-
     usb_cdc_acm: usb-cdc-acm {
         status = "okay";
         compatible = "zephyr,cdc-acm-uart";

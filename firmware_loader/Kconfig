@@ -56,6 +56,34 @@ config DISABLE_WAIT_BEFORE_ERASE
       Disables the 150ms wait before erasing slot0, which also disallows using the
       RoutineControl message without the no-reponse setting.
 
+menuconfig FIRMWARE_LOADER_USB_DFU
+    bool "Enable USB DFU support"
+    default y
+    select USBD_DFU
+    select USB_DEVICE_STACK_NEXT
+    select USBD_DFU_FLASH
+    select USBD_DFU_FLASH_SLOT0
+    help
+      Enable USB Device Firmware Upgrade (DFU) support for firmware updates via USB.
+
+if FIRMWARE_LOADER_USB_DFU
+  config FIRMWARE_LOADER_USB_DFU_REBOOT_AFTER_COMPLETION
+      bool "Reboot after DFU completion"
+      default y
+      depends on REBOOT
+      help
+        Reboot the system automatically after a successful firmware update via USB DFU.
+  if FIRMWARE_LOADER_USB_DFU_REBOOT_AFTER_COMPLETION
+    config FIRMWARE_LOADER_USB_DFU_REBOOT_DELAY_MS
+        int "USB DFU Reboot Delay (ms)"
+        default 3000
+        help
+          Time in milliseconds to wait before rebooting the system after a successful
+          firmware update via USB DFU.
+  endif
+endif
+
+
 endmenu
 
 comment "Zephyr Configuration"

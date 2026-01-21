@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 menu "ARDEP"
-
+    rsource "ardep_usb/Kconfig"
     rsource "can_router/Kconfig"
     rsource "iso14229/Kconfig"
     rsource "uds/Kconfig"

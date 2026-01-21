@@ -35,6 +35,7 @@ Build the example with:
 
             west build --board ardep@2.0.0 ../modules/lib/cannectivity/app -- \
                 -DFILE_SUFFIX=usbd_next \
+                -DEXTRA_CONF_FILE=../../../../ardep/samples/can_usb_bridge/cannectivity.conf \
                 -DEXTRA_DTC_OVERLAY_FILE=../../../../ardep/samples/can_usb_bridge/cannectivity_2_0_0.overlay
 
     .. tab:: Ardep v1.0.0
@@ -43,7 +44,7 @@ Build the example with:
 
             west build --board ardep@1.0.0 ../modules/lib/cannectivity/app -- \
                 -DFILE_SUFFIX=usbd_next \
-                -DEXTRA_CONF_FILE=../../../../ardep/samples/can_usb_bridge/cannectivity_1_0_0.conf \
+                -DEXTRA_CONF_FILE=../../../../ardep/samples/can_usb_bridge/cannectivity.conf \
                 -DEXTRA_DTC_OVERLAY_FILE=../../../../ardep/samples/can_usb_bridge/cannectivity_1_0_0.overlay
                 
 The ``FILE_SUFFIX`` selects the `prj_usbd_next.conf` file from the CANnectivity app folder, which enables the new USB stack.

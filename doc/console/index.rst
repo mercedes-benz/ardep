@@ -7,20 +7,22 @@ Console Output
    :local:
    :depth: 2
 
-Fimrware Output
+Firmware Output
 ===============
+
+The application output is sent on ``UART-A``.
 
 .. tabs::
 
 
     .. tab:: Ardep v2.0.0 and later
 
-        The output of the application is send on ``UART-A`` and additionally forwarded via the on-board debugger to a cdc-acm device on the host system.
+        The output of the application is additionally forwarded via the on-board debugger to a USB cdc-acm device on the host system.
 
     .. tab:: Ardep v1.0.0
 
-       Per default, every application build for the *ardep* board will include a cdc-acm driver.
-       This means, when connecting the board via usb to your pc, a new serial device should be visible in your system.
+       By default, every application built for the *ardep* board will include a USB cdc-acm driver.
+       This means, when connecting the board via USB to your PC, a new serial device should be visible in your system.
 
 
 You can use the cdc-acm device to communicate with the board. The default baudrate is 115200.
@@ -45,18 +47,22 @@ You can use the cdc-acm device to communicate with the board. The default baudra
 
         Connect to the COM port by selecting *Serial* in the *Connection type* section and entering the COM port number (e.g. *COM5*) in the *Serial line* field, setting the speed to 115200.
 
-Bootloader Output
-=================
+Bootloader and Firmware Loader Output
+======================================
 
-The bootloader output is by default available on the ``UART-A`` interface.
+The bootloader and firmware loader output is available on the ``UART-A`` interface.
 
 .. tabs::
 
     .. tab:: Ardep v2.0.0 and later
 
-       Just as the firmwares output, the bootloaders output is also forwarded via the on-board debugger to a cdc-acm device on the host system.
+       Just as the firmware's output, the bootloader and firmware loader output is also forwarded via the on-board debugger to a cdc-acm device on the host system.
 
     .. tab:: Ardep v1.0.0
 
-       The bootloader does not contain the cdc-acm driver and is only emitted via ``UART-A``.
-       If you want to see the bootloader output on your pc, you will need an external UART to USB adapter connected to the ``UART-A`` pins.
+       The bootloader and firmware loader do not contain the cdc-acm driver and only emit output via ``UART-A``.
+       If you want to see the bootloader or firmware loader output on your PC, you will need an external UART to USB adapter connected to the ``UART-A`` pins.
+
+.. note::
+    
+    The unified firmware loader is now used by default on all board versions, supporting both UDS DFU and USB DFU update mechanisms.
