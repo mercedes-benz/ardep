@@ -1,8 +1,0 @@
-sample:
-  name: Power IO shield interrupt sample
-common:
-  build_only: true
-  integration_platforms:
-    - ardep
-tests:
-  example.power_io_shield.interrupts.default: {}

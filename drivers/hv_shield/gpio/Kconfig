@@ -1,4 +1,0 @@
-config HV_SHIELD_GPIO_INIT_PRIORITY
-  int
-  prompt "GPIO init priority"
-  default HV_SHIELD_INIT_PRIORITY

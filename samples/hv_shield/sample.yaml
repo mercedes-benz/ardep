@@ -1,9 +1,0 @@
-sample:
-  name: HV Shield sample
-common:
-  build_only: true
-  integration_platforms:
-    - ardep
-tests:
-  example.hv_shield.default:
-    extra_args: SHIELD=hv_shield

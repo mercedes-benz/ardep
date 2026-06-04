@@ -1,2 +1,0 @@
-config SHIELD_HV_SHIELD
-  def_bool $(shields_list_contains,hv_shield)
