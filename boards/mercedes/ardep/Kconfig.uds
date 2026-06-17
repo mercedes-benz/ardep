@@ -16,7 +16,7 @@ if UDS
 endif # UDS
 
 choice STD_C
-    default STD_C11 # requirement for external iso14229 module
+    default STD_C17 # requirement for external iso14229 module
 endchoice
 
 config CAN
