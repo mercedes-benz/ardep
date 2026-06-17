@@ -256,13 +256,13 @@ static void *uds_setup(void) {
   static struct fs_mount_t fixture_fs_mount = {
     .type = FS_LITTLEFS,
     .fs_data = &lfs_storage,
-    .storage_dev = (void *)FIXED_PARTITION_ID(storage_partition),
+    .storage_dev = (void *)PARTITION_ID(storage_partition),
     .mnt_point = "/lfs",
   };
 
   extern int fixture_fs_wipe(void) {
     const struct flash_area *fa;
-    int rc = flash_area_open(FIXED_PARTITION_ID(storage_partition), &fa);
+    int rc = flash_area_open(PARTITION_ID(storage_partition), &fa);
 
     if (rc < 0) {
       return rc;
