@@ -21,6 +21,7 @@ manifest:
           - hal_st
           - mcuboot
           - mbedtls
+          - tf-psa-crypto
           - littlefs
     - name: zephboards
       url: https://github.com/dragonlock2/zephyrboards.git
