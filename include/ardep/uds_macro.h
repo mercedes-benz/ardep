@@ -467,6 +467,64 @@
       .user_context = _user_context,                                  \
       .data = _data_ptr,                                              \
       .data_id = _data_id,                                            \
+      .ignore_data_id = false,                                        \
+      .read = {                                                       \
+        .check = _read_check,                                         \
+        .action = _read,                                              \
+      },                                                              \
+      .write = {                                                      \
+        .check = _write_check,                                        \
+        .action = _write,                                             \
+      },                                                              \
+      .io_control = {                                                 \
+        .check = _io_control_check,                                   \
+        .action = _io_control,                                        \
+      },                                                              \
+    },                                                                \
+  };
+
+// clang-format on
+
+// clang-format off
+
+/**
+ * @brief Register a new data identifier handler for all data identifiers (catch-all handler)
+ * 
+ * @param _instance Pointer to associated the UDS server instance
+ * @param _data_ptr Custom context or data to handle the event
+ * @param _read_check Check if the `_read` action should be executed
+ * @param _read Execute a read for the event
+ * @param _write_check Check if the `_write` action should be executed
+ * @param _write Execute a write for the event
+ * @param _io_control_check Check if the `_io_control` action should be executed
+ * @param _io_control Act an io control event
+ * @param _user_context Optional context provided by the user
+ * 
+ * @note: @p _write_check and @p _write are optional. Set to NULL for read-only
+ *        data identifier
+ *
+ * @note: @p _io_control_check and @p _io_control are optional.
+ *        Set to NULL for to make this data identifier not I/O controllable
+ */
+#define UDS_REGISTER_DATA_BY_IDENTIFIER_CATCHALL_HANDLER(             \
+  _instance,                                                          \
+  _data_ptr,                                                          \
+  _read_check,                                                        \
+  _read,                                                              \
+  _write_check,                                                       \
+  _write,                                                             \
+  _io_control_check,                                                  \
+  _io_control,                                                        \
+  _user_context                                                       \
+)                                                                     \
+  STRUCT_SECTION_ITERABLE(uds_registration_t,                         \
+        _UDS_CAT_EXPAND(__uds_registration_id, _data_id)) = {         \
+    .instance = _instance,                                            \
+    .type = UDS_REGISTRATION_TYPE__DATA_IDENTIFIER,                   \
+    .data_identifier = {                                              \
+      .user_context = _user_context,                                  \
+      .data = _data_ptr,                                              \
+      .ignore_data_id = true,                                         \
       .read = {                                                       \
         .check = _read_check,                                         \
         .action = _read,                                              \
