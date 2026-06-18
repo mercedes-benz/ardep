@@ -31,6 +31,16 @@ DECLARE_FAKE_VALUE_FUNC(UDSErr_t,
                         struct uds_context *const,
                         bool *);
 
+DECLARE_FAKE_VALUE_FUNC(UDSErr_t,
+                        catchall_check_fn,
+                        const struct uds_context *const,
+                        bool *);
+
+DECLARE_FAKE_VALUE_FUNC(UDSErr_t,
+                        catchall_action_fn,
+                        struct uds_context *const,
+                        bool *);
+
 extern const uint16_t data_id_r;
 extern uint8_t data_id_r_data[4];
 
@@ -42,6 +52,8 @@ extern const uint16_t data_id_rw_duplicated2;
 extern uint8_t data_id_rw_duplicated_data[4];
 
 extern const uint16_t routine_id;
+
+extern const uint16_t data_id_unregistered;
 
 #ifdef CONFIG_UDS_USE_DYNAMIC_REGISTRATION
 extern bool test_dynamic_registration_check_invoked;

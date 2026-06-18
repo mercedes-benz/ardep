@@ -17,7 +17,8 @@ static UDSErr_t uds_check_read_with_data_id(
   const struct uds_registration_t* const reg = context->registration;
   UDSRDBIArgs_t* args = (UDSRDBIArgs_t*)context->arg;
 
-  if (args->dataId != context->registration->data_identifier.data_id) {
+  if (args->dataId != context->registration->data_identifier.data_id &&
+      !context->registration->data_identifier.ignore_data_id) {
     *apply_action = false;
 
     return UDS_OK;
@@ -53,13 +54,18 @@ static UDSErr_t uds_check_write_with_data_id(
   const struct uds_registration_t* const reg = context->registration;
   UDSRDBIArgs_t* args = (UDSRDBIArgs_t*)context->arg;
 
-  if (args->dataId != context->registration->data_identifier.data_id) {
+  if (args->dataId != context->registration->data_identifier.data_id &&
+      !context->registration->data_identifier.ignore_data_id) {
     *apply_action = false;
 
     return UDS_OK;
   }
 
-  return reg->data_identifier.write.check(context, apply_action);
+  if (reg->data_identifier.write.check) {
+    return reg->data_identifier.write.check(context, apply_action);
+  }
+
+  return UDS_OK;
 }
 
 uds_check_fn uds_get_check_for_write_data_by_identifier(
@@ -85,13 +91,18 @@ static UDSErr_t uds_check_io_control_with_data_id(
   const struct uds_registration_t* const reg = context->registration;
   UDSRDBIArgs_t* args = (UDSRDBIArgs_t*)context->arg;
 
-  if (args->dataId != context->registration->data_identifier.data_id) {
+  if (args->dataId != context->registration->data_identifier.data_id &&
+      !context->registration->data_identifier.ignore_data_id) {
     *apply_action = false;
 
     return UDS_OK;
   }
 
-  return reg->data_identifier.io_control.check(context, apply_action);
+  if (reg->data_identifier.io_control.check) {
+    return reg->data_identifier.io_control.check(context, apply_action);
+  }
+
+  return UDS_OK;
 }
 
 uds_check_fn uds_get_check_for_io_control_by_identifier(

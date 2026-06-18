@@ -426,6 +426,11 @@ struct uds_registration_t {
        */
       uint16_t data_id;
       /**
+       * @brief Set to true if this registration should receive all
+       * data identifier events regardless of the data identifier.
+       */
+      bool ignore_data_id;
+      /**
        * @brief Actor for *UDS_EVT_ReadDataByIdent* events
        */
       struct uds_actor read;
