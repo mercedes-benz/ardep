@@ -61,7 +61,11 @@ static UDSErr_t uds_check_write_with_data_id(
     return UDS_OK;
   }
 
-  return reg->data_identifier.write.check(context, apply_action);
+  if (reg->data_identifier.write.check) {
+    return reg->data_identifier.write.check(context, apply_action);
+  }
+
+  return UDS_OK;
 }
 
 uds_check_fn uds_get_check_for_write_data_by_identifier(
@@ -94,7 +98,11 @@ static UDSErr_t uds_check_io_control_with_data_id(
     return UDS_OK;
   }
 
-  return reg->data_identifier.io_control.check(context, apply_action);
+  if (reg->data_identifier.io_control.check) {
+    return reg->data_identifier.io_control.check(context, apply_action);
+  }
+
+  return UDS_OK;
 }
 
 uds_check_fn uds_get_check_for_io_control_by_identifier(
