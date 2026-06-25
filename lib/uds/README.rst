@@ -508,6 +508,35 @@ These three services share the same data identifier space, so they use a common 
         NULL                 // User context
     );
 
+**Catch-all handler**:
+
+To handle *every* data identifier with a single registration (instead of one
+per DID), use the catch-all variant. It is identical to
+``UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER`` but drops the ``_data_id``
+parameter: the handler is invoked for read, write, and IO control events
+regardless of the requested DID. The actual DID is available to the check and
+action functions via ``args->dataId``.
+
+- ``UDS_REGISTER_DATA_BY_IDENTIFIER_CATCHALL_HANDLER(_instance, _data_ptr, _read_check, _read, _write_check, _write, _io_control_check, _io_control, _user_context)``
+
+.. code-block:: c
+
+    UDS_REGISTER_DATA_BY_IDENTIFIER_CATCHALL_HANDLER(
+        &instance,           // Instance
+        NULL,                // Data pointer
+        catchall_read_check, // Read check (inspect args->dataId)
+        catchall_read,       // Read action
+        NULL, NULL,          // No write support
+        NULL, NULL,          // No IO control support
+        NULL                 // User context
+    );
+
+.. note::
+
+    If both a DID-specific handler and a catch-all handler match a request,
+    both registrations are evaluated. Use the ``_check`` functions to decide
+    which one should consume the event.
+
 Diagnostic Session Control (``0x10``)
 --------------------------------------
 
