@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>ARDEP UDS Runner &#8212; ARDEP  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="ARDEP Board" href="../../boards/mercedes/ardep/doc/index.html" />
+    <link rel="prev" title="ARDEP Command" href="../ardep.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="ardep-uds-runner">
+<span id="ardep-uds"></span><h1>ARDEP UDS Runner<a class="headerlink" href="#ardep-uds-runner" title="Permalink to this heading">¶</a></h1>
+<p>Using the ARDEP UDS runner, you can flash firmware images to ARDEPs with UDS support. ARDEP v2 device have this enabled by default and can be flashed over CAN using UDS protocol.
+ARDEP v1 devices can also be flashed using UDS, but require to flash the UDS bootloader first using sysbuild, also see <a class="reference internal" href="../../bootloader/index.html#uds-bootloader"><span class="std std-ref">UDS and USB DFU Support via Firmware Loader</span></a>.</p>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">¶</a></h2>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Make sure not to use sysbuild while building the new firmware, as the runner can only flash the application binary, not the bootloader or firmware loader.</p>
+</div>
+<p>Example command:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>west<span class="w"> </span>flash<span class="w"> </span>--runner<span class="w"> </span>ardep-uds
+</pre></div>
+</div>
+<p>If you want to use a different gearshift address, specify it with the <code class="docutils literal notranslate"><span class="pre">--gearshift</span></code> option (valid range: 0-7):</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>west<span class="w"> </span>flash<span class="w"> </span>--runner<span class="w"> </span>ardep-uds<span class="w"> </span>--gearshift<span class="w"> </span><span class="m">2</span>
+</pre></div>
+</div>
+<p>If you want to use custom UDS CAN IDs, specify them with the <code class="docutils literal notranslate"><span class="pre">--uds-source-id</span></code> and <code class="docutils literal notranslate"><span class="pre">--uds-target-id</span></code> options:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>west<span class="w"> </span>flash<span class="w"> </span>--runner<span class="w"> </span>ardep-uds<span class="w"> </span>--uds-source-id<span class="w"> </span>0x7E0<span class="w"> </span>--uds-target-id<span class="w"> </span>0x7E8
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <strong>source</strong> address of the UDS client (i.e., this ARDEP-UDS runner) must match the <strong>target</strong> address of the UDS server (i.e., the ARDEP device being flashed) and vice versa.</p>
+<p>Also note, that you cannot use both the <code class="docutils literal notranslate"><span class="pre">--gearshift</span></code> option and custom UDS addresses at the same time, as gearshift changes the UDS addresses automatically.</p>
+</div>
+<p>If the upload fails due to timeouts, you can try reducing the block size using the <code class="docutils literal notranslate"><span class="pre">--block-size</span></code> option (<code class="docutils literal notranslate"><span class="pre">128</span></code> bytes is usually a safe choice):</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>west<span class="w"> </span>flash<span class="w"> </span>--runner<span class="w"> </span>ardep-uds<span class="w"> </span>--block-size<span class="w"> </span><span class="m">128</span>
+</pre></div>
+</div>
+</section>
+<section id="uds-flow">
+<h2>UDS Flow<a class="headerlink" href="#uds-flow" title="Permalink to this heading">¶</a></h2>
+<p>The <a class="reference internal" href="../../firmware_loader/index.html#firmware-loader"><span class="std std-ref">Firmware Loader</span></a> needs the following UDS services to be called in this order to flash new firmware, this runner implements this flow as following:</p>
+<ol class="arabic simple">
+<li><p>Start a programming session using <cite>DiagnosticSessionControl</cite> (0x10) with sub-function 0x02 (<em>Programming Session</em>).</p></li>
+<li><p>Wait for the UDS server (the ARDEP device) to switch to the firmware loader. For this, use <cite>TesterPresent</cite> (0x3E) periodically until the server responds.</p></li>
+<li><p>Erase slot0 (the application slot) using the custom erase routine with id <code class="docutils literal notranslate"><span class="pre">0xFF00</span></code>. For this, use <cite>RoutineControl</cite> (0x31) with sub-function 0x01 (<em>Start Routine</em>) and routine id <code class="docutils literal notranslate"><span class="pre">0xFF00</span></code>.</p></li>
+<li><p>Wait for the erase to complete by waiting for the Server to respond again (use <cite>TesterPresent</cite> periodically) and finally check the routine status using <cite>RoutineControl</cite> with sub-function 0x03 (<em>Request Routine Results</em>). The expected payload is <code class="docutils literal notranslate"><span class="pre">0x0000</span></code> indicating success.</p></li>
+<li><p>Upload the new firmware using <cite>RequestDownload</cite> (0x34), <cite>TransferData</cite> (0x36) and <cite>RequestTransferExit</cite> (0x37).
+The size of the TransferData blocks should be less than or equal 512 bytes, higher sizes might lead to timeouts.
+Check which size works best for your setup.
+Also note, that the <cite>TransferData</cite> block sequence counter should start at 1 and may wrap around after reaching 0xFF (back to a 0).</p></li>
+<li><p>Finally, reset the device using <cite>ECUReset</cite> (0x11) with sub-function 0x01 (<em>Hard Reset</em>), which will make mcuboot boot into the newly flashed application, if the bootloader jumper is not set.</p></li>
+</ol>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">ARDEP</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bootloader/index.html">Bootloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware_loader/index.html">Firmware Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../console/index.html">Console Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../error_handling/index.html">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/index.html">Libraries</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Commands and runners</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../ardep.html">ARDEP Command</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ARDEP UDS Runner</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../boards/mercedes/ardep/doc/index.html">ARDEP Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boards/shields/hv_shield/doc/index.html">ARDEP HV Shield</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boards/shields/power_io_shield/doc/index.html">ARDEP Power IO Shield</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../samples/index.html">Samples and Demos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../debugging/index.html">Debugging</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Commands and runners</a><ul>
+      <li>Previous: <a href="../ardep.html" title="previous chapter">ARDEP Command</a></li>
+      <li>Next: <a href="../../boards/mercedes/ardep/doc/index.html" title="next chapter">ARDEP Board</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Frickly Systems GmbH.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 6.2.1</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../../_sources/scripts/runner/ardep-uds.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
