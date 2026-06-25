@@ -12,7 +12,7 @@ manifest:
   projects:
     - name: zephyr
       remote: zephyrproject-rtos
-      revision: v4.3.0
+      revision: v4.4.0
       import:
         name-allowlist:
           - cmsis_6
@@ -21,6 +21,7 @@ manifest:
           - hal_st
           - mcuboot
           - mbedtls
+          - tf-psa-crypto
           - littlefs
     - name: zephboards
       url: https://github.com/dragonlock2/zephyrboards.git
@@ -30,5 +31,5 @@ manifest:
       revision: zephyr
     - name: cannectivity
       url: https://github.com/CANnectivity/cannectivity.git
-      revision: v1.2.1
+      revision: v1.4.0
       path: modules/lib/cannectivity

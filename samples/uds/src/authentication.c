@@ -14,9 +14,7 @@ LOG_MODULE_DECLARE(uds_sample, LOG_LEVEL_DBG);
 #include <zephyr/kernel.h>
 
 #include <ardep/uds.h>
-#include <mbedtls/aes.h>
-#include <mbedtls/ctr_drbg.h>
-#include <mbedtls/entropy.h>
+#include <psa/crypto.h>
 
 const unsigned char uds_aes_key_bin[] = {0xc3, 0x6a, 0xd3, 0x5c, 0xa2, 0xb7,
                                          0x0e, 0x82, 0xf7, 0xc3, 0x7a, 0xfa,
@@ -34,64 +32,57 @@ struct authentication_data auth_data = {
                               0x04, 0x01, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00},
 };
 
-int aes_encrypt_ecb(const uint8_t *key, const uint8_t *input, uint8_t *output) {
-  mbedtls_aes_context aes;
-  int ret;
+// AES-128 single-block ECB via the PSA Crypto API. The legacy mbedtls_aes_*
+// low-level API was removed from the public surface in Mbed TLS 4.x.
+static int aes_ecb_crypt(const uint8_t *key, const uint8_t *input,
+                         uint8_t *output, bool encrypt) {
+  psa_key_attributes_t attr = PSA_KEY_ATTRIBUTES_INIT;
+  psa_key_id_t key_id;
+  psa_status_t status;
+  size_t output_len;
 
-  mbedtls_aes_init(&aes);
-  ret = mbedtls_aes_setkey_enc(&aes, key, 128);
-  if (ret != 0) {
-    mbedtls_aes_free(&aes);
+  if (psa_crypto_init() != PSA_SUCCESS) {
     return -1;
   }
 
-  ret = mbedtls_aes_crypt_ecb(&aes, MBEDTLS_AES_ENCRYPT, input, output);
-  mbedtls_aes_free(&aes);
+  psa_set_key_usage_flags(
+      &attr, encrypt ? PSA_KEY_USAGE_ENCRYPT : PSA_KEY_USAGE_DECRYPT);
+  psa_set_key_algorithm(&attr, PSA_ALG_ECB_NO_PADDING);
+  psa_set_key_type(&attr, PSA_KEY_TYPE_AES);
+  psa_set_key_bits(&attr, 128);
 
-  return (ret == 0) ? 0 : -1;
+  status = psa_import_key(&attr, key, 16, &key_id);
+  if (status != PSA_SUCCESS) {
+    return -1;
+  }
+
+  if (encrypt) {
+    status = psa_cipher_encrypt(key_id, PSA_ALG_ECB_NO_PADDING, input, 16,
+                                output, 16, &output_len);
+  } else {
+    status = psa_cipher_decrypt(key_id, PSA_ALG_ECB_NO_PADDING, input, 16,
+                                output, 16, &output_len);
+  }
+
+  psa_destroy_key(key_id);
+
+  return (status == PSA_SUCCESS && output_len == 16) ? 0 : -1;
+}
+
+int aes_encrypt_ecb(const uint8_t *key, const uint8_t *input, uint8_t *output) {
+  return aes_ecb_crypt(key, input, output, true);
 }
 
 int aes_decrypt_ecb(const uint8_t *key, const uint8_t *input, uint8_t *output) {
-  mbedtls_aes_context aes;
-  int ret;
-
-  mbedtls_aes_init(&aes);
-  ret = mbedtls_aes_setkey_dec(&aes, key, 128);
-  if (ret != 0) {
-    mbedtls_aes_free(&aes);
-    return -1;
-  }
-
-  ret = mbedtls_aes_crypt_ecb(&aes, MBEDTLS_AES_DECRYPT, input, output);
-  mbedtls_aes_free(&aes);
-
-  return (ret == 0) ? 0 : -1;
+  return aes_ecb_crypt(key, input, output, false);
 }
 
 int generate_random_seed(uint8_t *seed) {
-  mbedtls_entropy_context entropy;
-  mbedtls_ctr_drbg_context ctr_drbg;
-  const char *personalization = "uds_seed_gen";
-  int ret;
-
-  mbedtls_entropy_init(&entropy);
-  mbedtls_ctr_drbg_init(&ctr_drbg);
-
-  ret = mbedtls_ctr_drbg_seed(&ctr_drbg, mbedtls_entropy_func, &entropy,
-                              (const unsigned char *)personalization,
-                              strlen(personalization));
-  if (ret != 0) {
-    mbedtls_ctr_drbg_free(&ctr_drbg);
-    mbedtls_entropy_free(&entropy);
+  if (psa_crypto_init() != PSA_SUCCESS) {
     return -1;
   }
 
-  ret = mbedtls_ctr_drbg_random(&ctr_drbg, seed, 16);
-
-  mbedtls_ctr_drbg_free(&ctr_drbg);
-  mbedtls_entropy_free(&entropy);
-
-  return (ret == 0) ? 0 : -1;
+  return (psa_generate_random(seed, 16) == PSA_SUCCESS) ? 0 : -1;
 }
 
 static UDSErr_t auth_check(const struct uds_context *const context,

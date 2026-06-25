@@ -1,5 +1,6 @@
 board:
   name: ardep
+  full_name: ARDEP
   vendor: mercedes
   revision:
     format: major.minor.patch

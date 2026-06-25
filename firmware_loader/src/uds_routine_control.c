@@ -57,7 +57,7 @@ static void erase_slot0_work_handler(struct k_work *work) {
       CONTAINER_OF(dwork, struct uds_memory_erasure_routine_status, work);
 
   const struct flash_area *fa;
-  int rc = flash_area_open(FIXED_PARTITION_ID(slot0_partition), &fa);
+  int rc = flash_area_open(PARTITION_ID(slot0_partition), &fa);
 
   int32_t result = UDS_OK;
 
