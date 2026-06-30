@@ -1,13 +1,11 @@
 #!/bin/bash
-# =============================================================================
 # ARDEP Toolchain Validation Script
-# ISO 26262-6:2018 Clause 8.4.3 - Error Detection Mechanisms
-# =============================================================================
+# Checks for compatible GDB required by Black Magic Probe
 
 echo "================================================================================"
-echo "ARDEP Toolchain Validation v1.0"
+echo "ARDEP Toolchain Validation"
 echo "================================================================================"
-echo "Checking GDB Multiarch compatibility for Black Magic Probe..."
+echo "Checking for compatible GDB..."
 echo ""
 
 if command -v gdb-multiarch >/dev/null 2>&1; then
@@ -19,7 +17,7 @@ elif command -v arm-none-eabi-gdb >/dev/null 2>&1; then
     echo "[OK] arm-none-eabi-gdb found: $GDB_VERSION"
     exit 0
 else
-    echo "[FAIL] No compatible GDB found for Black Magic Probe"
+    echo "[FAIL] No compatible GDB found"
     echo ""
     echo "Install one of the following:"
     echo "  Ubuntu/Debian: sudo apt install gdb-multiarch"
