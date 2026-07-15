@@ -518,8 +518,7 @@
   _user_context                                                       \
 )                                                                     \
   STRUCT_SECTION_ITERABLE(uds_registration_t,                         \
-        _UDS_CAT_EXPAND(__uds_registration_id_catchall_,              \
-                        __COUNTER__)) = {                             \
+        _UDS_UNIQUE_REGISTRATION_NAME(catchall)) = {                  \
     .instance = _instance,                                            \
     .type = UDS_REGISTRATION_TYPE__DATA_IDENTIFIER,                   \
     .data_identifier = {                                              \
