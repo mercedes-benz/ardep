@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Gearshift Address Providers &#8212; ARDEP  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="ISO14229 Library" href="../iso14229/README.html" />
+    <link rel="prev" title="CAN Log Library" href="../can_log/README.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="gearshift-address-providers">
+<span id="id1"></span><h1>Gearshift Address Providers<a class="headerlink" href="#gearshift-address-providers" title="Permalink to this heading">¶</a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
+<p>The Gearshift Address Providers library enables dynamic CAN address configuration based on the ARDEP board’s <a class="reference internal" href="../../boards/mercedes/ardep/doc/gearshift/index.html#gearshift"><span class="std std-ref">Gearshift</span></a> position. This allows multiple devices on the same CAN bus to automatically configure unique addresses without manual configuration or multiple firmware builds.</p>
+<p>The gearshift address providers are enabled by default for all ARDEP boards, if UDS is enabled, which is also the default.</p>
+<section id="key-features">
+<h3>Key Features<a class="headerlink" href="#key-features" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>UDS Address Provider</strong>: Configure UDS CAN IDs based on gearshift position</p></li>
+<li><p><strong>CAN Log Address Provider</strong>: Configure CAN logging ID based on gearshift position</p></li>
+</ul>
+</section>
+</section>
+<section id="how-it-works">
+<h2>How It Works<a class="headerlink" href="#how-it-works" title="Permalink to this heading">¶</a></h2>
+<p>The library reads the gearshift position from GPIO pins on the ARDEP board during initialization. The gearshift position (0-7) is then used to calculate unique CAN addresses for UDS and logging services.</p>
+<section id="gearshift-reading">
+<h3>Gearshift Reading<a class="headerlink" href="#gearshift-reading" title="Permalink to this heading">¶</a></h3>
+<p>The gearshift position is read via the gearshift driver (see the code of the <a class="reference internal" href="../../samples/gearshift/README.html#gearshift-sample"><span class="std std-ref">Gearshift Sample</span></a> for an example).
+The gearshift position is read only once during boot.</p>
+</section>
+</section>
+<section id="address-providers">
+<h2>Address Providers<a class="headerlink" href="#address-providers" title="Permalink to this heading">¶</a></h2>
+<section id="uds-address-provider">
+<h3>UDS Address Provider<a class="headerlink" href="#uds-address-provider" title="Permalink to this heading">¶</a></h3>
+<p>When enabled (enabled by default on ARDEP boards), this provider automatically configures UDS CAN addresses based on gearshift position. It integrates seamlessly with the UDS library’s default instance by implementing the external address provider interface (<code class="docutils literal notranslate"><span class="pre">CONFIG_UDS_DEFAULT_INSTANCE_EXTERNAL_ADDRESS_PROVIDER</span></code>).</p>
+<p>The provider supplies physical source and target addresses dynamically based on gearshift position:</p>
+<p><strong>Configuration</strong>:</p>
+<div class="highlight-cfg notranslate"><div class="highlight"><pre><span></span><span class="c1"># In prj.conf</span>
+<span class="na">CONFIG_GEARSHIFT_UDS_ADDRESS_PROVIDER_BASE_PHYS_SA</span><span class="o">=</span><span class="s">0x7E8</span>
+<span class="na">CONFIG_GEARSHIFT_UDS_ADDRESS_PROVIDER_BASE_PHYS_TA</span><span class="o">=</span><span class="s">0x7E0</span>
+</pre></div>
+</div>
+<p><strong>Address Calculation</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Physical Source Address = BASE_PHYS_SA + gearshift_position
+Physical Target Address = BASE_PHYS_TA + gearshift_position
+</pre></div>
+</div>
+<p><strong>Example</strong>:</p>
+<p>For gearshift position 2 with default configuration:</p>
+<ul class="simple">
+<li><p>Physical Source Address: <code class="docutils literal notranslate"><span class="pre">0x7E8</span> <span class="pre">+</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">0x7EA</span></code></p></li>
+<li><p>Physical Target Address: <code class="docutils literal notranslate"><span class="pre">0x7E0</span> <span class="pre">+</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">0x7E2</span></code></p></li>
+</ul>
+</section>
+<section id="can-log-address-provider">
+<h3>CAN Log Address Provider<a class="headerlink" href="#can-log-address-provider" title="Permalink to this heading">¶</a></h3>
+<p>When enabled (enabled by default on ARDEP boards), this provider configures the CAN logging ID based on gearshift position:</p>
+<p><strong>Configuration</strong>:</p>
+<div class="highlight-cfg notranslate"><div class="highlight"><pre><span></span><span class="c1"># In prj.conf</span>
+<span class="na">CONFIG_GEARSHIFT_CAN_LOG_ADDRESS_PROVIDER_BASE_ID</span><span class="o">=</span><span class="s">0x100</span>
+</pre></div>
+</div>
+<p><strong>Address Calculation</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CAN Log ID = BASE_ID + gearshift_position
+</pre></div>
+</div>
+<p><strong>Example</strong>:</p>
+<p>For gearshift position 2 with default configuration:</p>
+<ul class="simple">
+<li><p>CAN Log ID: <code class="docutils literal notranslate"><span class="pre">0x100</span> <span class="pre">+</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">0x102</span></code></p></li>
+</ul>
+<p><strong>Usage</strong>:</p>
+<p>The provider automatically integrates with the CAN log library:</p>
+<div class="highlight-cfg notranslate"><div class="highlight"><pre><span></span><span class="na">CONFIG_CAN_LOG</span><span class="o">=</span><span class="s">y</span>
+<span class="na">CONFIG_GEARSHIFT_CAN_LOG_ADDRESS_PROVIDER</span><span class="o">=</span><span class="s">y</span>
+</pre></div>
+</div>
+<p>The CAN log library will automatically call the gearshift address provider to determine the logging CAN ID.</p>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">ARDEP</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bootloader/index.html">Bootloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../firmware_loader/index.html">Firmware Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../console/index.html">Console Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../error_handling/index.html">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">Documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Libraries</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../can_log/README.html">CAN Log Library</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Gearshift Address Providers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../iso14229/README.html">ISO14229 Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../uds/README.html">UDS Library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../scripts/index.html">Commands and runners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boards/mercedes/ardep/doc/index.html">ARDEP Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boards/shields/hv_shield/doc/index.html">ARDEP HV Shield</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boards/shields/power_io_shield/doc/index.html">ARDEP Power IO Shield</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../samples/index.html">Samples and Demos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../debugging/index.html">Debugging</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Libraries</a><ul>
+      <li>Previous: <a href="../can_log/README.html" title="previous chapter">CAN Log Library</a></li>
+      <li>Next: <a href="../iso14229/README.html" title="next chapter">ISO14229 Library</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Frickly Systems GmbH.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 6.2.1</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../../_sources/lib/gearshift_address_providers/README.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
