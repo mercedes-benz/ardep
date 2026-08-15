@@ -15,6 +15,12 @@
 
 static const struct device *gpio0 = DEVICE_DT_GET(DT_NODELABEL(gpio0));
 
+/*
+ * The gearshift is a zephyr,binary-encoded-gpio node: pins 0..2 of gpio0 carry
+ * the position as a 3-bit little-endian number, so positions 0..7 are possible.
+ * There is no gearshift hardware on native_sim, so drive the pins through the
+ * GPIO emulator to stand in for it.
+ */
 static void set_gearshift_position(uint8_t pos)
 {
 	zassert_equal(gpio_emul_input_set(gpio0, 0, (pos >> 0) & 1), 0);
@@ -28,6 +34,7 @@ static void *gearshift_setup(void)
 	return NULL;
 }
 
+/* Start every test from position 0 so a previous test cannot leak state. */
 static void gearshift_before(void *f)
 {
 	ARG_UNUSED(f);
@@ -37,6 +44,12 @@ static void gearshift_before(void *f)
 ZTEST_SUITE(lib_gearshift_address_providers, NULL, gearshift_setup, gearshift_before,
 	    NULL, NULL);
 
+/*
+ * The CAN log provider derives its ID as base + gearshift position, so each ECU
+ * on the bus logs under a distinct ID. Sweep the low, an arbitrary middle and
+ * the highest encodable position to confirm the offset is applied as-is and not
+ * clamped or masked somewhere.
+ */
 ZTEST(lib_gearshift_address_providers, test_can_log_id_offsets)
 {
 	set_gearshift_position(0);
@@ -52,6 +65,11 @@ ZTEST(lib_gearshift_address_providers, test_can_log_id_offsets)
 		      CONFIG_GEARSHIFT_CAN_LOG_ADDRESS_PROVIDER_BASE_ID + 7);
 }
 
+/*
+ * The UDS provider offsets both physical addresses by the same position, while
+ * the functional addresses stay unused. Checking the functional pair matters as
+ * much as the physical one: the provider must not accidentally offset them.
+ */
 ZTEST(lib_gearshift_address_providers, test_uds_address_offsets)
 {
 	set_gearshift_position(2);
