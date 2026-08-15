@@ -26,6 +26,12 @@ static struct can_frame last_sent_frame;
 static const struct device *last_send_dev;
 static uint32_t send_call_count;
 
+/*
+ * With the external address provider selected, can_log expects the application
+ * to supply the log ID instead of taking it from Kconfig. testcase.yaml builds
+ * this suite a second time with that option on, so provide the override here to
+ * cover both paths from a single source file.
+ */
 #ifdef CONFIG_CAN_LOG_ADDRESS_PROVIDER_EXTERNAL
 uint16_t can_log_get_id(void)
 {
@@ -33,6 +39,13 @@ uint16_t can_log_get_id(void)
 }
 #endif
 
+/*
+ * native_sim has no CAN controller, so the chosen bus is zephyr,fake-can. Use a
+ * custom fake rather than the recorded FFF arguments because the frame is passed
+ * by pointer and only stays valid for the duration of the call, and the frame
+ * contents are what these tests are about. Invoking the completion callback
+ * keeps the backend from waiting on a transmission that will never happen.
+ */
 static int capture_can_send_fake(const struct device *dev,
 				 const struct can_frame *frame,
 				 k_timeout_t timeout,
@@ -78,10 +91,16 @@ static void can_log_before(void *f)
 
 ZTEST_SUITE(lib_can_log, NULL, can_log_setup, can_log_before, NULL, NULL);
 
+/*
+ * can_log is a logging backend, so the only way in is to emit a log message and
+ * observe what reaches the bus. CONFIG_LOG_MODE_IMMEDIATE makes that happen
+ * synchronously, without having to wait on the log processing thread.
+ */
 ZTEST(lib_can_log, test_log_message_is_sent_on_can)
 {
 	LOG_INF("can-log");
 
+	/* One message may be split over several frames, so do not pin the count. */
 	zassert_true(send_call_count >= 1, "expected at least one CAN frame");
 	zassert_equal(last_send_dev, can_dev);
 
@@ -90,6 +109,7 @@ ZTEST(lib_can_log, test_log_message_is_sent_on_can)
 #else
 	zassert_equal(last_sent_frame.id, CONFIG_CAN_LOG_ID);
 #endif
+	/* Payload must carry something and still fit a classic CAN frame. */
 	zassert_true(last_sent_frame.dlc > 0);
 	zassert_true(last_sent_frame.dlc <= CAN_MAX_DLEN);
 }
