@@ -1,3 +1,10 @@
+config GEARSHIFT
+	bool "Gearshift hardware present"
+	select BINARY_ENCODED_GPIO
+	help
+	  Enable when a gearshift device-tree node (zephyr,binary-encoded-gpio)
+	  is available. Used by the gearshift address providers.
+
 menuconfig GEARSHIFT_ADDRESS_PROVIDERS
     bool "Enable Gearshift Address Providers"
     default n

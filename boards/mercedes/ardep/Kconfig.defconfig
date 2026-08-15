@@ -32,7 +32,7 @@ if !MCUBOOT
 		default y
 
 	# enable Gearshift addresses
-	config BINARY_ENCODED_GPIO
+	config GEARSHIFT
 		default y
 	config GEARSHIFT_ADDRESS_PROVIDERS
 		default y
