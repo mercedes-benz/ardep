@@ -29,6 +29,12 @@ static struct can_frame last_sent_frame;
 static const struct device *last_send_dev;
 static uint32_t send_call_count;
 
+/*
+ * native_sim has no CAN controller, so can_a and can_b are zephyr,fake-can
+ * devices. can_router installs an RX filter on the source bus and forwards what
+ * arrives to the destination, so capturing the callback the router registers is
+ * the only way to feed it a frame without hardware.
+ */
 static int capture_rx_filter_fake(const struct device *dev,
 				  can_rx_callback_t callback,
 				  void *user_data,
@@ -41,6 +47,7 @@ static int capture_rx_filter_fake(const struct device *dev,
 	return 0;
 }
 
+/* Stands in for a controller whose filter slots are all taken. */
 static int fail_rx_filter_fake(const struct device *dev,
 			       can_rx_callback_t callback,
 			       void *user_data,
@@ -53,6 +60,11 @@ static int fail_rx_filter_fake(const struct device *dev,
 	return -ENOSPC;
 }
 
+/*
+ * The frame is only valid for the duration of the call, so copy it out instead
+ * of relying on the pointer FFF records. Calling the completion callback keeps
+ * the router from waiting on a transmission that will never happen.
+ */
 static int capture_can_send_fake(const struct device *dev,
 				 const struct can_frame *frame,
 				 k_timeout_t timeout,
@@ -102,6 +114,12 @@ static void can_router_before(void *f)
 
 ZTEST_SUITE(lib_can_router, NULL, can_router_setup, can_router_before, NULL, NULL);
 
+/*
+ * Check the wiring, not just that registration succeeds: the filter has to land
+ * on the source bus, the destination device has to travel as the callback's user
+ * data, and the caller's filter must be passed through untouched. A router that
+ * swapped the two buses or widened the mask would still register cleanly.
+ */
 ZTEST(lib_can_router, test_register_installs_rx_filter)
 {
 	static const struct can_router_entry_t entries[] = {
@@ -129,6 +147,11 @@ ZTEST(lib_can_router, test_register_installs_rx_filter)
 	zassert_equal(captured_filter->mask, 0x7FF);
 }
 
+/*
+ * Controllers have a limited number of filter slots, so registration can fail on
+ * real hardware. The router must surface that instead of reporting success and
+ * silently dropping the route.
+ */
 ZTEST(lib_can_router, test_register_propagates_filter_error)
 {
 	static const struct can_router_entry_t entries[] = {
@@ -150,6 +173,11 @@ ZTEST(lib_can_router, test_register_propagates_filter_error)
 	zassert_equal(fake_can_add_rx_filter_fake.call_count, 1);
 }
 
+/*
+ * Invoking the captured callback simulates a frame arriving on can_a. The frame
+ * must come out on can_b unchanged: routing that altered the ID or truncated the
+ * payload would break the buses it is meant to bridge.
+ */
 ZTEST(lib_can_router, test_frame_is_forwarded_to_destination)
 {
 	static const struct can_router_entry_t entries[] = {
