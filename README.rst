@@ -5,7 +5,6 @@ ARDEP - Automotive Rapid Development Platform
    :align: center
    :width: 50%
 
-
 ARDEP (**A**\ utomotive **R**\ apid **DE**\ velopment **P**\ latform) is an open-source hardware and software platform 
 that simplifies automotive development. It combines a feature-rich development board with a robust 
 Zephyr-based software framework, enabling you to build and deploy automotive applications quickly.
@@ -25,6 +24,7 @@ Waypoints
    * `Hardware documentation <https://mercedes-benz.github.io/ardep/boards/mercedes/ardep/doc/index.html>`_
    * `PowerIO Shield documentation <https://mercedes-benz.github.io/ardep/boards/shields/power_io_shield/doc/index.html>`_
    * `Hardware files <hardware/>`_
+   * `Get the hardware (Crowd Supply) <https://www.crowdsupply.com/frickly-systems/ardep>`_
 
 * **Software**
    * `UDS Library documentation <https://mercedes-benz.github.io/ardep/lib/uds/README.html>`_
@@ -65,6 +65,15 @@ Key Features
 * **Modular architecture** - Clean separation of concerns, designed for long-term maintainability
 * **Rich connectivity** - CAN, LIN, SPI, I2C, UART and more with unified and easy-to-use APIs
 
+Hardware availability
+===============
+
+Frickly Systems has started a Crowd Supply campaign to make the hardware available for purchase. Subscribe to notified when it launches at:
+
+.. image:: https://img.shields.io/badge/CROWD%20SUPPLY-ARDEP-008E8E?style=for-the-badge&labelColor=1F1F1F
+   :target: https://www.crowdsupply.com/frickly-systems/ardep
+   :alt: Crowd Supply campaign
+   :align: center
 
 Getting Started
 ===============
