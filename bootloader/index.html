@@ -1,0 +1,330 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Bootloader &#8212; ARDEP  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/tabs.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Firmware Loader" href="../firmware_loader/index.html" />
+    <link rel="prev" title="Getting Started" href="../getting_started/index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="bootloader">
+<span id="id1"></span><h1>Bootloader<a class="headerlink" href="#bootloader" title="Permalink to this heading">¶</a></h1>
+<nav class="contents local" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p></li>
+<li><p><a class="reference internal" href="#building-the-bootloader" id="id4">Building the bootloader</a></p></li>
+<li><p><a class="reference internal" href="#flashing-the-bootloader" id="id5">Flashing the bootloader</a></p></li>
+<li><p><a class="reference internal" href="#firmware-loader-mode" id="id6">Firmware Loader Mode</a></p>
+<ul>
+<li><p><a class="reference internal" href="#entering-firmware-loader-mode" id="id7">Entering Firmware Loader Mode</a></p></li>
+<li><p><a class="reference internal" href="#upgrading-the-application-firmware" id="id8">Upgrading the Application Firmware</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#uds-and-usb-dfu-support-via-firmware-loader" id="id9">UDS and USB DFU Support via Firmware Loader</a></p></li>
+<li><p><a class="reference internal" href="#sysbuild" id="id10">Sysbuild</a></p>
+<ul>
+<li><p><a class="reference internal" href="#sysbuild-basics" id="id11">Sysbuild basics</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<section id="overview">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
+<p>The ARDEP bootloader uses MCUBoot and a <a class="reference internal" href="../firmware_loader/index.html#firmware-loader"><span class="std std-ref">Firmware Loader</span></a> for firmware updates. This enables application upgrades either via UDS over CAN or USB DFU.</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Ardep v2.0.0 and later</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Ardep v1.0.0</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><p>The recommended upgrade mechanism is the on-board debugger using the <cite>west flash</cite> command or if needed using UDS over CAN.</p>
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><p>The recommended upgrade mechanism is USB DFU using the <cite>west flash</cite> command or if needed using UDS over CAN.</p>
+</div></div>
+</section>
+<section id="building-the-bootloader">
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Building the bootloader</a><a class="headerlink" href="#building-the-bootloader" title="Permalink to this heading">¶</a></h2>
+<p>The bootloader can be built using sysbuild together with a sample for flashing. To reset the board to a delivery state, use</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>west<span class="w"> </span>build<span class="w"> </span>-b<span class="w"> </span>ardep<span class="w"> </span>samples/led<span class="w"> </span>-p<span class="w"> </span>--sysbuild
+</pre></div>
+</div>
+<p>to build the <a class="reference internal" href="../samples/led/README.html#led-sample"><span class="std std-ref">LED Sample</span></a> and bootloader</p>
+<p>If you want to build for a specific board version, change the <cite>-b</cite> argument accordingly:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>west<span class="w"> </span>build<span class="w"> </span>-b<span class="w"> </span>ardep@1.0.0<span class="w"> </span>samples/led<span class="w"> </span>-p<span class="w"> </span>--sysbuild
+</pre></div>
+</div>
+</section>
+<section id="flashing-the-bootloader">
+<span id="id2"></span><h2><a class="toc-backref" href="#id5" role="doc-backlink">Flashing the bootloader</a><a class="headerlink" href="#flashing-the-bootloader" title="Permalink to this heading">¶</a></h2>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Bootloader and firmware loader can ONLY be flashed via debugger:</strong></p>
+<ul class="simple">
+<li><p><strong>v2.0.0 and later</strong>: Must use the on-board debugger (OBD) - this is the <strong>recommended and default</strong> method</p></li>
+<li><p><strong>v1.0.0</strong>: Must use an external debug probe (e.g. J-Link, ST-Link)</p></li>
+</ul>
+<p>The firmware loader itself <strong>cannot</strong> be flashed via USB DFU or UDS DFU. Only <strong>application</strong> updates can use the firmware loader’s DFU capabilities.</p>
+</div>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">Ardep v2.0.0 and later</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">Ardep v1.0.0</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><p>The bootloader and firmware loader are flashed via the on-board debugger using the <cite>west flash</cite> command.</p>
+<p>Just run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>west<span class="w"> </span>flash
+</pre></div>
+</div>
+<p>This will flash the bootloader and firmware loader to the board.</p>
+</div><div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0"><p>The bootloader and firmware loader are flashed with an external debug probe (e.g. J-Link) using the <cite>west flash</cite> command.</p>
+<p>For this connect the SWD Pins of the ARDEP board to the debug probe an run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>west<span class="w"> </span>flash<span class="w"> </span>-r<span class="w"> </span><span class="o">{</span>runner<span class="o">}</span>
+</pre></div>
+</div>
+<p>The Pinout of the SWD connector is printed on the boards backside.</p>
+<p>See the <cite>board.cmake</cite> file under <cite>boards/mercedes/ardep</cite> for more info about supported debuggers/runners.</p>
+</div></div>
+</section>
+<section id="firmware-loader-mode">
+<span id="bootloader-mode"></span><h2><a class="toc-backref" href="#id6" role="doc-backlink">Firmware Loader Mode</a><a class="headerlink" href="#firmware-loader-mode" title="Permalink to this heading">¶</a></h2>
+<p>The firmware loader supports both <strong>USB DFU</strong> and <strong>UDS DFU</strong> update mechanisms for <strong>application</strong> updates. When you set the BOOT jumper, the bootloader enters the firmware loader, which provides both update methods.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The firmware loader can only update <strong>applications</strong>, not the bootloader or firmware loader itself. To update the bootloader or firmware loader, you must use the on-board debugger (v2) or external probe (v1).</p>
+</div>
+<p>It is helpful to see the Bootloader console output on <code class="docutils literal notranslate"><span class="pre">UART-A</span></code> for this.</p>
+<section id="entering-firmware-loader-mode">
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Entering Firmware Loader Mode</a><a class="headerlink" href="#entering-firmware-loader-mode" title="Permalink to this heading">¶</a></h3>
+<p>To enter the firmware loader mode, pull the <code class="docutils literal notranslate"><span class="pre">PE4</span></code> pin (labeled <em>BOOT</em>) to a LOW state (by setting the jumper) while power-cycling or pushing the Reset button.</p>
+<p>The firmware loader will be active and ready to accept <strong>application</strong> firmware updates via either USB DFU or UDS (CAN).</p>
+<p>On <code class="docutils literal notranslate"><span class="pre">UART-A</span></code> you will see output indicating the bootloader has started the firmware loader.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">UART-A</span></code> is the output that is forwarded by the on-board debugger (on v2 boards) or available via the UART-A pins.</p>
+</div>
+</section>
+<section id="upgrading-the-application-firmware">
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Upgrading the Application Firmware</a><a class="headerlink" href="#upgrading-the-application-firmware" title="Permalink to this heading">¶</a></h3>
+<p>You can upgrade <strong>application</strong> firmware using either method:</p>
+<p><strong>Via On-board Debugger (v2)</strong></p>
+<ul class="simple">
+<li><p>Note that this method only works on ARDEP v2.0.0 and later boards with an on-board debugger.</p></li>
+<li><p>Build the application firmware you want to flash (assuming it is in the <em>build</em> directory)</p></li>
+<li><p>Set the BOOT jumper and reset the board</p></li>
+<li><p>Perform the upgrade with <code class="docutils literal notranslate"><span class="pre">west</span> <span class="pre">flash</span></code></p></li>
+<li><p>Wait for the upgrade to complete</p></li>
+</ul>
+<p><strong>Via USB DFU:</strong></p>
+<ul class="simple">
+<li><p>Note that this method works on all ARDEP boards (v1 and v2), but the first option is generally better for v2+ boards</p></li>
+<li><p>Build the application firmware you want to flash (assuming it is in the <em>build</em> directory)</p></li>
+<li><p>Set the BOOT jumper and reset the board</p></li>
+<li><p>Perform the upgrade with <code class="docutils literal notranslate"><span class="pre">west</span> <span class="pre">flash</span></code> (for v2+ boards, set the runner: <code class="docutils literal notranslate"><span class="pre">west</span> <span class="pre">flash</span> <span class="pre">--runner</span> <span class="pre">ardep</span></code>)</p></li>
+<li><p>Wait for the upgrade to complete</p></li>
+</ul>
+<p><strong>Via UDS (CAN):</strong></p>
+<ul class="simple">
+<li><p>Use the UDS diagnostic services over CAN to request a programming session</p></li>
+<li><p>The firmware loader will handle the application update process</p></li>
+<li><p>See <a class="reference internal" href="../firmware_loader/index.html#firmware-loader"><span class="std std-ref">Firmware Loader</span></a> for details</p></li>
+</ul>
+</section>
+</section>
+<section id="uds-and-usb-dfu-support-via-firmware-loader">
+<span id="uds-bootloader"></span><h2><a class="toc-backref" href="#id9" role="doc-backlink">UDS and USB DFU Support via Firmware Loader</a><a class="headerlink" href="#uds-and-usb-dfu-support-via-firmware-loader" title="Permalink to this heading">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>All ARDEP boards</strong> (v1 and v2): The unified firmware loader is now the <strong>default</strong> boot logic for all board versions. You can build any application with sysbuild and it will automatically include the firmware loader with support for both UDS DFU and USB DFU.</p>
+<p><strong>Upgrading from older ARDEP versions</strong>: If your bootloader was built with an older ARDEP repository version that differentiated between board versions, you need to upgrade the bootloader using sysbuild (via OBD on v2 or external probe on v1) to get the unified firmware loader support.</p>
+</div>
+<p>For applications that require firmware updates over UDS (Unified Diagnostic Services) or USB DFU,
+a <a class="reference internal" href="../firmware_loader/index.html#firmware-loader"><span class="std std-ref">Firmware Loader</span></a> is provided which can be built using sysbuild.</p>
+<p>It is not recommended to build the firmware loader independently as the bootloader needs configuration options to handle the firmware loader correctly.</p>
+<p>For demonstration purposes, build the <a class="reference internal" href="../samples/uds/README.html#uds-sample"><span class="std std-ref">UDS Sample</span></a> using sysbuild (which contains a <code class="docutils literal notranslate"><span class="pre">sysbuild.conf</span></code>), which automatically builds the firmware loader:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>west<span class="w"> </span>build<span class="w"> </span>-b<span class="w"> </span>ardep<span class="w"> </span>samples/uds<span class="w"> </span>-p<span class="w"> </span>--sysbuild
+</pre></div>
+</div>
+<p>If you wish to build your own application using the firmware loader, it is included by default when using sysbuild.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Flashing considerations:</strong></p>
+<ul class="simple">
+<li><p><strong>Bootloader and firmware loader</strong>: Can ONLY be flashed via on-board debugger (v2) or external probe (v1)</p></li>
+<li><p><strong>Applications</strong>: Can be flashed via debugger OR via the firmware loader (USB DFU/UDS DFU)</p></li>
+</ul>
+<p>See <a class="reference internal" href="#flashing-the-bootloader"><span class="std std-ref">Flashing the bootloader</span></a> for detailed instructions.</p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>When using the default UDS instance (<code class="docutils literal notranslate"><span class="pre">CONFIG_UDS_DEFAULT_INSTANCE=y</span></code>, enabled by default on ARDEP boards), the firmware loader switch is handled automatically on programming session requests unless disabled with <code class="docutils literal notranslate"><span class="pre">CONFIG_UDS_DEFAULT_INSTANCE_DISABLE_SWITCH_TO_FIRMWARE_LOADER=y</span></code>.</p>
+<p>If you create a custom UDS instance or disable the automatic switch, you must call <code class="docutils literal notranslate"><span class="pre">uds_switch_to_firmware_loader_with_programming_session()</span></code> in your diagnostic session control action handler when a programming session is requested.</p>
+</div>
+<p>To flash an application with the UDS firmware loader, see <a class="reference internal" href="../scripts/runner/ardep-uds.html#ardep-uds"><span class="std std-ref">ARDEP UDS Runner</span></a>.</p>
+</section>
+<section id="sysbuild">
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Sysbuild</a><a class="headerlink" href="#sysbuild" title="Permalink to this heading">¶</a></h2>
+<p>With sysbuild, multiple applications (i.e. bootloader, main application and firmware loader) are built together using just one build command.</p>
+<p>More information is available in the official <a class="reference external" href="https://docs.zephyrproject.org/4.2.0/build/sysbuild/index.html">Zephyr Sysbuild documentation</a>.</p>
+<section id="sysbuild-basics">
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Sysbuild basics</a><a class="headerlink" href="#sysbuild-basics" title="Permalink to this heading">¶</a></h3>
+<p>There are multiple things that differ from a normal west build:</p>
+<p>First, there are multiple targets for using menuconfig, one for each “domain”:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Main application menuconfig</span>
+west<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>menuconfig
+
+<span class="c1"># Bootloader menuconfig</span>
+west<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>mcuboot_menuconfig
+
+<span class="c1"># Firmware loader menuconfig</span>
+west<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>firmware_loader_menuconfig
+
+<span class="c1"># Sysbuild menuconfig</span>
+west<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>sysbuild_menuconfig
+</pre></div>
+</div>
+<p>Second, you can switch between domains when debugging by specifying the domain:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Debug main application</span>
+west<span class="w"> </span>debug
+
+<span class="c1"># Debug bootloader</span>
+west<span class="w"> </span>debug<span class="w"> </span>--domain<span class="w"> </span>mcuboot
+
+<span class="c1"># Debug firmware loader</span>
+west<span class="w"> </span>debug<span class="w"> </span>--domain<span class="w"> </span>firmware_loader
+</pre></div>
+</div>
+<p>Finally, when flashing, you can either specify no domain, which flashes all domains in series or you can specify a domain to flash only that domain:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Flash all domains (bootloader, firmware loader and main application)</span>
+west<span class="w"> </span>flash
+
+<span class="c1"># Flash only bootloader</span>
+west<span class="w"> </span>flash<span class="w"> </span>--domain<span class="w"> </span>mcuboot
+
+<span class="c1"># Flash only firmware loader</span>
+west<span class="w"> </span>flash<span class="w"> </span>--domain<span class="w"> </span>firmware_loader
+
+<span class="c1"># Flash only main application (when building sample/uds the sample-name would be uds)</span>
+west<span class="w"> </span>flash<span class="w"> </span>--domain<span class="w"> </span>&lt;sample-name&gt;
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Note that on ARDEP v1 boards, only the main application can be flashed using the ardep runner. This also means that the bootloader and firmware loader must be flashed using an external debug probe, see <a class="reference internal" href="#flashing-the-bootloader"><span class="std std-ref">Flashing the bootloader</span></a>.</p>
+</div>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">ARDEP</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Bootloader</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#building-the-bootloader">Building the bootloader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#flashing-the-bootloader">Flashing the bootloader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#firmware-loader-mode">Firmware Loader Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#uds-and-usb-dfu-support-via-firmware-loader">UDS and USB DFU Support via Firmware Loader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sysbuild">Sysbuild</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../firmware_loader/index.html">Firmware Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../console/index.html">Console Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../error_handling/index.html">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/index.html">Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scripts/index.html">Commands and runners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boards/mercedes/ardep/doc/index.html">ARDEP Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boards/shields/hv_shield/doc/index.html">ARDEP HV Shield</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boards/shields/power_io_shield/doc/index.html">ARDEP Power IO Shield</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../samples/index.html">Samples and Demos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../debugging/index.html">Debugging</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../getting_started/index.html" title="previous chapter">Getting Started</a></li>
+      <li>Next: <a href="../firmware_loader/index.html" title="next chapter">Firmware Loader</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Frickly Systems GmbH.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 6.2.1</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/bootloader/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
