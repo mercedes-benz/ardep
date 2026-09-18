@@ -36,11 +36,23 @@ DEFINE_FAKE_VALUE_FUNC(UDSErr_t,
                        struct uds_context *const,
                        bool *);
 
+DEFINE_FAKE_VALUE_FUNC(UDSErr_t,
+                       catchall_check_fn,
+                       const struct uds_context *const,
+                       bool *);
+
+DEFINE_FAKE_VALUE_FUNC(UDSErr_t,
+                       catchall_action_fn,
+                       struct uds_context *const,
+                       bool *);
+
 #define FFF_FAKES_LIST(FAKE) \
   FAKE(copy)                 \
   FAKE(set_auth_state)       \
   FAKE(data_id_check_fn)     \
-  FAKE(data_id_action_fn)
+  FAKE(data_id_action_fn)    \
+  FAKE(catchall_check_fn)    \
+  FAKE(catchall_action_fn)
 
 struct uds_instance_t fixture_uds_instance;
 
@@ -60,6 +72,10 @@ const uint16_t data_id_rw_duplicated2 = 3;
 uint8_t data_id_rw_duplicated_data[4];
 
 const uint16_t routine_id = 0xDEAD;
+
+// A data identifier that has no dedicated handler registered, used to verify
+// the catch-all data identifier handler is invoked for unknown DIDs.
+const uint16_t data_id_unregistered = 0xABCD;
 
 UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(&fixture_uds_instance,
                                         data_id_r,
@@ -117,6 +133,20 @@ UDS_REGISTER_DATA_BY_IDENTIFIER_HANDLER(&fixture_uds_instance,
                                         data_id_check_fn,
                                         data_id_action_fn,
                                         NULL)
+
+// Catch-all handler: receives read/write/io-control events for every DID
+UDS_REGISTER_DATA_BY_IDENTIFIER_CATCHALL_HANDLER(&fixture_uds_instance,
+                                                 NULL,
+                                                 // read
+                                                 catchall_check_fn,
+                                                 catchall_action_fn,
+                                                 // write
+                                                 catchall_check_fn,
+                                                 catchall_action_fn,
+                                                 // io control
+                                                 catchall_check_fn,
+                                                 catchall_action_fn,
+                                                 NULL)
 
 UDS_REGISTER_ECU_RESET_HANDLER(&fixture_uds_instance,
                                ECU_RESET__KEY_OFF_ON,
