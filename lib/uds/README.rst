@@ -71,7 +71,7 @@ The following diagnostic services are currently implemented:
     * - Control DTC Settings
       - ``0x85``
     * - Link Control
-      - ``0x86``
+      - ``0x87``
 
 Getting Started
 ***************
