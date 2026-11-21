@@ -1,0 +1,20 @@
+/*
+ * SPDX-FileCopyrightText: Copyright (C) Frickly Systems GmbH
+ * SPDX-FileCopyrightText: Copyright (C) MBition GmbH
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/ {
+	can_a: can_a {
+		compatible = "zephyr,fake-can";
+		status = "okay";
+	};
+
+	can_b: can_b {
+		compatible = "zephyr,fake-can";
+		status = "okay";
+	};
+};
+
+/delete-node/ &can0;
